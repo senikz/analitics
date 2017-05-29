@@ -83,7 +83,7 @@ return [
      * Configure the cache adapters.
      */
     'Cache' => [
-        'default' => [
+        /*'default' => [
             'className' => 'File',
             'path' => CACHE,
             'url' => env('CACHE_DEFAULT_URL', null),

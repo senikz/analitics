@@ -75,6 +75,12 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->fallbacks(DashedRoute::class);
 });
 
+Router::prefix('api', function ($routes) {
+    // All routes here will be prefixed with `/api`
+    // And have the prefix => api route element added.
+    $routes->fallbacks(DashedRoute::class);
+});
+
 /**
  * Load all plugin routes. See the Plugin documentation on
  * how to customize the loading of plugin routes.
