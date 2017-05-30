@@ -13,8 +13,14 @@ class ApiController extends Controller
 		$this->autoRender = false;
 
         $this->response->header('Access-Control-Allow-Origin', '*');
-        $this->response->header('Access-Control-Allow-Headers', 'user_token');
+        $this->response->header('Access-Control-Allow-Headers', 'user_token, Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
 		$this->response->header('Content-Type', 'application/json');
+
+		if($this->request->is('options')) {
+			$this->response->statusCode(200);
+			$this->response->send();
+			exit;
+		}
 
         if ($this->request->params['controller'] != 'Users' || $this->request->params['action'] != 'auth') {
             $headers = getallheaders();
