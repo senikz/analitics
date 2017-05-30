@@ -13,7 +13,7 @@ class ApiController extends Controller
 		$this->autoRender = false;
 
         $this->response->header('Access-Control-Allow-Origin', '*');
-        $this->response->header('Access-Control-Allow-Headers', 'user_token, Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
+        $this->response->header('Access-Control-Allow-Headers', 'User-Token, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
 		$this->response->header('Content-Type', 'application/json');
 
 		if($this->request->is('options')) {
@@ -25,11 +25,11 @@ class ApiController extends Controller
         if ($this->request->params['controller'] != 'Users' || $this->request->params['action'] != 'auth') {
             $headers = getallheaders();
 
-    		if(empty($headers) || empty($headers['user_token'])) {
+    		if(empty($headers) || empty($headers['User-Token'])) {
                 $this->sendError('Access token is empty.');
         	} else {
 				try {
-					$decoded = JWT::decode($headers['user_token'], Configure::read('JWT.key'), array('HS256'));
+					$decoded = JWT::decode($headers['User-Token'], Configure::read('JWT.key'), array('HS256'));
 				} catch (\UnexpectedValueException $e) {
 					$this->sendError('Invalid token.', 403);
 				}
