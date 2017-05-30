@@ -76,8 +76,11 @@ Router::scope('/', function (RouteBuilder $routes) {
 });
 
 Router::prefix('api', function ($routes) {
-    // All routes here will be prefixed with `/api`
-    // And have the prefix => api route element added.
+
+    $routes->resources('Projects', function ($routes) {
+        $routes->resources('Statistics', ['prefix' => 'projects']);
+    });
+
     $routes->fallbacks(DashedRoute::class);
 });
 

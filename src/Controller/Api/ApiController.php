@@ -16,6 +16,12 @@ class ApiController extends Controller
         $this->response->header('Access-Control-Allow-Headers', 'user_token');
 		$this->response->header('Content-Type', 'application/json');
 
+		if($this->request->is('options')) {
+			$this->response->statusCode(200);
+			$this->response->send();
+			exit;
+		}
+
         if ($this->request->params['controller'] != 'Users' || $this->request->params['action'] != 'auth') {
             $headers = getallheaders();
 

@@ -11,11 +11,21 @@ class ProjectsController extends ApiController
      */
     public function index()
     {
-        /*$projects = $this->paginate($this->Projects);
-e
-        $this->set(compact('projects'));
-        $this->set('_serialize', ['projects']);*/
-		$this->sendData([1,2,3]);
+		$result = [];
+
+		$query = $this->Projects->find('all', [
+			'contain' => false
+		]);
+
+		foreach ($query as $row) {
+			$result[] = [
+				'id' => $row->id,
+				'caption' => $row->caption,
+				'icon' => $row->icon,
+			];
+		}
+
+		$this->sendData($result);
     }
 
     /**
@@ -31,8 +41,13 @@ e
             'contain' => []
         ]);
 
-        $this->set('project', $project);
-        $this->set('_serialize', ['project']);
+		$result = [
+			'id' => $project->id,
+			'caption' => $project->caption,
+			'icon' => $project->icon,
+		];
+
+		$this->sendData($result);
     }
 
     /**
@@ -42,7 +57,7 @@ e
      */
     public function add()
     {
-        $project = $this->Projects->newEntity();
+        /*$project = $this->Projects->newEntity();
         if ($this->request->is('post')) {
             $project = $this->Projects->patchEntity($project, $this->request->getData());
             if ($this->Projects->save($project)) {
@@ -53,7 +68,7 @@ e
             $this->Flash->error(__('The project could not be saved. Please, try again.'));
         }
         $this->set(compact('project'));
-        $this->set('_serialize', ['project']);
+        $this->set('_serialize', ['project']);*/
     }
 
     /**
@@ -65,7 +80,7 @@ e
      */
     public function edit($id = null)
     {
-        $project = $this->Projects->get($id, [
+        /*$project = $this->Projects->get($id, [
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -78,7 +93,7 @@ e
             $this->Flash->error(__('The project could not be saved. Please, try again.'));
         }
         $this->set(compact('project'));
-        $this->set('_serialize', ['project']);
+        $this->set('_serialize', ['project']);*/
     }
 
     /**
@@ -90,7 +105,7 @@ e
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
+        /*$this->request->allowMethod(['post', 'delete']);
         $project = $this->Projects->get($id);
         if ($this->Projects->delete($project)) {
             $this->Flash->success(__('The project has been deleted.'));
@@ -98,6 +113,6 @@ e
             $this->Flash->error(__('The project could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['action' => 'index']);*/
     }
 }
