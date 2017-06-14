@@ -78,7 +78,25 @@ Router::scope('/', function (RouteBuilder $routes) {
 Router::prefix('api', function ($routes) {
 
     $routes->resources('Projects', function ($routes) {
+        $routes->resources('Sites', ['prefix' => 'projects']);
+		$routes->resources('Statistics', ['prefix' => 'projects']);
+    });
+    $routes->resources('Sites', function ($routes) {
+        $routes->resources('Campaigns', ['prefix' => 'projects']);
         $routes->resources('Statistics', ['prefix' => 'projects']);
+    });
+
+    $routes->resources('Campaigns', function ($routes) {
+        $routes->resources('Statistics', [
+			'prefix' => 'campaigns',
+			'map' => [
+		        'loadCostFromXml' => [
+		            'action' => 'loadCostFromXml',
+		            'method' => 'GET',
+		            'path' => '/load_cost_from_xml'
+		        ],
+		    ],
+		]);
     });
 
     $routes->fallbacks(DashedRoute::class);

@@ -7,9 +7,12 @@ use Cake\ORM\Entity;
  * Site Entity
  *
  * @property int $id
- * @property string $url
+ * @property string $project_id
+ * @property string $domain
  *
- * @property \App\Model\Entity\CampaignSite[] $campaign_site
+ * @property \App\Model\Entity\Project $project
+ * @property \App\Model\Entity\Campaign[] $campaigns
+ * @property \App\Model\Entity\SiteStatisticsHourly[] $site_statistics_hourly
  */
 class Site extends Entity
 {

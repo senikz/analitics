@@ -1,22 +1,22 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\SitesTable;
+use App\Model\Table\SiteStatisticsHourlyTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\SitesTable Test Case
+ * App\Model\Table\SiteStatisticsHourlyTable Test Case
  */
-class SitesTableTest extends TestCase
+class SiteStatisticsHourlyTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\SitesTable
+     * @var \App\Model\Table\SiteStatisticsHourlyTable
      */
-    public $Sites;
+    public $SiteStatisticsHourly;
 
     /**
      * Fixtures
@@ -24,10 +24,13 @@ class SitesTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
+        'app.site_statistics_hourly',
         'app.sites',
         'app.projects',
         'app.campaigns',
-        'app.site_statistics_hourly'
+        'app.rels',
+        'app.campaign_statistics_daily',
+        'app.campaign_statistics_hourly'
     ];
 
     /**
@@ -38,8 +41,8 @@ class SitesTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('Sites') ? [] : ['className' => 'App\Model\Table\SitesTable'];
-        $this->Sites = TableRegistry::get('Sites', $config);
+        $config = TableRegistry::exists('SiteStatisticsHourly') ? [] : ['className' => 'App\Model\Table\SiteStatisticsHourlyTable'];
+        $this->SiteStatisticsHourly = TableRegistry::get('SiteStatisticsHourly', $config);
     }
 
     /**
@@ -49,7 +52,7 @@ class SitesTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Sites);
+        unset($this->SiteStatisticsHourly);
 
         parent::tearDown();
     }

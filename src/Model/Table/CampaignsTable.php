@@ -9,8 +9,10 @@ use Cake\Validation\Validator;
 /**
  * Campaigns Model
  *
- * @property \Cake\ORM\Association\BelongsTo $Projects
- * @property \Cake\ORM\Association\HasMany $CampaignSite
+ * @property \Cake\ORM\Association\BelongsTo $Sites
+ * @property \Cake\ORM\Association\BelongsTo $Rels
+ * @property \Cake\ORM\Association\HasMany $CampaignStatisticsDaily
+ * @property \Cake\ORM\Association\HasMany $CampaignStatisticsHourly
  *
  * @method \App\Model\Entity\Campaign get($primaryKey, $options = [])
  * @method \App\Model\Entity\Campaign newEntity($data = null, array $options = [])
@@ -37,11 +39,18 @@ class CampaignsTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Projects', [
-            'foreignKey' => 'project_id',
+        $this->belongsTo('Sites', [
+            'foreignKey' => 'site_id',
             'joinType' => 'INNER'
         ]);
-        $this->hasMany('CampaignSite', [
+        /*$this->belongsTo('Rels', [
+            'foreignKey' => 'rel_id',
+            'joinType' => 'INNER'
+        ]);*/
+        $this->hasMany('CampaignStatisticsDaily', [
+            'foreignKey' => 'campaign_id'
+        ]);
+        $this->hasMany('CampaignStatisticsHourly', [
             'foreignKey' => 'campaign_id'
         ]);
     }
@@ -62,6 +71,10 @@ class CampaignsTable extends Table
             ->requirePresence('caption', 'create')
             ->notEmpty('caption');
 
+        $validator
+            ->requirePresence('type', 'create')
+            ->notEmpty('type');
+
         return $validator;
     }
 
@@ -74,7 +87,8 @@ class CampaignsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['project_id'], 'Projects'));
+        $rules->add($rules->existsIn(['site_id'], 'Sites'));
+        //$rules->add($rules->existsIn(['rel_id'], 'Rels'));
 
         return $rules;
     }

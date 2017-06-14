@@ -4,8 +4,64 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6d3559bb20d1a82185461b5cc4664fe8",
+    "content-hash": "13f6efe042a11d388d45a9f462dfa0e5",
     "packages": [
+        {
+            "name": "Cewi/Excel",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cewi/excel.git",
+                "reference": "c28558bffc2a798389cc6b8cceb994ce1cbcefab"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cewi/excel/zipball/c28558bffc2a798389cc6b8cceb994ce1cbcefab",
+                "reference": "c28558bffc2a798389cc6b8cceb994ce1cbcefab",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/cakephp": "~3.0",
+                "cakephp/plugin-installer": "*",
+                "php": ">=5.4",
+                "phpoffice/phpexcel": "1.8.*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "type": "cakephp-plugin",
+            "autoload": {
+                "psr-4": {
+                    "Cewi\\Excel\\": "src"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Cewi\\Excel\\Test\\": "tests",
+                    "Cake\\Test\\": "./vendor/cakephp/cakephp/tests"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Cornelius Wichmann",
+                    "role": "Author"
+                }
+            ],
+            "description": "Excel plugin for CakePHP 3",
+            "homepage": "https://github.com/cewi/excel",
+            "keywords": [
+                "cakephp",
+                "excel"
+            ],
+            "support": {
+                "issues": "https://github.com/cewi/excel/issues",
+                "source": "https://github.com/cewi/excel"
+            },
+            "time": "2017-05-27 09:08:22"
+        },
         {
             "name": "aura/intl",
             "version": "3.0.0",
@@ -374,6 +430,63 @@
             "time": "2017-03-29T13:59:30+00:00"
         },
         {
+            "name": "phpoffice/phpexcel",
+            "version": "1.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPOffice/PHPExcel.git",
+                "reference": "372c7cbb695a6f6f1e62649381aeaa37e7e70b32"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPOffice/PHPExcel/zipball/372c7cbb695a6f6f1e62649381aeaa37e7e70b32",
+                "reference": "372c7cbb695a6f6f1e62649381aeaa37e7e70b32",
+                "shasum": ""
+            },
+            "require": {
+                "ext-xml": "*",
+                "ext-xmlwriter": "*",
+                "php": ">=5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "PHPExcel": "Classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL"
+            ],
+            "authors": [
+                {
+                    "name": "Maarten Balliauw",
+                    "homepage": "http://blog.maartenballiauw.be"
+                },
+                {
+                    "name": "Mark Baker"
+                },
+                {
+                    "name": "Franck Lefevre",
+                    "homepage": "http://blog.rootslabs.net"
+                },
+                {
+                    "name": "Erik Tilt"
+                }
+            ],
+            "description": "PHPExcel - OpenXML - Read, Create and Write Spreadsheet documents in PHP - Spreadsheet engine",
+            "homepage": "http://phpexcel.codeplex.com",
+            "keywords": [
+                "OpenXML",
+                "excel",
+                "php",
+                "spreadsheet",
+                "xls",
+                "xlsx"
+            ],
+            "time": "2015-05-01T07:00:55+00:00"
+        },
+        {
             "name": "psr/http-message",
             "version": "1.0.1",
             "source": {
@@ -469,6 +582,53 @@
                 "psr-3"
             ],
             "time": "2016-10-10T12:19:37+00:00"
+        },
+        {
+            "name": "queencitycodefactory/cakesoap",
+            "version": "3.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/QueenCityCodeFactory/CakeSoap.git",
+                "reference": "5e00e40b48cbdb4bde342aa7e03df62873205898"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/QueenCityCodeFactory/CakeSoap/zipball/5e00e40b48cbdb4bde342aa7e03df62873205898",
+                "reference": "5e00e40b48cbdb4bde342aa7e03df62873205898",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/cakephp": ">=3.1.0",
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "cakephp/cakephp-codesniffer": "dev-master",
+                "phpunit/phpunit": "*"
+            },
+            "type": "cakephp-plugin",
+            "autoload": {
+                "psr-4": {
+                    "CakeSoap\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "jrble819",
+                    "homepage": "https://github.com/jrble819",
+                    "role": "Author"
+                }
+            ],
+            "description": "Soap plugin for CakePHP 3.x",
+            "homepage": "http://github.com/QueenCityCodeFactory/CakeSoap",
+            "keywords": [
+                "cakephp",
+                "soap"
+            ],
+            "time": "2017-06-05T12:48:30+00:00"
         },
         {
             "name": "robmorgan/phinx",
@@ -1967,6 +2127,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "cakephp/migrations": 0,
+        "cewi/excel": 20,
         "psy/psysh": 0
     },
     "prefer-stable": true,

@@ -4,11 +4,6 @@ namespace App\Controller\Api;
 class ProjectsController extends ApiController
 {
 
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|null
-     */
     public function index()
     {
 		$result = [];
@@ -28,13 +23,6 @@ class ProjectsController extends ApiController
 		$this->sendData($result);
     }
 
-    /**
-     * View method
-     *
-     * @param string|null $id Project id.
-     * @return \Cake\Http\Response|null
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function view($id = null)
     {
         $project = $this->Projects->get($id, [

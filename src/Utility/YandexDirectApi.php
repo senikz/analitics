@@ -1,18 +1,123 @@
 <?php
-namespace App\Controller\Component;
+namespace App\Utility;
 
-use Cake\Controller\Component;
-use Cake\Controller\ComponentRegistry;
+use App\Utility\YandexDirectApi\RequestJson;
+use App\Utility\YandexDirectApi\RequestXml;
 
-class YandexDirectComponent extends Component
+class YandexDirectApi
 {
-    private $login            = 'catkitseo';
-    private $token            = '37f22b0f3aa441bf8a863c7910901912';
-    private $master_token    = 'FpSeIeCNgs2VwiH5';
-    private $locale            = 'ru';
-    private $currency        = 'RUB';
-    private $url              = 'https://api.direct.yandex.ru/v4/json/';
+    private $config = [
+        'login'        => 'catkitseo',
+        'token'        => '37f22b0f3aa441bf8a863c7910901912',
+        'master_token' => 'FpSeIeCNgs2VwiH5',
+        'locale'       => 'ru',
+        'currency'     => 'RUB',
+        'url'          => '//api.direct.yandex.com/',
+		'api_version'  => 'v5',
+    ];
 
+    private function prepareResponse($response)
+    {
+        if ($response->isError) {
+            throw new \Exception($response->error->details);
+        } else {
+            return $response->body;
+        }
+    }
+
+    public function GetCampaignsList()
+    {
+        $request = [
+            'SelectionCriteria' => (new \stdClass),
+            //'FieldNames' => ['Id', 'Name']
+            'FieldNames' => ['BlockedIps','ExcludedSites','Currency','DailyBudget','Notification','EndDate','Funds','ClientInfo','Id','Name','NegativeKeywords','RepresentedBy','StartDate','Statistics','State','Status','StatusPayment','StatusClarification','SourceId','TimeTargeting','TimeZone','Type']
+        ];
+
+        $apiRequest = new RequestJson($this->config);
+
+        $response = $apiRequest->send('campaigns', $request, [
+            'method' => 'get'
+        ]);
+
+        return $this->prepareResponse($response);
+    }
+
+
+    public function createStatisticsReport($campaign_ids, $options = [])
+    {
+        $period = 'TODAY';
+        if (isset($options['period'])) {
+            // TODO
+            $period = 'CUSTOM_DATE';
+        }
+
+		$fields = ['CampaignId', 'Cost', 'Impressions', 'Clicks'];
+
+        $request = [
+			'ReportDefinition' => [
+	            'SelectionCriteria' => [
+	                'Filter' => [
+	                    'Field' => 'CampaignId',
+	                    'Operator' => 'IN',
+	                    'Values' => $campaign_ids,
+	                ]
+	            ],
+				'FieldNames' => $fields,
+				'ReportName' => 'Test request 1001',
+	            'ReportType' => 'CAMPAIGN_PERFORMANCE_REPORT',
+	            'DateRangeType' => $period,
+	            'Format' => 'TSV',
+	            'IncludeVAT' => 'NO',
+	            'IncludeDiscount' => 'NO',
+			]
+        ];
+
+		$apiRequest = new RequestXml($this->config);
+
+		$response = $apiRequest->send('reports', $request, [
+			'headers' => [
+            	'processingMode: online',
+            	'returnMoneyInMicros: false'
+			]
+        ]);
+
+		$response = $this->prepareResponse($response);
+
+		return $this->parseReportAnswer($response, $fields);
+    }
+
+	private function parseReportAnswer($report, $fields) {
+
+		$reportContent = [];
+
+		if($lines = explode(PHP_EOL, $report)) {
+			$lines = array_filter($lines);
+
+			for($lineId = 2; $lineId<(count($lines)-1); $lineId++ ) {
+				$line = array_filter(preg_split('/[\s]+/', $lines[$lineId]));
+
+				if(!empty($line) && count($line) == count($fields)) {
+					$reportLine = [];
+					foreach($fields as $num => $field) {
+						$reportLine[$field] = $line[$num];
+					}
+					$reportContent[] = $reportLine;
+				}
+			}
+		}
+
+		return $reportContent;
+	}
+
+    public function getStatisticsReportStatus()
+    {
+        //
+    }
+
+    public function getStatisticsReportResult()
+    {
+        //
+    }
 
     //private $fin_token	= $connect['finance_token'];
     //private $op_num		= $connect['operation_num'];
@@ -44,7 +149,7 @@ class YandexDirectComponent extends Component
 
         return $this->createRequest($request);
     }*/
-
+/*
     private function utf8($struct)
     {
         foreach ($struct as $key => $value) {
@@ -57,16 +162,15 @@ class YandexDirectComponent extends Component
         return $struct;
     }
 
+    private function sendRequest($request) {
 
-    private function createRequest($request)
-    {
         $request = json_encode($request);
 
         $opts = array(
-            'http'=>array(
-                'method'=>"POST",
-                                  'timeout' => 60,
-                'content'=>$request,
+            'http' => array(
+                'method' => "POST",
+                'timeout' => 60,
+                'content' => $request,
                 'header' => 'Content-type: "."application/x-www-form-urlencoded',
             )
         );
@@ -75,6 +179,11 @@ class YandexDirectComponent extends Component
         $result = file_get_contents($this->url, 0, $context);
 
         return json_decode($result, true);
+    }
+
+    private function createRequest($request)
+    {
+        return $this->sendRequest($request);
     }
 
 
@@ -139,12 +248,6 @@ class YandexDirectComponent extends Component
         return $this->createRequest($request);
     }
 
-    /** WORDSTAT **/
-
-    /*
-    * зарегистрировать фразы в системе
-    * не более 10 фраз
-    * */
     public function CreateNewWordstatReport($params)
     {
         if (is_array($params['Phrases'])) {
@@ -161,10 +264,7 @@ class YandexDirectComponent extends Component
             return $this->createRequest($request);
         }
     }
-    /*
-    * получить сведения о готовности отчета
-    *
-    * */
+
     public function GetWordstatReportList()
     {
         $request = array(
@@ -174,10 +274,7 @@ class YandexDirectComponent extends Component
 
         return $this->createRequest($request);
     }
-    /*
-    * получить отчет с указанным идентификатором
-    *
-    * */
+
     public function GetWordstatReport($id)
     {
         $request = array(
@@ -188,10 +285,7 @@ class YandexDirectComponent extends Component
 
         return $this->createRequest($request);
     }
-    /*
-    * дулить отчет с указанным идентификатором из системы
-    *
-    * */
+
     public function DeleteWordstatReport($id)
     {
         $request = array(
@@ -201,5 +295,5 @@ class YandexDirectComponent extends Component
         );
 
         return $this->createRequest($request);
-    }
+    }*/
 }
