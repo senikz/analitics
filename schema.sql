@@ -95,7 +95,7 @@ DROP TABLE IF EXISTS `phinxlog`;
 CREATE TABLE `phinxlog` (
   `version` bigint(20) NOT NULL,
   `migration_name` varchar(100) DEFAULT NULL,
-  `start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `start_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `end_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `breakpoint` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`version`)
@@ -175,4 +175,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-06-14 19:35:42
+-- Dump completed on 2017-06-14 19:46:31
