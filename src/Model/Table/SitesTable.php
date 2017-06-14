@@ -9,7 +9,9 @@ use Cake\Validation\Validator;
 /**
  * Sites Model
  *
- * @property \Cake\ORM\Association\HasMany $CampaignSite
+ * @property \Cake\ORM\Association\BelongsTo $Projects
+ * @property \Cake\ORM\Association\HasMany $Campaigns
+ * @property \Cake\ORM\Association\HasMany $SiteStatisticsHourly
  *
  * @method \App\Model\Entity\Site get($primaryKey, $options = [])
  * @method \App\Model\Entity\Site newEntity($data = null, array $options = [])
@@ -36,7 +38,14 @@ class SitesTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->hasMany('CampaignSite', [
+        $this->belongsTo('Projects', [
+            'foreignKey' => 'project_id',
+            'joinType' => 'INNER'
+        ]);
+        $this->hasMany('Campaigns', [
+            'foreignKey' => 'site_id'
+        ]);
+        $this->hasMany('SiteStatisticsHourly', [
             'foreignKey' => 'site_id'
         ]);
     }
@@ -54,9 +63,23 @@ class SitesTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->requirePresence('url', 'create')
-            ->notEmpty('url');
+            ->requirePresence('domain', 'create')
+            ->notEmpty('domain');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->existsIn(['project_id'], 'Projects'));
+
+        return $rules;
     }
 }

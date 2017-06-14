@@ -4,15 +4,18 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Project Entity
+ * CampaignStatisticsDaily Entity
  *
  * @property int $id
- * @property string $caption
- * @property string $icon
+ * @property int $campaign_id
+ * @property float $cost
+ * @property int $views
+ * @property int $clicks
+ * @property \Cake\I18n\FrozenTime $date
  *
- * @property \App\Model\Entity\Site[] $sites
+ * @property \App\Model\Entity\Campaign $campaign
  */
-class Project extends Entity
+class CampaignStatisticsDaily extends Entity
 {
 
     /**

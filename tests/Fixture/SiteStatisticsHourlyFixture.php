@@ -4,11 +4,18 @@ namespace App\Test\Fixture;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**
- * CampaignsFixture
+ * SiteStatisticsHourlyFixture
  *
  */
-class CampaignsFixture extends TestFixture
+class SiteStatisticsHourlyFixture extends TestFixture
 {
+
+    /**
+     * Table name
+     *
+     * @var string
+     */
+    public $table = 'site_statistics_hourly';
 
     /**
      * Fields
@@ -19,9 +26,10 @@ class CampaignsFixture extends TestFixture
     public $fields = [
         'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'site_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'caption' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'type' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'rel_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'calls' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'mails' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'orders' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'time' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
         ],
@@ -41,9 +49,10 @@ class CampaignsFixture extends TestFixture
         [
             'id' => 1,
             'site_id' => 1,
-            'caption' => 'Lorem ipsum dolor sit amet',
-            'type' => 'Lorem ipsum dolor sit amet',
-            'rel_id' => 1
+            'calls' => 1,
+            'mails' => 1,
+            'orders' => 1,
+            'time' => '2017-06-08 20:12:54'
         ],
     ];
 }

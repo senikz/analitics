@@ -1,7 +1,7 @@
 <?php
 use Migrations\AbstractMigration;
 
-class CreateSites extends AbstractMigration
+class AddTypeToCampaigns extends AbstractMigration
 {
     /**
      * Change Method.
@@ -12,17 +12,17 @@ class CreateSites extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('sites');
-        $table->addColumn('campaign_id', 'integer', [
-            'default' => null,
-            'limit' => 11,
-            'null' => false,
-        ]);
-        $table->addColumn('url', 'string', [
+        $table = $this->table('campaigns');
+        $table->addColumn('type', 'string', [
             'default' => null,
             'limit' => 255,
             'null' => false,
         ]);
-        $table->create();
+        $table->addColumn('rel_id', 'integer', [
+            'default' => null,
+            'limit' => 11,
+            'null' => false,
+        ]);
+        $table->update();
     }
 }

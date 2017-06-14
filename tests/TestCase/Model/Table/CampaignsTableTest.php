@@ -25,8 +25,12 @@ class CampaignsTableTest extends TestCase
      */
     public $fixtures = [
         'app.campaigns',
+        'app.sites',
         'app.projects',
-        'app.campaign_site'
+        'app.site_statistics_hourly',
+        'app.rels',
+        'app.campaign_statistics_daily',
+        'app.campaign_statistics_hourly'
     ];
 
     /**
