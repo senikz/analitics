@@ -66,7 +66,7 @@ class UpdateDirectStatisticsShell extends Shell
 			$currentDate = date('Y-m-d');
 
 			foreach($reportDetails as $reportCampaign) {
-				$campaignId = $availableCampaigns[ $reportCampaign['CampaignId'] ];
+				$campaignId = $campaignRelIds[ $reportCampaign['CampaignId'] ];
 
 				$newClicksCount = $reportCampaign['Clicks'];
 				$newImpressionsCount = $reportCampaign['Impressions'];
