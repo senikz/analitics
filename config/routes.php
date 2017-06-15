@@ -95,6 +95,16 @@ Router::prefix('api', function ($routes) {
 		            'method' => 'GET',
 		            'path' => '/load_cost_from_xml'
 		        ],
+		        'summary' => [
+		            'action' => 'summary',
+		            'method' => 'GET',
+		            'path' => '/summary'
+		        ],
+		        'details' => [
+		            'action' => 'details',
+		            'method' => 'GET',
+		            'path' => '/details'
+		        ],
 		    ],
 		]);
     });

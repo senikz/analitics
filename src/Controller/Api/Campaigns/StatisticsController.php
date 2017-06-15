@@ -8,22 +8,91 @@ class StatisticsController extends \App\Controller\Api\ApiController
 
 	public function initialize() {
 		parent::initialize();
-		$this->loadComponent('YandexDirect');
-		$this->loadComponent('Cewi/Excel.Import');
+		$this->loadComponent('Validator');
+		//$this->loadComponent('Cewi/Excel.Import');
 	}
 
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|null
-     */
-    public function index()
+    public function summary()
     {
-        $statistics = $this->paginate($this->Statistics);
+		if($this->Validator->required($this->request->query, ['from', 'to'])) {
 
-        $this->set(compact('statistics'));
-        $this->set('_serialize', ['statistics']);
+			$query = $this->request->query;
+
+			$interval = date_diff(new \DateTime($query['from']), new \DateTime($query['to']));
+
+			if($interval->format('%d')) {
+				$CampaignStatistics = TableRegistry::get('CampaignStatisticsDaily');
+				$timeSelect = [
+					'date >=' => $query['from'],
+					'date <=' => $query['to']
+				];
+			} else {
+				$CampaignStatistics = TableRegistry::get('CampaignStatisticsHourly');
+				$timeSelect = [
+					'time >=' => $query['from'] . ' 00:00:00',
+					'time <=' => $query['to'] . ' 23:59:59'
+				];
+			}
+
+			$query = $CampaignStatistics->find('all', [
+				'conditions' => array_merge([
+					'campaign_id' => $this->request->params['campaign_id'],
+				], $timeSelect),
+			]);
+
+			$statistics = $query
+    			->select([
+					'total_clicks' => $query->func()->sum('clicks'),
+					'total_cost' => $query->func()->sum('cost'),
+					'total_views' => $query->func()->sum('views'),
+				])
+				->first();
+
+			if($statistics) {
+				$this->sendData([
+					'clicks' => $statistics->total_clicks,
+					'views' => $statistics->total_views,
+					'cost' => sprintf('%.2f', $statistics->total_cost),
+				]);
+			}
+		}
+
+		$this->sendError($this->Validator->getLastError());
     }
+
+	public function details() {
+
+		if($this->Validator->required($this->request->query, ['from', 'to'])) {
+
+			$query = $this->request->query;
+
+			$CampaignStatistics = TableRegistry::get('CampaignStatisticsHourly');
+			$statistics = $CampaignStatistics->find('all', [
+				'conditions' => [
+					'campaign_id' => $this->request->params['campaign_id'],
+					'time >=' => $query['from'] . ' 00:00:00',
+					'time <=' => $query['to'] . ' 23:59:59'
+				],
+			])->all();
+
+			$result = [];
+
+			foreach($statistics as $stat) {
+				$result[] = [
+					'time' => $stat->time,
+					'statistics' => [
+						'clicks' => $stat->clicks,
+						'views' => $stat->views,
+						'cost' => sprintf('%.2f', $stat->cost),
+					]
+				];
+			}
+
+			$this->sendData($result);
+		}
+
+		$this->sendError($this->Validator->getLastError());
+	}
 
     /**
      * View method

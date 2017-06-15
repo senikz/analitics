@@ -117,12 +117,13 @@ class UpdateDirectStatisticsShell extends Shell
 		if(empty($hourlyRecord)) {
 			$hourlyRecord = $this->CampaignStatisticsHourly->newEntity();
 			$hourlyRecord->campaign_id = $campaignId;
-			$hourlyRecord->time = date('Y-m-d H:i:s');
 		} else {
 			$newClicksCount += $hourlyRecord->clicks;
 			$newImpressionsCount += $hourlyRecord->views;
 			$newCostCount += $hourlyRecord->cost;
 		}
+
+		$hourlyRecord->time = date('Y-m-d H:i:s');
 
 		$hourlyRecord->clicks = $newClicksCount;
 		$hourlyRecord->views  = $newImpressionsCount;
