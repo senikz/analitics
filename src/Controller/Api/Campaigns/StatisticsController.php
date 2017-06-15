@@ -36,7 +36,7 @@ class StatisticsController extends \App\Controller\Api\ApiController
 
 			$query = $CampaignStatistics->find('all', [
 				'conditions' => array_merge([
-					'campaign_id' => $this->request->params['campaign_id'],
+					'campaign_id' => $this->request->getParam('campaign_id'),
 				], $timeSelect),
 			]);
 
@@ -69,7 +69,7 @@ class StatisticsController extends \App\Controller\Api\ApiController
 			$CampaignStatistics = TableRegistry::get('CampaignStatisticsHourly');
 			$statistics = $CampaignStatistics->find('all', [
 				'conditions' => [
-					'campaign_id' => $this->request->params['campaign_id'],
+					'campaign_id' => $this->request->getParam('campaign_id'),
 					'time >=' => $query['from'] . ' 00:00:00',
 					'time <=' => $query['to'] . ' 23:59:59'
 				],

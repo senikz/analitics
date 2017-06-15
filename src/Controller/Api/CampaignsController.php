@@ -18,7 +18,6 @@ class CampaignsController extends ApiController
         foreach ($query as $row) {
             $result[] = [
                     'id' => $row->id,
-					'site_id' => $row->site_id,
                     'caption' => $row->caption,
                 ];
         }
@@ -36,6 +35,8 @@ class CampaignsController extends ApiController
                 'id' => $campaign->id,
 				'site_id' => $campaign->site_id,
                 'caption' => $campaign->caption,
+				'type' => $campaign->getType(),
+				'num' => $campaign->rel_id,
             ];
 
         $this->sendData($result);
@@ -45,7 +46,7 @@ class CampaignsController extends ApiController
 
 		$YandexDirect = new YandexDirectApi();
 		$campaignsAvailable = $YandexDirect->GetCampaignsList();
-var_dump($campaignsAvailable);exit;
+
 		$campaignsExisting = $this->Campaigns->find('all')->all()->toArray();
 
 		$Sites = TableRegistry::get('Sites');
