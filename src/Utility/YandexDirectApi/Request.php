@@ -29,7 +29,7 @@ abstract class Request {
 		];
 
 		$context = stream_context_create($opts);
-		$result = file_get_contents( $this->config->url . $service, 0, $context);
+		$result = file_get_contents( 'https:' . $this->config->url . $service, 0, $context);
 
 		return $this->parseResponse($service, $result);
 	}

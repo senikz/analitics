@@ -6,6 +6,9 @@ use App\Utility\YandexDirectApi\RequestXml;
 
 class YandexDirectApi
 {
+
+	public $lastError;
+
     private $config = [
         'login'        => 'catkitseo',
         'token'        => '37f22b0f3aa441bf8a863c7910901912',
@@ -19,11 +22,21 @@ class YandexDirectApi
     private function prepareResponse($response)
     {
         if ($response->isError) {
-            throw new \Exception($response->error->details);
+            //throw new \Exception($response->error->message . $response->error->details);
+            $this->lastError = $response->error->message . $response->error->details;
+            return false;
         } else {
             return $response->body;
         }
     }
+
+	public function checkDictionaries() {
+		$apiRequest = new RequestJson($this->config);
+        $response = $apiRequest->send('changes', [], [
+            'method' => 'checkDictionaries'
+        ]);
+        return $this->prepareResponse($response);
+	}
 
     public function GetCampaignsList()
     {

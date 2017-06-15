@@ -11,8 +11,8 @@ class RequestJson extends Request
     protected function prepareBody($body, $options = [])
     {
         return json_encode([
-            'method' => strtolower($options['method']),
-            'params' => $body
+            'method' => $options['method'],
+            'params' => (object)$body
         ]);
     }
 

@@ -36,10 +36,6 @@ class UpdateDirectStatisticsShell extends Shell
 
 	public function today() {
 
-		$YandexDirect = new YandexDirectApi();
-
-		$campaignRelIds = [];
-
 		$availableCampaigns = $this->Campaign->find('all', [
 			'conditions' => [
 				'type' => 'direct',
@@ -54,85 +50,84 @@ class UpdateDirectStatisticsShell extends Shell
 
 		foreach($availableCampaigns as $availableCampaign) {
 
-			$campaignRelIds[$availableCampaign->rel_id] = $availableCampaign->id;
+			$this->loadSingleCampaign($availableCampaign->id, $availableCampaign->rel_id);
 
-			break;
+			sleep(1);
+		}
+	}
+
+	public function loadSingleCampaign($campaignId, $relId) {
+
+		$YandexDirect = new YandexDirectApi();
+
+		$reportDetails = $YandexDirect->createStatisticsReport($relId);
+
+		if($reportDetails === false) {
+			Log::write('debug', ['campaignId' => $campaignId, 'report' => $YandexDirect->lastError], ['shell', 'UpdateDirectStatisticsShell', 'today']);
 		}
 
-		if($reportDetails = $YandexDirect->createStatisticsReport(array_keys($campaignRelIds))) {
+		Log::write('debug', ['campaignId' => $campaignId, 'report' => $reportDetails], ['shell', 'UpdateDirectStatisticsShell', 'today']);
 
-			Log::write('debug', ['campaigns' => $availableCampaigns, 'report' => $reportDetails], ['shell', 'UpdateDirectStatisticsShell', 'today']);
+		$currentDate = date('Y-m-d');
 
-			$currentDate = date('Y-m-d');
+		$newClicksCount = 0;
+		$newImpressionsCount = 0;
+		$newCostCount = 0;
 
-			foreach($reportDetails as $reportCampaign) {
-				$campaignId = $campaignRelIds[ $reportCampaign['CampaignId'] ];
+		if(!empty($reportDetails)) {
+			$reportCampaign = $reportDetails[0];
 
-				$newClicksCount = $reportCampaign['Clicks'];
-				$newImpressionsCount = $reportCampaign['Impressions'];
-				$newCostCount = $reportCampaign['Cost'];
+			$newClicksCount = $reportCampaign['Clicks'];
+			$newImpressionsCount = $reportCampaign['Impressions'];
+			$newCostCount = $reportCampaign['Cost'];
 
-				// проверить запись в дневной статистике, есть ли текущий день
-				$dailyRecord = $this->CampaignStatisticsDaily->find('all', [
-					'conditions' => [
-						'campaign_id' => $campaignId,
-						'date' => $currentDate
-					]
-				])->first();
+			// проверить запись в дневной статистике, есть ли текущий день
+			$dailyRecord = $this->CampaignStatisticsDaily->find('all', [
+				'conditions' => [
+					'campaign_id' => $campaignId,
+					'date' => $currentDate
+				]
+			])->first();
 
-				if(empty($dailyRecord)) {
-					$dailyRecord = $this->CampaignStatisticsDaily->newEntity();
-					$dailyRecord->campaign_id = $campaignId;
-					$dailyRecord->date = $currentDate;
-				} else {
-					$newClicksCount -= $dailyRecord->clicks;
-					$newImpressionsCount -= $dailyRecord->views;
-					$newCostCount -= $dailyRecord->cost;
-				}
+			if(empty($dailyRecord)) {
+				$dailyRecord = $this->CampaignStatisticsDaily->newEntity();
+				$dailyRecord->campaign_id = $campaignId;
+				$dailyRecord->date = $currentDate;
+			} else {
+				$newClicksCount -= $dailyRecord->clicks;
+				$newImpressionsCount -= $dailyRecord->views;
+				$newCostCount -= $dailyRecord->cost;
+			}
 
-				$dailyRecord->clicks = $reportCampaign['Clicks'];
-				$dailyRecord->views  = $reportCampaign['Impressions'];
-				$dailyRecord->cost   = $reportCampaign['Cost'];
+			$dailyRecord->clicks = $reportCampaign['Clicks'];
+			$dailyRecord->views  = $reportCampaign['Impressions'];
+			$dailyRecord->cost   = $reportCampaign['Cost'];
 
-				if($this->CampaignStatisticsDaily->save($dailyRecord)) {
-
-					if(!$newClicksCount && !$newImpressionsCount && !$newCostCount) {
-						//continue;
-					}
-
-					$hourlyRecord = $this->CampaignStatisticsHourly->find('all', [
-						'conditions' => [
-							'campaign_id' => $campaignId,
-							'time >=' => date('Y-m-d H:00:00')
-						]
-					])->first();
-
-					if(empty($hourlyRecord)) {
-						$hourlyRecord = $this->CampaignStatisticsHourly->newEntity();
-						$hourlyRecord->campaign_id = $campaignId;
-						$hourlyRecord->time = date('Y-m-d H:i:s');
-					} else {
-						$newClicksCount += $hourlyRecord->clicks;
-						$newImpressionsCount += $hourlyRecord->views;
-						$newCostCount += $hourlyRecord->cost;
-					}
-
-					$hourlyRecord->clicks = $newClicksCount;
-					$hourlyRecord->views  = $newImpressionsCount;
-					$hourlyRecord->cost   = $newCostCount;
-
-					$this->CampaignStatisticsHourly->save($hourlyRecord);
-
-				}
-			} // end foreach
+			$this->CampaignStatisticsDaily->save($dailyRecord);
 		}
 
+		$hourlyRecord = $this->CampaignStatisticsHourly->find('all', [
+			'conditions' => [
+				'campaign_id' => $campaignId,
+				'time >=' => date('Y-m-d H:00:00')
+			]
+		])->first();
 
-		// если нет записи то добавить ее. показания считать исходными и записать в текущий час
-		// если запись есть, вычесть показания из записи из текущих показаний. итоговые показания считать исходными
-		// проверить запись текущего часа
-		// если запись есть, то добавить исходные показания
-		// если записи нет, то сделать новую с исходными показаниями
-		//
+		if(empty($hourlyRecord)) {
+			$hourlyRecord = $this->CampaignStatisticsHourly->newEntity();
+			$hourlyRecord->campaign_id = $campaignId;
+			$hourlyRecord->time = date('Y-m-d H:i:s');
+		} else {
+			$newClicksCount += $hourlyRecord->clicks;
+			$newImpressionsCount += $hourlyRecord->views;
+			$newCostCount += $hourlyRecord->cost;
+		}
+
+		$hourlyRecord->clicks = $newClicksCount;
+		$hourlyRecord->views  = $newImpressionsCount;
+		$hourlyRecord->cost   = $newCostCount;
+
+		$this->CampaignStatisticsHourly->save($hourlyRecord);
+
 	}
 }

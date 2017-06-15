@@ -16,6 +16,8 @@ class RequestXml extends Request
 			$options['headers'] = [];
 		}
 
+		$options['service'] = $service;
+
 		curl_setopt($ch, CURLOPT_URL, 'https:' . $this->config->url . $service);
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $this->prepareBody($body, $options));
@@ -33,7 +35,7 @@ class RequestXml extends Request
     protected function prepareBody($body, $options = [])
     {
         // TODO
-        $body[key($body)]['@xmlns'] = 'http:' . $this->config->url . 'reports';
+        $body[key($body)]['@xmlns'] = 'http:' . $this->config->url . $options['service'];
 
         $xmlObject = Xml::fromArray($body, ['format' => 'tags']);
         $xmlString = $xmlObject->asXML();
@@ -54,7 +56,6 @@ class RequestXml extends Request
 
         try {
 			$result = Xml::build($response);
-			var_dump($result); exit;
 		} catch (\Exception $e) {
 			$result->body = $response;
 		}
