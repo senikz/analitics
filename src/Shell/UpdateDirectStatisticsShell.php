@@ -64,6 +64,7 @@ class UpdateDirectStatisticsShell extends Shell
 
 		if($reportDetails === false) {
 			Log::write('debug', ['campaignId' => $campaignId, 'report' => $YandexDirect->lastError], ['shell', 'UpdateDirectStatisticsShell', 'today']);
+			return;
 		}
 
 		Log::write('debug', ['campaignId' => $campaignId, 'report' => $reportDetails], ['shell', 'UpdateDirectStatisticsShell', 'today']);
