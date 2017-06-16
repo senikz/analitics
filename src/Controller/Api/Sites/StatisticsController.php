@@ -109,4 +109,38 @@ class StatisticsController extends \App\Controller\Api\ApiController
 
 		$this->sendError($this->Validator->getLastError());
 	}
+
+	public function edit() {
+
+		$fields = $this->request->query;
+		$data = $this->request->getData();
+
+		if($this->Validator->required($fields, ['date'])) {
+
+			$Statistics = TableRegistry::get('SiteStatisticsDaily');
+
+			$statistic = $Statistics->find('all', [
+				'conditions' => [
+					'site_id' => $this->request->getParam('site_id'),
+					'date' => $fields['date']
+				]
+			])->first();
+
+			if(empty($statistic)) {
+				$statistic = $Statistics->newEntity();
+				$statistic->site_id = $this->request->getParam('site_id');
+				$statistic->date = $fields['date'];
+			}
+
+			$statistic->calls = $data['calls'];
+			$statistic->mails = $data['mails'];
+			$statistic->orders = $data['orders'];
+
+			$Statistics->save($statistic);
+
+			$this->sendData([]);
+		}
+
+		$this->sendError($this->Validator->getLastError());
+	}
 }

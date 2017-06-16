@@ -77,6 +77,19 @@ Router::scope('/', function (RouteBuilder $routes) {
 
 Router::prefix('api', function ($routes) {
 
+	$statisticsMap = [
+		'summary' => [
+			'action' => 'summary',
+			'method' => 'GET',
+			'path' => '/summary'
+		],
+		'details' => [
+			'action' => 'details',
+			'method' => 'GET',
+			'path' => '/details'
+		]
+	];
+
     $routes->resources('Projects', function ($routes) {
         $routes->resources('Sites', [
 			'prefix' => 'projects',
@@ -84,50 +97,35 @@ Router::prefix('api', function ($routes) {
 		]);
 		$routes->resources('Statistics', ['prefix' => 'projects']);
     });
-    $routes->resources('Sites', function ($routes) {
+    $routes->resources('Sites', function ($routes) use ($statisticsMap) {
         $routes->resources('Campaigns', [
 			'prefix' => 'sites',
 			'only' => ['index']
 		]);
         $routes->resources('Statistics', [
 			'prefix' => 'sites',
-			'only' => [],
-			'map' => [
-				'summary' => [
-					'action' => 'summary',
-					'method' => 'GET',
-					'path' => '/summary'
-				],
-				'details' => [
-					'action' => 'details',
-					'method' => 'GET',
-					'path' => '/details'
+			'only' => ['edit'],
+			'map' => array_merge($statisticsMap, [
+				'edit' => [
+					'action' => 'edit',
+		            'method' => 'PUT',
+		            'path' => '',
 				]
-			]
+			]),
 		]);
     });
 
-    $routes->resources('Campaigns', function ($routes) {
+    $routes->resources('Campaigns', function ($routes) use ($statisticsMap) {
         $routes->resources('Statistics', [
 			'prefix' => 'campaigns',
-			'only' => [],
-			'map' => [
+			'only' => false,
+			'map' => array_merge($statisticsMap, [
 		        'loadCostFromXml' => [
 		            'action' => 'loadCostFromXml',
 		            'method' => 'GET',
 		            'path' => '/load_cost_from_xml'
 		        ],
-				'summary' => [
-					'action' => 'summary',
-					'method' => 'GET',
-					'path' => '/summary'
-				],
-				'details' => [
-					'action' => 'details',
-					'method' => 'GET',
-					'path' => '/details'
-				]
-		    ],
+		    ]),
 		]);
     });
 
