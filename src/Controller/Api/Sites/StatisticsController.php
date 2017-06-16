@@ -1,102 +1,112 @@
 <?php
 namespace App\Controller\Api\Sites;
 
-class StatisticsController extends App\Controller\Api\ApiController
+use Cake\ORM\TableRegistry;
+
+class StatisticsController extends \App\Controller\Api\ApiController
 {
+	public function initialize() {
+		parent::initialize();
+		$this->loadComponent('Validator');
+	}
 
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|null
-     */
-    public function index()
-    {
-        $statistics = $this->paginate($this->Statistics);
+	public function summary()
+	{
+		if($this->Validator->required($this->request->query, ['from', 'to'])) {
 
-        $this->set(compact('statistics'));
-        $this->set('_serialize', ['statistics']);
-    }
+			$fields = $this->request->query;
 
-    /**
-     * View method
-     *
-     * @param string|null $id Statistic id.
-     * @return \Cake\Http\Response|null
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $statistic = $this->Statistics->get($id, [
-            'contain' => []
-        ]);
+			$Sites = TableRegistry::get('Sites');
 
-        $this->set('statistic', $statistic);
-        $this->set('_serialize', ['statistic']);
-    }
+			$site = $Sites->find('all', [
+				'conditions' => [
+					'Sites.id' => $this->request->getParam('site_id'),
+				],
+				'contain' => ['Campaigns.CampaignStatisticsDaily' => function($query) use ($fields) {
+					return $query->where([
+						'CampaignStatisticsDaily.date >=' => $fields['from'],
+						'CampaignStatisticsDaily.date <=' => $fields['to'],
+					]);
+				}],
+			])->first()->toArray();
 
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
-     */
-    public function add()
-    {
-        $statistic = $this->Statistics->newEntity();
-        if ($this->request->is('post')) {
-            $statistic = $this->Statistics->patchEntity($statistic, $this->request->getData());
-            if ($this->Statistics->save($statistic)) {
-                $this->Flash->success(__('The statistic has been saved.'));
+			$result = [
+				'clicks' => 0,
+				'views' => 0,
+				'cost' => 0,
+			];
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The statistic could not be saved. Please, try again.'));
-        }
-        $this->set(compact('statistic'));
-        $this->set('_serialize', ['statistic']);
-    }
+			if(!empty($site)) {
+				foreach($site['campaigns'] as $campaign) {
+					foreach($campaign['campaign_statistics_daily'] as $stat) {
+						$result['clicks'] += $stat['clicks'];
+						$result['views'] += $stat['views'];
+						$result['cost'] += $stat['cost'];
+					}
+				}
+			}
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Statistic id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
-     */
-    public function edit($id = null)
-    {
-        $statistic = $this->Statistics->get($id, [
-            'contain' => []
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $statistic = $this->Statistics->patchEntity($statistic, $this->request->getData());
-            if ($this->Statistics->save($statistic)) {
-                $this->Flash->success(__('The statistic has been saved.'));
+			$this->sendData($result);
+		}
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The statistic could not be saved. Please, try again.'));
-        }
-        $this->set(compact('statistic'));
-        $this->set('_serialize', ['statistic']);
-    }
+		$this->sendError($this->Validator->getLastError());
+	}
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id Statistic id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function delete($id = null)
-    {
-        $this->request->allowMethod(['post', 'delete']);
-        $statistic = $this->Statistics->get($id);
-        if ($this->Statistics->delete($statistic)) {
-            $this->Flash->success(__('The statistic has been deleted.'));
-        } else {
-            $this->Flash->error(__('The statistic could not be deleted. Please, try again.'));
-        }
+	public function details() {
 
-        return $this->redirect(['action' => 'index']);
-    }
+		if($this->Validator->required($this->request->query, ['from', 'to'])) {
+
+			$fields = $this->request->query;
+
+			$Sites = TableRegistry::get('Sites');
+
+			$site = $Sites->find('all', [
+				'conditions' => [
+					'Sites.id' => $this->request->getParam('site_id'),
+				],
+				'contain' => ['Campaigns.CampaignStatisticsHourly' => function($query) use ($fields) {
+					return $query->where([
+						'CampaignStatisticsHourly.time >=' => $fields['from'] . ' 00:00:00',
+						'CampaignStatisticsHourly.time <=' => $fields['to'] . ' 23:59:59',
+					]);
+				}],
+			])->first()->toArray();
+
+			$result = [];
+
+			if(!empty($site)) {
+
+				$details = [];
+
+				foreach($site['campaigns'] as $campaign) {
+					foreach($campaign['campaign_statistics_hourly'] as $stat) {
+						$key = $stat['time']->format('Y-m-d H:00:00');
+
+						if(!isset($details[$key])) {
+							$details[$key] = [
+								'clicks' => 0,
+								'views' => 0,
+								'cost' => 0,
+							];
+						}
+
+						$details[$key]['clicks'] += $stat['clicks'];
+						$details[$key]['views'] += $stat['views'];
+						$details[$key]['cost'] += $stat['cost'];
+					}
+				}
+
+				foreach($details as $time => $statistics) {
+					$result[] = [
+						'time' => date(DATE_ATOM, strtotime($time)),
+						'statistics' => $statistics
+					];
+				}
+			}
+
+			$this->sendData($result);
+		}
+
+		$this->sendError($this->Validator->getLastError());
+	}
 }

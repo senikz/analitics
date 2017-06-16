@@ -18,6 +18,42 @@ class StatisticsController extends \App\Controller\Api\ApiController
 
 			$query = $this->request->query;
 
+			$CampaignStatistics = TableRegistry::get('CampaignStatisticsDaily');
+
+			$query = $CampaignStatistics->find('all', [
+				'conditions' => [
+					'campaign_id' => $this->request->getParam('campaign_id'),
+					'date >=' => $query['from'],
+					'date <=' => $query['to']
+				],
+			]);
+
+			$statistics = $query
+    			->select([
+					'total_clicks' => $query->func()->sum('clicks'),
+					'total_cost' => $query->func()->sum('cost'),
+					'total_views' => $query->func()->sum('views'),
+				])
+				->first();
+
+			if($statistics) {
+				$this->sendData([
+					'clicks' => $statistics->total_clicks,
+					'views' => $statistics->total_views,
+					'cost' => sprintf('%.2f', $statistics->total_cost),
+				]);
+			}
+		}
+
+		$this->sendError($this->Validator->getLastError());
+    }
+
+    /*public function summary()
+    {
+		if($this->Validator->required($this->request->query, ['from', 'to'])) {
+
+			$query = $this->request->query;
+
 			$interval = date_diff(new \DateTime($query['from']), new \DateTime($query['to']));
 
 			if($interval->format('%d')) {
@@ -58,7 +94,7 @@ class StatisticsController extends \App\Controller\Api\ApiController
 		}
 
 		$this->sendError($this->Validator->getLastError());
-    }
+    }*/
 
 	public function details() {
 

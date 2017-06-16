@@ -78,33 +78,55 @@ Router::scope('/', function (RouteBuilder $routes) {
 Router::prefix('api', function ($routes) {
 
     $routes->resources('Projects', function ($routes) {
-        $routes->resources('Sites', ['prefix' => 'projects']);
+        $routes->resources('Sites', [
+			'prefix' => 'projects',
+			'only' => ['index']
+		]);
 		$routes->resources('Statistics', ['prefix' => 'projects']);
     });
     $routes->resources('Sites', function ($routes) {
-        $routes->resources('Campaigns', ['prefix' => 'projects']);
-        $routes->resources('Statistics', ['prefix' => 'projects']);
+        $routes->resources('Campaigns', [
+			'prefix' => 'sites',
+			'only' => ['index']
+		]);
+        $routes->resources('Statistics', [
+			'prefix' => 'sites',
+			'only' => [],
+			'map' => [
+				'summary' => [
+					'action' => 'summary',
+					'method' => 'GET',
+					'path' => '/summary'
+				],
+				'details' => [
+					'action' => 'details',
+					'method' => 'GET',
+					'path' => '/details'
+				]
+			]
+		]);
     });
 
     $routes->resources('Campaigns', function ($routes) {
         $routes->resources('Statistics', [
 			'prefix' => 'campaigns',
+			'only' => [],
 			'map' => [
 		        'loadCostFromXml' => [
 		            'action' => 'loadCostFromXml',
 		            'method' => 'GET',
 		            'path' => '/load_cost_from_xml'
 		        ],
-		        'summary' => [
-		            'action' => 'summary',
-		            'method' => 'GET',
-		            'path' => '/summary'
-		        ],
-		        'details' => [
-		            'action' => 'details',
-		            'method' => 'GET',
-		            'path' => '/details'
-		        ],
+				'summary' => [
+					'action' => 'summary',
+					'method' => 'GET',
+					'path' => '/summary'
+				],
+				'details' => [
+					'action' => 'details',
+					'method' => 'GET',
+					'path' => '/details'
+				]
 		    ],
 		]);
     });
