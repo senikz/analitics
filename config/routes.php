@@ -122,7 +122,7 @@ Router::prefix('api', function ($routes) {
     $routes->resources('Campaigns', function ($routes) use ($statisticsMap) {
         $routes->resources('Statistics', [
 			'prefix' => 'campaigns',
-			'only' => false,
+			//'only' => false,
 			'map' => array_merge($statisticsMap, [
 		        'loadCostFromXml' => [
 		            'action' => 'loadCostFromXml',
