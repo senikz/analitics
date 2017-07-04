@@ -90,13 +90,17 @@ Router::prefix('api', function ($routes) {
 		]
 	];
 
-    $routes->resources('Projects', function ($routes) {
+    $routes->resources('Projects', function ($routes) use ($statisticsMap) {
         $routes->resources('Sites', [
 			'prefix' => 'projects',
 			'only' => ['index']
 		]);
-		$routes->resources('Statistics', ['prefix' => 'projects']);
+		$routes->resources('Statistics', [
+			'prefix' => 'projects',
+			'map' => $statisticsMap,
+		]);
     });
+
     $routes->resources('Sites', function ($routes) use ($statisticsMap) {
         $routes->resources('Campaigns', [
 			'prefix' => 'sites',
