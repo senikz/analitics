@@ -95,7 +95,7 @@ class UpdateDirectStatisticsShell extends Shell
 				$dailyRecord->campaign_id = $campaignId;
 				$dailyRecord->date = $currentDate;
 			} else {
-Log::write('debug', ['dailyRecord' => print_r($dailyRecord)], ['shell', 'UpdateDirectStatisticsShell', 'dailyRecord']);
+Log::write('debug', ['dailyRecord' => print_r($dailyRecord, true)], ['shell', 'UpdateDirectStatisticsShell', 'dailyRecord']);
 
 				$newClicksCount -= $dailyRecord->clicks;
 				$newImpressionsCount -= $dailyRecord->views;
