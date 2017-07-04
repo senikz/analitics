@@ -67,9 +67,9 @@ class UpdateDirectStatisticsShell extends Shell
 			return;
 		}
 
-		Log::write('debug', ['campaignId' => $campaignId, 'report' => $reportDetails], ['shell', 'UpdateDirectStatisticsShell', 'today']);
-
 		$currentDate = date('Y-m-d');
+
+		Log::write('debug', ['campaignId' => $campaignId, 'report' => $reportDetails, 'cur_date' => $currentDate], ['shell', 'UpdateDirectStatisticsShell', 'today']);
 
 		$newClicksCount = 0;
 		$newImpressionsCount = 0;
