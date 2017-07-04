@@ -37,7 +37,7 @@ class ApiController extends Controller
         }
 
 		if(isset($this->request->query['from']) && !isset($this->request->query['to'])) {
-			$this->request->query['to'] = date('Y-m-d');
+			$this->request->query['to'] = $this->request->query['from'];
 		}
     }
 
