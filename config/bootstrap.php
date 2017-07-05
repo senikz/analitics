@@ -95,7 +95,7 @@ if (Configure::read('debug')) {
     Configure::write('Cache._cake_core_.duration', '+2 minutes');
 }
 
-Configure::write(‘Cache.disable’, true);
+Configure::write('Cache.disable', true);
 
 /*
  * Set server timezone to UTC. You can change it to another timezone of your
