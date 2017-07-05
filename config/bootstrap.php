@@ -101,7 +101,7 @@ Configure::write('Cache.disable', true);
  * Set server timezone to UTC. You can change it to another timezone of your
  * choice but using UTC makes time calculations / conversions easier.
  */
-date_default_timezone_set('+3:00');
+date_default_timezone_set('Europe/Moscow');
 
 /*
  * Configure the mbstring extension to use the correct encoding.
