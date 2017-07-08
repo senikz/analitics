@@ -6,6 +6,11 @@ use App\Utility\YandexDirectApi;
 
 class CampaignsController extends ApiController
 {
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadComponent('Validator');
+    }
 
     public function index()
     {
@@ -33,55 +38,46 @@ class CampaignsController extends ApiController
 
         $result = [
                 'id' => $campaign->id,
-				'site_id' => $campaign->site_id,
+                'site_id' => $campaign->site_id,
                 'caption' => $campaign->caption,
-				'type' => $campaign->getType(),
-				'num' => $campaign->rel_id,
+                'type' => $campaign->getType(),
+                'num' => $campaign->rel_id,
             ];
 
         $this->sendData($result);
     }
 
-	public function importFromYandexDirect() {
+    public function add()
+    {
+        if ($this->request->is('post')) {
+            $data = $this->request->getData();
 
-		$YandexDirect = new YandexDirectApi();
-		$campaignsAvailable = $YandexDirect->GetCampaignsList();
+            if ($this->Validator->required($data, ['site_id', 'type', 'caption', 'key'])) {
+                $campaign = $this->Campaigns->newEntity();
+                $campaign = $this->Campaigns->patchEntity($campaign, $data);
 
-		$campaignsExisting = $this->Campaigns->find('all')->all()->toArray();
+                if ($this->Campaigns->save($campaign)) {
+                    $this->sendData([
+                        'id' => $campaign->id
+                    ]);
+                }
 
-		$Sites = TableRegistry::get('Sites');
-		$sites = $Sites->find('all')->all()->toArray();
+                $this->sendError($this->Validator->getLastError(__('Can`t add campaign')));
+            }
 
-		if(!empty($campaigns)) {
-			foreach($sites as $site) {
+            $this->sendError($this->Validator->getLastError());
+        }
+    }
 
-				$siteParts = explode('.', $site->domain);
-				$siteName = $siteParts[count($siteParts)-2];
-
-				foreach($campaignsAvailable as $available) {
-					if(in_array($available['State'], ['ON', 'SUSPENDED']) && strpos(strtolower($available['Name']), $siteName) !== false) {
-
-						$added = false;
-						foreach($campaignsExisting as $existing) {
-							if($existing->type === 'direct' && $existing->rel_id == $available['Id']) {
-								$added = true;
-								break;
-							}
-						}
-
-						if(!$added) {
-							$newCampaign = $this->Campaigns->newEntity();
-							$newCampaign->site_id = $site->id;
-							$newCampaign->caption = $available['Name'];
-							$newCampaign->type = 'direct';
-							$newCampaign->rel_id = $available['Id'];
-							$this->Campaigns->save($newCampaign);
-						}
-
-					}
-				}
-
-			}
-		}
-	}
+    public function delete($id = null)
+    {
+        if ($this->request->is('delete') && $id) {
+            $campaign = $this->Campaigns->get($id);
+            if ($this->Campaigns->delete($campaign)) {
+                $this->sendData([]);
+            } else {
+                $this->sendError($this->Validator->getLastError(__('Can`t delete campaign')));
+            }
+        }
+    }
 }

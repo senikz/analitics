@@ -213,7 +213,7 @@ class StatisticsController extends \App\Controller\Api\ApiController
         return $this->redirect(['action' => 'index']);
     }
 
-	public function loadCostFromXml() {
+	/*public function loadCostFromXml() {
 
 		$data = $this->Import->prepareEntityData(TMP . 'stats_2.xlsx', ['worksheet'=> 0]);
 
@@ -231,10 +231,6 @@ class StatisticsController extends \App\Controller\Api\ApiController
 						$stat['project_id'] = 1;
 						$stat['campaign_id'] = $campaignId+1;
 						$stat['cost'] = $value;
-						/*$stat['views'] = 0;
-						$stat['clicks'] = 0,
-						$stat['calls'] = 0,
-						$stat['orders'] = 0,*/
 						$stat['date'] = $dateFormat;
 
 						$statisticsTable->save($stat);
@@ -247,5 +243,5 @@ class StatisticsController extends \App\Controller\Api\ApiController
 		var_dump($data);
 
 		exit;
-	}
+	}*/
 }
