@@ -8,6 +8,12 @@ use Cake\Network\Exception\BadRequestException;
 
 class ApiController extends Controller
 {
+
+	public $freeActionsMap = [
+		['controller' => 'Calls', 'prefix' => 'api', 'action' => 'push'],
+		['controller' => 'Users', 'action' => 'auth'],
+	];
+
     public function beforeFilter(\Cake\Event\Event $event)
     {
 		$this->autoRender = false;
@@ -22,7 +28,7 @@ class ApiController extends Controller
 			exit;
 		}
 
-        if ($this->request->params['controller'] != 'Users' || $this->request->params['action'] != 'auth') {
+        if (!$this->validateAction()) {
             $headers = getallheaders();
 
     		if(empty($headers) || empty($headers['User-Token'])) {
@@ -40,6 +46,23 @@ class ApiController extends Controller
 			$this->request->query['to'] = $this->request->query['from'];
 		}
     }
+
+	protected function validateAction() {
+
+		foreach($this->freeActionsMap as $rule) {
+			$validate = true;
+			foreach($rule as $key => $value) {
+				if(empty($this->request->params[$key]) || $this->request->params[$key] != $value) {
+					$validate = false;
+				}
+			}
+			if($validate) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 
 	protected function sendData($data) {
 		$this->response->body(json_encode(['data' => $data]));
