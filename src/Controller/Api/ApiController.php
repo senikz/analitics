@@ -54,7 +54,6 @@ class ApiController extends Controller
 			foreach($rule as $key => $value) {
 				if($key == 'query') {
 					foreach($value as $qKey => $qValue) {
-						var_dump( $this->request->query[$qKey] );
 						if(empty($this->request->query[$qKey]) || $this->request->query[$qKey] != $qValue) {
 							$validate = false;
 						}
