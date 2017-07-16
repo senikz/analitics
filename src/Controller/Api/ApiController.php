@@ -10,7 +10,7 @@ class ApiController extends Controller
 {
 
 	public $freeActionsMap = [
-		['controller' => 'Calls', 'prefix' => 'api', 'action' => 'push'],
+		['controller' => 'Calls', 'prefix' => 'api', 'action' => 'push', 'query' => ['token' => '0ffd8c1d3491938fc1de7bd9173bc356']],
 		['controller' => 'Users', 'action' => 'auth'],
 	];
 
@@ -52,8 +52,17 @@ class ApiController extends Controller
 		foreach($this->freeActionsMap as $rule) {
 			$validate = true;
 			foreach($rule as $key => $value) {
-				if(empty($this->request->params[$key]) || $this->request->params[$key] != $value) {
-					$validate = false;
+				if($key == 'query') {
+					foreach($value as $qKey => $qValue) {
+						var_dump( $this->request->query[$qKey] );
+						if(empty($this->request->query[$qKey]) || $this->request->query[$qKey] != $qValue) {
+							$validate = false;
+						}
+					}
+				} else {
+					if(empty($this->request->params[$key]) || $this->request->params[$key] != $value) {
+						$validate = false;
+					}
 				}
 			}
 			if($validate) {

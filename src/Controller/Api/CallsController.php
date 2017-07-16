@@ -1,11 +1,15 @@
 <?php
 namespace App\Controller\Api;
 
+use Cake\Log\Log;
+use Cake\ORM\TableRegistry;
+
 class CallsController extends ApiController
 {
 
     public function push()
     {
+		Log::write('debug', $this->request->query, ['controller', 'Calls', 'push']);
     /*    $call = $this->Calls->newEntity();
         if ($this->request->is('post')) {
             $call = $this->Calls->patchEntity($call, $this->request->getData());
