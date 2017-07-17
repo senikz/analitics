@@ -10,20 +10,26 @@ class CallsController extends ApiController
     {
 		$fields = $this->request->query;
 
+		if(empty($fields['site'])) {
+			$this->sendError(__('Site doesn`t specified'));
+		}
+
 		if(!empty($fields['unique']) && $fields['unique']) {
+
+			$Sites = TableRegistry::get('Sites');
 			$SiteCalls = TableRegistry::get('SiteCalls');
+
+
+			if(!$site = $Sites->find('all', ['conditions' => ['domain' => $fields['site']]])->first()) {
+				$this->sendError(__('Unknown site'));
+			}
+
 			$call = $SiteCalls->newEntity();
+
+			$call->site_id = $site->id;
 
 			foreach($fields as $key => $value) {
 				switch ($key) {
-
-					case 'site':
-						$Sites = TableRegistry::get('Sites');
-						if($site = $Sites->find('all', ['conditions' => ['domain' => $value]])->first()) {
-							$call->site_id = $site->id;
-						}
-						break;
-
 					case 'callerphone' :
 						$call->phone = $value;
 						break;

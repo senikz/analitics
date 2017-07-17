@@ -11,6 +11,7 @@ class ApiController extends Controller
 
 	public $freeActionsMap = [
 		['controller' => 'Calls', 'prefix' => 'api', 'action' => 'push', 'query' => ['token' => '0ffd8c1d3491938fc1de7bd9173bc356']],
+		['controller' => 'Emails', 'prefix' => 'api', 'action' => 'push', 'query' => ['token' => '0ffd8c1d3491938fc1de7bd9173bc356']],
 		['controller' => 'Users', 'action' => 'auth'],
 	];
 
