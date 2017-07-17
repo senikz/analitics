@@ -38,7 +38,7 @@ class UpdateDirectStatisticsShell extends Shell
 
 		$availableCampaigns = $this->Campaign->find('all', [
 			'conditions' => [
-				'type' => 'direct',
+				'type' => 'yandex',
 				'rel_id !=' => 0
 			],
 			'contain' => false
