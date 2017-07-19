@@ -48,6 +48,12 @@ class SitesTable extends Table
         $this->hasMany('SiteStatisticsHourly', [
             'foreignKey' => 'site_id'
         ]);
+        $this->hasMany('SiteCalls', [
+            'foreignKey' => 'site_id'
+        ]);
+        $this->hasMany('SiteEmails', [
+            'foreignKey' => 'site_id'
+        ]);
     }
 
     /**
