@@ -20,6 +20,7 @@ class ApiController extends Controller
 		$this->autoRender = false;
 
         $this->response->header('Access-Control-Allow-Origin', '*');
+        $this->response->header('Access-Control-Allow-Methods', 'PUT, POST, GET, OPTIONS, DELETE, PATCH');
         $this->response->header('Access-Control-Allow-Headers', 'User-Token, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
 		$this->response->header('Content-Type', 'application/json');
 
