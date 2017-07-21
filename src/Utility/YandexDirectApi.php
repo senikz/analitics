@@ -78,7 +78,7 @@ class YandexDirectApi
 	            'ReportType' => 'CAMPAIGN_PERFORMANCE_REPORT',
 	            'DateRangeType' => $period,
 	            'Format' => 'TSV',
-	            'IncludeVAT' => ' Yes',
+	            'IncludeVAT' => 'YES',
 	            'IncludeDiscount' => 'NO',
 			]
         ];

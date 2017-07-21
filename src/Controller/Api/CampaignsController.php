@@ -23,6 +23,7 @@ class CampaignsController extends ApiController
         foreach ($query as $row) {
             $result[] = [
                     'id' => $row->id,
+					'site_id' => $row->site_id,
                     'caption' => $row->caption,
                 ];
         }
