@@ -50,15 +50,15 @@ class SitesController extends ApiController
 
             if ($this->Validator->required($data, ['project_id', 'domain'])) {
                 $site = $this->Sites->newEntity();
-                $ite = $this->Sites->patchEntity($site, $data);
+                $site = $this->Sites->patchEntity($site, $data);
 
-                if ($this->Sites->save($ite)) {
+                if ($this->Sites->save($site)) {
                     $this->sendData([
                         'id' => $site->id
                     ]);
                 }
 
-                $this->sendError($this->Validator->getLastError(__('Can`t add site')));
+                $this->sendError(__('Can`t add site'));
             }
 
             $this->sendError($this->Validator->getLastError());
@@ -72,7 +72,7 @@ class SitesController extends ApiController
             if ($this->Sites->delete($site)) {
                 $this->sendData([]);
             } else {
-                $this->sendError($this->Validator->getLastError(__('Can`t delete site')));
+                $this->sendError(__('Can`t delete site'));
             }
         }
     }

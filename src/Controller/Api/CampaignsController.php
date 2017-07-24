@@ -63,7 +63,7 @@ class CampaignsController extends ApiController
                     ]);
                 }
 
-                $this->sendError($this->Validator->getLastError(__('Can`t add campaign')));
+                $this->sendError(__('Can`t add campaign'));
             }
 
             $this->sendError($this->Validator->getLastError());
@@ -77,7 +77,7 @@ class CampaignsController extends ApiController
             if ($this->Campaigns->delete($campaign)) {
                 $this->sendData([]);
             } else {
-                $this->sendError($this->Validator->getLastError(__('Can`t delete campaign')));
+                $this->sendError(__('Can`t delete campaign'));
             }
         }
     }

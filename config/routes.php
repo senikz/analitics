@@ -111,6 +111,12 @@ Router::prefix('api', function ($routes) {
 			'only' => null,
 			'map' => $statisticsMap,
 		]);
+        $routes->resources('Orders', [
+			'prefix' => 'sites',
+		]);
+        $routes->resources('Costs', [
+			'prefix' => 'sites',
+		]);
     });
 
     $routes->resources('Campaigns', function ($routes) use ($statisticsMap) {

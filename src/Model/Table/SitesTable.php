@@ -54,6 +54,12 @@ class SitesTable extends Table
         $this->hasMany('SiteEmails', [
             'foreignKey' => 'site_id'
         ]);
+        $this->hasMany('SiteOrders', [
+            'foreignKey' => 'site_id'
+        ]);
+        $this->hasMany('SiteCosts', [
+            'foreignKey' => 'site_id'
+        ]);
     }
 
     /**

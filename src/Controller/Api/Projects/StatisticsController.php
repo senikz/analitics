@@ -35,6 +35,12 @@ class StatisticsController extends \App\Controller\Api\ApiController
 					},
 					'Sites.SiteCalls' => function ($query) use ($fields) {
 						return $query->select(['site_id', 'total' => $query->func()->count('*')])->where(["time BETWEEN '{$fields['from']} 00:00:00' AND '{$fields['to']} 23:59:59'"]);
+					},
+					'Sites.SiteOrders' => function ($query) use ($fields) {
+						return $query->select(['site_id', 'total' => $query->func()->sum('count')])->where(["time BETWEEN '{$fields['from']} 00:00:00' AND '{$fields['to']} 23:59:59'"]);
+					},
+					'Sites.SiteCosts' => function ($query) use ($fields) {
+						return $query->select(['site_id', 'total' => $query->func()->sum('cost')])->where(["time BETWEEN '{$fields['from']} 00:00:00' AND '{$fields['to']} 23:59:59'"]);
 					}
 				],
 			])->first()->toArray();
@@ -62,6 +68,12 @@ class StatisticsController extends \App\Controller\Api\ApiController
 					}
 					if(isset($site['site_calls'][0])) {
 						$result['calls'] += $site['site_calls'][0]['total'];
+					}
+					if(isset($site['site_orders'][0])) {
+						$result['orders'] += $site['site_orders'][0]['total'];
+					}
+					if(isset($site['site_costs'][0])) {
+						$result['cost'] += $site['site_costs'][0]['total'];
 					}
 				}
 			}
@@ -117,6 +129,12 @@ class StatisticsController extends \App\Controller\Api\ApiController
 					},
 					'Sites.SiteCalls' => function ($query) use ($dateFrom, $dateTo) {
 						return $query->where(["time BETWEEN '{$dateFrom}' AND '{$dateTo}'"]);
+					},
+					'Sites.SiteOrders' => function ($query) use ($dateFrom, $dateTo) {
+						return $query->where(["time BETWEEN '{$dateFrom}' AND '{$dateTo}'"]);
+					},
+					'Sites.SiteCosts' => function ($query) use ($dateFrom, $dateTo) {
+						return $query->where(["time BETWEEN '{$dateFrom}' AND '{$dateTo}'"]);
 					}
 				],
 			])->first()->toArray();
@@ -141,6 +159,14 @@ class StatisticsController extends \App\Controller\Api\ApiController
 					foreach($site['site_calls'] as $call) {
 						$key = $call['time']->format('Y-m-d H:00:00');
 						$details[$key]['calls']++;
+					}
+					foreach($site['site_orders'] as $order) {
+						$key = $order['time']->format('Y-m-d H:00:00');
+						$details[$key]['calls'] += $order['count'];
+					}
+					foreach($site['site_costs'] as $cost) {
+						$key = $cost['time']->format('Y-m-d H:00:00');
+						$details[$key]['cost'] += $cost['cost'];
 					}
 				}
 

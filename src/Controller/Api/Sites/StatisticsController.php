@@ -36,6 +36,12 @@ class StatisticsController extends \App\Controller\Api\ApiController
 					},
 					'SiteCalls' => function ($query) use ($fields) {
 						return $query->select(['site_id', 'total' => $query->func()->count('*')])->where(["time BETWEEN '{$fields['from']} 00:00:00' AND '{$fields['to']} 23:59:59'"]);
+					},
+					'SiteOrders' => function ($query) use ($fields) {
+						return $query->select(['site_id', 'total' => $query->func()->sum('count')])->where(["time BETWEEN '{$fields['from']} 00:00:00' AND '{$fields['to']} 23:59:59'"]);
+					},
+					'SiteCosts' => function ($query) use ($fields) {
+						return $query->select(['site_id', 'total' => $query->func()->sum('cost')])->where(["time BETWEEN '{$fields['from']} 00:00:00' AND '{$fields['to']} 23:59:59'"]);
 					}
 				],
             ])->first()->toArray();
@@ -43,10 +49,10 @@ class StatisticsController extends \App\Controller\Api\ApiController
             $result = [
                 'clicks' => 0,
                 'views' => 0,
-                'cost' => 0,
+                'cost' => isset($site['site_costs'][0]) ? $site['site_costs'][0]['total'] : 0,
                 'emails' => isset($site['site_emails'][0]) ? $site['site_emails'][0]['total'] : 0,
                 'calls' => isset($site['site_calls'][0]) ? $site['site_calls'][0]['total'] : 0,
-				'orders' => 0,
+				'orders' => isset($site['site_orders'][0]) ? $site['site_orders'][0]['total'] : 0,
             ];
 
             if (!empty($site)) {
@@ -116,6 +122,12 @@ class StatisticsController extends \App\Controller\Api\ApiController
 	                },
 					'SiteCalls' => function ($query) use ($dateFrom, $dateTo) {
 	                    return $query->where(["(time BETWEEN '{$dateFrom}' AND '{$dateTo}')"]);
+	                },
+					'SiteOrders' => function ($query) use ($dateFrom, $dateTo) {
+	                    return $query->where(["(time BETWEEN '{$dateFrom}' AND '{$dateTo}')"]);
+	                },
+					'SiteCosts' => function ($query) use ($dateFrom, $dateTo) {
+	                    return $query->where(["(time BETWEEN '{$dateFrom}' AND '{$dateTo}')"]);
 	                }
 				],
             ])->first()->toArray();
@@ -139,6 +151,14 @@ class StatisticsController extends \App\Controller\Api\ApiController
 			foreach($site['site_calls'] as $call) {
 				$key = $call['time']->format('Y-m-d H:00:00');
 				$details[$key]['calls']++;
+			}
+			foreach($site['site_orders'] as $order) {
+				$key = $order['time']->format('Y-m-d H:00:00');
+				$details[$key]['calls'] += $order['count'];
+			}
+			foreach($site['site_costs'] as $cost) {
+				$key = $cost['time']->format('Y-m-d H:00:00');
+				$details[$key]['cost'] += $cost['cost'];
 			}
 
             foreach ($details as $time => $statistics) {
