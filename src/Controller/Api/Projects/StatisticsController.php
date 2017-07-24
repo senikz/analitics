@@ -162,7 +162,7 @@ class StatisticsController extends \App\Controller\Api\ApiController
 					}
 					foreach($site['site_orders'] as $order) {
 						$key = $order['time']->format('Y-m-d H:00:00');
-						$details[$key]['calls'] += $order['count'];
+						$details[$key]['orders'] += $order['count'];
 					}
 					foreach($site['site_costs'] as $cost) {
 						$key = $cost['time']->format('Y-m-d H:00:00');
