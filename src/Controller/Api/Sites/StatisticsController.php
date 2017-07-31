@@ -174,37 +174,30 @@ class StatisticsController extends \App\Controller\Api\ApiController
         $this->sendError($this->Validator->getLastError());
     }
 
-    /*public function edit() {
+    public function edit() {
 
         $fields = $this->request->query;
         $data = $this->request->getData();
+		$siteId = $this->request->getParam('site_id');
 
         if($this->Validator->required($fields, ['date'])) {
 
-            $Statistics = TableRegistry::get('SiteStatisticsDaily');
-
-            $statistic = $Statistics->find('all', [
-                'conditions' => [
-                    'site_id' => $this->request->getParam('site_id'),
-                    'date' => $fields['date']
-                ]
-            ])->first();
-
-            if(empty($statistic)) {
-                $statistic = $Statistics->newEntity();
-                $statistic->site_id = $this->request->getParam('site_id');
-                $statistic->date = $fields['date'];
-            }
-
-            $statistic->calls = $data['calls'];
-            $statistic->mails = $data['mails'];
-            $statistic->orders = $data['orders'];
-
-            $Statistics->save($statistic);
+			if(isset($data['orders'])) {
+				$SiteOrders = TableRegistry::get('SiteOrders');
+				$SiteOrders->deleteAll([
+					'site_id' => $siteId,
+					'time LIKE' => $fields['date'] . ' %',
+				]);
+				$newOrders = $SiteOrders->newEntity();
+				$newOrders->site_id = $siteId;
+				$newOrders->count = $data['orders'];
+				$newOrders->time = $fields['date'] . ' 00:00:00';
+				$SiteOrders->save($newOrders);
+			}
 
             $this->sendData([]);
         }
 
         $this->sendError($this->Validator->getLastError());
-    }*/
+    }
 }

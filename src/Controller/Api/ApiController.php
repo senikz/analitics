@@ -75,7 +75,21 @@ class ApiController extends Controller
 	}
 
 	protected function sendData($data) {
-		$this->response->body(json_encode(['data' => $data]));
+
+		$query = $this->request->query;
+		foreach($this->request->params as $key => $param) {
+			if(preg_match('/^id|([a-z]*_id)$/', $key)) {
+				$query[$key] = $param;
+			}
+		}
+
+		$this->response->body(json_encode([
+			'request' => [
+				'query' => $query,
+				'body' => $this->request->getData(),
+			],
+			'data' => $data
+		]));
 		$this->response->send();
 		exit;
 	}

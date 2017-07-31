@@ -76,4 +76,18 @@ class SitesController extends ApiController
             }
         }
     }
+
+	public function edit($id = null)
+    {
+        if ($this->request->is('put')) {
+
+			$data = $this->request->getData();
+            $site = $this->Sites->patchEntity($this->Sites->get($id, ['contain' => []]), $data);
+
+            if ($this->Sites->save($site)) {
+				$this->sendData([]);
+            }
+            $this->sendError(__('Can`t save site details'));
+        }
+    }
 }

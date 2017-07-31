@@ -109,7 +109,13 @@ Router::prefix('api', function ($routes) {
         $routes->resources('Statistics', [
 			'prefix' => 'sites',
 			'only' => null,
-			'map' => $statisticsMap,
+			'map' => array_merge($statisticsMap, [
+				[
+					'action' => 'edit',
+					'method' => 'PUT',
+					'path' => '/',
+				]
+			]),
 		]);
         $routes->resources('Orders', [
 			'prefix' => 'sites',
