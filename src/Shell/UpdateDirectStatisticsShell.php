@@ -80,7 +80,7 @@ class UpdateDirectStatisticsShell extends Shell
 
     public function loadSingleCampaign($campaignId, $relId, $credentials)
     {
-        $YandexDirect = new YandexDirectApi();
+        $YandexDirect = new YandexDirectApi($credentials);
 
         $reportDetails = $YandexDirect->createStatisticsReport($relId);
 
