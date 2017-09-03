@@ -10,14 +10,18 @@ class YandexDirectApi
 	public $lastError;
 
     private $config = [
-        'login'        => 'catkitseo',
-        'token'        => '37f22b0f3aa441bf8a863c7910901912',
-        'master_token' => 'FpSeIeCNgs2VwiH5',
+		'login'		   => null,
+		'token'		   => null,
         'locale'       => 'ru',
         'currency'     => 'RUB',
         'url'          => '//api.direct.yandex.com/',
 		'api_version'  => 'v5',
     ];
+
+	public function __construct($credentials) {
+		$this->config['login'] = $credentials['login'];
+		$this->config['token'] = $credentials['token'];
+	}
 
     private function prepareResponse($response)
     {
