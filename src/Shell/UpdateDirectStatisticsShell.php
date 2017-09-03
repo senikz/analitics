@@ -8,25 +8,26 @@ use App\Utility\YandexDirectApi;
 
 class UpdateDirectStatisticsShell extends Shell
 {
+    private $accounts = [];
 
-	public function initialize()
+    public function initialize()
     {
         parent::initialize();
         $this->loadModel('CampaignStatisticsDaily');
         $this->loadModel('CampaignStatisticsHourly');
 
-		$this->Campaign = TableRegistry::get('Campaigns');
+        $this->Campaign = TableRegistry::get('Campaigns');
     }
 
     public function getOptionParser()
     {
         $parser = parent::getOptionParser();
 
-		$parser->addSubcommand('today', [
-	        'help' => 'Update the `todays` statistics'
-	    ]);
+        $parser->addSubcommand('today', [
+            'help' => 'Update the `todays` statistics'
+        ]);
 
-		return $parser;
+        return $parser;
     }
 
     public function main()
@@ -34,102 +35,122 @@ class UpdateDirectStatisticsShell extends Shell
         $this->out($this->OptionParser->help());
     }
 
-	public function today() {
+    private function loadYandexConfig()
+    {
+        require_once CONFIG . '/yandex.php';
 
-		$availableCampaigns = $this->Campaign->find('all', [
-			'conditions' => [
-				'type' => 'yandex',
-				'rel_id !=' => 0
-			],
-			'contain' => false
-		])->all();
+        foreach (\Cake\Core\Configure::read('Yandex.api') as $account) {
+            $YandexDirect = new YandexDirectApi($account);
+            $account['campaigns'] = [];
 
-		if(empty($availableCampaigns)) {
-			return;
-		}
+            $campaigns = $YandexDirect->GetCampaignsList();
+            if ($campaigns) {
+                foreach ($campaigns as $campaign) {
+                    $account['campaigns'][] = $campaign['Id'];
+                }
+            }
+            $this->accounts[] = $account;
+        }
+    }
 
-		foreach($availableCampaigns as $availableCampaign) {
+    public function today()
+    {
+        $this->loadYandexConfig();
 
-			$this->loadSingleCampaign($availableCampaign->id, $availableCampaign->rel_id);
+        foreach ($this->accounts as $account) {
+            $availableCampaigns = $this->Campaign->find('all', [
+                'conditions' => [
+                    'type' => 'yandex',
+                    'rel_id IN' => $account['campaigns'],
+                ],
+                'contain' => false
+            ])->all();
 
-			sleep(1);
-		}
-	}
+            if (empty($availableCampaigns)) {
+                continue;
+            }
 
-	public function loadSingleCampaign($campaignId, $relId) {
+            foreach ($availableCampaigns as $availableCampaign) {
+                $this->loadSingleCampaign($availableCampaign->id, $availableCampaign->rel_id, $account);
 
-		$YandexDirect = new YandexDirectApi();
+                sleep(1);
+            }
+        }
+    }
 
-		$reportDetails = $YandexDirect->createStatisticsReport($relId);
+    public function loadSingleCampaign($campaignId, $relId, $credentials)
+    {
+        $YandexDirect = new YandexDirectApi();
 
-		if($reportDetails === false) {
-			Log::write('debug', ['campaignId' => $campaignId, 'report' => $YandexDirect->lastError], ['shell', 'UpdateDirectStatisticsShell', 'today']);
-			return;
-		}
+        $reportDetails = $YandexDirect->createStatisticsReport($relId);
 
-		$currentDate = date('Y-m-d');
+        if ($reportDetails === false) {
+            Log::write('debug', ['campaignId' => $campaignId, 'report' => $YandexDirect->lastError], ['shell', 'UpdateDirectStatisticsShell', 'today']);
+            return;
+        }
 
-		Log::write('debug', ['campaignId' => $campaignId, 'report' => $reportDetails], ['shell', 'UpdateDirectStatisticsShell', 'today']);
+        $currentDate = date('Y-m-d');
 
-		$newClicksCount = 0;
-		$newImpressionsCount = 0;
-		$newCostCount = 0;
+        Log::write('debug', ['campaignId' => $campaignId, 'report' => $reportDetails], ['shell', 'UpdateDirectStatisticsShell', 'today']);
 
-		if(!empty($reportDetails)) {
-			$reportCampaign = $reportDetails[0];
+        $newClicksCount = 0;
+        $newImpressionsCount = 0;
+        $newCostCount = 0;
 
-			$newClicksCount = $reportCampaign['Clicks'];
-			$newImpressionsCount = $reportCampaign['Impressions'];
-			$newCostCount = $reportCampaign['Cost'];
+        if (!empty($reportDetails)) {
+            $reportCampaign = $reportDetails[0];
 
-			// проверить запись в дневной статистике, есть ли текущий день
-			$dailyRecord = $this->CampaignStatisticsDaily->find('all', [
-				'conditions' => [
-					'campaign_id' => $campaignId,
-					'date' => $currentDate
-				]
-			])->first();
+            $newClicksCount = $reportCampaign['Clicks'];
+            $newImpressionsCount = $reportCampaign['Impressions'];
+            $newCostCount = $reportCampaign['Cost'];
 
-			if(empty($dailyRecord)) {
-				$dailyRecord = $this->CampaignStatisticsDaily->newEntity();
-				$dailyRecord->campaign_id = $campaignId;
-				$dailyRecord->date = $currentDate;
-			} else {
-				$newClicksCount -= $dailyRecord->clicks;
-				$newImpressionsCount -= $dailyRecord->views;
-				$newCostCount -= $dailyRecord->cost;
-			}
+            // проверить запись в дневной статистике, есть ли текущий день
+            $dailyRecord = $this->CampaignStatisticsDaily->find('all', [
+                'conditions' => [
+                    'campaign_id' => $campaignId,
+                    'date' => $currentDate
+                ]
+            ])->first();
 
-			$dailyRecord->clicks = $reportCampaign['Clicks'];
-			$dailyRecord->views  = $reportCampaign['Impressions'];
-			$dailyRecord->cost   = $reportCampaign['Cost'];
+            if (empty($dailyRecord)) {
+                $dailyRecord = $this->CampaignStatisticsDaily->newEntity();
+                $dailyRecord->campaign_id = $campaignId;
+                $dailyRecord->date = $currentDate;
+            } else {
+                $newClicksCount -= $dailyRecord->clicks;
+                $newImpressionsCount -= $dailyRecord->views;
+                $newCostCount -= $dailyRecord->cost;
+            }
 
-			$this->CampaignStatisticsDaily->save($dailyRecord);
-		}
+            $dailyRecord->clicks = $reportCampaign['Clicks'];
+            $dailyRecord->views  = $reportCampaign['Impressions'];
+            $dailyRecord->cost   = $reportCampaign['Cost'];
 
-		$hourlyRecord = $this->CampaignStatisticsHourly->find('all', [
-			'conditions' => [
-				'campaign_id' => $campaignId,
-				'time >=' => date('Y-m-d H:00:00')
-			]
-		])->first();
+            $this->CampaignStatisticsDaily->save($dailyRecord);
+        }
 
-		if(empty($hourlyRecord)) {
-			$hourlyRecord = $this->CampaignStatisticsHourly->newEntity();
-			$hourlyRecord->campaign_id = $campaignId;
-		} else {
-			$newClicksCount += $hourlyRecord->clicks;
-			$newImpressionsCount += $hourlyRecord->views;
-			$newCostCount += $hourlyRecord->cost;
-		}
+        $hourlyRecord = $this->CampaignStatisticsHourly->find('all', [
+            'conditions' => [
+                'campaign_id' => $campaignId,
+                'time >=' => date('Y-m-d H:00:00')
+            ]
+        ])->first();
 
-		$hourlyRecord->time = date('Y-m-d H:i:s');
+        if (empty($hourlyRecord)) {
+            $hourlyRecord = $this->CampaignStatisticsHourly->newEntity();
+            $hourlyRecord->campaign_id = $campaignId;
+        } else {
+            $newClicksCount += $hourlyRecord->clicks;
+            $newImpressionsCount += $hourlyRecord->views;
+            $newCostCount += $hourlyRecord->cost;
+        }
 
-		$hourlyRecord->clicks = $newClicksCount;
-		$hourlyRecord->views  = $newImpressionsCount;
-		$hourlyRecord->cost   = $newCostCount;
+        $hourlyRecord->time = date('Y-m-d H:i:s');
 
-		$this->CampaignStatisticsHourly->save($hourlyRecord);
+        $hourlyRecord->clicks = $newClicksCount;
+        $hourlyRecord->views  = $newImpressionsCount;
+        $hourlyRecord->cost   = $newCostCount;
 
-	}
+        $this->CampaignStatisticsHourly->save($hourlyRecord);
+    }
 }
