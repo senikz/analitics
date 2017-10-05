@@ -55,6 +55,7 @@ class CampaignsController extends ApiController
 
             if ($this->Validator->required($data, ['site_id', 'type', 'caption', 'key'])) {
                 $campaign = $this->Campaigns->newEntity();
+				$campaign->rel_id = $data['key'];
                 $campaign = $this->Campaigns->patchEntity($campaign, $data);
 
                 if ($this->Campaigns->save($campaign)) {

@@ -66,6 +66,8 @@ use Cake\Network\Request;
 use Cake\Utility\Inflector;
 use Cake\Utility\Security;
 
+require __DIR__ . '/yandex.php';
+
 /*
  * Read configuration file and inject configuration into various
  * CakePHP classes.
