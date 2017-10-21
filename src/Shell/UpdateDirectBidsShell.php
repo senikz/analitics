@@ -16,10 +16,25 @@ use Biplane\YandexDirect\Api\V5\Contract\SetBidsRequest;
 
 class UpdateDirectBidsShell extends \Cake\Console\Shell
 {
+	private $globalOptions = [];
+
     public function initialize()
     {
         parent::initialize();
-        $this->Campaign = TableRegistry::get('Campaigns');
+        $this->Campaigns = TableRegistry::get('Campaigns');
+        $this->Keywords = TableRegistry::get('Keywords');
+        $this->AdGroups = TableRegistry::get('AdGroups');
+        $this->BidOptions = TableRegistry::get('BidOptions');
+
+		$this->globalOptions = $this->BidOptions->find('all', [
+				'conditions' => [
+					'BidOptions.type IN' => ['keyword', 'adgroup'],
+					'BidOptions.status' => 1,
+				],
+				'contain' => [
+					'Keywords', 'AdGroups',
+				],
+			])->all();
     }
 
     public function main()
@@ -28,8 +43,8 @@ class UpdateDirectBidsShell extends \Cake\Console\Shell
 
 		foreach($credentials as $login) {
 			$user = new User([
-				'access_token' => $credentials[0]['token'],
-				'login' => $credentials[0]['login'],
+				'access_token' => $login['token'],
+				'login' => $login['login'],
 				'locale' => User::LOCALE_RU,
 			]);
 
@@ -46,67 +61,82 @@ class UpdateDirectBidsShell extends \Cake\Console\Shell
 					])
 			);
 
-			foreach ($campaigns->getCampaigns() as $campaign) {
-				$availableCampaign = $this->Campaign->find('all', [
+			$userCampaigns = $campaigns->getCampaigns();
+
+			if(empty($userCampaigns)) {
+				continue;
+			}
+
+			foreach ($userCampaigns as $campaign) {
+				$availableCampaign = $this->Campaigns->find('all', [
 					'conditions' => [
 						'type' => 'yandex',
 						'rel_id' => $campaign->getId(),
-						'bid_inc >' => '0',
 					],
-					'contain' => false
+					'contain' => ['BidOptions',],
 				])->first();
-				if(empty($availableCampaign)) {
+
+				if(empty($availableCampaign) || empty($availableCampaign->bid_options) || !$availableCampaign->bid_options[0]->status) {
 					continue;
 				}
 
-				$this->processCampaign($campaign, $availableCampaign, $user);
+				$this->processCampaign($user, $availableCampaign);
 			}
 		}
     }
 
-	private function processCampaign($campaign, $record, $user)
+	private function processCampaign($user, $campaign)
 	{
-		$maxPrice = $record->bid_max;
-		$incPrice = $record->bid_inc;
-		$position = $record->bid_pos;
-
-		Log::write('debug', ['campaignId' => $campaign->getId(), 'options' => [$maxPrice, $incPrice, $position]], ['shell', 'UpdateDirectBidsShell', 'processCampaign']);
+		//Log::write('debug', ['campaignId' => $campaign->rel_id, 'options' => [$maxPrice, $incPrice, $position]], ['shell', 'UpdateDirectBidsShell', 'processCampaign']);
 
 		$bids = $user->getBidsService()->get(GetBidsRequest::create()
-			->setSelectionCriteria(BidsSelectionCriteria::create()->setCampaignIds([$campaign->getId()]))
+			->setSelectionCriteria(BidsSelectionCriteria::create()->setCampaignIds([$campaign->rel_id]))
 			->setFieldNames([
 				BidFieldEnum::KEYWORD_ID,
 				BidFieldEnum::CAMPAIGN_ID,
+				BidFieldEnum::AD_GROUP_ID,
 				BidFieldEnum::BID,
 				BidFieldEnum::AUCTION_BIDS,
 			])
-			->setPage(
-				LimitOffset::create()->setLimit(3)->setOffset(0)
-			)
+		//	->setPage(
+		//		LimitOffset::create()->setLimit(3)->setOffset(0)
+		//	)
 		);
 
 		$updateBids = [];
 
 		foreach($bids->getBids() as $bid) {
 
+			$options = $campaign->bid_options[0];
+			$bidId = $bid->getKeywordId();
+
+			foreach($this->globalOptions as $go) {
+				if($go->type == 'keyword' && $go->keyword->rel_id == $bidId) {
+					$options = $go;
+					break;
+				} else if($go->type == 'adgroup' && $go->ad_group->rel_id == $bid->getAdGroupId() ) {
+					$options = $go;
+				}
+			}
+
 			foreach($bid->getAuctionBids() as $auctionPrice) {
-				if($auctionPrice->getPosition() != $position) {
+				if($auctionPrice->getPosition() != $options->position) {
 					continue;
 				}
 				$price = $auctionPrice->getPrice() / 1000000;
-				$newPrice = $price + ($price / 100 * $incPrice);
-				if($newPrice > $maxPrice) {
-					$newPrice = $maxPrice;
+				$newPrice = $price + ($price / 100 * $options->increment);
+				if($newPrice > $options->max) {
+					$newPrice = $options->max;
 				}
 
 				$updateBids[] = [
-					BidFieldEnum::KEYWORD_ID => $bid->getKeywordId(),
+					BidFieldEnum::KEYWORD_ID => $bidId,
 					BidFieldEnum::BID => $newPrice * 1000000,
 				];
 			}
 		}
 
-		Log::write('debug', ['campaignId' => $campaign->getId(), 'bids' => $updateBids], ['shell', 'UpdateDirectBidsShell', 'update bids']);
+		//Log::write('debug', ['campaignId' => $campaign->rel_id, 'bids' => $updateBids], ['shell', 'UpdateDirectBidsShell', 'update bids']);
 
 		if(!empty($updateBids)) {
 			//$user->getBidsService()->set(SetBidsRequest::create()->setBids($updateBids));

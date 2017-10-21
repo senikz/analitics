@@ -95,6 +95,14 @@ Router::prefix('api', function ($routes) {
 			'prefix' => 'projects',
 			'only' => ['index']
 		]);
+        $routes->resources('Campaigns', [
+			'prefix' => 'projects',
+			'only' => ['index']
+		]);
+        $routes->resources('Leads', [
+			'prefix' => 'projects',
+			'only' => ['index']
+		]);
 		$routes->resources('Statistics', [
 			'prefix' => 'projects',
 			'map' => $statisticsMap,
@@ -103,6 +111,10 @@ Router::prefix('api', function ($routes) {
 
     $routes->resources('Sites', function ($routes) use ($statisticsMap) {
         $routes->resources('Campaigns', [
+			'prefix' => 'sites',
+			'only' => ['index']
+		]);
+        $routes->resources('Leads', [
 			'prefix' => 'sites',
 			'only' => ['index']
 		]);
@@ -136,6 +148,16 @@ Router::prefix('api', function ($routes) {
 		            'path' => '/load_cost_from_xml'
 		        ],
 		    ]),
+		]);
+		$routes->resources('Bids', [
+			'prefix' => 'campaigns',
+			'map' => [
+				[
+					'action' => 'edit',
+					'method' => 'PUT',
+					'path' => '/',
+				]
+			],
 		]);
     });
 

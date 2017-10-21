@@ -49,3 +49,8 @@ configuration relevant for your application.
 The app skeleton uses a subset of [Foundation](http://foundation.zurb.com/) CSS
 framework by default. You can, however, replace it with any other library or
 custom styles.
+
+## Build api docs
+
+Install `aglio`
+Run `aglio -o src/Template/Docs/index.ctp -i api-docs.apib --theme-template ./src/Template/aglio-theme-kaiten/templates/index.jade --theme-style ./src/Template/aglio-theme-kaiten/styles/layout-default.less`

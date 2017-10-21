@@ -26,7 +26,8 @@ class Campaign extends Entity
     ];
 
 	public $campaignTypes = [
-		'direct' => 'Кампания Яндекс.Директ'
+		'yandex' => 'Кампания Яндекс.Директ',
+		'adwords' => 'Кампания Google Adwords',
 	];
 
 	public function getType() {

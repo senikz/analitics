@@ -1,0 +1,534 @@
+FORMAT: 1A
+HOST: http://analitics.catkitcms.ru/api
+
+# Аналитика
+
+### Аутентификация
+
+Для авторизации приложения используется механизм JWT токенов. При каждом
+запросе к API должен передаваться HTTP-заголовок `User-Token`, содержащий
+JWT токен.
+
+
+Пример запроса к сервису:
+
+
+```
+
+curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
+
+```
+
+### REST
+
+* GET - получение информации
+
+* POST - создание новой записи
+
+* PUT - обновление существующей записи
+
+* DELETE - удаление записи
+
+### Возвращаемый результат
+
+
+Успешный ответ будет возвращен как JSON-объект с одним из следующих
+параметров:
+
+- `data`: основные данные, возвращаемые при успешном создании запроса.
+
+- `errors`: массив возвращаемых ошибок
+
+
+Объекты `data` и` errors` не могут быть возвращены в одном запросе.
+
+
+### Объект ответа
+
+Для одного объекта:
+
+```json
+
+{
+    request: {
+        query: {},
+        body: {}
+    },
+    data: {
+        id: 1,
+        caption: 'First item'
+    }
+}
+
+```
+
+Для списка объектов:
+
+```json
+
+{
+    request: {
+        query: {},
+        body: {}
+    },
+    data: [
+        {
+            id: 1,
+            caption: 'First item'
+        }, {
+            id: 2,
+            caption: 'Second item'
+        }
+    ]
+}
+
+```
+
+# Data Structures
+
+## Campaign Statistics
++ cost (number) - Потраченная сумма(руб.).
++ views (number) - Кол-во просмотров рекламных объявлений за период.
++ clicks (number) - Кол-во кликов по рекламе за период.
+
+## Statistics Summary
++ Include Campaign Statistics
++ calls (number) - Кол-во звонков с сайтов проекта.
++ emails (number) - Кол-во писем с сайтов проекта.
++ orders (number) - Кол-во заказов с сайтов проекта.
+
+## Statistics Details
++ data: (array,fixed)
+    + (object)
+        + time: (string) - Время, за которое предоставляется стастистика (в формате UTC).
+        + statistics: (Statistics Summary) - Объект со статистикой за указанное время
+
+## Campaign Statistics Details
++ data: (array,fixed)
+    + (object)
+        + time: (string) - Время, за которое предоставляется стастистика (в формате UTC).
+        + statistics: (Campaign Statistics) - Объект со статистикой за указанное время
+
+## Project
++ id: (number) - ID проекта
++ caption: (number) - Заголовок
++ icon: (string) - Иконка
+
+## Site
++ id: (number) - ID сайта
++ domain: (string) - Доменное имя сайта
+
+## Campaign
++ id: (number) - ID кампании
++ caption: (string) - Заголовок кампании
+
+## Keyword
++ id: (number) - ID ключевой фразы
+
+## Ad
++ id: (number) - ID объявления
+
+## Ad Group
++ id: (number) - ID группы
+
+## Lead
++ site_id: (number) - ID сайта
++ type: (enum[string]) - Тип заявки
+    + Members
+        + email - Письмо с сайта
+        + call - Звонок
++ source: (string) - Источник заявки
++ campaign: (string) - Кампания
++ keyword: - Ключевое слово
++ place: (string) - Место показа
++ time: (string) - Время заявки
+
+
+## Bid Options
++ max: (number) - Максимальная ставка
++ position: (enum[string]) - Позиция, строка по формуле Pnm, где n - , m -
+    + Members
+        + P11
+        + P12
+        + P13
+        + P14
+        + P21
+        + P22
++ increment: (number) - Процент завышения ставки
++ active: (boolean) - Статус (включено/выключено)
+
+
+## Проекты [/projects]
+
+### Список проектов [GET]
+
++ Response 200 (application/json)
+    + Attributes
+        + data (array,fixed)
+            + (Project)
+
+### Детали проекта [GET/projects/{id}]
+
++ Parameters
+    + id: (number, required) - ID проекта
+
++ Response 200 (application/json)
+    + Attributes
+        + Include Project
+
+
+### Список сайтов [GET/projects/{id}/sites]
+
++ Parameters
+    + id: (number, required) - ID проекта
+
++ Response 200 (application/json)
+    + Attributes
+        + data (array,fixed)
+            + (Site)
+
+### Список кампаний [GET/projects/{id}/campaigns]
+
++ Parameters
+    + id: (number, required) - ID проекта
+
++ Response 200 (application/json)
+    + Attributes
+        + data (array,fixed)
+            + (Campaign)
+
+### Общая статистика проекта [GET/projects/{id}/statistics/summary?{from}=&{to}=]
+Возвращает объект с суммой статистик по кампаниям проекта за указанный период.
+
++ Parameters
+    + id: (number, required) - ID проекта
+    + from: (string, required) - Дата начала периода в формате `YYYY-mm-dd`.
+    + to: (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
+
++ Response 200 (application/json)
+    + Attributes (Statistics Summary)
+
+
+### Подробная статистика проекта [GET/projects/{id}/statistics/details?{from}=&{to}=]
+
+Возвращает массив объектов с суммой почасовых статистик по всем кампаниям проекта за указанный период.
+
++ Parameters
+    + id: (number, required) - ID проекта
+    + from: (string, required) - Дата начала периода в формате `YYYY-mm-dd`.
+    + to: (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
+
++ Response 200 (application/json)
+    + Attributes (Statistics Details)
+
+
+### Список заявок [GET/projects/{id}/leads?{from}=&{to}=&{order}=&{reverse}]
+
++ Parameters
+    + id: (number, required) - ID проекта
+    + from: (string, required) - Дата начала периода в формате `YYYY-mm-dd`.
+    + to: (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
+    + order: (string, optional) - Поле для сортировки
+    + reverse: (boolean, optional) - Сортировка в обратном порядке
+
++ Response 200 (application/json)
+    + Attributes
+        + data: (array,fixed)
+            + (Lead)
+
+
+
+## Сайты [/sites]
+
+### Список сайтов [GET]
+
++ Response 200 (application/json)
+    + Attributes
+        + data (array,fixed)
+            + (Site)
+                + project_id: (number) - ID проекта, которому принадлежит сайт
+
+### Добавить новый сайт [POST]
+
++ Request
+    + Attributes
+        + project_id: (number, required) - ID проекта, к которому относится сайт.
+        + domain: (string, required) - Доменное имя сайта.
+
++ Response 200 (application/json)
+    + Attributes
+        + data
+            + id: (number) - ID добавленного сайта
+
+### Детали сайта [GET/sites/{id}]
+
++ Parameters
+    + id: (number) - ID сайта.
+
++ Response 200 (application/json)
+    + Attributes (Site)
+        + project_id: (number) - ID проекта, которому принадлежит сайт
+
+### Удалить сайт [DELETE/sites/{id}]
+
++ Parameters
+    + id: (number) - ID сайта.
+
++ Response 200 (application/json)
+
+
+### Список кампаний [GET/sites/{id}/campaigns]
+
++ Parameters
+    + id: (number) - ID сайта.
+
++ Response 200 (application/json)
+    + Attributes
+        + data (array,fixed)
+            + (Campaign)
+
+### Добавление заказа [POST/sites/{id}/orders]
+
++ Attributes
+    + count (number, optional) - Количество заказов (позволяет создать заказ с количеством более 1).
+    + comment (string, optional) - Комментарий к заказу.
+    + time (string, optional) - Время заказа в формате `Y-m-d H:i:s` (по умолчанию будет установлено текущее время).
+
++ Response 200 (application/json)
+    + Attributes
+        + id: (number) - ID добавленного заказа
+
+### Добавление произвольного расхода [POST/sites/{id}/costs]
+
++ Attributes
+    + cost (number, required) - Сумма расхода.
+    + comment (string, required) - Комментарий к заказу.
+    + time (string, optional) - Время заказа в формате `Y-m-d H:i:s` (по умолчанию будет установлено текущее время).
+
++ Response 200 (application/json)
+    + Attributes
+        + id: (number) - ID добавленной записи
+
+### Общая статистика сайта [GET/sites/{id}/statistics/summary?{from}=&{to}=]
+
+Возвращает объект с суммой статистик по всем кампаниям, принадлежащим сайту, за указанный период.
+
++ Parameters
+    + id: (number, required) - ID сайта
+    + from: (string, required) - Дата начала периода в формате `YYYY-mm-dd`.
+    + to: (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
+
++ Response 200 (application/json)
+    + Attributes (Statistics Summary)
+
+### Подробная статистика сайта [GET/sites/{id}/statistics/details?{from}=&{to}=]
+
+Возвращает массив объектов с суммой почасовых статистик по всем кампаниям проекта за указанный период.
+
++ Parameters
+    + id: (number, required) - ID сайта
+    + from: (string, required) - Дата начала периода в формате `YYYY-mm-dd`.
+    + to: (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
+
++ Response 200 (application/json)
+    + Attributes (Statistics Details)
+
+### Обновление статистики сайта [PUT/sites/{id}/statistics?{date}]
+
++ Parameters
+    + id: (number, required) - ID сайта
+    + date: (string, required) - Дата для изменения статистики
+
++ Request
+    + Attributes
+        + orders: (number) - Количество заказов за указанный в date день
+
++ Response 200 (application/json)
+
+## Кампании [/campaigns]
+
+### Список кампаний [GET]
+
++ Response 200 (application/json)
+    + Attributes
+        + data (array,fixed)
+            + (Campaign)
+
+### Добавить новую кампанию [POST]
+
++ Request
+    + Attributes
+        + site_id: (number, required) - ID сайта, к которому относится кампания
+        + type: (string, required) - Тип кампании (yandex, adwords)
+        + key: (number, required) - Идентификатор кампании в соответствующей типу системе
+        + caption: (string) - Название кампании
+
++ Response 200 (application/json)
+    + Attributes
+        + data
+            + id: (number) - ID добавленной кампании
+
+### Детали кампании [GET/campaigns/{id}]
+
++ Parameters
+    + id: (number) - ID кампании
+
++ Response 200 (application/json)
+    + Attributes (Campaign)
+        + site_id: (number) - ID сайта, которому принадлежит кампания
+        + type: (enum[number]) - Тип кампании
+            + Members
+                + yandex
+                + adwords
+        + num: (number) - Номер кампании в системе статистики
+
+### Удалить кампанию [DELETE/campaigns/{id}]
+
++ Parameters
+    + id: (number) - ID кампании
+
++ Response 200 (application/json)
+
+### Общая статистика кампании [GET/campaigns/{id}/statistics/summary?{from}=&{to}=]
+
+Возвращает объект с суммой статистик кампании за указанный период.
+
++ Parameters
+    + id: (number, required) - ID кампании
+    + from: (string, required) - Дата начала периода в формате `YYYY-mm-dd`.
+    + to: (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
+
++ Response 200 (application/json)
+    + Attributes (Campaign Statistics)
+
+### Подробная статистика кампании [GET/campaigns/{id}/statistics/details?{from}=&{to}=]
+
+Возвращает массив объектов с суммой почасовых статистик кампании за указанный период.
+
++ Parameters
+    + id: (number, required) - ID кампании
+    + from: (string, required) - Дата начала периода в формате `YYYY-mm-dd`.
+    + to: (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
+
++ Response 200 (application/json)
+    + Attributes (Campaign Statistics Details)
+
+### Текущие настройки биддера [GET/campaigns/{id}/bids]
+
++ Parameters
+    + id: (number, required) - ID кампании
+
++ Response 200 (application/json)
+    + Attributes (Bid Options)
+
+### Обновить настройки биддера [PUT/campaigns/{id}/bids]
+
++ Parameters
+    + id: (number, required) - ID кампании
+
++ Request
+    + Attributes (Bid Options)
+
++ Response 200 (application/json)
+
+### Список ключевых фраз [GET/campaigns/{id}/keywords]
+
+Возвращает список ключевых фраз кампании.
+
++ Parameters
+    + id: (number, required) - ID кампании
+
++ Response 200 (application/json)
+    + Attributes
+        + data (array,fixed)
+            + (Keyword)
+
+### Список объявлений [GET/campaigns/{id}/ads]
+
++ Parameters
+    + id: (number, required) - ID кампании
+
++ Request
+
++ Response 200 (application/json)
+    + Attributes
+
+### Список групп объявлений [GET/campaigns/{id}/ad-groups]
+
++ Parameters
+    + id: (number, required) - ID кампании
+
++ Request
+
++ Response 200 (application/json)
+    + Attributes
+
+### Обновить содержимое кампании [GET/campaigns/{id}/sync]
+
+Запускает подгрузку ключевых фраз, объявлений и статусов с серверов поисковых систем немедленно.
+
++ Parameters
+    + id: (number, required) - ID кампании
+
++ Request
+
++ Response 200 (application/json)
+
+
+## Объявления [/ads]
+
+### Детали объявления [GET/ads/{id}]
+
++ Parameters
+    + id: (number, required) - ID объявления
+
++ Response 200 (application/json)
+    + Attributes
+
+## Группы объявлений [/ad-groups]
+
+### Детали группы [GET/ad-groups/{id}]
+### Список ключевых фраз [GET/ad-groups/{id}/keywords]
+
+
+
+### Текущие настройки биддера [GET/ad-groups/{id}/bids]
+
++ Parameters
+    + id: (number, required) - ID группы объявлений
+
++ Response 200 (application/json)
+    + Attributes (Bid Options)
+
+### Обновить настройки биддера [PUT/ad-groups/{id}/bids]
+
++ Parameters
+    + id: (number, required) - ID группы объявлений
+
++ Attributes (Bid Options)
+
++ Response 200 (application/json)
+
+## Ключевые фразы [/keywords]
+
+Из-за большого количества записей нет возможности их динамической подгрузки из ресурсов поисковых систем.  В связи с этим, все методы, возвращающие список ключевых фраз, предоставляют только их снимок, который автоматически синхронизируется в течение некоторого времени. Так же при необходимости можно запустить синхронизацию немедленно, вызвав метод [campaigns::sync](#кампании-get-8)
+
+### Детали ключевой фразы[GET/{id}]
+
+
+### Текущие настройки биддера [GET/keywords/{id}/bids]
+
++ Parameters
+    + id: (number, required) - ID ключевой фразы
+
++ Response 200 (application/json)
+    + Attributes (Bid Options)
+
+### Обновить настройки биддера [PUT/keywords/{id}/bids]
+
++ Parameters
+    + id: (number, required) - ID ключевой фразы
+
++ Attributes (Bid Options)
+
++ Response 200 (application/json)

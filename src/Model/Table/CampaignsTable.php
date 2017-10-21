@@ -53,6 +53,12 @@ class CampaignsTable extends Table
         $this->hasMany('CampaignStatisticsHourly', [
             'foreignKey' => 'campaign_id'
         ]);
+
+		$this->hasMany('BidOptions', [
+			'foreignKey' => 'rel_id',
+			'conditions' => ['BidOptions.type' => 'campaign'],
+            'joinType' => 'LEFT',
+		]);
     }
 
     /**
