@@ -43,6 +43,9 @@ class CampaignsTable extends Table
             'foreignKey' => 'site_id',
             'joinType' => 'INNER'
         ]);
+        $this->belongsTo('Credentials', [
+            'foreignKey' => 'credential_id',
+        ]);
         /*$this->belongsTo('Rels', [
             'foreignKey' => 'rel_id',
             'joinType' => 'INNER'

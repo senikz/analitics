@@ -21,6 +21,7 @@ class UpdateDirectBidsShell extends \Cake\Console\Shell
     public function initialize()
     {
         parent::initialize();
+
         $this->Campaigns = TableRegistry::get('Campaigns');
         $this->Keywords = TableRegistry::get('Keywords');
         $this->AdGroups = TableRegistry::get('AdGroups');
@@ -39,49 +40,19 @@ class UpdateDirectBidsShell extends \Cake\Console\Shell
 
     public function main()
     {
-		$credentials = \Cake\Core\Configure::read('Yandex.api');
+		$campaigns = $this->Campaigns->find('all', [
+			'conditions' => [
+				'credential_id >' => '0',
+			],
+			'contain' => ['Credentials', 'BidOptions',],
+		])->all();
 
-		foreach($credentials as $login) {
-			$user = new User([
-				'access_token' => $login['token'],
-				'login' => $login['login'],
-				'locale' => User::LOCALE_RU,
-			]);
-
-			$campaigns = $user->getCampaignsService()->get(
-				GetCampaignsRequest::create()
-					->setSelectionCriteria(
-						CampaignsSelectionCriteria::create()->setStates(['ON', 'SUSPENDED']))
-					->setFieldNames([
-						CampaignFieldEnum::ID,
-						CampaignFieldEnum::NAME,
-						CampaignFieldEnum::STATE,
-						CampaignFieldEnum::STATUS,
-						CampaignFieldEnum::TYPE,
-					])
-			);
-
-			$userCampaigns = $campaigns->getCampaigns();
-
-			if(empty($userCampaigns)) {
+		foreach($campaigns as $campaign) {
+			if(empty($campaign->credential) || $campaign->credential->type != \App\Model\Entity\Credential::CREDENTIAL_TYPE_DIRECT || empty($campaign->bid_options) || !$campaign->bid_options[0]->status) {
 				continue;
 			}
 
-			foreach ($userCampaigns as $campaign) {
-				$availableCampaign = $this->Campaigns->find('all', [
-					'conditions' => [
-						'type' => 'yandex',
-						'rel_id' => $campaign->getId(),
-					],
-					'contain' => ['BidOptions',],
-				])->first();
-
-				if(empty($availableCampaign) || empty($availableCampaign->bid_options) || !$availableCampaign->bid_options[0]->status) {
-					continue;
-				}
-
-				$this->processCampaign($user, $availableCampaign);
-			}
+			$this->processCampaign($campaign->credential->getUser(), $campaign);
 		}
     }
 

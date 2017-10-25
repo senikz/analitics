@@ -2,7 +2,14 @@
 namespace App\Controller\Api;
 
 use Cake\ORM\TableRegistry;
-use App\Utility\YandexDirectApi;
+
+use Biplane\YandexDirect\User;
+use Biplane\YandexDirect\KeywordFieldEnum;
+use Biplane\YandexDirect\Api\V5\Contract\CampaignFieldEnum;
+use Biplane\YandexDirect\Api\V5\Contract\GetCampaignsRequest;
+use Biplane\YandexDirect\Api\V5\Contract\GetKeywordsRequest;
+use Biplane\YandexDirect\Api\V5\Contract\CampaignsSelectionCriteria;
+use Biplane\YandexDirect\Api\V5\Contract\KeywordsSelectionCriteria;
 
 class CampaignsController extends ApiController
 {
@@ -23,7 +30,7 @@ class CampaignsController extends ApiController
         foreach ($query as $row) {
             $result[] = [
                     'id' => $row->id,
-					'site_id' => $row->site_id,
+                    'site_id' => $row->site_id,
                     'caption' => $row->caption,
                 ];
         }
@@ -55,7 +62,7 @@ class CampaignsController extends ApiController
 
             if ($this->Validator->required($data, ['site_id', 'type', 'caption', 'key'])) {
                 $campaign = $this->Campaigns->newEntity();
-				$campaign->rel_id = $data['key'];
+                $campaign->rel_id = $data['key'];
                 $campaign = $this->Campaigns->patchEntity($campaign, $data);
 
                 if ($this->Campaigns->save($campaign)) {
@@ -81,5 +88,56 @@ class CampaignsController extends ApiController
                 $this->sendError(__('Can`t delete campaign'));
             }
         }
+    }
+
+    public function sync()
+    {
+        $campaignId = $this->request->getParam('campaign_id');
+        $campaignDetails = $this->Campaigns->get($campaignId, [
+			//'contain' => ['Credentials'],
+		]);
+
+		var_dump($campaignDetails);
+$campaignDetails->test();
+		exit;
+
+        $campaignDetails = $this->Campaigns->find('all', [
+			//'contain' => ['Credentials'],
+		])->all();
+
+		var_dump($campaignDetails);
+		//$campaignDetails->sync();
+		exit;
+
+
+        if (empty($campaignDetails->credential_id)) {
+            return;
+        }
+return;
+    	$user = $campaignDetails->credential->getUser();
+
+		if($campaignDetails->credential->isDirect) {
+
+		}
+
+		$bids = $user->getKeywordsService()->get(
+			GetKeywordsRequest::create()
+				->setSelectionCriteria(
+					KeywordsSelectionCriteria::create()->setCampaignIds([$campaign->rel_id])
+				)
+				->setFieldNames([
+					BidFieldEnum::KEYWORD_ID,
+					BidFieldEnum::CAMPAIGN_ID,
+					BidFieldEnum::AD_GROUP_ID,
+					BidFieldEnum::BID,
+					BidFieldEnum::AUCTION_BIDS,
+				])
+			//	->setPage(
+			//		LimitOffset::create()->setLimit(3)->setOffset(0)
+			//	)
+		);
+
+        var_dump($campaignDetails);
+        exit;
     }
 }

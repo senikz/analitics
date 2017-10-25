@@ -60,7 +60,6 @@ class UpdateDirectStatisticsShell extends Shell
         foreach ($this->accounts as $account) {
             $availableCampaigns = $this->Campaign->find('all', [
                 'conditions' => [
-                    'type' => 'yandex',
                     'rel_id IN' => $account['campaigns'],
                 ],
                 'contain' => false

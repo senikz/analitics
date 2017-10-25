@@ -42,7 +42,6 @@ class CallsController extends ApiController
 					case 'timestamp' :
 						$call->time = date('Y-m-d H:i:s', $value);
 						break;
-
 					case 'utm_source' :
 						$call->utm_source = $value;
 						break;

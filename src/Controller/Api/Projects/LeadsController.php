@@ -49,14 +49,12 @@ class LeadsController extends \App\Controller\Api\ApiController
 			$order = empty($query['order']) ? 'time' : $query['order'];
 			$reverse = (empty($query['reverse']) || !$query['reverse']) ? false : true;
 
-
-			uasort($result, function($a, $b) use($order, $reverse) {
+			usort($result, function($a, $b) use($order, $reverse) {
 				if($reverse) {
 					return strnatcmp($b[$order], $a[$order]);
 				} else {
 					return strnatcmp($a[$order], $b[$order]);
 				}
-
 			});
 
 			$this->sendData($result);

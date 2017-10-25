@@ -86,6 +86,11 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 # Data Structures
 
+## Profile
++ id: (number) - ID профиля
++ login: (string) - Логин
++ type: (string) - Тип
+
 ## Campaign Statistics
 + cost (number) - Потраченная сумма(руб.).
 + views (number) - Кол-во просмотров рекламных объявлений за период.
@@ -120,6 +125,7 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 ## Campaign
 + id: (number) - ID кампании
++ site_id: (number) - ID сайта, к которому привязана кампания
 + caption: (string) - Заголовок кампании
 
 ## Keyword
@@ -157,6 +163,14 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 + increment: (number) - Процент завышения ставки
 + active: (boolean) - Статус (включено/выключено)
 
+## Настройки [/settings]
+
+### Список профилей [GET/profiles]
+
++ Response 200 (application/json)
+    + Attributes
+        + data (array,fixed)
+            + (Profile)
 
 ## Проекты [/projects]
 
@@ -335,6 +349,8 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 ### Обновление статистики сайта [PUT/sites/{id}/statistics?{date}]
 
+Возвращает массив объектов с суммой почасовых статистик по всем кампаниям проекта за указанный период.
+
 + Parameters
     + id: (number, required) - ID сайта
     + date: (string, required) - Дата для изменения статистики
@@ -353,13 +369,14 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
     + Attributes
         + data (array,fixed)
             + (Campaign)
+                + site_id: (number) - ID сайта, которому принадлежит кампания
 
 ### Добавить новую кампанию [POST]
 
 + Request
     + Attributes
         + site_id: (number, required) - ID сайта, к которому относится кампания
-        + type: (string, required) - Тип кампании (yandex, adwords)
+        + profile_id: (number, required) - ID профиля, которому принадлежит кампания
         + key: (number, required) - Идентификатор кампании в соответствующей типу системе
         + caption: (string) - Название кампании
 
@@ -376,10 +393,7 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 + Response 200 (application/json)
     + Attributes (Campaign)
         + site_id: (number) - ID сайта, которому принадлежит кампания
-        + type: (enum[number]) - Тип кампании
-            + Members
-                + yandex
-                + adwords
+        + type: (string) - Тип кампании
         + num: (number) - Номер кампании в системе статистики
 
 ### Удалить кампанию [DELETE/campaigns/{id}]

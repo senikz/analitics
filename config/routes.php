@@ -138,6 +138,9 @@ Router::prefix('api', function ($routes) {
     });
 
     $routes->resources('Campaigns', function ($routes) use ($statisticsMap) {
+
+		$routes->connect('/sync', ['controller' => 'campaigns', 'action' => 'sync']);
+
         $routes->resources('Statistics', [
 			'prefix' => 'campaigns',
 			//'only' => false,
