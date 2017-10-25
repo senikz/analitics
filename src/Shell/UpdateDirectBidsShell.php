@@ -3,6 +3,7 @@ namespace App\Shell;
 
 use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
+use \App\Model\Entity\Credential;
 
 use Biplane\YandexDirect\User;
 use Biplane\YandexDirect\Api\V5\Contract\LimitOffset;
@@ -43,12 +44,13 @@ class UpdateDirectBidsShell extends \Cake\Console\Shell
 		$campaigns = $this->Campaigns->find('all', [
 			'conditions' => [
 				'credential_id >' => '0',
+				'Credentials.type' => Credential::TYPE_DIRECT,
 			],
 			'contain' => ['Credentials', 'BidOptions',],
 		])->all();
 
 		foreach($campaigns as $campaign) {
-			if(empty($campaign->credential) || $campaign->credential->type != \App\Model\Entity\Credential::CREDENTIAL_TYPE_DIRECT || empty($campaign->bid_options) || !$campaign->bid_options[0]->status) {
+			if(empty($campaign->credential) || empty($campaign->bid_options) || !$campaign->bid_options[0]->status) {
 				continue;
 			}
 

@@ -80,10 +80,6 @@ class CampaignsTable extends Table
             ->requirePresence('caption', 'create')
             ->notEmpty('caption');
 
-        $validator
-            ->requirePresence('type', 'create')
-            ->notEmpty('type');
-
         return $validator;
     }
 

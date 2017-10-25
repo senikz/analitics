@@ -13,6 +13,7 @@ class RemoveTypeFromCampaigns extends AbstractMigration
     public function change()
     {
         $table = $this->table('campaigns');
+		$table->removeColumn('type');
         $table->update();
     }
 }

@@ -79,7 +79,6 @@ class AdGroupsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['rel_id'], 'Rels'));
         $rules->add($rules->existsIn(['campaign_id'], 'Campaigns'));
 
         return $rules;

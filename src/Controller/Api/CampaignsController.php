@@ -2,14 +2,11 @@
 namespace App\Controller\Api;
 
 use Cake\ORM\TableRegistry;
+use \App\Model\Entity\Credential;
 
 use Biplane\YandexDirect\User;
-use Biplane\YandexDirect\KeywordFieldEnum;
-use Biplane\YandexDirect\Api\V5\Contract\CampaignFieldEnum;
-use Biplane\YandexDirect\Api\V5\Contract\GetCampaignsRequest;
-use Biplane\YandexDirect\Api\V5\Contract\GetKeywordsRequest;
-use Biplane\YandexDirect\Api\V5\Contract\CampaignsSelectionCriteria;
-use Biplane\YandexDirect\Api\V5\Contract\KeywordsSelectionCriteria;
+use Biplane\YandexDirect\Api\V5\Contract\KeywordFieldEnum;
+use Biplane\YandexDirect\Api\V5\Contract\AdGroupFieldEnum;
 
 class CampaignsController extends ApiController
 {
@@ -60,12 +57,13 @@ class CampaignsController extends ApiController
         if ($this->request->is('post')) {
             $data = $this->request->getData();
 
-            if ($this->Validator->required($data, ['site_id', 'type', 'caption', 'key'])) {
+            if ($this->Validator->required($data, ['site_id', 'profile_id', 'caption', 'key'])) {
                 $campaign = $this->Campaigns->newEntity();
                 $campaign->rel_id = $data['key'];
+                $campaign->credential = $this->Campaigns->Credentials->get($data['profile_id']);
                 $campaign = $this->Campaigns->patchEntity($campaign, $data);
 
-                if ($this->Campaigns->save($campaign)) {
+                if ($a = $this->Campaigns->save($campaign)) {
                     $this->sendData([
                         'id' => $campaign->id
                     ]);
@@ -94,50 +92,77 @@ class CampaignsController extends ApiController
     {
         $campaignId = $this->request->getParam('campaign_id');
         $campaignDetails = $this->Campaigns->get($campaignId, [
-			//'contain' => ['Credentials'],
+			'contain' => ['Credentials'],
 		]);
 
-		var_dump($campaignDetails);
-$campaignDetails->test();
-		exit;
-
-        $campaignDetails = $this->Campaigns->find('all', [
-			//'contain' => ['Credentials'],
-		])->all();
-
-		var_dump($campaignDetails);
-		//$campaignDetails->sync();
-		exit;
-
-
-        if (empty($campaignDetails->credential_id)) {
-            return;
-        }
-return;
-    	$user = $campaignDetails->credential->getUser();
-
-		if($campaignDetails->credential->isDirect) {
-
+		if(empty($campaignDetails->credential) || $campaignDetails->credential->type != Credential::TYPE_DIRECT) {
+			$this->sendError('Campaign #'.$campaignId.' is not associated with any profiles');
 		}
 
-		$bids = $user->getKeywordsService()->get(
-			GetKeywordsRequest::create()
+		$user = $campaignDetails->credential->getUser();
+
+		$adGroups = $user->getAdGroupsService()->get(
+			\Biplane\YandexDirect\Api\V5\Contract\GetAdGroupsRequest::create()
 				->setSelectionCriteria(
-					KeywordsSelectionCriteria::create()->setCampaignIds([$campaign->rel_id])
+					\Biplane\YandexDirect\Api\V5\Contract\AdGroupsSelectionCriteria::create()->setCampaignIds([$campaignDetails->rel_id])
 				)
 				->setFieldNames([
-					BidFieldEnum::KEYWORD_ID,
-					BidFieldEnum::CAMPAIGN_ID,
-					BidFieldEnum::AD_GROUP_ID,
-					BidFieldEnum::BID,
-					BidFieldEnum::AUCTION_BIDS,
+					AdGroupFieldEnum::ID,
+					AdGroupFieldEnum::NAME,
+					AdGroupFieldEnum::CAMPAIGN_ID,
 				])
-			//	->setPage(
-			//		LimitOffset::create()->setLimit(3)->setOffset(0)
-			//	)
-		);
+		)->getAdGroups();
 
-        var_dump($campaignDetails);
-        exit;
+		if(!empty($adGroups)) {
+			$adGroupsTable = TableRegistry::get('AdGroups');
+			$adGroupsIds = [];
+
+			foreach($adGroups as $group) {
+				$groupDetails = $adGroupsTable->find('all', ['conditions' => ['rel_id' => $group->getId()]])->first();
+				if(!$groupDetails) {
+					$groupDetails = $adGroupsTable->newEntity(['rel_id' => $group->getId(), 'campaign_id' => $campaignId]);
+				}
+				$groupDetails->name = $group->getName();
+				$adGroupsTable->save($groupDetails);
+
+				$adGroupsIds[$group->getId()] = $groupDetails->id;
+			}
+
+			$adGroupsTable->deleteAll([
+				'AdGroups.campaign_id' => $campaignId,
+				'AdGroups.rel_id NOT IN' => array_keys($adGroupsIds),
+			]);
+
+			$keywords = $user->getKeywordsService()->get(
+				\Biplane\YandexDirect\Api\V5\Contract\GetKeywordsRequest::create()
+					->setSelectionCriteria(
+						\Biplane\YandexDirect\Api\V5\Contract\KeywordsSelectionCriteria::create()->setCampaignIds([$campaignDetails->rel_id])
+					)
+					->setFieldNames([
+						KeywordFieldEnum::ID,
+						KeywordFieldEnum::AD_GROUP_ID,
+						KeywordFieldEnum::KEYWORD,
+					])
+			)->getKeywords();
+
+			if(!empty($keywords)) {
+				$keywordsTable = TableRegistry::get('Keywords');
+				$keywordsIds = [];
+
+				$query = $keywordsTable->query()->insert(['rel_id', 'campaign_id', 'ad_group_id', 'keyword']);
+
+				foreach($keywords as $keyword) {
+					$keywordsIds[] = $keyword->getId();
+					$query->values(['rel_id' => $keyword->getId(), 'campaign_id' => $campaignId, 'ad_group_id' => $adGroupsIds[$keyword->getAdGroupId()], 'keyword' => $keyword->getKeyword()]);
+				}
+
+				$query->epilog('ON DUPLICATE KEY UPDATE `keyword`=values(`keyword`)')->execute();
+
+				$keywordsTable->deleteAll([
+					'Keywords.campaign_id' => $campaignId,
+					'Keywords.rel_id NOT IN' => $keywordsIds,
+				]);
+			}
+		}
     }
 }

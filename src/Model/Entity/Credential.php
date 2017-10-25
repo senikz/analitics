@@ -42,10 +42,14 @@ class Credential extends Entity
 
     public function getUser()
     {
-        return new \Biplane\YandexDirect\User([
-            'access_token' => $this->token,
-            'login' => $this->login,
-            'locale' => \Biplane\YandexDirect\User::LOCALE_RU,
-        ]);
+		if($this->type == self::TYPE_DIRECT) {
+			return new \Biplane\YandexDirect\User([
+	            'access_token' => $this->token,
+	            'login' => $this->login,
+	            'locale' => \Biplane\YandexDirect\User::LOCALE_RU,
+	        ]);
+		} else if($this->type == self::TYPE_ADWORDS) {
+			return;
+		}
     }
 }
