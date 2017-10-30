@@ -22,7 +22,7 @@ class ApiController extends Controller
         $this->response->header('Access-Control-Allow-Origin', '*');
         $this->response->header('Access-Control-Allow-Methods', 'PUT, POST, GET, OPTIONS, DELETE, PATCH');
         $this->response->header('Access-Control-Allow-Headers', 'User-Token, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
-		$this->response->header('Content-Type', 'application/json');
+		$this->response->withType('application/json');
 
 		if($this->request->is('options')) {
 			$this->response->statusCode(200);
@@ -83,14 +83,13 @@ class ApiController extends Controller
 			}
 		}
 
-		$this->response->body(json_encode([
+		$this->response->withType('application/json')->withStringBody(json_encode([
 			'request' => [
 				'query' => $query,
 				'body' => $this->request->getData(),
 			],
 			'data' => $data
-		]));
-		$this->response->send();
+		]))->send();
 		exit;
 	}
 
@@ -100,9 +99,10 @@ class ApiController extends Controller
 			$errors = ['message' => $errors];
 		}
 
-		$this->response->statusCode($code);
-		$this->response->body(json_encode(['errors' => $errors]));
-		$this->response->send();
+		$this->response->withType('application/json')
+			->statusCode($code)
+			->withStringBody(json_encode(['errors' => $errors]))
+			->send();
 		exit;
 	}
 }

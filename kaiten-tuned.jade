@@ -1,0 +1,1581 @@
+doctype
+
+mixin Badge(method)
+    //- Draw a badge for a given HTTP method
+    case method
+        when 'GET'
+            span.badge.get
+        when 'HEAD'
+            span.badge.head
+        when 'OPTIONS'
+            span.badge.options
+        when 'POST'
+            span.badge.post
+        when 'PUT'
+            span.badge.put
+        when 'PATCH'
+            span.badge.patch
+        when 'DELETE'
+            span.badge.delete
+        default
+            span.badge
+
+mixin Nav()
+    //- Draw a navigation bar, which includes links to individual
+    //- resources and actions.
+    nav
+        if self.api.navItems && self.api.navItems.length
+            .resource-group
+                .heading
+                    .chevron
+                        i.open.fa.fa-angle-down
+                    a(href='#top') Overview
+                .collapse-content
+                    ul: each item in self.api.navItems
+                        li
+                            a(href=item[1])!= item[0]
+        each resourceGroup in self.api.resourceGroups || []
+            .resource-group
+                .heading
+                    .chevron
+                        i.open.fa.fa-angle-down
+                    a(href=resourceGroup.elementLink)!= resourceGroup.name || 'Resource Group'
+                .collapse-content
+                    ul
+                        each item in resourceGroup.navItems || []
+                            li
+                                a(href=item[1])!= item[0]
+                        each resource in resourceGroup.resources || []
+                            li
+                                if !self.condenseNav || (resource.actions.length != 1)
+                                    a(href=resource.elementLink)
+                                        b!= resource.name || 'Resource'
+                                    ul: each action in resource.actions || []
+                                        li: a(href=action.elementLink)
+                                            +Badge(action.method)
+                                            != action.name || action.method + ' ' + (action.attributes && action.attributes.uriTemplate || resource.uriTemplate)
+                                else
+                                    - var action = resource.actions[0]
+                                    a(href=action.elementLink)
+                                        +Badge(action.method)
+                                        != action.name || resource.name || action.method + ' ' + (action.attributes && action.attributes.uriTemplate || resource.uriTemplate)
+        //- Link to the API hostname, e.g. api.yourcompany.com
+        each meta in self.api.metadata || {}
+            if meta.name == 'HOST'
+                p(style="text-align: center; word-wrap: break-word;")
+                    a(href=meta.value)= meta.value
+
+mixin Parameters(params)
+    //- Draw a definition list of parameter names, types, defaults,
+    //- examples and descriptions.
+    .title
+        strong Parameters
+        .collapse-button.show
+            i(class="fa fa-arrow-down close")
+            i(class="fa fa-arrow-left open")
+    .collapse-content
+        table.inner: each param in params || []
+            tr
+                td
+                td(class="attribute-status")
+                    span(class=param.required ? 'required' : '')
+                td #{self.urldec(param.name)}
+                td
+                    span.attribute-type #{param.type || 'string'}
+                    p #{param.description}
+
+
+mixin Constraints(name, schema)
+    each constraint in ['minLength', 'maxLength', 'pattern']
+        if schema.properties[name][constraint]
+            div #{constraint}: #{schema.properties[name][constraint]}
+
+
+mixin RequestResponse(title, request, collapse, showSchema)
+    .title
+        strong
+            = title
+            if request.name
+                | &nbsp;&nbsp;
+                code= request.name
+        if collapse && request.hasContent
+            .collapse-button
+                i(class="fa fa-arrow-down close")
+                i(class="fa fa-arrow-left open")
+    +RequestResponseBody(request, collapse, false, showSchema)
+
+mixin RequestResponseBody(request, collapse, showBlank, showSchema)
+    if request.hasContent || showBlank
+        div(class=collapse ? 'collapse-content' : ''): .inner
+            if request.description
+                .description!= self.markdown(request.description)
+
+            if Object.keys(request.headers).length
+                h5 Headers
+                pre: code
+                    each item, index in request.headers
+                        != self.highlight(item.name + ': ' + item.value, 'http')
+                        if index < request.headers.length - 1
+                            br
+                div(style="height: 1px;")
+
+            if request.hasContent
+                div(class="tabs r-tabs")
+                    div.tabs-menu
+                        if request.schema 
+                            a(data-tab="attributes" class="tab-button active") Attributes
+                        if request.body
+                            a(data-tab="attributes" class="tab-button") Body
+                        if showSchema && request.schema 
+                            a(data-tab="attributes" class="tab-button") Schema
+                    if request.schema
+                        div.tab(data-tab="attributes" class="active")
+                            - var schema = JSON.parse(request.schema)
+                            table(style="width: 100%;")
+                                thead
+                                    each description, name in schema.properties || []
+                                        tr
+                                            td(class="attribute-status")
+                                                span(class=(schema.required && schema.required.indexOf(name) >= 0) ? 'required' : '')
+                                            td #{name}
+                                            td
+                                                span.attribute-type #{description.type}
+                                                p #{description.description}
+                                            td
+                                                +Constraints(name, schema) 
+                                        if description.type == 'array'
+                                            each d2, n2 in description.items.properties || []
+                                                tr
+                                                    td
+                                                    td(class="attribute-status")
+                                                        span(class=(schema.required && schema.required.indexOf(n2) >= 0) ? 'required' : '')
+                                                    td #{n2}
+                                                    td
+                                                        span.attribute-type #{d2.type}
+                                                        p #{d2.description}
+                                                if d2.type == 'array'
+                                                    each d3, n3 in d2.items.properties || []
+                                                        tr
+                                                            td
+                                                            td(class="attribute-status")
+                                                                span(class=(schema.required && schema.required.indexOf(n3) >= 0) ? 'required' : '')
+                                                            td #{n3}
+                                                            td
+                                                                span.attribute-type #{d3.type}
+                                                                p #{d3.description}
+                    if request.body
+                        div.tab(data-tab="body")
+                            pre: code
+                                != self.highlight(request.body, null, ['json', 'yaml', 'xml', 'javascript'])
+                            div(style="height: 1px;")
+                    if showSchema && request.schema 
+                        div.tab(data-tab="schema")
+                            pre: code
+                                != self.highlight(request.schema, null, ['json', 'yaml', 'xml'])
+
+            if !request.hasContent
+                .description.text-muted This response has no content.
+                div(style="height: 1px;")
+
+mixin Examples(resourceGroup, resource, action)
+    each example in action.examples
+        each request in example.requests
+            +RequestResponse('Request', request, true, true)
+        each response in example.responses
+            +RequestResponse('Response', response, true, true)
+
+mixin Content()
+    //- Page header and API description
+    header
+        h1#top!= self.api.name || 'API Documentation'
+
+    if self.api.descriptionHtml
+        != self.api.descriptionHtml
+
+    //- Loop through and display information about all the resource
+    //- groups, resources, and actions.
+    each resourceGroup in self.api.resourceGroups || []
+        h2.group-heading
+            != resourceGroup.name || 'Resource Group'
+            = " "
+            a.permalink(href=resourceGroup.elementLink) &para;
+        if resourceGroup.descriptionHtml
+            != resourceGroup.descriptionHtml
+
+        each resource in resourceGroup.resources || []
+            .resource(id=resource.elementId)
+                h3.resource-heading
+                    != resource.name || ((resource.actions[0] != null) && resource.actions[0].name) || 'Resource'
+                    = " "
+                    a.permalink(href=resource.elementLink) &nbsp;&para;
+                if resource.description
+                    != self.markdown(resource.description)
+
+                each action in resource.actions || []
+                    .action(class=action.methodLower, id=action.elementId)
+                        div.action-name!= action.name
+                        h4.action-heading
+                            a.method(class=action.methodLower, href=action.elementLink)
+                                = action.method
+                            code.uri= self.urldec(self.api.host + action.uriTemplate)
+                        if action.description
+                            != self.markdown(action.description)
+
+                        //- A list of sub-sections for parameters, requests
+                        //- and responses.
+                        if action.parameters.length
+                            +Parameters(action.parameters)
+                        if action.examples
+                            +Examples(resourceGroup, resource, action)
+
+mixin ContentTriple()
+    .middle
+        //- Page header and API description
+        header
+            h1#top!= self.api.name || 'API Documentation'
+
+    .right
+        h5 API Endpoint
+        a(href=self.api.host)= self.api.host
+    .middle
+        if self.api.descriptionHtml
+            != self.api.descriptionHtml
+
+    //- Loop through and display information about all the resource
+    //- groups, resources, and actions.
+    each resourceGroup in self.api.resourceGroups || []
+        .middle
+            section.resource-group(id=resourceGroup.elementId)
+                h2.group-heading
+                    != resourceGroup.name || 'Resource Group'
+                    = " "
+                    a.permalink(href=resourceGroup.elementLink) &para;
+                if resourceGroup.descriptionHtml
+                    != resourceGroup.descriptionHtml
+
+        each resource in resourceGroup.resources || []
+            .middle
+                .resource(id=resource.elementId)
+                    h3.resource-heading
+                        != resource.name || ((resource.actions[0] != null) && resource.actions[0].name) || 'Resource'
+                        = " "
+                        a.permalink(href=resource.elementLink) &para;
+                    if resource.description
+                        != self.markdown(resource.description)
+
+            each action in resource.actions || []
+                if action.examples
+                    .right
+                        .definition
+                            span.method(class=action.methodLower)= action.method
+                            | &nbsp;
+                            span.uri
+                                span.hostname= self.api.host
+                                != action.colorizedUriTemplate
+                        .tabs
+                            if action.hasRequest
+                                .example-names
+                                    span Requests
+                                    - var requestCount = 0
+                                    each example in action.examples
+                                        each request in example.requests
+                                            - requestCount++
+                                            span.tab-button= request.name || 'example ' + requestCount
+                                each example in action.examples
+                                    each request in example.requests
+                                        .tab
+                                            +RequestResponseBody(request, false, true)
+                                            .tabs
+                                                .example-names
+                                                    span Responses
+                                                    each response in example.responses
+                                                        span.tab-button= response.name
+                                                each response in example.responses
+                                                    .tab
+                                                        +RequestResponseBody(response, false, true)
+                            else
+                                each example in action.examples
+                                    .tabs
+                                        .example-names
+                                            span Responses
+                                            each response in example.responses
+                                                span.tab-button= response.name
+                                        each response in example.responses
+                                            .tab
+                                                +RequestResponseBody(response, false, true)
+                .middle
+                    .action(class=action.methodLower, id=action.elementId)
+                        h4.action-heading
+                            .name!= action.name
+                            a.method(class=action.methodLower, href=action.elementLink)
+                                = action.method
+                            code.uri= self.urldec(action.uriTemplate)
+                        if action.description
+                            != self.markdown(action.description)
+
+                        //- A list of sub-sections for parameters, requests
+                        //- and responses.
+                        if action.parameters.length
+                            +Parameters(action.parameters)
+
+                hr.split
+
+
+html
+    head
+        meta(charset="utf-8")
+        title= self.api.name || 'API Documentation'
+        link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css")
+        style(type='text/css').
+            @import url('https://fonts.googleapis.com/css?family=Roboto:400,700|Inconsolata|Raleway:200');
+            .hljs-comment,
+            .hljs-title {
+                color: #8e908c;
+            }
+            .hljs-variable,
+            .hljs-attribute,
+            .hljs-tag,
+            .hljs-regexp,
+            .ruby .hljs-constant,
+            .xml .hljs-tag .hljs-title,
+            .xml .hljs-pi,
+            .xml .hljs-doctype,
+            .html .hljs-doctype,
+            .css .hljs-id,
+            .css .hljs-class,
+            .css .hljs-pseudo {
+                color: #c82829;
+            }
+            .hljs-number,
+            .hljs-preprocessor,
+            .hljs-pragma,
+            .hljs-built_in,
+            .hljs-literal,
+            .hljs-params,
+            .hljs-constant {
+                color: #f5871f;
+            }
+            .ruby .hljs-class .hljs-title,
+            .css .hljs-rules .hljs-attribute {
+                color: #eab700;
+            }
+            .hljs-string,
+            .hljs-value,
+            .hljs-inheritance,
+            .hljs-header,
+            .ruby .hljs-symbol,
+            .xml .hljs-cdata {
+                color: #718c00;
+            }
+            .css .hljs-hexcolor {
+                color: #3e999f;
+            }
+            .hljs-function,
+            .python .hljs-decorator,
+            .python .hljs-title,
+            .ruby .hljs-function .hljs-title,
+            .ruby .hljs-title .hljs-keyword,
+            .perl .hljs-sub,
+            .javascript .hljs-title,
+            .coffeescript .hljs-title {
+                color: #4271ae;
+            }
+            .hljs-keyword,
+            .javascript .hljs-function {
+                color: #8959a8;
+            }
+            .hljs {
+                display: block;
+                background: white;
+                color: #4d4d4c;
+                padding: 0.5em;
+            }
+            .coffeescript .javascript,
+            .javascript .xml,
+            .tex .hljs-formula,
+            .xml .javascript,
+            .xml .vbscript,
+            .xml .css,
+            .xml .hljs-cdata {
+                opacity: 0.5;
+            }
+            /* Highlight.js Theme Tomorrow Night */
+            .right .hljs-comment {
+                color: #969896;
+            }
+            .right .css .hljs-class,
+            .right .css .hljs-id,
+            .right .css .hljs-pseudo,
+            .right .hljs-attribute,
+            .right .hljs-regexp,
+            .right .hljs-tag,
+            .right .hljs-variable,
+            .right .html .hljs-doctype,
+            .right .ruby .hljs-constant,
+            .right .xml .hljs-doctype,
+            .right .xml .hljs-pi,
+            .right .xml .hljs-tag .hljs-title {
+                color: #c66;
+            }
+            .right .hljs-built_in,
+            .right .hljs-constant,
+            .right .hljs-literal,
+            .right .hljs-number,
+            .right .hljs-params,
+            .right .hljs-pragma,
+            .right .hljs-preprocessor {
+                color: #de935f;
+            }
+            .right .css .hljs-rule .hljs-attribute,
+            .right .ruby .hljs-class .hljs-title {
+                color: #f0c674;
+            }
+            .right .hljs-header,
+            .right .hljs-inheritance,
+            .right .hljs-name,
+            .right .hljs-string,
+            .right .hljs-value,
+            .right .ruby .hljs-symbol,
+            .right .xml .hljs-cdata {
+                color: #b5bd68;
+            }
+            .right .css .hljs-hexcolor,
+            .right .hljs-title {
+                color: #8abeb7;
+            }
+            .right .coffeescript .hljs-title,
+            .right .hljs-function,
+            .right .javascript .hljs-title,
+            .right .perl .hljs-sub,
+            .right .python .hljs-decorator,
+            .right .python .hljs-title,
+            .right .ruby .hljs-function .hljs-title,
+            .right .ruby .hljs-title .hljs-keyword {
+                color: #81a2be;
+            }
+            .right .hljs-keyword,
+            .right .javascript .hljs-function {
+                color: #b294bb;
+            }
+            .right .hljs {
+                display: block;
+                overflow-x: auto;
+                background: #1d1f21;
+                color: #c5c8c6;
+                padding: .5em;
+                -webkit-text-size-adjust: none;
+            }
+            .right .coffeescript .javascript,
+            .right .javascript .xml,
+            .right .tex .hljs-formula,
+            .right .xml .css,
+            .right .xml .hljs-cdata,
+            .right .xml .javascript,
+            .right .xml .vbscript {
+                opacity: 0.5;
+            }
+            /* Element styles */
+            body {
+                color: black;
+                background: rgba(234, 234, 231, 0.66);
+                font: 400 14px / 1.42 'Roboto', Helvetica, sans-serif;
+                margin: 0;
+            }
+            header {
+                border-bottom: 1px solid #f2f2f2;
+                margin-bottom: 12px;
+            }
+            h1,
+            h2,
+            h3,
+            h4,
+            h5 {
+                color: black;
+                margin: 12px 0;
+            }
+            h1 .permalink,
+            h2 .permalink,
+            h3 .permalink,
+            h4 .permalink,
+            h5 .permalink {
+                margin-left: 0;
+                opacity: 0;
+                transition: opacity 0.25s ease;
+            }
+            h1:hover .permalink,
+            h2:hover .permalink,
+            h3:hover .permalink,
+            h4:hover .permalink,
+            h5:hover .permalink {
+                opacity: 1;
+            }
+            .triple h1 .permalink,
+            .triple h2 .permalink,
+            .triple h3 .permalink,
+            .triple h4 .permalink,
+            .triple h5 .permalink {
+                opacity: 0.15;
+            }
+            .triple h1:hover .permalink,
+            .triple h2:hover .permalink,
+            .triple h3:hover .permalink,
+            .triple h4:hover .permalink,
+            .triple h5:hover .permalink {
+                opacity: 0.15;
+            }
+            h1 {
+                font: 200 36px 'Raleway', Helvetica, sans-serif;
+                font-size: 36px;
+            }
+            h2 {
+                font: 200 36px 'Raleway', Helvetica, sans-serif;
+                font-size: 30px;
+            }
+            h3 {
+                font-size: 100%;
+                text-transform: uppercase;
+            }
+            h5 {
+                font-size: 100%;
+                font-weight: normal;
+            }
+            p {
+                margin: 0 0 10px;
+            }
+            p.choices {
+                line-height: 1.6;
+            }
+            a {
+                color: #428bca;
+                text-decoration: none;
+            }
+            li p {
+                margin: 0;
+            }
+            hr.split {
+                border: 0;
+                height: 1px;
+                width: 100%;
+                padding-left: 6px;
+                margin: 12px auto;
+                background-image: linear-gradient(to right, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0.2) 51.4%, rgba(255, 255, 255, 0.2) 51.4%, rgba(255, 255, 255, 0) 80%);
+            }
+            dl dt {
+                float: left;
+                width: 130px;
+                clear: left;
+                text-align: right;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                font-weight: 700;
+            }
+            dl dd {
+                margin-left: 150px;
+            }
+            blockquote {
+                color: rgba(0, 0, 0, 0.5);
+                font-size: 15.5px;
+                padding: 10px 20px;
+                margin: 12px 0;
+                border-left: 5px solid #e8e8e8;
+            }
+            blockquote p:last-child {
+                margin-bottom: 0;
+            }
+            pre {
+                background-color: #f5f5f5;
+                padding: 12px;
+                border: 1px solid #cfcfcf;
+                border-radius: 6px;
+                overflow: auto;
+            }
+            pre code {
+                color: black;
+                background-color: transparent;
+                padding: 0;
+                border: none;
+            }
+            code {
+                color: #444;
+                background-color: #f5f5f5;
+                font: 'Inconsolata', monospace;
+                padding: 1px 4px;
+                border: 1px solid #cfcfcf;
+                border-radius: 3px;
+            }
+            ol,
+            ul {
+                padding-left: 2em;
+            }
+            table {
+                border-collapse: collapse;
+                border-spacing: 0;
+                margin-bottom: 12px;
+            }
+            table tr {
+                border-top: 1px solid #ddd;
+            }
+            table tr:first-child {
+                border-top: none;
+            }
+            table td {
+                border: none;
+                padding: 12px 12px 0;
+                vertical-align: top;
+            }
+            table td.attribute-status {
+                text-align: right;
+                width: 50px;
+            }
+            table td.attribute-status span {
+                display: inline-block;
+                width: 6px;
+                height: 6px;
+                background: none;
+                border: 2px solid #ccc;
+                border-radius: 5px;
+                line-height: 8px;
+            }
+            table td.attribute-status span.required {
+                background: #ccc;
+            }
+            table .attribute-type {
+                display: inline-block;
+                padding: 0 14px;
+                background: #d0d0d0;
+                border-radius: 4px;
+                color: #fff;
+                font-size: 13px;
+                margin: 0 0 3px;
+            }
+            .text-muted {
+                opacity: 0.5;
+            }
+            .note,
+            .warning {
+                padding: 0.3em 1em;
+                margin: 1em 0;
+                border-radius: 2px;
+                font-size: 90%;
+            }
+            .note h1,
+            .warning h1,
+            .note h2,
+            .warning h2,
+            .note h3,
+            .warning h3,
+            .note h4,
+            .warning h4,
+            .note h5,
+            .warning h5,
+            .note h6,
+            .warning h6 {
+                font-family: 200 36px 'Raleway', Helvetica, sans-serif;
+                font-size: 135%;
+                font-weight: 500;
+            }
+            .note p,
+            .warning p {
+                margin: 0.5em 0;
+            }
+            .note {
+                color: black;
+                background-color: #f0f6fb;
+                border-left: 4px solid #428bca;
+            }
+            .note h1,
+            .note h2,
+            .note h3,
+            .note h4,
+            .note h5,
+            .note h6 {
+                color: #428bca;
+            }
+            .warning {
+                color: black;
+                background-color: #fbf1f0;
+                border-left: 4px solid #c9302c;
+            }
+            .warning h1,
+            .warning h2,
+            .warning h3,
+            .warning h4,
+            .warning h5,
+            .warning h6 {
+                color: #c9302c;
+            }
+            header {
+                margin-top: 24px;
+            }
+            nav {
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                overflow-y: auto;
+                /* Remove the top border from the first item in each group */
+            }
+            nav .resource-group {
+                padding: 0;
+            }
+            nav .resource-group .heading {
+                position: relative;
+            }
+            nav .resource-group .heading .chevron {
+                position: absolute;
+                top: 12px;
+                right: 12px;
+                opacity: 0.5;
+            }
+            nav .resource-group .heading a {
+                display: block;
+                color: black;
+                opacity: 0.7;
+                border-left: 2px solid transparent;
+                margin: 0;
+            }
+            nav .resource-group .heading a:hover {
+                text-decoration: none;
+                background-color: bad-color;
+                border-left: 2px solid black;
+            }
+            nav ul {
+                list-style-type: none;
+                padding-left: 0;
+                /* Spacing for first level items */
+                /* Adjust spacing for nested lists */
+            }
+            nav ul a {
+                display: block;
+                font-size: 13px;
+                color: rgba(0, 0, 0, 0.7);
+                padding: 8px 12px;
+                border-top: 1px solid #d9d9d9;
+                border-left: 2px solid transparent;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            nav ul a:hover {
+                text-decoration: none;
+                background-color: bad-color;
+                border-left: 2px solid black;
+            }
+            nav ul > li {
+                margin: 0;
+            }
+            nav ul > li:first-child {
+                margin-top: -12px;
+            }
+            nav ul > li:last-child {
+                margin-bottom: -12px;
+            }
+            nav ul ul a {
+                padding-left: 24px;
+            }
+            nav ul ul li {
+                margin: 0;
+            }
+            nav ul ul li:first-child {
+                margin-top: 0;
+            }
+            nav ul ul li:last-child {
+                margin-bottom: 0;
+            }
+            nav > div > div > ul > li:first-child > a {
+                border-top: none;
+            }
+            /* Generic classes */
+            .preload * {
+                transition: none !important;
+            }
+            .pull-left {
+                float: left;
+            }
+            .pull-right {
+                float: right;
+            }
+            .badge {
+                display: inline-block;
+                float: right;
+                width: 10px;
+                height: 10px;
+                border-radius: 5px;
+                margin: 4px 0 0 0;
+            }
+            .badge.get {
+                color: #154862;
+                background-color: #2b95cb;
+            }
+            .badge.head {
+                color: #154862;
+                background-color: #2b95cb;
+            }
+            .badge.options {
+                color: #154862;
+                background-color: #2b95cb;
+            }
+            .badge.put {
+                color: #f0db70;
+                background-color: #fcf8e3;
+            }
+            .badge.patch {
+                color: #f0db70;
+                background-color: #fcf8e3;
+            }
+            .badge.post {
+                color: #195819;
+                background-color: #36bb36;
+            }
+            .badge.delete {
+                color: #971313;
+                background-color: #e74343;
+            }
+            .collapse-button {
+                float: right;
+            }
+            .collapse-button .close {
+                display: none;
+                color: #428bca;
+                cursor: pointer;
+            }
+            .collapse-button .open {
+                color: #428bca;
+                cursor: pointer;
+            }
+            .collapse-button.show .close {
+                display: inline;
+            }
+            .collapse-button.show .open {
+                display: none;
+            }
+            .collapse-content {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-in-out;
+            }
+            /* Layout classes */
+            nav {
+                width: 220px;
+            }
+            .container {
+                max-width: 940px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .container .row .content {
+                margin-left: 244px;
+                width: 696px;
+            }
+            .container .row:after {
+                content: '';
+                display: block;
+                clear: both;
+            }
+            .container-fluid nav {
+                width: 22%;
+            }
+            .container-fluid .row .content {
+                margin-left: 24%;
+                padding-right: 20px;
+            }
+            .container-fluid.triple nav {
+                width: 16.5%;
+                padding-right: 1px;
+            }
+            .container-fluid.triple .row .content {
+                position: relative;
+                margin-left: 16.5%;
+                padding-left: 24px;
+            }
+            .middle:after,
+            .middle:before {
+                content: '';
+                display: table;
+            }
+            .middle:after {
+                clear: both;
+            }
+            .middle {
+                box-sizing: border-box;
+                width: 51.5%;
+                padding-right: 12px;
+            }
+            .right {
+                box-sizing: border-box;
+                float: right;
+                width: 48.5%;
+                padding-left: 12px;
+            }
+            .right a {
+                color: #428bca;
+            }
+            .right div,
+            .right h1,
+            .right h2,
+            .right h3,
+            .right h4,
+            .right h5,
+            .right p {
+                color: white;
+            }
+            .right pre {
+                background-color: #1d1f21;
+                border: 1px solid #1d1f21;
+            }
+            .right pre code {
+                color: #c5c8c6;
+            }
+            .right .description {
+                margin-top: 12px;
+            }
+            .triple .resource-heading {
+                font-size: 125%;
+            }
+            .definition {
+                margin-top: 12px;
+                margin-bottom: 12px;
+            }
+            .definition .method {
+                font-weight: bold;
+            }
+            .definition .method.get {
+                color: #2e89b8;
+            }
+            .definition .method.head {
+                color: #2e89b8;
+            }
+            .definition .method.options {
+                color: #2e89b8;
+            }
+            .definition .method.post {
+                color: #2eb82e;
+            }
+            .definition .method.put {
+                color: #b8a22e;
+            }
+            .definition .method.patch {
+                color: #b8a22e;
+            }
+            .definition .method.delete {
+                color: #b82e2e;
+            }
+            .definition .uri {
+                word-break: break-all;
+                word-wrap: break-word;
+            }
+            .definition .hostname {
+                opacity: 0.5;
+            }
+            .example-names {
+                background-color: #eee;
+                padding: 12px;
+                border-radius: 6px;
+            }
+            .example-names .tab-button {
+                cursor: pointer;
+                color: black;
+                border: 1px solid #ddd;
+                padding: 6px;
+                margin-left: 12px;
+            }
+            .example-names .tab-button.active {
+                background-color: #d5d5d5;
+            }
+            .right .example-names {
+                background-color: #444;
+            }
+            .right .example-names .tab-button {
+                color: white;
+                border: 1px solid #666;
+                border-radius: 6px;
+            }
+            .right .example-names .tab-button.active {
+                background-color: #5e5e5e;
+            }
+            #nav-background {
+                position: fixed;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 16.5%;
+                padding-right: 14.4px;
+                background-color: #fbfbfb;
+                border-right: 1px solid #f0f0f0;
+                z-index: -1;
+            }
+            #right-panel-background {
+                position: absolute;
+                right: -12px;
+                top: -12px;
+                bottom: -12px;
+                width: 48.6%;
+                background-color: #333;
+                z-index: -1;
+            }
+            @media (max-width: 1200px) {
+                nav {
+                    width: 198px;
+                }
+                .container {
+                    max-width: 840px;
+                }
+                .container .row .content {
+                    margin-left: 224px;
+                    width: 606px;
+                }
+            }
+            @media (max-width: 992px) {
+                nav {
+                    width: 169.4px;
+                }
+                .container {
+                    max-width: 720px;
+                }
+                .container .row .content {
+                    margin-left: 194px;
+                    width: 526px;
+                }
+            }
+            @media (max-width: 768px) {
+                nav {
+                    display: none;
+                }
+                .container {
+                    width: 95%;
+                    max-width: none;
+                }
+                .container .row .content,
+                .container-fluid .row .content,
+                .container-fluid.triple .row .content {
+                    margin-left: auto;
+                    margin-right: auto;
+                    width: 95%;
+                }
+                #nav-background {
+                    display: none;
+                }
+                #right-panel-background {
+                    width: 48.6%;
+                }
+            }
+            /* Context-specific and API color classes */
+            .back-to-top {
+                position: fixed;
+                z-index: 1;
+                bottom: 0;
+                right: 24px;
+                padding: 4px 8px;
+                color: rgba(0, 0, 0, 0.5);
+                background-color: #f2f2f2;
+                text-decoration: none !important;
+                border-top: 1px solid #d9d9d9;
+                border-left: 1px solid #d9d9d9;
+                border-right: 1px solid #d9d9d9;
+                border-top-left-radius: 3px;
+                border-top-right-radius: 3px;
+            }
+            .resource-group {
+                padding: 12px;
+                margin-bottom: 12px;
+                background-color: white;
+                border: 1px solid #d9d9d9;
+            }
+            .resource-group .heading a,
+            .resource-group h2.group-heading {
+                padding: 12px;
+                margin: -12px -12px 12px -12px;
+                background-color: #f2f2f2;
+                border-bottom: 1px solid #d9d9d9;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+            .triple .content .resource-group {
+                padding: 0;
+                border: none;
+            }
+            .triple .content .resource-group .heading a,
+            .triple .content .resource-group h2.group-heading {
+                margin: 0 0 12px;
+                border: 1px solid #d9d9d9;
+            }
+            nav .resource-group .heading a {
+                padding: 12px;
+                margin-bottom: 0;
+            }
+            nav .resource-group .collapse-content {
+                padding: 0;
+            }
+            .action {
+                margin-bottom: 40px;
+                padding: 12px 12px 0;
+                overflow: hidden;
+                border: 1px solid #d9d9d8;
+                border-radius: 6px;
+                padding-bottom: 20px;
+                background: #fff;
+            }
+            .action .action-name {
+                font-size: 18px;
+                position: relative;
+                white-space: nowrap;
+                line-height: 1;
+                text-align: center;
+                margin: 10px 0;
+                height: 30px;
+                font-weight: 400;
+                color: #000;
+            }
+            .action h4.action-heading {
+                padding: 0;
+                margin: 5px 5px 15px;
+                border-width: 1px;
+                border-style: solid;
+                border-radius: 4px;
+                height: 40px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+            .action h4.action-heading .name {
+                float: right;
+                font-weight: normal;
+            }
+            .action h4.action-heading .method {
+                padding: 0;
+                margin-right: 12px;
+                border-radius: 0;
+                line-height: 40px;
+                height: 40px;
+                display: block;
+                width: 64px;
+                text-align: center;
+                font-size: 16px;
+                color: #fff !important;
+                float: left;
+            }
+            .action h4.action-heading code {
+                height: 40px;
+                display: block;
+                line-height: 40px;
+                font-size: 15px;
+                background-color: transparent;
+                padding: 0;
+                border: none;
+            }
+            .action dl.inner {
+                padding-bottom: 2px;
+            }
+            .action .title {
+                border-bottom: 1px solid white;
+                margin: 0 -12px -1px;
+                padding: 12px;
+                color: #666;
+                font-size: 16px;
+            }
+            .action .title:after {
+                content: '';
+                display: block;
+                width: 100%;
+                height: 1px;
+                background: #cdcdcd;
+                margin: -11px 0 0 0;
+            }
+            .action .title strong {
+                background: #fff;
+                padding: 0 10px 0 0;
+                font-weight: 300;
+            }
+            .action .title .collapse-button {
+                padding: 0 0 0 8px;
+                background: #fff;
+            }
+            .action .title .collapse-button * {
+                color: #666;
+            }
+            .action.get h4.action-heading,
+            .action.get h4.action-heading code {
+                color: #337ab7;
+            }
+            .action.get h4.action-heading .method {
+                background-color: #337ab7;
+            }
+            .action.head h4.action-heading,
+            .action.head h4.action-heading code {
+                color: #337ab7;
+            }
+            .action.head h4.action-heading .method {
+                background-color: #337ab7;
+            }
+            .action.options h4.action-heading,
+            .action.options h4.action-heading code {
+                color: #337ab7;
+            }
+            .action.options h4.action-heading .method {
+                background-color: #337ab7;
+            }
+            .action.post h4.action-heading,
+            .action.post h4.action-heading code {
+                color: #5cb85c;
+            }
+            .action.post h4.action-heading .method {
+                background-color: #5cb85c;
+            }
+            .action.put h4.action-heading,
+            .action.put h4.action-heading code {
+                color: #ed9c28;
+            }
+            .action.put h4.action-heading .method {
+                background-color: #ed9c28;
+            }
+            .action.patch h4.action-heading,
+            .action.patch h4.action-heading code {
+                color: #ed9c28;
+            }
+            .action.patch h4.action-heading .method {
+                background-color: #ed9c28;
+            }
+            .action.delete h4.action-heading,
+            .action.delete h4.action-heading code {
+                color: #d9534f;
+            }
+            .action.delete h4.action-heading .method {
+                background-color: #d9534f;
+            }
+            .tabs.r-tabs {
+                border-top: solid 1px #ddd !important;
+                border-bottom: solid 1px #ddd !important;
+                background-color: rgba(0, 0, 0, 0.03);
+                padding: 0.5em 1em !important;
+            }
+            .r-tabs .tabs-menu {
+                box-shadow: none!important;
+                border: none;
+                background: none;
+                border-bottom: 1px solid #D4D4D5;
+                bottom: 0;
+                margin-bottom: 0;
+                top: 0;
+            }
+            .r-tabs .tabs-menu a {
+                background: 0 0;
+                border-bottom: none;
+                border-left: 1px solid transparent;
+                border-right: 1px solid transparent;
+                border-top: 2px solid transparent;
+                color: rgba(0, 0, 0, 0.87);
+                margin: 0;
+                width: 120px;
+                display: inline-block;
+                text-align: center;
+                line-height: 40px;
+                height: 40px;
+                text-transform: uppercase;
+                cursor: pointer;
+            }
+            .r-tabs .tabs-menu a.active {
+                background: #FFF;
+                color: rgba(0, 0, 0, 0.95);
+                border-top-width: 1px;
+                border-color: #D4D4D5;
+                font-weight: 700;
+                margin-bottom: -1px;
+                box-shadow: none;
+                border-radius: 0.28571429rem 0.28571429rem 0 0!important;
+                border-bottom: 1px solid #fff;
+            }
+            .r-tabs .tab {
+                border-bottom: solid 1px #ddd !important;
+                background: #fff;
+                padding: 0.5em 1em !important;
+                display: none;
+                min-height: 100px;
+                border-left: 1px solid #D4D4D5;
+                border-right: 1px solid #D4D4D5;
+            }
+            r-tabs .tab.active {
+                display: block;
+            }
+
+    body.preload
+        a.text-muted.back-to-top(href='#top')
+            i.fa.fa-toggle-up
+            | &nbsp;Back to top
+        div(class='container-fluid')
+            .row
+                block nav
+                    +Nav(false)
+
+                .content
+                    block content
+                        +Content('primary', false)
+
+        p.text-muted(style="text-align: center;")
+            | Generated by&nbsp;
+            a.aglio(href="https://github.com/danielgtaylor/aglio") aglio
+            | &nbsp;on #{self.date().format('DD MMM YYYY')}
+
+        script.
+            /*
+                Determine if a string ends with another string.
+            */
+            function endsWith(str, suffix) {
+                return str.indexOf(suffix, str.length - suffix.length) !== -1;
+            }
+
+            /*
+                Get a list of direct child elements by class name.
+            */
+            function childrenByClass(element, name) {
+                var filtered = [];
+
+                for (var i = 0; i < element.children.length; i++) {
+                    var child = element.children[i];
+                    var classNames = child.className.split(' ');
+                    if (classNames.indexOf(name) !== -1) {
+                        filtered.push(child);
+                    }
+                }
+
+                return filtered;
+            }
+
+            function closest(el, selector) {
+                var matchesFn;
+
+                // find vendor prefix
+                ['matches','webkitMatchesSelector','mozMatchesSelector','msMatchesSelector','oMatchesSelector'].some(function(fn) {
+                    if (typeof document.body[fn] == 'function') {
+                        matchesFn = fn;
+                        return true;
+                    }
+                    return false;
+                })
+
+                var parent;
+
+                // traverse parents
+                while (el) {
+                    parent = el.parentElement;
+                    if (parent && parent[matchesFn](selector)) {
+                        return parent;
+                    }
+                    el = parent;
+                }
+
+                return null;
+            }
+
+            /*
+                Get an array [width, height] of the window.
+            */
+            function getWindowDimensions() {
+                var w = window,
+                    d = document,
+                    e = d.documentElement,
+                    g = d.body,
+                    x = w.innerWidth || e.clientWidth || g.clientWidth,
+                    y = w.innerHeight || e.clientHeight || g.clientHeight;
+
+                return [x, y];
+            }
+
+            /*
+                Collapse or show a request/response example.
+            */
+            function toggleCollapseButton(event) {
+                var button = event.target.parentNode;
+                var content = button.parentNode.nextSibling;
+                var inner = content.children[0];
+
+                if (button.className.indexOf('collapse-button') === -1) {
+                    // Clicked without hitting the right element?
+                    return;
+                }
+
+                if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+                    // Currently showing, so let's hide it
+                    button.className = 'collapse-button';
+                    content.style.maxHeight = '0px';
+                } else {
+                    // Currently hidden, so let's show it
+                    button.className = 'collapse-button show';
+                    content.style.maxHeight = inner.offsetHeight + 12 + 'px';
+                }
+            }
+
+            function toggleTabButton(event) {
+                var i, index;
+                var button = event.target;
+
+                // Get index of the current button.
+                var buttons = childrenByClass(button.parentNode, 'tab-button');
+                for (i = 0; i < buttons.length; i++) {
+                    if (buttons[i] === button) {
+                        index = i;
+                        button.className = 'tab-button active';
+                    } else {
+                        buttons[i].className = 'tab-button';
+                    }
+                }
+
+                // Hide other tabs and show this one.
+                var tabs = childrenByClass(button.parentNode.parentNode, 'tab');
+                for (i = 0; i < tabs.length; i++) {
+                    if (i === index) {
+                        tabs[i].style.display = 'block';
+                    } else {
+                        tabs[i].style.display = 'none';
+                    }
+                }
+
+                var content = button.closest('.collapse-content');
+                if(content) {
+                    var inner = content.children[0];
+                    content.style.maxHeight = inner.offsetHeight + 32 + 'px';
+                }
+
+            }
+
+            /*
+                Collapse or show a navigation menu. It will not be hidden unless it
+                is currently selected or `force` has been passed.
+            */
+            function toggleCollapseNav(event, force) {
+                var heading = event.target.parentNode;
+                var content = heading.nextSibling;
+                var inner = content.children[0];
+
+                if (heading.className.indexOf('heading') === -1) {
+                    // Clicked without hitting the right element?
+                    return;
+                }
+
+                if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+                    // Currently showing, so let's hide it, but only if this nav item
+                    // is already selected. This prevents newly selected items from
+                    // collapsing in an annoying fashion.
+                    if (force || window.location.hash && endsWith(event.target.href, window.location.hash)) {
+                        content.style.maxHeight = '0px';
+                    }
+                } else {
+                    // Currently hidden, so let's show it
+                    content.style.maxHeight = inner.offsetHeight + 32 + 'px';
+                }
+            }
+
+            /*
+                Refresh the page after a live update from the server. This only
+                works in live preview mode (using the `--server` parameter).
+            */
+            function refresh(body) {
+                document.querySelector('body').className = 'preload';
+                document.body.innerHTML = body;
+
+                // Re-initialize the page
+                init();
+                autoCollapse();
+
+                document.querySelector('body').className = '';
+            }
+
+            /*
+                Determine which navigation items should be auto-collapsed to show as many
+                as possible on the screen, based on the current window height. This also
+                collapses them.
+            */
+            function autoCollapse() {
+                var windowHeight = getWindowDimensions()[1];
+                var itemsHeight = 64; /* Account for some padding */
+                var itemsArray = Array.prototype.slice.call(
+                    document.querySelectorAll('nav .resource-group .heading'));
+
+                // Get the total height of the navigation items
+                itemsArray.forEach(function (item) {
+                    itemsHeight += item.parentNode.offsetHeight;
+                });
+
+                // Should we auto-collapse any nav items? Try to find the smallest item
+                // that can be collapsed to show all items on the screen. If not possible,
+                // then collapse the largest item and do it again. First, sort the items
+                // by height from smallest to largest.
+                var sortedItems = itemsArray.sort(function (a, b) {
+                    return a.parentNode.offsetHeight - b.parentNode.offsetHeight;
+                });
+
+                while (sortedItems.length && itemsHeight > windowHeight) {
+                    for (var i = 0; i < sortedItems.length; i++) {
+                        // Will collapsing this item help?
+                        var itemHeight = sortedItems[i].nextSibling.offsetHeight;
+                        if ((itemsHeight - itemHeight <= windowHeight) || i === sortedItems.length - 1) {
+                            // It will, so let's collapse it, remove its content height from
+                            // our total and then remove it from our list of candidates
+                            // that can be collapsed.
+                            itemsHeight -= itemHeight;
+                            toggleCollapseNav({target: sortedItems[i].children[0]}, true);
+                            sortedItems.splice(i, 1);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            /*
+                Initialize the interactive functionality of the page.
+            */
+            function init() {
+                var i, j;
+
+                // Make collapse buttons clickable
+                var buttons = document.querySelectorAll('.collapse-button');
+                for (i = 0; i < buttons.length; i++) {
+                    buttons[i].onclick = toggleCollapseButton;
+
+                    // Show by default? Then toggle now.
+                    if (buttons[i].className.indexOf('show') !== -1) {
+                        toggleCollapseButton({target: buttons[i].children[0]});
+                    }
+                }
+
+                var responseCodes = document.querySelectorAll('.example-names, .tabs-menu');
+                for (i = 0; i < responseCodes.length; i++) {
+                    var tabButtons = childrenByClass(responseCodes[i], 'tab-button');
+                    for (j = 0; j < tabButtons.length; j++) {
+                        tabButtons[j].onclick = toggleTabButton;
+
+                        // Show by default?
+                        if (j === 0) {
+                            toggleTabButton({target: tabButtons[j]});
+                        }
+                    }
+                }
+
+                // Make nav items clickable to collapse/expand their content.
+                var navItems = document.querySelectorAll('nav .resource-group .heading');
+                for (i = 0; i < navItems.length; i++) {
+                    navItems[i].onclick = toggleCollapseNav;
+
+                    // Show all by default
+                    toggleCollapseNav({target: navItems[i].children[0]});
+                }
+            }
+
+            // Initial call to set up buttons
+            init();
+
+            window.onload = function () {
+                // autoCollapse();
+                // Remove the `preload` class to enable animations
+                document.querySelector('body').className = '';
+            };
+
+
+        if self.livePreview
+            script(src="/socket.io/socket.io.js")
+            script.
+                var socket = io();
+                socket.on('refresh', refresh);
+                socket.on('reconnect', function () {
+                    socket.emit('request-refresh');
+                });

@@ -2,29 +2,17 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\ORM\TableRegistry;
 
-/**
- * Credential Entity
- *
- * @property int $id
- * @property string $rel_id
- * @property string $login
- * @property string $password
- * @property string $token
- * @property string $token2
- *
- * @property \App\Model\Entity\Rel $rel
- * @property \App\Model\Entity\Campaign[] $campaigns
- */
 class Credential extends Entity
 {
-	const TYPE_DIRECT = 'direct';
-	const TYPE_ADWORDS = 'adwords';
+    const TYPE_DIRECT = 'direct';
+    const TYPE_ADWORDS = 'adwords';
 
-	public $types = [
-		self::TYPE_DIRECT => 'Яндекс.Директ',
-		self::TYPE_ADWORDS => 'Google Adwords',
-	];
+    public $types = [
+        self::TYPE_DIRECT => 'Яндекс.Директ',
+        self::TYPE_ADWORDS => 'Google Adwords',
+    ];
 
     protected $_accessible = [
         '*' => true,
@@ -36,20 +24,14 @@ class Credential extends Entity
         'token'
     ];
 
-	public function getType() {
-		return $this->types[$this->type];
-	}
-
-    public function getUser()
+    public function getType()
     {
-		if($this->type == self::TYPE_DIRECT) {
-			return new \Biplane\YandexDirect\User([
-	            'access_token' => $this->token,
-	            'login' => $this->login,
-	            'locale' => \Biplane\YandexDirect\User::LOCALE_RU,
-	        ]);
-		} else if($this->type == self::TYPE_ADWORDS) {
-			return;
-		}
+        return $this->types[$this->type];
+    }
+
+    public function updateLimits($limit)
+    {
+        $this->limits = $limit;
+        TableRegistry::get('Credentials')->save($this);
     }
 }

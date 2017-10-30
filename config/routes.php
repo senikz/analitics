@@ -140,6 +140,7 @@ Router::prefix('api', function ($routes) {
     $routes->resources('Campaigns', function ($routes) use ($statisticsMap) {
 
 		$routes->connect('/sync', ['controller' => 'campaigns', 'action' => 'sync']);
+		$routes->connect('/keywords', ['controller' => 'campaigns', 'action' => 'keywords']);
 
         $routes->resources('Statistics', [
 			'prefix' => 'campaigns',
@@ -163,6 +164,33 @@ Router::prefix('api', function ($routes) {
 			],
 		]);
     });
+
+	$routes->resources('AdGroups', function ($routes) use ($statisticsMap) {
+		$routes->connect('/keywords', ['controller' => 'ad-groups', 'action' => 'keywords']);
+		$routes->resources('Bids', [
+			'prefix' => 'ad_groups',
+			'map' => [
+				[
+					'action' => 'edit',
+					'method' => 'PUT',
+					'path' => '/',
+				]
+			],
+		]);
+	});
+
+	$routes->resources('Keywords', function ($routes) use ($statisticsMap) {
+		$routes->resources('Bids', [
+			'prefix' => 'keywords',
+			'map' => [
+				[
+					'action' => 'edit',
+					'method' => 'PUT',
+					'path' => '/',
+				]
+			],
+		]);
+	});
 
     $routes->fallbacks(DashedRoute::class);
 });

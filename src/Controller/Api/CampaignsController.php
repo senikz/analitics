@@ -4,10 +4,6 @@ namespace App\Controller\Api;
 use Cake\ORM\TableRegistry;
 use \App\Model\Entity\Credential;
 
-use Biplane\YandexDirect\User;
-use Biplane\YandexDirect\Api\V5\Contract\KeywordFieldEnum;
-use Biplane\YandexDirect\Api\V5\Contract\AdGroupFieldEnum;
-
 class CampaignsController extends ApiController
 {
     public function initialize()
@@ -21,7 +17,7 @@ class CampaignsController extends ApiController
         $result = [];
 
         $query = $this->Campaigns->find('all', [
-                'contain' => false
+                'contain' => false,
             ]);
 
         foreach ($query as $row) {
@@ -45,7 +41,7 @@ class CampaignsController extends ApiController
                 'id' => $campaign->id,
                 'site_id' => $campaign->site_id,
                 'caption' => $campaign->caption,
-                'type' => $campaign->getType(),
+                'type' => $campaign->getTypeHuman(),
                 'num' => $campaign->rel_id,
             ];
 
@@ -90,79 +86,41 @@ class CampaignsController extends ApiController
 
     public function sync()
     {
+        $this->Campaigns->get($this->request->getParam('campaign_id'))->sync();
+    }
+
+    public function keywords()
+    {
+        $fields = $this->request->query;
         $campaignId = $this->request->getParam('campaign_id');
-        $campaignDetails = $this->Campaigns->get($campaignId, [
-			'contain' => ['Credentials'],
-		]);
 
-		if(empty($campaignDetails->credential) || $campaignDetails->credential->type != Credential::TYPE_DIRECT) {
-			$this->sendError('Campaign #'.$campaignId.' is not associated with any profiles');
-		}
+        $count = empty($fields['count']) ? 5 : $fields['count'];
 
-		$user = $campaignDetails->credential->getUser();
+        $result = [];
 
-		$adGroups = $user->getAdGroupsService()->get(
-			\Biplane\YandexDirect\Api\V5\Contract\GetAdGroupsRequest::create()
-				->setSelectionCriteria(
-					\Biplane\YandexDirect\Api\V5\Contract\AdGroupsSelectionCriteria::create()->setCampaignIds([$campaignDetails->rel_id])
-				)
-				->setFieldNames([
-					AdGroupFieldEnum::ID,
-					AdGroupFieldEnum::NAME,
-					AdGroupFieldEnum::CAMPAIGN_ID,
-				])
-		)->getAdGroups();
+        $keywordsTable = TableRegistry::get('Keywords');
 
-		if(!empty($adGroups)) {
-			$adGroupsTable = TableRegistry::get('AdGroups');
-			$adGroupsIds = [];
+        $conditions = [
+            'campaign_id' => $campaignId,
+        ];
 
-			foreach($adGroups as $group) {
-				$groupDetails = $adGroupsTable->find('all', ['conditions' => ['rel_id' => $group->getId()]])->first();
-				if(!$groupDetails) {
-					$groupDetails = $adGroupsTable->newEntity(['rel_id' => $group->getId(), 'campaign_id' => $campaignId]);
-				}
-				$groupDetails->name = $group->getName();
-				$adGroupsTable->save($groupDetails);
+        if (!empty($fields['mask'])) {
+            $conditions['keyword LIKE'] = '%' . $fields['mask'] . '%';
+        }
 
-				$adGroupsIds[$group->getId()] = $groupDetails->id;
-			}
+        $keywords = $keywordsTable->find('all', [
+            'conditions' => $conditions,
+            'contain' => false,
+            'limit' => $count,
+        ]);
 
-			$adGroupsTable->deleteAll([
-				'AdGroups.campaign_id' => $campaignId,
-				'AdGroups.rel_id NOT IN' => array_keys($adGroupsIds),
-			]);
+        foreach ($keywords as $keyword) {
+            $result[] = [
+                'id' => $keyword->id,
+                'keyword' => $keyword->keyword,
+            ];
+        }
 
-			$keywords = $user->getKeywordsService()->get(
-				\Biplane\YandexDirect\Api\V5\Contract\GetKeywordsRequest::create()
-					->setSelectionCriteria(
-						\Biplane\YandexDirect\Api\V5\Contract\KeywordsSelectionCriteria::create()->setCampaignIds([$campaignDetails->rel_id])
-					)
-					->setFieldNames([
-						KeywordFieldEnum::ID,
-						KeywordFieldEnum::AD_GROUP_ID,
-						KeywordFieldEnum::KEYWORD,
-					])
-			)->getKeywords();
-
-			if(!empty($keywords)) {
-				$keywordsTable = TableRegistry::get('Keywords');
-				$keywordsIds = [];
-
-				$query = $keywordsTable->query()->insert(['rel_id', 'campaign_id', 'ad_group_id', 'keyword']);
-
-				foreach($keywords as $keyword) {
-					$keywordsIds[] = $keyword->getId();
-					$query->values(['rel_id' => $keyword->getId(), 'campaign_id' => $campaignId, 'ad_group_id' => $adGroupsIds[$keyword->getAdGroupId()], 'keyword' => $keyword->getKeyword()]);
-				}
-
-				$query->epilog('ON DUPLICATE KEY UPDATE `keyword`=values(`keyword`)')->execute();
-
-				$keywordsTable->deleteAll([
-					'Keywords.campaign_id' => $campaignId,
-					'Keywords.rel_id NOT IN' => $keywordsIds,
-				]);
-			}
-		}
+        $this->sendData($result);
     }
 }

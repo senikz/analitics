@@ -12,13 +12,19 @@ class Campaign extends Entity
         'id' => false
     ];
 
-	public $types = [
-		Credential::TYPE_DIRECT => 'Кампания Яндекс.Директ',
-		Credential::TYPE_ADWORDS => 'Кампания Google Adwords',
-	];
-
-	public function getType() {
-		return empty($this->credential) ? null : $this->types[$this->credential->type];
+	public function getType()
+	{
+		return strtolower((new \ReflectionClass($this))->getShortName());
 	}
 
+	public function getTypeHuman()
+	{}
+
+	public function getProvider()
+	{}
+
+	public function sync()
+	{
+		return false;
+	}
 }

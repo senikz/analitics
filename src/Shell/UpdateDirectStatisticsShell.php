@@ -4,7 +4,16 @@ namespace App\Shell;
 use Cake\Log\Log;
 use Cake\Console\Shell;
 use Cake\ORM\TableRegistry;
-use App\Utility\YandexDirectApi;
+use \App\Model\Entity\Credential;
+
+use Biplane\YandexDirect\Api\V5\Contract\GetReportsRequest;
+use Biplane\YandexDirect\Api\V5\Report\ReportRequest;
+use Biplane\YandexDirect\Api\V5\Report\ReportDefinitionBuilder;
+use Biplane\YandexDirect\Api\V5\Report\FieldEnum;
+use Biplane\YandexDirect\Api\V5\Report\ReportTypeEnum;
+use Biplane\YandexDirect\Api\V5\Report\DateRangeTypeEnum;
+use Biplane\YandexDirect\Api\V5\Report\FormatEnum;
+use Biplane\YandexDirect\Api\V5\Report\FilterOperatorEnum;
 
 class UpdateDirectStatisticsShell extends Shell
 {
@@ -16,7 +25,7 @@ class UpdateDirectStatisticsShell extends Shell
         $this->loadModel('CampaignStatisticsDaily');
         $this->loadModel('CampaignStatisticsHourly');
 
-        $this->Campaign = TableRegistry::get('Campaigns');
+        $this->Campaigns = TableRegistry::get('Campaigns');
     }
 
     public function getOptionParser()
@@ -35,55 +44,49 @@ class UpdateDirectStatisticsShell extends Shell
         $this->out($this->OptionParser->help());
     }
 
-    private function loadYandexConfig()
-    {
-        require_once CONFIG . '/yandex.php';
-
-        foreach (\Cake\Core\Configure::read('Yandex.api') as $account) {
-            $YandexDirect = new YandexDirectApi($account);
-            $account['campaigns'] = [];
-
-            $campaigns = $YandexDirect->GetCampaignsList();
-            if ($campaigns) {
-                foreach ($campaigns as $campaign) {
-                    $account['campaigns'][] = $campaign['Id'];
-                }
-            }
-            $this->accounts[] = $account;
-        }
-    }
-
     public function today()
     {
-        $this->loadYandexConfig();
+		$campaigns = $this->Campaigns->find('all', [
+			'conditions' => [
+				'credential_id >' => '0',
+				'Credentials.type' => Credential::TYPE_DIRECT,
+			],
+		])->all();
 
-        foreach ($this->accounts as $account) {
-            $availableCampaigns = $this->Campaign->find('all', [
-                'conditions' => [
-                    'rel_id IN' => $account['campaigns'],
-                ],
-                'contain' => false
-            ])->all();
+		foreach($campaigns as $campaign) {
+			$provider = $campaign->getProvider();
 
-            if (empty($availableCampaigns)) {
-                continue;
-            }
+			if(empty($provider)) {
+				continue;
+			}
 
-            foreach ($availableCampaigns as $availableCampaign) {
-                $this->loadSingleCampaign($availableCampaign->id, $availableCampaign->rel_id, $account);
-
-                sleep(1);
-            }
-        }
+			$this->processCampaign($provider, $campaign);
+		}
     }
 
-    public function loadSingleCampaign($campaignId, $relId, $credentials)
-    {
-        $YandexDirect = new YandexDirectApi($credentials);
+	private function processCampaign($provider, $campaign)
+	{
+		$campaignId = $campaign->id;
 
-        $reportDetails = $YandexDirect->createStatisticsReport($relId);
+		$reportService = $provider->getReportsService();
+		$reportRequest = (new ReportRequest)
+			->setProcessingMode(ReportRequest::PROCESSING_MODE_ONLINE)
+			->returnMoneyAsFloat()
+			->setDefinition(
+				(new ReportDefinitionBuilder)
+					->setFieldNames([FieldEnum::CAMPAIGN_ID, FieldEnum::COST, FieldEnum::IMPRESSIONS, FieldEnum::CLICKS])
+					->setReportName('Statistics report 1001')
+					->setReportType(ReportTypeEnum::CAMPAIGN_PERFORMANCE_REPORT)
+					->setDateRangeType(DateRangeTypeEnum::TODAY)
+					->includeVat()
+					->setFormat(FormatEnum::TSV)
+					->addFilter(FieldEnum::CAMPAIGN_ID, FilterOperatorEnum::IN, [$campaign->rel_id])
+			);
 
-        if ($reportDetails === false) {
+		$reportResult = $reportService->getReady($reportRequest);
+		$reportDetails = $this->parseReportAnswer($reportResult->getData(), [FieldEnum::CAMPAIGN_ID, FieldEnum::COST, FieldEnum::IMPRESSIONS, FieldEnum::CLICKS]);
+
+		if (empty($reportDetails)) {
             Log::write('debug', ['campaignId' => $campaignId, 'report' => $YandexDirect->lastError], ['shell', 'UpdateDirectStatisticsShell', 'today']);
             return;
         }
@@ -151,5 +154,28 @@ class UpdateDirectStatisticsShell extends Shell
         $hourlyRecord->cost   = $newCostCount;
 
         $this->CampaignStatisticsHourly->save($hourlyRecord);
-    }
+	}
+
+	private function parseReportAnswer($report, $fields) {
+
+		$reportContent = [];
+
+		if($lines = explode(PHP_EOL, $report)) {
+			$lines = array_filter($lines);
+
+			for($lineId = 2; $lineId<(count($lines)-1); $lineId++ ) {
+				$line = array_filter(preg_split('/[\s]+/', $lines[$lineId]));
+
+				if(!empty($line) && count($line) == count($fields)) {
+					$reportLine = [];
+					foreach($fields as $num => $field) {
+						$reportLine[$field] = $line[$num];
+					}
+					$reportContent[] = $reportLine;
+				}
+			}
+		}
+
+		return $reportContent;
+	}
 }

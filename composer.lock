@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2213a1895f1026c5e8cb63509187f1db",
+    "content-hash": "56fdc28b4830b8e76213a017de1fc39d",
     "packages": [
         {
             "name": "Cewi/Excel",
@@ -110,32 +110,37 @@
         },
         {
             "name": "biplane/yandex-direct",
-            "version": "4.0.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/biplane/yandex-direct.git",
-                "reference": "0759bbf25e4fffd6a4a6f4fc3b1d9b085e8d931a"
+                "reference": "6a72f782c786b7590c1bfe877500b98d8f829c63"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/biplane/yandex-direct/zipball/0759bbf25e4fffd6a4a6f4fc3b1d9b085e8d931a",
-                "reference": "0759bbf25e4fffd6a4a6f4fc3b1d9b085e8d931a",
+                "url": "https://api.github.com/repos/biplane/yandex-direct/zipball/6a72f782c786b7590c1bfe877500b98d8f829c63",
+                "reference": "6a72f782c786b7590c1bfe877500b98d8f829c63",
                 "shasum": ""
             },
             "require": {
                 "ext-soap": "*",
+                "guzzlehttp/guzzle": "^6.3",
                 "php": "^5.5|^7.0",
                 "symfony/event-dispatcher": "~2.3|~3.0",
                 "symfony/options-resolver": "~2.3|~3.0"
             },
             "require-dev": {
                 "doctrine/inflector": "^1.0",
+                "friendsofphp/php-cs-fixer": "^2.1",
                 "lstrojny/phpunit-function-mocker": "^0.3.0|^0.4.0",
                 "monolog/monolog": "^1.21",
                 "phpunit/phpunit": "~4.8.27|~5.5",
                 "phpunit/phpunit-mock-objects": "^2.3.8|~3.0",
                 "wsdl2phpgenerator/wsdl2phpgenerator": "dev-inline-type as 4.0.x-dev",
                 "zendframework/zend-code": "^2.6"
+            },
+            "suggest": {
+                "monolog/monolog": "For LoggerListener"
             },
             "type": "library",
             "extra": {
@@ -169,7 +174,7 @@
                 "yandex.direct",
                 "Яндекс.Директ"
             ],
-            "time": "2017-02-23T19:54:01+00:00"
+            "time": "2017-10-05 15:51:13"
         },
         {
             "name": "cakephp/cakephp",
@@ -2983,6 +2988,7 @@
     "stability-flags": {
         "cakephp/migrations": 0,
         "cewi/excel": 20,
+        "biplane/yandex-direct": 20,
         "psy/psysh": 0
     },
     "prefer-stable": true,

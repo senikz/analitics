@@ -97,4 +97,34 @@ class CampaignsTable extends Table
 
         return $rules;
     }
+
+	public function beforeFind($event, $query, $options, $primary)
+	{
+		$query->contain(['Credentials']);
+		$containsMap = $query->getEagerLoader()->associationsMap($this);
+
+		$query->hydrate(false)->formatResults(function($results) use ($containsMap) {
+			return $results->map(function ($row) use ($containsMap) {
+				if(!empty($containsMap)) {
+					foreach($containsMap as $contain) {
+						if(empty($row[$contain['targetProperty']])) {
+							continue;
+						}
+						if($contain['canBeJoined']) {
+							$row[$contain['targetProperty']] = new $contain['entityClass']($row[$contain['targetProperty']]);
+						} else {
+							foreach($row[$contain['targetProperty']] as $key => $prop) {
+								$row[$contain['targetProperty']][$key] = new $contain['entityClass']($prop);
+							}
+						}
+					}
+				}
+				$entityClassName = $this->getEntityClass();
+				if(!empty($row['credential']['type'])) {
+					$entityClassName .= '\\' . ucfirst($row['credential']['type']);
+				}
+				return new $entityClassName($row);
+			});
+		});
+	}
 }

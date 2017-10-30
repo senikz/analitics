@@ -14,7 +14,7 @@
         "Cewi/Excel": "dev-master",
         "queencitycodefactory/cakesoap": "^3.3",
         "googleads/googleads-php-lib": "^28.0",
-        "biplane/yandex-direct": "^4.0"
+        "biplane/yandex-direct": "4.1.x-dev"
     },
     "require-dev": {
         "psy/psysh": "@stable",
@@ -56,6 +56,6 @@
             "type": "vcs",
             "url": "https://github.com/cewi/excel"
         }
-    ] 
+    ]
 
 }

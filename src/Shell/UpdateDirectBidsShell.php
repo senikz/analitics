@@ -23,6 +23,7 @@ class UpdateDirectBidsShell extends \Cake\Console\Shell
     {
         parent::initialize();
 
+        $this->Options = TableRegistry::get('Options');
         $this->Campaigns = TableRegistry::get('Campaigns');
         $this->Keywords = TableRegistry::get('Keywords');
         $this->AdGroups = TableRegistry::get('AdGroups');
@@ -41,28 +42,53 @@ class UpdateDirectBidsShell extends \Cake\Console\Shell
 
     public function main()
     {
+		if(!$this->checkRunTime()) {
+			return;
+		}
+
 		$campaigns = $this->Campaigns->find('all', [
 			'conditions' => [
 				'credential_id >' => '0',
 				'Credentials.type' => Credential::TYPE_DIRECT,
 			],
-			'contain' => ['Credentials', 'BidOptions',],
+			'contain' => ['BidOptions',],
 		])->all();
 
 		foreach($campaigns as $campaign) {
-			if(empty($campaign->credential) || empty($campaign->bid_options) || !$campaign->bid_options[0]->status) {
+			$provider = $campaign->getProvider();
+
+			if(empty($provider) || empty($campaign->bid_options) || !$campaign->bid_options[0]->status) {
 				continue;
 			}
 
-			$this->processCampaign($campaign->credential->getUser(), $campaign);
+			$this->processCampaign($provider, $campaign);
 		}
     }
+
+	private function checkRunTime()
+	{
+		$optionPeriod = $this->Options->getByName('BidCronTime')->value;
+		$optionLastTime = $this->Options->getByName('BidCronLastRun');
+
+		$currentTime = time();
+		$lastTime = strtotime($optionLastTime->value);
+
+		if( (($currentTime-$lastTime)/60) >= $optionPeriod ) {
+			$optionLastTime->value = date('Y-m-d H:i:s');
+			$this->Options->save($optionLastTime);
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	private function processCampaign($user, $campaign)
 	{
 		//Log::write('debug', ['campaignId' => $campaign->rel_id, 'options' => [$maxPrice, $incPrice, $position]], ['shell', 'UpdateDirectBidsShell', 'processCampaign']);
 
-		$bids = $user->getBidsService()->get(GetBidsRequest::create()
+		$bidsService = $user->getBidsService();
+
+		$bids = $bidsService->get(GetBidsRequest::create()
 			->setSelectionCriteria(BidsSelectionCriteria::create()->setCampaignIds([$campaign->rel_id]))
 			->setFieldNames([
 				BidFieldEnum::KEYWORD_ID,
@@ -71,14 +97,20 @@ class UpdateDirectBidsShell extends \Cake\Console\Shell
 				BidFieldEnum::BID,
 				BidFieldEnum::AUCTION_BIDS,
 			])
-		//	->setPage(
-		//		LimitOffset::create()->setLimit(3)->setOffset(0)
-		//	)
+			->setPage(
+				LimitOffset::create()->setLimit(3)->setOffset(0)
+			)
 		);
 
 		$updateBids = [];
 
 		foreach($bids->getBids() as $bid) {
+
+			$prices = $bid->getAuctionBids();
+
+			if(empty($prices)) {
+				continue;
+			}
 
 			$options = $campaign->bid_options[0];
 			$bidId = $bid->getKeywordId();
@@ -92,7 +124,7 @@ class UpdateDirectBidsShell extends \Cake\Console\Shell
 				}
 			}
 
-			foreach($bid->getAuctionBids() as $auctionPrice) {
+			foreach($prices as $auctionPrice) {
 				if($auctionPrice->getPosition() != $options->position) {
 					continue;
 				}
@@ -112,8 +144,9 @@ class UpdateDirectBidsShell extends \Cake\Console\Shell
 		//Log::write('debug', ['campaignId' => $campaign->rel_id, 'bids' => $updateBids], ['shell', 'UpdateDirectBidsShell', 'update bids']);
 
 		if(!empty($updateBids)) {
-			//$user->getBidsService()->set(SetBidsRequest::create()->setBids($updateBids));
+			$bidsService->set(SetBidsRequest::create()->setBids($updateBids));
 		}
 
+		$campaign->updateLimits($bidsService);
 	}
 }

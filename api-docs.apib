@@ -84,6 +84,19 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 ```
 
+### История изменений
+
+`1.1`
+
+* Добавлена группа [настроек](#настройки)
+* Изменен [метод добавления новой кампании](#кампании-post)
+* Добавлен метод получения [групп объявлений кампании](кампании-get-7)
+* Добавлен раздел [ключевых фраз](#ключевые-фразы)
+* Добавлен метод [ключевых фраз кампании](#кампании-get-5)
+* Добавлен метод [ключевых фраз группы объявлений](#группы-объявлений-get-1)
+
+
+
 # Data Structures
 
 ## Profile
@@ -130,12 +143,14 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 ## Keyword
 + id: (number) - ID ключевой фразы
++ keyword: (string) - Ключевая фраза
 
 ## Ad
 + id: (number) - ID объявления
 
-## Ad Group
+## AdGroup
 + id: (number) - ID группы
++ caption: (string) - Заголовок группы
 
 ## Lead
 + site_id: (number) - ID сайта
@@ -165,12 +180,20 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 ## Настройки [/settings]
 
-### Список профилей [GET/profiles]
+### Список профилей поисковых систем [GET/settings/profiles]
 
 + Response 200 (application/json)
     + Attributes
         + data (array,fixed)
             + (Profile)
+
+### Обновить настройки работы биддера [PUT/settings/bidder]
+
++ Request
+    + Attributes
+        + period: (number) - Интервал запуска биддера в минутах
+
++ Response 200 (application/json)
 
 ## Проекты [/projects]
 
@@ -349,8 +372,6 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 ### Обновление статистики сайта [PUT/sites/{id}/statistics?{date}]
 
-Возвращает массив объектов с суммой почасовых статистик по всем кампаниям проекта за указанный период.
-
 + Parameters
     + id: (number, required) - ID сайта
     + date: (string, required) - Дата для изменения статистики
@@ -377,7 +398,7 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
     + Attributes
         + site_id: (number, required) - ID сайта, к которому относится кампания
         + profile_id: (number, required) - ID профиля, которому принадлежит кампания
-        + key: (number, required) - Идентификатор кампании в соответствующей типу системе
+        + key: (number, required) - Идентификатор кампании в соответствующей профилю системе
         + caption: (string) - Название кампании
 
 + Response 200 (application/json)
@@ -445,19 +466,21 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 + Response 200 (application/json)
 
-### Список ключевых фраз [GET/campaigns/{id}/keywords]
+### Список ключевых фраз [GET/campaigns/{id}/keywords?{mask}=&{count}=]
 
-Возвращает список ключевых фраз кампании.
+Возвращает нужное кол-во ключевых фраз, принадлежащих кампании.
 
 + Parameters
     + id: (number, required) - ID кампании
+    + mask: (string, optional) - Маска для подбора ключевых фраз. Если маска не указана, ключевые фразы не будут фильтроваться.
+    + count: (number, optional) - Кол-во результатов. Если не указано, будут возвращены все фразы, связанные с этой группой
 
 + Response 200 (application/json)
     + Attributes
         + data (array,fixed)
             + (Keyword)
 
-### Список объявлений [GET/campaigns/{id}/ads]
+### Список групп объявлений [GET/campaigns/{id}/ad_groups]
 
 + Parameters
     + id: (number, required) - ID кампании
@@ -466,16 +489,8 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 + Response 200 (application/json)
     + Attributes
-
-### Список групп объявлений [GET/campaigns/{id}/ad-groups]
-
-+ Parameters
-    + id: (number, required) - ID кампании
-
-+ Request
-
-+ Response 200 (application/json)
-    + Attributes
+        + data (array,fixed)
+            + (AdGroup)
 
 ### Обновить содержимое кампании [GET/campaigns/{id}/sync]
 
@@ -489,24 +504,39 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 + Response 200 (application/json)
 
 
-## Объявления [/ads]
+## Группы объявлений [/ad_groups]
 
-### Детали объявления [GET/ads/{id}]
-
-+ Parameters
-    + id: (number, required) - ID объявления
+### Список групп [GET]
 
 + Response 200 (application/json)
     + Attributes
+        + data (array,fixed)
+            + (AdGroup)
 
-## Группы объявлений [/ad-groups]
+### Детали группы [GET/ad_groups/{id}]
 
-### Детали группы [GET/ad-groups/{id}]
-### Список ключевых фраз [GET/ad-groups/{id}/keywords]
++ Parameters
+    + id: (number, required) - ID фразы
 
++ Response 200 (application/json)
+    + Attributes
+        + (AdGroup)
 
+### Список ключевых фраз [GET/ad_groups/{id}/keywords?{mask}=&{count}=]
 
-### Текущие настройки биддера [GET/ad-groups/{id}/bids]
+Возвращает нужное кол-во ключевых фраз, принадлежащих группе объявлений.
+
++ Parameters
+    + id: (number, required) - ID группы объявлений
+    + mask: (string, optional) - Маска для подбора ключевых фраз. Если маска не указана, ключевые фразы не будут фильтроваться.
+    + count: (number, optional) - Кол-во результатов. Если не указано, будут возвращены все фразы, связанные с этой группой
+
++ Response 200 (application/json)
+    + Attributes
+        + data (array,fixed)
+            + (Keyword)
+
+### Текущие настройки биддера [GET/ad_groups/{id}/bids]
 
 + Parameters
     + id: (number, required) - ID группы объявлений
@@ -514,20 +544,49 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 + Response 200 (application/json)
     + Attributes (Bid Options)
 
-### Обновить настройки биддера [PUT/ad-groups/{id}/bids]
+### Обновить настройки биддера [PUT/ad_groups/{id}/bids]
 
 + Parameters
     + id: (number, required) - ID группы объявлений
 
-+ Attributes (Bid Options)
++ Request
+    + Attributes (Bid Options)
 
 + Response 200 (application/json)
+
 
 ## Ключевые фразы [/keywords]
 
 Из-за большого количества записей нет возможности их динамической подгрузки из ресурсов поисковых систем.  В связи с этим, все методы, возвращающие список ключевых фраз, предоставляют только их снимок, который автоматически синхронизируется в течение некоторого времени. Так же при необходимости можно запустить синхронизацию немедленно, вызвав метод [campaigns::sync](#кампании-get-8)
 
-### Детали ключевой фразы[GET/{id}]
+### Детали ключевой фразы [GET/keywords/{id}]
+
++ Parameters
+    + id: (number, required) - ID фразы
+
++ Response 200 (application/json)
+    + Attributes
+        + data (array,fixed)
+            + (Keyword)
+                + campaign_id: (number) - ID кампании, которой принадлежит фраза
+                + ad_group_id: (number) - ID группы объявлений, которой принадлежит фраза
+
+
+### Поиск фразы [GET/keywords/seach?{mask}=&{count}=]
+
+Возвращает заданное количетсво ключевых фраз, подходящих по маске.
+Метод медленный, рекомендуется к использованию только в случае, когда неизвестны ID кампании и/или группы объявлений.
+
++ Parameters
+    + mask: (string, required) - Маска для подбора ключевых фраз
+    + count: 5 (number, optional) - Кол-во результатов
+
++ Response 200 (application/json)
+    + Attributes
+        + data (array,fixed)
+            + (Keyword)
+                + campaign_id: (number) - ID кампании, которой принадлежит фраза
+                + ad_group_id: (number) - ID группы объявлений, которой принадлежит фраза
 
 
 ### Текущие настройки биддера [GET/keywords/{id}/bids]

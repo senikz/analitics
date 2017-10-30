@@ -54,22 +54,6 @@ class CredentialsTable extends Table
             ->integer('id')
             ->allowEmpty('id', 'create');
 
-        $validator
-            ->requirePresence('login', 'create')
-            ->notEmpty('login');
-
-        $validator
-            ->requirePresence('password', 'create')
-            ->notEmpty('password');
-
-        $validator
-            ->requirePresence('token', 'create')
-            ->notEmpty('token');
-
-        $validator
-            ->requirePresence('token2', 'create')
-            ->notEmpty('token2');
-
         return $validator;
     }
 
@@ -83,7 +67,6 @@ class CredentialsTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->isUnique(['login']));
-        $rules->add($rules->existsIn(['rel_id'], 'Rels'));
 
         return $rules;
     }

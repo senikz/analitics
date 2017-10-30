@@ -53,4 +53,4 @@ custom styles.
 ## Build api docs
 
 Install `aglio`
-Run `aglio -o src/Template/Docs/index.ctp -i api-docs.apib --theme-template ./src/Template/aglio-theme-kaiten/templates/index.jade --theme-style ./src/Template/aglio-theme-kaiten/styles/layout-default.less`
+Run `aglio -o src/Template/Docs/index.ctp -i api-docs.apib --theme-template ./kaiten-tuned.jade`
