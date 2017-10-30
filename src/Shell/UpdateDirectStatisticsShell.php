@@ -87,7 +87,7 @@ class UpdateDirectStatisticsShell extends Shell
 		$reportDetails = $this->parseReportAnswer($reportResult->getData(), [FieldEnum::CAMPAIGN_ID, FieldEnum::COST, FieldEnum::IMPRESSIONS, FieldEnum::CLICKS]);
 
 		if (empty($reportDetails)) {
-            Log::write('debug', ['campaignId' => $campaignId, 'report' => $YandexDirect->lastError], ['shell', 'UpdateDirectStatisticsShell', 'today']);
+            Log::write('debug', ['campaignId' => $campaignId, 'report' => 'empty'], ['shell', 'UpdateDirectStatisticsShell', 'today']);
             return;
         }
 
