@@ -75,8 +75,7 @@ class CampaignsController extends ApiController
     public function delete($id = null)
     {
         if ($this->request->is('delete') && $id) {
-            $campaign = $this->Campaigns->get($id);
-            if ($this->Campaigns->delete($campaign)) {
+            if ($this->Campaigns->deleteAll(['id' => $id])) {
                 $this->sendData([]);
             } else {
                 $this->sendError(__('Can`t delete campaign'));

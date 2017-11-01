@@ -38,4 +38,26 @@ class UsersController extends ApiController
             }
         }
     }
+
+    public function edit($id)
+    {
+        var_dump('123');
+		$hasher = new \Cake\Auth\DefaultPasswordHasher();
+		debug($hasher->hash('s476aQc6aa9'));
+        exit;
+        if (!$this->request->is('PUT')) {
+            $this->sendError('Must be PUT');
+        }
+
+        $user = $this->Auth->identify();
+
+        if (!$user) {
+            $this->sendError('Invalid username or password, try again.');
+        }
+
+        $user->password = $this->request->data['new'];
+        if ($this->Users->save($user)) {
+            $this->sendData([]);
+        }
+    }
 }

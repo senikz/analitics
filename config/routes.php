@@ -77,6 +77,8 @@ Router::scope('/', function (RouteBuilder $routes) {
 
 Router::prefix('api', function ($routes) {
 
+	$routes->resources('Users');
+
 	$statisticsMap = [
 		'summary' => [
 			'action' => 'summary',
@@ -165,7 +167,7 @@ Router::prefix('api', function ($routes) {
 		]);
     });
 
-	$routes->resources('AdGroups', function ($routes) use ($statisticsMap) {
+	$routes->resources('AdGroups', function ($routes) {
 		$routes->connect('/keywords', ['controller' => 'ad-groups', 'action' => 'keywords']);
 		$routes->resources('Bids', [
 			'prefix' => 'ad_groups',
@@ -179,7 +181,7 @@ Router::prefix('api', function ($routes) {
 		]);
 	});
 
-	$routes->resources('Keywords', function ($routes) use ($statisticsMap) {
+	$routes->resources('Keywords', function ($routes) {
 		$routes->resources('Bids', [
 			'prefix' => 'keywords',
 			'map' => [

@@ -19,13 +19,14 @@ class BidsController extends \App\Controller\Api\ApiController
 
         $campaign = $Campaigns->find('all', [
             'conditions' => [
-                'id' => $this->request->getParam('campaign_id'),
+                'Campaigns.id' => $this->request->getParam('campaign_id'),
             ],
             'contain' => ['BidOptions',],
         ])->first();
 
         if (!empty($campaign->bid_options)) {
             $result = $campaign->bid_options[0]->getObject();
+			$result['hit'] = $campaign->bid_options[0]->hit;
         }
 
         $this->sendData($result);

@@ -50,11 +50,7 @@ class LeadsController extends \App\Controller\Api\ApiController
 			$reverse = (empty($query['reverse']) || !$query['reverse']) ? false : true;
 
 			usort($result, function($a, $b) use($order, $reverse) {
-				if($reverse) {
-					return strnatcmp($b[$order], $a[$order]);
-				} else {
-					return strnatcmp($a[$order], $b[$order]);
-				}
+				return ($a[$order] == $b[$order] ? 0 : ($a[$order] > $b[$order] ? 1 : -1)) * ($reverse ? -1 : 1);
 			});
 
 			$this->sendData($result);

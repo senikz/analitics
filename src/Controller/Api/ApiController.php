@@ -13,6 +13,7 @@ class ApiController extends Controller
 		['controller' => 'Calls', 'prefix' => 'api', 'action' => 'push', 'query' => ['token' => '0ffd8c1d3491938fc1de7bd9173bc356']],
 		['controller' => 'Emails', 'prefix' => 'api', 'action' => 'push', 'query' => ['token' => '0ffd8c1d3491938fc1de7bd9173bc356']],
 		['controller' => 'Users', 'action' => 'auth'],
+		['controller' => 'Users', 'action' => 'edit'],
 	];
 
     public function beforeFilter(\Cake\Event\Event $event)
@@ -22,7 +23,6 @@ class ApiController extends Controller
         $this->response->header('Access-Control-Allow-Origin', '*');
         $this->response->header('Access-Control-Allow-Methods', 'PUT, POST, GET, OPTIONS, DELETE, PATCH');
         $this->response->header('Access-Control-Allow-Headers', 'User-Token, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
-		$this->response->withType('application/json');
 
 		if($this->request->is('options')) {
 			$this->response->statusCode(200);
@@ -99,8 +99,8 @@ class ApiController extends Controller
 			$errors = ['message' => $errors];
 		}
 
+		$this->response->statusCode($code);
 		$this->response->withType('application/json')
-			->statusCode($code)
 			->withStringBody(json_encode(['errors' => $errors]))
 			->send();
 		exit;
