@@ -148,8 +148,8 @@
 /* Element styles */
 body {
     color: black;
-    background: rgba(234, 234, 231, 0.66);
-    font: 400 14px / 1.42 'Roboto', Helvetica, sans-serif;
+    background: #f0f1f4;
+    font: 400 14px / 1.42 -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;
     margin: 0;
 }
 header {
@@ -161,7 +161,7 @@ h2,
 h3,
 h4,
 h5 {
-    color: black;
+    color: #2e2e2e;
     margin: 12px 0;
 }
 h1 .permalink,
@@ -195,20 +195,10 @@ h5:hover .permalink {
     opacity: 0.15;
 }
 h1 {
-    font: 200 36px 'Raleway', Helvetica, sans-serif;
     font-size: 36px;
 }
 h2 {
-    font: 200 36px 'Raleway', Helvetica, sans-serif;
     font-size: 30px;
-}
-h3 {
-    font-size: 100%;
-    text-transform: uppercase;
-}
-h5 {
-    font-size: 100%;
-    font-weight: normal;
 }
 p {
     margin: 0 0 10px;
@@ -255,11 +245,10 @@ blockquote p:last-child {
     margin-bottom: 0;
 }
 pre {
-    background-color: #f5f5f5;
+    background-color: #ffffff;
     padding: 12px;
-    border: 1px solid #cfcfcf;
-    border-radius: 6px;
     overflow: auto;
+    margin: 0;
 }
 pre code {
     color: black;
@@ -285,10 +274,10 @@ table {
     margin-bottom: 12px;
 }
 table tr {
-    border-top: 1px solid #ddd;
+
 }
 table tr:first-child {
-    border-top: none;
+
 }
 table td {
     border: none;
@@ -313,11 +302,11 @@ table td.attribute-status span.required {
 }
 table .attribute-type {
     display: inline-block;
-    padding: 0 14px;
+    padding: 0px 12px 2px 12px;
     background: #d0d0d0;
-    border-radius: 4px;
+    border-radius: 13px;
     color: #fff;
-    font-size: 13px;
+    font-size: 11px;
     margin: 0 0 3px;
 }
 .text-muted {
@@ -342,7 +331,6 @@ table .attribute-type {
 .warning h5,
 .note h6,
 .warning h6 {
-    font-family: 200 36px 'Raleway', Helvetica, sans-serif;
     font-size: 135%;
     font-weight: 500;
 }
@@ -383,27 +371,20 @@ nav {
     position: fixed;
     top: 0;
     bottom: 0;
-    overflow-y: auto;
-    /* Remove the top border from the first item in each group */
+    overflow-y: auto;                
+    padding: 28px 18px;
+    box-sizing: border-box;
 }
 nav .resource-group {
-    padding: 0;
+    padding: 0 0 25px 0;
 }
 nav .resource-group .heading {
-    position: relative;
+
 }
-nav .resource-group .heading .chevron {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    opacity: 0.5;
-}
-nav .resource-group .heading a {
-    display: block;
-    color: black;
-    opacity: 0.7;
-    border-left: 2px solid transparent;
-    margin: 0;
+nav .resource-group .heading span {
+    color: #f2ba31;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 nav .resource-group .heading a:hover {
     text-decoration: none;
@@ -413,27 +394,27 @@ nav .resource-group .heading a:hover {
 nav ul {
     list-style-type: none;
     padding-left: 0;
-    /* Spacing for first level items */
-    /* Adjust spacing for nested lists */
+}
+nav ul ul {
+    margin: 0 0 15px 0;
 }
 nav ul a {
     display: block;
-    font-size: 13px;
+    font-size: 16px;
     color: rgba(0, 0, 0, 0.7);
-    padding: 8px 12px;
-    border-top: 1px solid #d9d9d9;
-    border-left: 2px solid transparent;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    position: relative;
+    line-height: 38px;
+    padding: 0;
+    box-sizing: border-box;
 }
 nav ul a:hover {
     text-decoration: none;
-    background-color: bad-color;
-    border-left: 2px solid black;
 }
 nav ul > li {
-    margin: 0;
+    border-bottom: 1px solid #dedede;
 }
 nav ul > li:first-child {
     margin-top: -12px;
@@ -442,16 +423,25 @@ nav ul > li:last-child {
     margin-bottom: -12px;
 }
 nav ul ul a {
-    padding-left: 24px;
+    padding-left: 15px;
+    border-bottom: 1px solid #e8e9eb;
+    font-size: 14px;
+    padding: 0 0 0 14px;
 }
 nav ul ul li {
     margin: 0;
+    border: none;
 }
 nav ul ul li:first-child {
     margin-top: 0;
 }
-nav ul ul li:last-child {
+nav ul ul li:last-child a {
     margin-bottom: 0;
+    border: none;
+}
+nav ul ul li:hover a {
+    background: #707071;
+    color: #fff;
 }
 nav > div > div > ul > li:first-child > a {
     border-top: none;
@@ -467,12 +457,12 @@ nav > div > div > ul > li:first-child > a {
     float: right;
 }
 .badge {
-    display: inline-block;
-    float: right;
-    width: 10px;
-    height: 10px;
-    border-radius: 5px;
-    margin: 4px 0 0 0;
+    display: block;
+    width: 4px;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 .badge.get {
     color: #154862;
@@ -488,7 +478,7 @@ nav > div > div > ul > li:first-child > a {
 }
 .badge.put {
     color: #f0db70;
-    background-color: #fcf8e3;
+    background-color: #edc25f;
 }
 .badge.patch {
     color: #f0db70;
@@ -538,16 +528,23 @@ nav {
     margin-left: 244px;
     width: 696px;
 }
+.content .group-heading {
+    font-size: 18px;
+    color: #f3ba31;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 15px 0 26px;
+}
 .container .row:after {
     content: '';
     display: block;
     clear: both;
 }
 .container-fluid nav {
-    width: 22%;
+    width: 26%;
 }
 .container-fluid .row .content {
-    margin-left: 24%;
+    margin-left: 26.5%;
     padding-right: 20px;
 }
 .container-fluid.triple nav {
@@ -748,9 +745,6 @@ nav {
 }
 .resource-group {
     padding: 12px;
-    margin-bottom: 12px;
-    background-color: white;
-    border: 1px solid #d9d9d9;
 }
 .resource-group .heading a,
 .resource-group h2.group-heading {
@@ -771,19 +765,14 @@ nav {
     margin: 0 0 12px;
     border: 1px solid #d9d9d9;
 }
-nav .resource-group .heading a {
-    padding: 12px;
-    margin-bottom: 0;
-}
 nav .resource-group .collapse-content {
     padding: 0;
 }
 .action {
     margin-bottom: 40px;
-    padding: 12px 12px 0;
+    padding: 18px 25px 0;
     overflow: hidden;
-    border: 1px solid #d9d9d8;
-    border-radius: 6px;
+    border: 1px solid rgba(137, 137, 137, 0.16);
     padding-bottom: 20px;
     background: #fff;
 }
@@ -792,15 +781,27 @@ nav .resource-group .collapse-content {
     position: relative;
     white-space: nowrap;
     line-height: 1;
-    text-align: center;
+    text-align: left;
     margin: 10px 0;
     height: 30px;
     font-weight: 400;
     color: #000;
 }
+.action .action-resource {
+    color: #afaeae;
+    font-size: 15px;
+}
+.action .action-dif {
+    padding: 0 7px;
+    color: #afaeae;
+    font-size: 15px;
+}
+.action .action-title {
+
+}
 .action h4.action-heading {
     padding: 0;
-    margin: 5px 5px 15px;
+    margin: 7px 0 15px;
     border-width: 1px;
     border-style: solid;
     border-radius: 4px;
@@ -838,25 +839,32 @@ nav .resource-group .collapse-content {
 .action dl.inner {
     padding-bottom: 2px;
 }
-.action .title {
-    border-bottom: 1px solid white;
-    margin: 0 -12px -1px;
-    padding: 12px;
-    color: #666;
-    font-size: 16px;
+.action div.inner {
+    margin-bottom: 30px;
 }
-.action .title:after {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 1px;
-    background: #cdcdcd;
-    margin: -11px 0 0 0;
+.action .title {
+    margin: 0 0 0px;
+    padding: 15px 0 7px 0;
+    color: #000;
+    font-size: 16px;
+    border-bottom: 1px solid #dddcdc;
 }
 .action .title strong {
-    background: #fff;
     padding: 0 10px 0 0;
-    font-weight: 300;
+    font-weight: 600;
+}
+.action .title code {
+    font-weight: 600;
+    font-size: 11px;
+    font-family: sans-serif !important;
+    display: inline-block;
+    position: relative;
+    color: #2a962a;
+    border: 1px solid #2b965d;
+    background: none;
+    height: 12px;
+    padding: 0px 3px 2px;
+    line-height: 16px;
 }
 .action .title .collapse-button {
     padding: 0 0 0 8px;
@@ -915,38 +923,30 @@ nav .resource-group .collapse-content {
     background-color: #d9534f;
 }
 .tabs.r-tabs {
-    border-top: solid 1px #ddd !important;
-    border-bottom: solid 1px #ddd !important;
-    background-color: rgba(0, 0, 0, 0.03);
-    padding: 0.5em 1em !important;
+
 }
 .r-tabs .tabs-menu {
     box-shadow: none!important;
     border: none;
-    background: none;
-    border-bottom: 1px solid #D4D4D5;
+    background: transparent;
     bottom: 0;
-    margin-bottom: 0;
+    margin: -40px 0 25px 0;
     top: 0;
+    float: right;
 }
 .r-tabs .tabs-menu a {
-    background: 0 0;
-    border-bottom: none;
-    border-left: 1px solid transparent;
-    border-right: 1px solid transparent;
-    border-top: 2px solid transparent;
     color: rgba(0, 0, 0, 0.87);
     margin: 0;
-    width: 120px;
     display: inline-block;
     text-align: center;
     line-height: 40px;
     height: 40px;
     text-transform: uppercase;
     cursor: pointer;
+    font-size: 11px;
+    padding: 0 10px;
 }
 .r-tabs .tabs-menu a.active {
-    background: #FFF;
     color: rgba(0, 0, 0, 0.95);
     border-top-width: 1px;
     border-color: #D4D4D5;
@@ -954,21 +954,22 @@ nav .resource-group .collapse-content {
     margin-bottom: -1px;
     box-shadow: none;
     border-radius: 0.28571429rem 0.28571429rem 0 0!important;
-    border-bottom: 1px solid #fff;
 }
 .r-tabs .tab {
-    border-bottom: solid 1px #ddd !important;
     background: #fff;
-    padding: 0.5em 1em !important;
+    padding: 0 10px;
     display: none;
     min-height: 100px;
-    border-left: 1px solid #D4D4D5;
-    border-right: 1px solid #D4D4D5;
+    box-sizing: border-box;
+}
+.r-tabs .tab pre {
+    width: 100%;
+    box-sizing: border-box;
 }
 r-tabs .tab.active {
     display: block;
 }
-</style></head><body class="preload"><a href="#top" class="text-muted back-to-top"><i class="fa fa-toggle-up"></i>&nbsp;Back to top</a><div class="container-fluid"><div class="row"><nav><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#top">Overview</a></div><div class="collapse-content"><ul><li><a href="#header-аутентификация">Аутентификация</a></li><li><a href="#header-rest">REST</a></li><li><a href="#header-возвращаемый-результат">Возвращаемый результат</a></li><li><a href="#header-объект-ответа">Объект ответа</a></li><li><a href="#header-история-изменений">История изменений</a></li></ul></div></div><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#">Resource Group</a></div><div class="collapse-content"><ul><li><a href="#настройки"><b>Настройки</b></a><ul><li><a href="#настройки-get"><span class="badge get"></span>Список профилей поисковых систем</a></li><li><a href="#настройки-put"><span class="badge put"></span>Обновить настройки работы биддера</a></li></ul></li><li><a href="#проекты"><b>Проекты</b></a><ul><li><a href="#проекты-get"><span class="badge get"></span>Список проектов</a></li><li><a href="#проекты-get-1"><span class="badge get"></span>Детали проекта</a></li><li><a href="#проекты-get-2"><span class="badge get"></span>Список сайтов</a></li><li><a href="#проекты-get-3"><span class="badge get"></span>Список кампаний</a></li><li><a href="#проекты-get-4"><span class="badge get"></span>Общая статистика проекта</a></li><li><a href="#проекты-get-5"><span class="badge get"></span>Подробная статистика проекта</a></li><li><a href="#проекты-get-6"><span class="badge get"></span>Список заявок</a></li></ul></li><li><a href="#сайты"><b>Сайты</b></a><ul><li><a href="#сайты-get"><span class="badge get"></span>Список сайтов</a></li><li><a href="#сайты-post"><span class="badge post"></span>Добавить новый сайт</a></li><li><a href="#сайты-get-1"><span class="badge get"></span>Детали сайта</a></li><li><a href="#сайты-delete"><span class="badge delete"></span>Удалить сайт</a></li><li><a href="#сайты-get-2"><span class="badge get"></span>Список кампаний</a></li><li><a href="#сайты-post-1"><span class="badge post"></span>Добавление заказа</a></li><li><a href="#сайты-post-2"><span class="badge post"></span>Добавление произвольного расхода</a></li><li><a href="#сайты-get-3"><span class="badge get"></span>Общая статистика сайта</a></li><li><a href="#сайты-get-4"><span class="badge get"></span>Подробная статистика сайта</a></li><li><a href="#сайты-put"><span class="badge put"></span>Обновление статистики сайта</a></li></ul></li><li><a href="#кампании"><b>Кампании</b></a><ul><li><a href="#кампании-get"><span class="badge get"></span>Список кампаний</a></li><li><a href="#кампании-post"><span class="badge post"></span>Добавить новую кампанию</a></li><li><a href="#кампании-get-1"><span class="badge get"></span>Детали кампании</a></li><li><a href="#кампании-delete"><span class="badge delete"></span>Удалить кампанию</a></li><li><a href="#кампании-get-2"><span class="badge get"></span>Общая статистика кампании</a></li><li><a href="#кампании-get-3"><span class="badge get"></span>Подробная статистика кампании</a></li><li><a href="#кампании-get-4"><span class="badge get"></span>Текущие настройки биддера</a></li><li><a href="#кампании-put"><span class="badge put"></span>Обновить настройки биддера</a></li><li><a href="#кампании-get-5"><span class="badge get"></span>Список ключевых фраз</a></li><li><a href="#кампании-get-6"><span class="badge get"></span>Список групп объявлений</a></li><li><a href="#кампании-get-7"><span class="badge get"></span>Обновить содержимое кампании</a></li></ul></li><li><a href="#группы-объявлений"><b>Группы объявлений</b></a><ul><li><a href="#группы-объявлений-get"><span class="badge get"></span>Список групп</a></li><li><a href="#группы-объявлений-get-1"><span class="badge get"></span>Детали группы</a></li><li><a href="#группы-объявлений-get-2"><span class="badge get"></span>Список ключевых фраз</a></li><li><a href="#группы-объявлений-get-3"><span class="badge get"></span>Текущие настройки биддера</a></li><li><a href="#группы-объявлений-put"><span class="badge put"></span>Обновить настройки биддера</a></li></ul></li><li><a href="#ключевые-фразы"><b>Ключевые фразы</b></a><ul><li><a href="#ключевые-фразы-get"><span class="badge get"></span>Детали ключевой фразы</a></li><li><a href="#ключевые-фразы-get-1"><span class="badge get"></span>Поиск фразы</a></li><li><a href="#ключевые-фразы-get-2"><span class="badge get"></span>Текущие настройки биддера</a></li><li><a href="#ключевые-фразы-put"><span class="badge put"></span>Обновить настройки биддера</a></li></ul></li></ul></div></div><p style="text-align: center; word-wrap: break-word;"><a href="http://analitics.catkitcms.ru/api">http://analitics.catkitcms.ru/api</a></p></nav><div class="content"><header><h1 id="top">Аналитика</h1></header><h3 id="header-аутентификация">Аутентификация <a class="permalink" href="#header-аутентификация" aria-hidden="true">¶</a></h3>
+</style></head><body class="preload"><a href="#top" class="text-muted back-to-top"><i class="fa fa-toggle-up"></i>&nbsp;Back to top</a><div class="container-fluid"><div class="row"><nav><div class="resource-group"><div class="heading"><span>Overview</span></div><div><ul><li><a href="#header-аутентификация">Аутентификация</a></li><li><a href="#header-rest">REST</a></li><li><a href="#header-формат-ответа">Формат ответа</a></li><li><a href="#header-история-изменений">История изменений</a></li></ul></div></div><div class="resource-group"><div class="heading"><span>Reference</span></div><div><ul><li><a href="#настройки"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Настройки</span></a><div class="collapse-content"><ul><li><a href="#настройки-get"><span class="badge get"></span>Список профилей поисковых систем</a></li><li><a href="#настройки-put"><span class="badge put"></span>Обновить настройки запуска биддера</a></li></ul></div></li><li><a href="#проекты"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Проекты</span></a><div class="collapse-content"><ul><li><a href="#проекты-get"><span class="badge get"></span>Список проектов</a></li><li><a href="#проекты-get-1"><span class="badge get"></span>Детали проекта</a></li><li><a href="#проекты-get-2"><span class="badge get"></span>Список сайтов</a></li><li><a href="#проекты-get-3"><span class="badge get"></span>Список кампаний</a></li><li><a href="#проекты-get-4"><span class="badge get"></span>Общая статистика проекта</a></li><li><a href="#проекты-get-5"><span class="badge get"></span>Подробная статистика проекта</a></li><li><a href="#проекты-get-6"><span class="badge get"></span>Список заявок</a></li><li><a href="#проекты-get-7"><span class="badge get"></span>Календарь стоимости заказа</a></li></ul></div></li><li><a href="#сайты"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Сайты</span></a><div class="collapse-content"><ul><li><a href="#сайты-get"><span class="badge get"></span>Список сайтов</a></li><li><a href="#сайты-post"><span class="badge post"></span>Добавить новый сайт</a></li><li><a href="#сайты-get-1"><span class="badge get"></span>Детали сайта</a></li><li><a href="#сайты-delete"><span class="badge delete"></span>Удалить сайт</a></li><li><a href="#сайты-get-2"><span class="badge get"></span>Список кампаний</a></li><li><a href="#сайты-post-1"><span class="badge post"></span>Добавление заказа</a></li><li><a href="#сайты-post-2"><span class="badge post"></span>Добавление произвольного расхода</a></li><li><a href="#сайты-get-3"><span class="badge get"></span>Общая статистика сайта</a></li><li><a href="#сайты-get-4"><span class="badge get"></span>Подробная статистика сайта</a></li><li><a href="#сайты-put"><span class="badge put"></span>Обновление статистики сайта</a></li><li><a href="#сайты-put-1"><span class="badge put"></span>Обновление UTM меток</a></li></ul></div></li><li><a href="#кампании"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Кампании</span></a><div class="collapse-content"><ul><li><a href="#кампании-get"><span class="badge get"></span>Список кампаний</a></li><li><a href="#кампании-post"><span class="badge post"></span>Добавить новую кампанию</a></li><li><a href="#кампании-get-1"><span class="badge get"></span>Детали кампании</a></li><li><a href="#кампании-delete"><span class="badge delete"></span>Удалить кампанию</a></li><li><a href="#кампании-get-2"><span class="badge get"></span>Общая статистика кампании</a></li><li><a href="#кампании-get-3"><span class="badge get"></span>Подробная статистика кампании</a></li><li><a href="#кампании-get-4"><span class="badge get"></span>Текущие настройки биддера</a></li><li><a href="#кампании-put"><span class="badge put"></span>Обновить настройки биддера</a></li><li><a href="#кампании-get-5"><span class="badge get"></span>Список ключевых фраз</a></li><li><a href="#кампании-get-6"><span class="badge get"></span>Список групп объявлений</a></li><li><a href="#кампании-get-7"><span class="badge get"></span>Обновить содержимое кампании</a></li></ul></div></li><li><a href="#группы-объявлений"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Группы объявлений</span></a><div class="collapse-content"><ul><li><a href="#группы-объявлений-get"><span class="badge get"></span>Список групп</a></li><li><a href="#группы-объявлений-get-1"><span class="badge get"></span>Детали группы</a></li><li><a href="#группы-объявлений-get-2"><span class="badge get"></span>Список ключевых фраз</a></li><li><a href="#группы-объявлений-get-3"><span class="badge get"></span>Текущие настройки биддера</a></li><li><a href="#группы-объявлений-put"><span class="badge put"></span>Обновить настройки биддера</a></li><li><a href="#группы-объявлений-get-4"><span class="badge get"></span>Общая статистика группы объявлений</a></li></ul></div></li><li><a href="#ключевые-фразы"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Ключевые фразы</span></a><div class="collapse-content"><ul><li><a href="#ключевые-фразы-get"><span class="badge get"></span>Детали ключевой фразы</a></li><li><a href="#ключевые-фразы-get-1"><span class="badge get"></span>Поиск фразы</a></li><li><a href="#ключевые-фразы-get-2"><span class="badge get"></span>Текущие настройки биддера</a></li><li><a href="#ключевые-фразы-put"><span class="badge put"></span>Обновить настройки биддера</a></li><li><a href="#ключевые-фразы-get-3"><span class="badge get"></span>Общая статистика ключевой фразы</a></li></ul></div></li></ul></div></div></nav><div class="content"><header><h1 id="top">Аналитика</h1></header><h2 class="group-heading">Overview</h2><div class="hostname"><a href="http://analitics.catkitcms.ru/api">http://analitics.catkitcms.ru/api</a></div><h3 id="header-аутентификация">Аутентификация <a class="permalink" href="#header-аутентификация" aria-hidden="true">¶</a></h3>
 <p>Для авторизации приложения используется механизм JWT токенов. При каждом
 запросе к API должен передаваться HTTP-заголовок <code>User-Token</code>, содержащий
 JWT токен.</p>
@@ -989,7 +990,7 @@ JWT токен.</p>
 <p>DELETE - удаление записи</p>
 </li>
 </ul>
-<h3 id="header-возвращаемый-результат">Возвращаемый результат <a class="permalink" href="#header-возвращаемый-результат" aria-hidden="true">¶</a></h3>
+<h3 id="header-формат-ответа">Формат ответа <a class="permalink" href="#header-формат-ответа" aria-hidden="true">¶</a></h3>
 <p>Успешный ответ будет возвращен как JSON-объект с одним из следующих
 параметров:</p>
 <ul>
@@ -1001,7 +1002,7 @@ JWT токен.</p>
 </li>
 </ul>
 <p>Объекты <code>data</code> и<code>errors</code> не могут быть возвращены в одном запросе.</p>
-<h3 id="header-объект-ответа">Объект ответа <a class="permalink" href="#header-объект-ответа" aria-hidden="true">¶</a></h3>
+<p><strong>Объект ответа</strong></p>
 <p>Для одного объекта:</p>
 <pre><code class="language-json">{
     request: {
@@ -1013,7 +1014,7 @@ JWT токен.</p>
         caption: 'First item'
     }
 }</code></pre>
-<p>Для списка объектов:</p>
+<p>Для списка:</p>
 <pre><code class="language-json">{
     request: {
         query: {},
@@ -1030,9 +1031,33 @@ JWT токен.</p>
     ]
 }</code></pre>
 <h3 id="header-история-изменений">История изменений <a class="permalink" href="#header-история-изменений" aria-hidden="true">¶</a></h3>
+<p><code>1.2</code></p>
+<ul>
+<li>
+<p>Добавлен метод задания <a href="#%D1%81%D0%B0%D0%B9%D1%82%D1%8B-put-1">UTM меток для всех кампаний сайта</a></p>
+</li>
+<li>
+<p>Добавлена возможность сортировки списка сайтов проекта и общего списка сайтов</p>
+</li>
+<li>
+<p>Заявки проекта теперь могут <a href="#%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B-get-6">отображаться постранично</a></p>
+</li>
+<li>
+<p>Добавлен <a href="#%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B-get-7">календарь стоимости заказов проекта по датам</a></p>
+</li>
+<li>
+<p>Добавлен <a href="#%D0%BA%D0%B0%D0%BC%D0%BF%D0%B0%D0%BD%D0%B8%D0%B8-get-4">временной таргетинг настроек биддера для кампании</a></p>
+</li>
+<li>
+<p>В <a href="#%D0%BA%D0%B0%D0%BC%D0%BF%D0%B0%D0%BD%D0%B8%D0%B8-get-2">статистику кампании</a> добавлено количество совершенных заказов</p>
+</li>
+<li>
+<p>Добавлены методы получения статистики для <a href="#%D0%B3%D1%80%D1%83%D0%BF%D0%BF%D1%8B-%D0%BE%D0%B1%D1%8A%D1%8F%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B9-get-4">группы объявлений</a> и <a href="#%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%B2%D1%8B%D0%B5-%D1%84%D1%80%D0%B0%D0%B7%D1%8B-get-3">ключевой фразы</a></p>
+</li>
+</ul>
 <p><code>1.1.1</code></p>
 <ul>
-<li>В состоянии биддера кампании добавлен <a href="#%D0%BA%D0%B0%D0%BC%D0%BF%D0%B0%D0%BD%D0%B8%D0%B8-get-4">показатель попадания ставки</a></li>
+<li>В состояние биддера кампании добавлен <a href="#%D0%BA%D0%B0%D0%BC%D0%BF%D0%B0%D0%BD%D0%B8%D0%B8-get-4">показатель попадания ставки</a></li>
 </ul>
 <p><code>1.1</code></p>
 <ul>
@@ -1055,7 +1080,7 @@ JWT токен.</p>
 <p>Добавлен метод <a href="#%D0%B3%D1%80%D1%83%D0%BF%D0%BF%D1%8B-%D0%BE%D0%B1%D1%8A%D1%8F%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B9-get-1">ключевых фраз группы объявлений</a></p>
 </li>
 </ul>
-<h2 class="group-heading">Resource Group <a href="#" class="permalink">&para;</a></h2><div id="настройки" class="resource"><h3 class="resource-heading">Настройки <a href="#настройки" class="permalink">&nbsp;&para;</a></h3><div id="настройки-get" class="action get"><div class="action-name">Список профилей поисковых систем</div><h4 class="action-heading"><a href="#настройки-get" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/settings/profiles</code></h4><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td>data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID профиля</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>login</td><td><span class="attribute-type">string</span><p>Логин</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>type</td><td><span class="attribute-type">string</span><p>Тип</p></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+<h2 class="group-heading">Reference <a href="#" class="permalink">&para;</a></h2><div id="настройки" class="resource"><div id="настройки-get" class="action get"><div class="action-name"><span class="action-resource">Настройки</span><span class="action-dif">/</span><span class="action-title">Список профилей поисковых систем</span></div><h4 class="action-heading"><a href="#настройки-get" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/settings/profiles</code></h4><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="90px">data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID профиля</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>login</td><td><span class="attribute-type">string</span><p>Логин</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>type</td><td><span class="attribute-type">string</span><p>Тип</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">data</span>": <span class="hljs-value">[
     {
       "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
@@ -1106,7 +1131,7 @@ JWT токен.</p>
   "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
     <span class="hljs-string">"data"</span>
   ]
-</span>}</code></pre></div></div></div></div></div><div id="настройки-put" class="action put"><div class="action-name">Обновить настройки работы биддера</div><h4 class="action-heading"><a href="#настройки-put" class="method put">PUT</a><code class="uri">http://analitics.catkitcms.ru/api/settings/bidder</code></h4><div class="title"><strong>Request</strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td>period</td><td><span class="attribute-type">number</span><p>Интервал запуска биддера в минутах</p></td><td></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div><div id="настройки-put" class="action put"><div class="action-name"><span class="action-resource">Настройки</span><span class="action-dif">/</span><span class="action-title">Обновить настройки запуска биддера</span></div><h4 class="action-heading"><a href="#настройки-put" class="method put">PUT</a><code class="uri">http://analitics.catkitcms.ru/api/settings/bidder</code></h4><div class="title"><strong>Request</strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width="90px">period</td><td><span class="attribute-type">number</span><p>Интервал запуска биддера в минутах</p></td><td></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">period</span>": <span class="hljs-value"><span class="hljs-number">1</span>
 </span>}</code></pre><div style="height: 1px;"></div></div><div data-tab="schema" class="tab"><pre><code>{
   "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
@@ -1117,7 +1142,7 @@ JWT токен.</p>
     </span>}
   </span>}</span>,
   "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span>
-</span>}</code></pre></div></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"></div></div></div></div></div></div><div id="проекты" class="resource"><h3 class="resource-heading">Проекты <a href="#проекты" class="permalink">&nbsp;&para;</a></h3><div id="проекты-get" class="action get"><div class="action-name">Список проектов</div><h4 class="action-heading"><a href="#проекты-get" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/projects</code></h4><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td>data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID проекта</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>caption</td><td><span class="attribute-type">number</span><p>Заголовок</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>icon</td><td><span class="attribute-type">string</span><p>Иконка</p></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button">Headers</a></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div></div></div></div></div><div id="проекты" class="resource"><div id="проекты-get" class="action get"><div class="action-name"><span class="action-resource">Проекты</span><span class="action-dif">/</span><span class="action-title">Список проектов</span></div><h4 class="action-heading"><a href="#проекты-get" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/projects</code></h4><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="90px">data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID проекта</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>caption</td><td><span class="attribute-type">number</span><p>Заголовок</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>icon</td><td><span class="attribute-type">string</span><p>Иконка</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">data</span>": <span class="hljs-value">[
     {
       "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
@@ -1168,7 +1193,7 @@ JWT токен.</p>
   "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
     <span class="hljs-string">"data"</span>
   ]
-</span>}</code></pre></div></div></div></div></div><div id="проекты-get-1" class="action get"><div class="action-name">Детали проекта</div><h4 class="action-heading"><a href="#проекты-get-1" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/projects/{id}</code></h4><div class="title"><strong>Parameters</strong><div class="collapse-button show"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID проекта</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID проекта</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>caption</td><td><span class="attribute-type">number</span><p>Заголовок</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>icon</td><td><span class="attribute-type">string</span><p>Иконка</p></td><td></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div><div id="проекты-get-1" class="action get"><div class="action-name"><span class="action-resource">Проекты</span><span class="action-dif">/</span><span class="action-title">Детали проекта</span></div><h4 class="action-heading"><a href="#проекты-get-1" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/projects/{id}</code></h4><div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID проекта</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width="90px">id</td><td><span class="attribute-type">number</span><p>ID проекта</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">caption</td><td><span class="attribute-type">number</span><p>Заголовок</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">icon</td><td><span class="attribute-type">string</span><p>Иконка</p></td><td></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">caption</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">icon</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span>
@@ -1189,7 +1214,7 @@ JWT токен.</p>
       "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Иконка"</span>
     </span>}
   </span>}
-</span>}</code></pre></div></div></div></div></div><div id="проекты-get-2" class="action get"><div class="action-name">Список сайтов</div><h4 class="action-heading"><a href="#проекты-get-2" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/projects/{id}/sites</code></h4><div class="title"><strong>Parameters</strong><div class="collapse-button show"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID проекта</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td>data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID сайта</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>domain</td><td><span class="attribute-type">string</span><p>Доменное имя сайта</p></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div><div id="проекты-get-2" class="action get"><div class="action-name"><span class="action-resource">Проекты</span><span class="action-dif">/</span><span class="action-title">Список сайтов</span></div><h4 class="action-heading"><a href="#проекты-get-2" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/projects/{id}/sites?{order}=&amp;{reverse}=</code></h4><div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID проекта</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>order</td><td><span class="attribute-type">string</span><p>Поле для сортировки</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>reverse</td><td><span class="attribute-type">boolean</span><p>Сортировка в обратном порядке</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="90px">data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID сайта</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>domain</td><td><span class="attribute-type">string</span><p>Доменное имя сайта</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">data</span>": <span class="hljs-value">[
     {
       "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
@@ -1231,7 +1256,7 @@ JWT токен.</p>
   "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
     <span class="hljs-string">"data"</span>
   ]
-</span>}</code></pre></div></div></div></div></div><div id="проекты-get-3" class="action get"><div class="action-name">Список кампаний</div><h4 class="action-heading"><a href="#проекты-get-3" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/projects/{id}/campaigns</code></h4><div class="title"><strong>Parameters</strong><div class="collapse-button show"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID проекта</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td>data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID кампании</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>site_id</td><td><span class="attribute-type">number</span><p>ID сайта, к которому привязана кампания</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>caption</td><td><span class="attribute-type">string</span><p>Заголовок кампании</p></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div><div id="проекты-get-3" class="action get"><div class="action-name"><span class="action-resource">Проекты</span><span class="action-dif">/</span><span class="action-title">Список кампаний</span></div><h4 class="action-heading"><a href="#проекты-get-3" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/projects/{id}/campaigns</code></h4><div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID проекта</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="90px">data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID кампании</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>site_id</td><td><span class="attribute-type">number</span><p>ID сайта, к которому привязана кампания</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>caption</td><td><span class="attribute-type">string</span><p>Заголовок кампании</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">data</span>": <span class="hljs-value">[
     {
       "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
@@ -1282,14 +1307,14 @@ JWT токен.</p>
   "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
     <span class="hljs-string">"data"</span>
   ]
-</span>}</code></pre></div></div></div></div></div><div id="проекты-get-4" class="action get"><div class="action-name">Общая статистика проекта</div><h4 class="action-heading"><a href="#проекты-get-4" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/projects/{id}/statistics/summary?{from}=&amp;{to}=</code></h4><p>Возвращает объект с суммой статистик по кампаниям проекта за указанный период.</p>
-<div class="title"><strong>Parameters</strong><div class="collapse-button show"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID проекта</p></td></tr><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>from</td><td><span class="attribute-type">string</span><p>Дата начала периода в формате `YYYY-mm-dd`.</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>to</td><td><span class="attribute-type">string</span><p>Дата окончания периода (опционально для периода больше 1 дня).</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td>cost</td><td><span class="attribute-type">number</span><p>Потраченная сумма(руб.).</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>views</td><td><span class="attribute-type">number</span><p>Кол-во просмотров рекламных объявлений за период.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>clicks</td><td><span class="attribute-type">number</span><p>Кол-во кликов по рекламе за период.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>calls</td><td><span class="attribute-type">number</span><p>Кол-во звонков с сайтов проекта.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>emails</td><td><span class="attribute-type">number</span><p>Кол-во писем с сайтов проекта.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>orders</td><td><span class="attribute-type">number</span><p>Кол-во заказов с сайтов проекта.</p></td><td></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div><div id="проекты-get-4" class="action get"><div class="action-name"><span class="action-resource">Проекты</span><span class="action-dif">/</span><span class="action-title">Общая статистика проекта</span></div><h4 class="action-heading"><a href="#проекты-get-4" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/projects/{id}/statistics/summary?{from}=&amp;{to}=</code></h4><p>Возвращает объект с суммой статистик по кампаниям проекта за указанный период.</p>
+<div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID проекта</p></td></tr><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>from</td><td><span class="attribute-type">string</span><p>Дата начала периода в формате `YYYY-mm-dd`.</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>to</td><td><span class="attribute-type">string</span><p>Дата окончания периода (опционально для периода больше 1 дня).</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width="90px">cost</td><td><span class="attribute-type">number</span><p>Потраченная сумма(руб.).</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">views</td><td><span class="attribute-type">number</span><p>Кол-во просмотров рекламных объявлений за период.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">clicks</td><td><span class="attribute-type">number</span><p>Кол-во кликов по рекламе за период.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">calls</td><td><span class="attribute-type">number</span><p>Кол-во звонков с сайтов проекта.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">emails</td><td><span class="attribute-type">number</span><p>Кол-во писем с сайтов проекта.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">orders</td><td><span class="attribute-type">number</span><p>Кол-во заказов с сайтов проекта.</p></td><td></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">cost</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">views</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">clicks</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+  "<span class="hljs-attribute">orders</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">calls</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-  "<span class="hljs-attribute">emails</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-  "<span class="hljs-attribute">orders</span>": <span class="hljs-value"><span class="hljs-number">1</span>
+  "<span class="hljs-attribute">emails</span>": <span class="hljs-value"><span class="hljs-number">1</span>
 </span>}</code></pre><div style="height: 1px;"></div></div><div data-tab="schema" class="tab"><pre><code>{
   "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
   "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
@@ -1319,8 +1344,8 @@ JWT токен.</p>
       "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во заказов с сайтов проекта."</span>
     </span>}
   </span>}
-</span>}</code></pre></div></div></div></div></div><div id="проекты-get-5" class="action get"><div class="action-name">Подробная статистика проекта</div><h4 class="action-heading"><a href="#проекты-get-5" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/projects/{id}/statistics/details?{from}=&amp;{to}=</code></h4><p>Возвращает массив объектов с суммой почасовых статистик по всем кампаниям проекта за указанный период.</p>
-<div class="title"><strong>Parameters</strong><div class="collapse-button show"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID проекта</p></td></tr><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>from</td><td><span class="attribute-type">string</span><p>Дата начала периода в формате `YYYY-mm-dd`.</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>to</td><td><span class="attribute-type">string</span><p>Дата окончания периода (опционально для периода больше 1 дня).</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td>data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>time</td><td><span class="attribute-type">string</span><p>Время, за которое предоставляется стастистика (в формате UTC).</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>statistics</td><td><span class="attribute-type">object</span><p>Объект со статистикой за указанное время</p></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div><div id="проекты-get-5" class="action get"><div class="action-name"><span class="action-resource">Проекты</span><span class="action-dif">/</span><span class="action-title">Подробная статистика проекта</span></div><h4 class="action-heading"><a href="#проекты-get-5" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/projects/{id}/statistics/details?{from}=&amp;{to}=</code></h4><p>Возвращает массив объектов с суммой почасовых статистик по всем кампаниям проекта за указанный период.</p>
+<div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID проекта</p></td></tr><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>from</td><td><span class="attribute-type">string</span><p>Дата начала периода в формате `YYYY-mm-dd`.</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>to</td><td><span class="attribute-type">string</span><p>Дата окончания периода (опционально для периода больше 1 дня).</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="90px">data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>time</td><td><span class="attribute-type">string</span><p>Время, за которое предоставляется стастистика (в формате UTC).</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>statistics</td><td><span class="attribute-type">object</span><p>Объект со статистикой за указанное время</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">data</span>": <span class="hljs-value">[
     {
       "<span class="hljs-attribute">time</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
@@ -1328,9 +1353,9 @@ JWT токен.</p>
         "<span class="hljs-attribute">cost</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
         "<span class="hljs-attribute">views</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
         "<span class="hljs-attribute">clicks</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+        "<span class="hljs-attribute">orders</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
         "<span class="hljs-attribute">calls</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-        "<span class="hljs-attribute">emails</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-        "<span class="hljs-attribute">orders</span>": <span class="hljs-value"><span class="hljs-number">1</span>
+        "<span class="hljs-attribute">emails</span>": <span class="hljs-value"><span class="hljs-number">1</span>
       </span>}
     </span>}
   ]
@@ -1400,6 +1425,7 @@ JWT токен.</p>
               <span class="hljs-string">"cost"</span>,
               <span class="hljs-string">"views"</span>,
               <span class="hljs-string">"clicks"</span>,
+              <span class="hljs-string">"orders"</span>,
               <span class="hljs-string">"calls"</span>,
               <span class="hljs-string">"emails"</span>,
               <span class="hljs-string">"orders"</span>
@@ -1419,7 +1445,7 @@ JWT токен.</p>
   "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
     <span class="hljs-string">"data"</span>
   ]
-</span>}</code></pre></div></div></div></div></div><div id="проекты-get-6" class="action get"><div class="action-name">Список заявок</div><h4 class="action-heading"><a href="#проекты-get-6" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/projects/{id}/leads?{from}=&amp;{to}=&amp;{order}=&amp;{reverse}</code></h4><div class="title"><strong>Parameters</strong><div class="collapse-button show"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID проекта</p></td></tr><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>from</td><td><span class="attribute-type">string</span><p>Дата начала периода в формате `YYYY-mm-dd`.</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>to</td><td><span class="attribute-type">string</span><p>Дата окончания периода (опционально для периода больше 1 дня).</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>order</td><td><span class="attribute-type">string</span><p>Поле для сортировки</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>reverse</td><td><span class="attribute-type">boolean</span><p>Сортировка в обратном порядке</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td>data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>site_id</td><td><span class="attribute-type">number</span><p>ID сайта</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>type</td><td><span class="attribute-type">string</span><p>Тип заявки</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>source</td><td><span class="attribute-type">string</span><p>Источник заявки</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>campaign</td><td><span class="attribute-type">string</span><p>Кампания</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>keyword</td><td><span class="attribute-type">string</span><p>Ключевое слово</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>place</td><td><span class="attribute-type">string</span><p>Место показа</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>time</td><td><span class="attribute-type">string</span><p>Время заявки</p></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div><div id="проекты-get-6" class="action get"><div class="action-name"><span class="action-resource">Проекты</span><span class="action-dif">/</span><span class="action-title">Список заявок</span></div><h4 class="action-heading"><a href="#проекты-get-6" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/projects/{id}/leads?{from}=&amp;{to}=&amp;{order}=&amp;{reverse}</code></h4><div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID проекта</p></td></tr><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>from</td><td><span class="attribute-type">string</span><p>Дата начала периода в формате `YYYY-mm-dd`.</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>to</td><td><span class="attribute-type">string</span><p>Дата окончания периода (опционально для периода больше 1 дня).</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>order</td><td><span class="attribute-type">string</span><p>Поле для сортировки</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>reverse</td><td><span class="attribute-type">boolean</span><p>Сортировка в обратном порядке</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>page</td><td><span class="attribute-type">string</span><p>Номер страницы списка (начиная от 1) и количество результатов на странице, разделенные запятыми</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="90px">data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>site_id</td><td><span class="attribute-type">number</span><p>ID сайта</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>type</td><td><span class="attribute-type">string</span><p>Тип заявки</p><p><b>email</b></p><p><b>call</b></p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>source</td><td><span class="attribute-type">string</span><p>Источник заявки</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>campaign</td><td><span class="attribute-type">string</span><p>Кампания</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>keyword</td><td><span class="attribute-type">string</span><p>Ключевое слово</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>place</td><td><span class="attribute-type">string</span><p>Место показа</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>time</td><td><span class="attribute-type">string</span><p>Время заявки</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">data</span>": <span class="hljs-value">[
     {
       "<span class="hljs-attribute">site_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
@@ -1507,7 +1533,50 @@ JWT токен.</p>
   "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
     <span class="hljs-string">"data"</span>
   ]
-</span>}</code></pre></div></div></div></div></div></div><div id="сайты" class="resource"><h3 class="resource-heading">Сайты <a href="#сайты" class="permalink">&nbsp;&para;</a></h3><div id="сайты-get" class="action get"><div class="action-name">Список сайтов</div><h4 class="action-heading"><a href="#сайты-get" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/sites</code></h4><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td>data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID сайта</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>domain</td><td><span class="attribute-type">string</span><p>Доменное имя сайта</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>project_id</td><td><span class="attribute-type">number</span><p>ID проекта, которому принадлежит сайт</p></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div><div id="проекты-get-7" class="action get"><div class="action-name"><span class="action-resource">Проекты</span><span class="action-dif">/</span><span class="action-title">Календарь стоимости заказа</span></div><h4 class="action-heading"><a href="#проекты-get-7" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/projects/{id}/orders/cost?{from}=&amp;{to}=</code></h4><p>Возвращает среднюю стоимость заказа за день по всем кампаниям проекта. Для расчета учитывается количество заказов и сумма расходов по всем кампаниям, полученная из статистики.</p>
+<div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID проекта</p></td></tr><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>from</td><td><span class="attribute-type">string</span><p>Дата начала периода в формате `YYYY-mm-dd`.</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>to</td><td><span class="attribute-type">string</span><p>Дата окончания периода (опционально для периода больше 1 дня).</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="90px">data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>date</td><td><span class="attribute-type">string</span><p>Дата</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>cost</td><td><span class="attribute-type">number</span><p>Стоимость клика</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
+  "<span class="hljs-attribute">data</span>": <span class="hljs-value">[
+    {
+      "<span class="hljs-attribute">date</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
+      "<span class="hljs-attribute">cost</span>": <span class="hljs-value"><span class="hljs-number">1</span>
+    </span>}
+  ]
+</span>}</code></pre><div style="height: 1px;"></div></div><div data-tab="schema" class="tab"><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span></span>,
+      "<span class="hljs-attribute">items</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+        "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">date</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+            "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+              <span class="hljs-string">""</span>
+            ]</span>,
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Дата"</span>
+          </span>}</span>,
+          "<span class="hljs-attribute">cost</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+            "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+              <span class="hljs-number">0</span>
+            ]</span>,
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Стоимость клика"</span>
+          </span>}
+        </span>}</span>,
+        "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+          <span class="hljs-string">"date"</span>,
+          <span class="hljs-string">"cost"</span>
+        ]</span>,
+        "<span class="hljs-attribute">additionalProperties</span>": <span class="hljs-value"><span class="hljs-literal">false</span>
+      </span>}
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"data"</span>
+  ]
+</span>}</code></pre></div></div></div></div></div></div><div id="сайты" class="resource"><div id="сайты-get" class="action get"><div class="action-name"><span class="action-resource">Сайты</span><span class="action-dif">/</span><span class="action-title">Список сайтов</span></div><h4 class="action-heading"><a href="#сайты-get" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/sites?{order}=&amp;{reverse}=</code></h4><div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span></span></td><td>order</td><td><span class="attribute-type">string</span><p>Поле для сортировки</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>reverse</td><td><span class="attribute-type">boolean</span><p>Сортировка в обратном порядке</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="90px">data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID сайта</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>domain</td><td><span class="attribute-type">string</span><p>Доменное имя сайта</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>project_id</td><td><span class="attribute-type">number</span><p>ID проекта, которому принадлежит сайт</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">data</span>": <span class="hljs-value">[
     {
       "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
@@ -1558,7 +1627,7 @@ JWT токен.</p>
   "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
     <span class="hljs-string">"data"</span>
   ]
-</span>}</code></pre></div></div></div></div></div><div id="сайты-post" class="action post"><div class="action-name">Добавить новый сайт</div><h4 class="action-heading"><a href="#сайты-post" class="method post">POST</a><code class="uri">http://analitics.catkitcms.ru/api/sites</code></h4><div class="title"><strong>Request</strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td>project_id</td><td><span class="attribute-type">number</span><p>ID проекта, к которому относится сайт.</p></td><td></td></tr><tr><td class="attribute-status"><span class="required"></span></td><td>domain</td><td><span class="attribute-type">string</span><p>Доменное имя сайта.</p></td><td></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div><div id="сайты-post" class="action post"><div class="action-name"><span class="action-resource">Сайты</span><span class="action-dif">/</span><span class="action-title">Добавить новый сайт</span></div><h4 class="action-heading"><a href="#сайты-post" class="method post">POST</a><code class="uri">http://analitics.catkitcms.ru/api/sites</code></h4><div class="title"><strong>Request</strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="90px">project_id</td><td><span class="attribute-type">number</span><p>ID проекта, к которому относится сайт.</p></td><td></td></tr><tr><td class="attribute-status"><span class="required"></span></td><td width="90px">domain</td><td><span class="attribute-type">string</span><p>Доменное имя сайта.</p></td><td></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">project_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">domain</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span>
 </span>}</code></pre><div style="height: 1px;"></div></div><div data-tab="schema" class="tab"><pre><code>{
@@ -1578,7 +1647,7 @@ JWT токен.</p>
     <span class="hljs-string">"domain"</span>
   ]</span>,
   "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span>
-</span>}</code></pre></div></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td>data</td><td><span class="attribute-type">object</span><p></p></td><td></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width="90px">data</td><td><span class="attribute-type">object</span><p></p></td><td></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
     "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span>
   </span>}
@@ -1596,7 +1665,7 @@ JWT токен.</p>
       </span>}
     </span>}
   </span>}
-</span>}</code></pre></div></div></div></div></div><div id="сайты-get-1" class="action get"><div class="action-name">Детали сайта</div><h4 class="action-heading"><a href="#сайты-get-1" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/sites/{id}</code></h4><div class="title"><strong>Parameters</strong><div class="collapse-button show"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID сайта.</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID сайта</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>domain</td><td><span class="attribute-type">string</span><p>Доменное имя сайта</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>project_id</td><td><span class="attribute-type">number</span><p>ID проекта, которому принадлежит сайт</p></td><td></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div><div id="сайты-get-1" class="action get"><div class="action-name"><span class="action-resource">Сайты</span><span class="action-dif">/</span><span class="action-title">Детали сайта</span></div><h4 class="action-heading"><a href="#сайты-get-1" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/sites/{id}</code></h4><div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID сайта.</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width="90px">id</td><td><span class="attribute-type">number</span><p>ID сайта</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">domain</td><td><span class="attribute-type">string</span><p>Доменное имя сайта</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">project_id</td><td><span class="attribute-type">number</span><p>ID проекта, которому принадлежит сайт</p></td><td></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">domain</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
   "<span class="hljs-attribute">project_id</span>": <span class="hljs-value"><span class="hljs-number">1</span>
@@ -1617,7 +1686,7 @@ JWT токен.</p>
       "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"ID проекта, которому принадлежит сайт"</span>
     </span>}
   </span>}
-</span>}</code></pre></div></div></div></div></div><div id="сайты-delete" class="action delete"><div class="action-name">Удалить сайт</div><h4 class="action-heading"><a href="#сайты-delete" class="method delete">DELETE</a><code class="uri">http://analitics.catkitcms.ru/api/sites/{id}</code></h4><div class="title"><strong>Parameters</strong><div class="collapse-button show"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID сайта.</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"></div></div></div></div></div><div id="сайты-get-2" class="action get"><div class="action-name">Список кампаний</div><h4 class="action-heading"><a href="#сайты-get-2" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/sites/{id}/campaigns</code></h4><div class="title"><strong>Parameters</strong><div class="collapse-button show"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID сайта.</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td>data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID кампании</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>site_id</td><td><span class="attribute-type">number</span><p>ID сайта, к которому привязана кампания</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>caption</td><td><span class="attribute-type">string</span><p>Заголовок кампании</p></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div><div id="сайты-delete" class="action delete"><div class="action-name"><span class="action-resource">Сайты</span><span class="action-dif">/</span><span class="action-title">Удалить сайт</span></div><h4 class="action-heading"><a href="#сайты-delete" class="method delete">DELETE</a><code class="uri">http://analitics.catkitcms.ru/api/sites/{id}</code></h4><div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID сайта.</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button">Headers</a></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div></div></div></div><div id="сайты-get-2" class="action get"><div class="action-name"><span class="action-resource">Сайты</span><span class="action-dif">/</span><span class="action-title">Список кампаний</span></div><h4 class="action-heading"><a href="#сайты-get-2" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/sites/{id}/campaigns</code></h4><div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID сайта.</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="90px">data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID кампании</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>site_id</td><td><span class="attribute-type">number</span><p>ID сайта, к которому привязана кампания</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>caption</td><td><span class="attribute-type">string</span><p>Заголовок кампании</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">data</span>": <span class="hljs-value">[
     {
       "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
@@ -1668,7 +1737,7 @@ JWT токен.</p>
   "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
     <span class="hljs-string">"data"</span>
   ]
-</span>}</code></pre></div></div></div></div></div><div id="сайты-post-1" class="action post"><div class="action-name">Добавление заказа</div><h4 class="action-heading"><a href="#сайты-post-1" class="method post">POST</a><code class="uri">http://analitics.catkitcms.ru/api/sites/orders</code></h4><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID добавленного заказа</p></td><td></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div><div id="сайты-post-1" class="action post"><div class="action-name"><span class="action-resource">Сайты</span><span class="action-dif">/</span><span class="action-title">Добавление заказа</span></div><h4 class="action-heading"><a href="#сайты-post-1" class="method post">POST</a><code class="uri">http://analitics.catkitcms.ru/api/sites/orders</code></h4><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width="90px">id</td><td><span class="attribute-type">number</span><p>ID добавленного заказа</p></td><td></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span>
 </span>}</code></pre><div style="height: 1px;"></div></div><div data-tab="schema" class="tab"><pre><code>{
   "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
@@ -1679,7 +1748,7 @@ JWT токен.</p>
       "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"ID добавленного заказа"</span>
     </span>}
   </span>}
-</span>}</code></pre></div></div></div></div></div><div id="сайты-post-2" class="action post"><div class="action-name">Добавление произвольного расхода</div><h4 class="action-heading"><a href="#сайты-post-2" class="method post">POST</a><code class="uri">http://analitics.catkitcms.ru/api/sites/costs</code></h4><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID добавленной записи</p></td><td></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div><div id="сайты-post-2" class="action post"><div class="action-name"><span class="action-resource">Сайты</span><span class="action-dif">/</span><span class="action-title">Добавление произвольного расхода</span></div><h4 class="action-heading"><a href="#сайты-post-2" class="method post">POST</a><code class="uri">http://analitics.catkitcms.ru/api/sites/costs</code></h4><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width="90px">id</td><td><span class="attribute-type">number</span><p>ID добавленной записи</p></td><td></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span>
 </span>}</code></pre><div style="height: 1px;"></div></div><div data-tab="schema" class="tab"><pre><code>{
   "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
@@ -1690,14 +1759,14 @@ JWT токен.</p>
       "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"ID добавленной записи"</span>
     </span>}
   </span>}
-</span>}</code></pre></div></div></div></div></div><div id="сайты-get-3" class="action get"><div class="action-name">Общая статистика сайта</div><h4 class="action-heading"><a href="#сайты-get-3" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/sites/{id}/statistics/summary?{from}=&amp;{to}=</code></h4><p>Возвращает объект с суммой статистик по всем кампаниям, принадлежащим сайту, за указанный период.</p>
-<div class="title"><strong>Parameters</strong><div class="collapse-button show"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID сайта</p></td></tr><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>from</td><td><span class="attribute-type">string</span><p>Дата начала периода в формате `YYYY-mm-dd`.</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>to</td><td><span class="attribute-type">string</span><p>Дата окончания периода (опционально для периода больше 1 дня).</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td>cost</td><td><span class="attribute-type">number</span><p>Потраченная сумма(руб.).</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>views</td><td><span class="attribute-type">number</span><p>Кол-во просмотров рекламных объявлений за период.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>clicks</td><td><span class="attribute-type">number</span><p>Кол-во кликов по рекламе за период.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>calls</td><td><span class="attribute-type">number</span><p>Кол-во звонков с сайтов проекта.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>emails</td><td><span class="attribute-type">number</span><p>Кол-во писем с сайтов проекта.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>orders</td><td><span class="attribute-type">number</span><p>Кол-во заказов с сайтов проекта.</p></td><td></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div><div id="сайты-get-3" class="action get"><div class="action-name"><span class="action-resource">Сайты</span><span class="action-dif">/</span><span class="action-title">Общая статистика сайта</span></div><h4 class="action-heading"><a href="#сайты-get-3" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/sites/{id}/statistics/summary?{from}=&amp;{to}=</code></h4><p>Возвращает объект с суммой статистик по всем кампаниям, принадлежащим сайту, за указанный период.</p>
+<div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID сайта</p></td></tr><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>from</td><td><span class="attribute-type">string</span><p>Дата начала периода в формате `YYYY-mm-dd`.</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>to</td><td><span class="attribute-type">string</span><p>Дата окончания периода (опционально для периода больше 1 дня).</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width="90px">cost</td><td><span class="attribute-type">number</span><p>Потраченная сумма(руб.).</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">views</td><td><span class="attribute-type">number</span><p>Кол-во просмотров рекламных объявлений за период.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">clicks</td><td><span class="attribute-type">number</span><p>Кол-во кликов по рекламе за период.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">calls</td><td><span class="attribute-type">number</span><p>Кол-во звонков с сайтов проекта.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">emails</td><td><span class="attribute-type">number</span><p>Кол-во писем с сайтов проекта.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">orders</td><td><span class="attribute-type">number</span><p>Кол-во заказов с сайтов проекта.</p></td><td></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">cost</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">views</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">clicks</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+  "<span class="hljs-attribute">orders</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">calls</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-  "<span class="hljs-attribute">emails</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-  "<span class="hljs-attribute">orders</span>": <span class="hljs-value"><span class="hljs-number">1</span>
+  "<span class="hljs-attribute">emails</span>": <span class="hljs-value"><span class="hljs-number">1</span>
 </span>}</code></pre><div style="height: 1px;"></div></div><div data-tab="schema" class="tab"><pre><code>{
   "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
   "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
@@ -1727,8 +1796,8 @@ JWT токен.</p>
       "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во заказов с сайтов проекта."</span>
     </span>}
   </span>}
-</span>}</code></pre></div></div></div></div></div><div id="сайты-get-4" class="action get"><div class="action-name">Подробная статистика сайта</div><h4 class="action-heading"><a href="#сайты-get-4" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/sites/{id}/statistics/details?{from}=&amp;{to}=</code></h4><p>Возвращает массив объектов с суммой почасовых статистик по всем кампаниям проекта за указанный период.</p>
-<div class="title"><strong>Parameters</strong><div class="collapse-button show"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID сайта</p></td></tr><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>from</td><td><span class="attribute-type">string</span><p>Дата начала периода в формате `YYYY-mm-dd`.</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>to</td><td><span class="attribute-type">string</span><p>Дата окончания периода (опционально для периода больше 1 дня).</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td>data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>time</td><td><span class="attribute-type">string</span><p>Время, за которое предоставляется стастистика (в формате UTC).</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>statistics</td><td><span class="attribute-type">object</span><p>Объект со статистикой за указанное время</p></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div><div id="сайты-get-4" class="action get"><div class="action-name"><span class="action-resource">Сайты</span><span class="action-dif">/</span><span class="action-title">Подробная статистика сайта</span></div><h4 class="action-heading"><a href="#сайты-get-4" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/sites/{id}/statistics/details?{from}=&amp;{to}=</code></h4><p>Возвращает массив объектов с суммой почасовых статистик по всем кампаниям проекта за указанный период.</p>
+<div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID сайта</p></td></tr><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>from</td><td><span class="attribute-type">string</span><p>Дата начала периода в формате `YYYY-mm-dd`.</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>to</td><td><span class="attribute-type">string</span><p>Дата окончания периода (опционально для периода больше 1 дня).</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="90px">data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>time</td><td><span class="attribute-type">string</span><p>Время, за которое предоставляется стастистика (в формате UTC).</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>statistics</td><td><span class="attribute-type">object</span><p>Объект со статистикой за указанное время</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">data</span>": <span class="hljs-value">[
     {
       "<span class="hljs-attribute">time</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
@@ -1736,9 +1805,9 @@ JWT токен.</p>
         "<span class="hljs-attribute">cost</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
         "<span class="hljs-attribute">views</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
         "<span class="hljs-attribute">clicks</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+        "<span class="hljs-attribute">orders</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
         "<span class="hljs-attribute">calls</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-        "<span class="hljs-attribute">emails</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-        "<span class="hljs-attribute">orders</span>": <span class="hljs-value"><span class="hljs-number">1</span>
+        "<span class="hljs-attribute">emails</span>": <span class="hljs-value"><span class="hljs-number">1</span>
       </span>}
     </span>}
   ]
@@ -1808,6 +1877,7 @@ JWT токен.</p>
               <span class="hljs-string">"cost"</span>,
               <span class="hljs-string">"views"</span>,
               <span class="hljs-string">"clicks"</span>,
+              <span class="hljs-string">"orders"</span>,
               <span class="hljs-string">"calls"</span>,
               <span class="hljs-string">"emails"</span>,
               <span class="hljs-string">"orders"</span>
@@ -1827,7 +1897,7 @@ JWT токен.</p>
   "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
     <span class="hljs-string">"data"</span>
   ]
-</span>}</code></pre></div></div></div></div></div><div id="сайты-put" class="action put"><div class="action-name">Обновление статистики сайта</div><h4 class="action-heading"><a href="#сайты-put" class="method put">PUT</a><code class="uri">http://analitics.catkitcms.ru/api/sites/{id}/statistics?{date}</code></h4><div class="title"><strong>Parameters</strong><div class="collapse-button show"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID сайта</p></td></tr><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>date</td><td><span class="attribute-type">string</span><p>Дата для изменения статистики</p></td></tr></table></div><div class="title"><strong>Request</strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td>orders</td><td><span class="attribute-type">number</span><p>Количество заказов за указанный в date день</p></td><td></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div><div id="сайты-put" class="action put"><div class="action-name"><span class="action-resource">Сайты</span><span class="action-dif">/</span><span class="action-title">Обновление статистики сайта</span></div><h4 class="action-heading"><a href="#сайты-put" class="method put">PUT</a><code class="uri">http://analitics.catkitcms.ru/api/sites/{id}/statistics?{date}</code></h4><div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID сайта</p></td></tr><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>date</td><td><span class="attribute-type">string</span><p>Дата для изменения статистики</p></td></tr></table></div><div class="title"><strong>Request</strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width="90px">orders</td><td><span class="attribute-type">number</span><p>Количество заказов за указанный в date день</p></td><td></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">orders</span>": <span class="hljs-value"><span class="hljs-number">1</span>
 </span>}</code></pre><div style="height: 1px;"></div></div><div data-tab="schema" class="tab"><pre><code>{
   "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
@@ -1838,7 +1908,34 @@ JWT токен.</p>
     </span>}
   </span>}</span>,
   "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span>
-</span>}</code></pre></div></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"></div></div></div></div></div></div><div id="кампании" class="resource"><h3 class="resource-heading">Кампании <a href="#кампании" class="permalink">&nbsp;&para;</a></h3><div id="кампании-get" class="action get"><div class="action-name">Список кампаний</div><h4 class="action-heading"><a href="#кампании-get" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/campaigns</code></h4><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td>data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID кампании</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>site_id</td><td><span class="attribute-type">number</span><p>ID сайта, которому принадлежит кампания</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>caption</td><td><span class="attribute-type">string</span><p>Заголовок кампании</p></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button">Headers</a></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div></div></div></div><div id="сайты-put-1" class="action put"><div class="action-name"><span class="action-resource">Сайты</span><span class="action-dif">/</span><span class="action-title">Обновление UTM меток</span></div><h4 class="action-heading"><a href="#сайты-put-1" class="method put">PUT</a><code class="uri">http://analitics.catkitcms.ru/api/sites/{id}/utm?{method}</code></h4><p>Обновляет UTM метки для ссылок в объявлениях всех кампаний, принадлежащик сайту.</p>
+<div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID сайта</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>method</td><td><span class="attribute-type">string</span><p>Способ задания меток</p><p><b>only</b> - Установить только заданные метки, остальные удалить</p><p><b>replace</b> - Обновить заданные метки, остальные не изменять. Выбран по умолчанию</p><p><b>all</b> - Обновить заданные метки, остальные очистить</p></td></tr></table></div><div class="title"><strong>Request</strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width="90px">utm_source</td><td><span class="attribute-type">string</span><p></p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">utm_medium</td><td><span class="attribute-type">string</span><p></p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">utm_campaign</td><td><span class="attribute-type">string</span><p></p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">utm_content</td><td><span class="attribute-type">string</span><p></p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">utm_term</td><td><span class="attribute-type">string</span><p></p></td><td></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+  "<span class="hljs-attribute">utm_source</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
+  "<span class="hljs-attribute">utm_medium</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
+  "<span class="hljs-attribute">utm_campaign</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
+  "<span class="hljs-attribute">utm_content</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
+  "<span class="hljs-attribute">utm_term</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span>
+</span>}</code></pre><div style="height: 1px;"></div></div><div data-tab="schema" class="tab"><pre><code>{
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">utm_source</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">utm_medium</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">utm_campaign</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">utm_content</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">utm_term</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span>
+</span>}</code></pre></div></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button">Headers</a></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div></div></div></div></div><div id="кампании" class="resource"><div id="кампании-get" class="action get"><div class="action-name"><span class="action-resource">Кампании</span><span class="action-dif">/</span><span class="action-title">Список кампаний</span></div><h4 class="action-heading"><a href="#кампании-get" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/campaigns</code></h4><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="90px">data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID кампании</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>site_id</td><td><span class="attribute-type">number</span><p>ID сайта, которому принадлежит кампания</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>caption</td><td><span class="attribute-type">string</span><p>Заголовок кампании</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">data</span>": <span class="hljs-value">[
     {
       "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
@@ -1889,7 +1986,7 @@ JWT токен.</p>
   "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
     <span class="hljs-string">"data"</span>
   ]
-</span>}</code></pre></div></div></div></div></div><div id="кампании-post" class="action post"><div class="action-name">Добавить новую кампанию</div><h4 class="action-heading"><a href="#кампании-post" class="method post">POST</a><code class="uri">http://analitics.catkitcms.ru/api/campaigns</code></h4><div class="title"><strong>Request</strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td>site_id</td><td><span class="attribute-type">number</span><p>ID сайта, к которому относится кампания</p></td><td></td></tr><tr><td class="attribute-status"><span class="required"></span></td><td>profile_id</td><td><span class="attribute-type">number</span><p>ID профиля, которому принадлежит кампания</p></td><td></td></tr><tr><td class="attribute-status"><span class="required"></span></td><td>key</td><td><span class="attribute-type">number</span><p>Идентификатор кампании в соответствующей профилю системе</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>caption</td><td><span class="attribute-type">string</span><p>Название кампании</p></td><td></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div><div id="кампании-post" class="action post"><div class="action-name"><span class="action-resource">Кампании</span><span class="action-dif">/</span><span class="action-title">Добавить новую кампанию</span></div><h4 class="action-heading"><a href="#кампании-post" class="method post">POST</a><code class="uri">http://analitics.catkitcms.ru/api/campaigns</code></h4><div class="title"><strong>Request</strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="90px">site_id</td><td><span class="attribute-type">number</span><p>ID сайта, к которому относится кампания</p></td><td></td></tr><tr><td class="attribute-status"><span class="required"></span></td><td width="90px">profile_id</td><td><span class="attribute-type">number</span><p>ID профиля, которому принадлежит кампания</p></td><td></td></tr><tr><td class="attribute-status"><span class="required"></span></td><td width="90px">key</td><td><span class="attribute-type">number</span><p>Идентификатор кампании в соответствующей профилю системе</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">caption</td><td><span class="attribute-type">string</span><p>Название кампании</p></td><td></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">site_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">profile_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">key</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
@@ -1920,7 +2017,7 @@ JWT токен.</p>
     <span class="hljs-string">"key"</span>
   ]</span>,
   "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span>
-</span>}</code></pre></div></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td>data</td><td><span class="attribute-type">object</span><p></p></td><td></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width="90px">data</td><td><span class="attribute-type">object</span><p></p></td><td></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
     "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span>
   </span>}
@@ -1938,7 +2035,7 @@ JWT токен.</p>
       </span>}
     </span>}
   </span>}
-</span>}</code></pre></div></div></div></div></div><div id="кампании-get-1" class="action get"><div class="action-name">Детали кампании</div><h4 class="action-heading"><a href="#кампании-get-1" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/campaigns/{id}</code></h4><div class="title"><strong>Parameters</strong><div class="collapse-button show"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID кампании</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID кампании</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>site_id</td><td><span class="attribute-type">number</span><p>ID сайта, которому принадлежит кампания</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>caption</td><td><span class="attribute-type">string</span><p>Заголовок кампании</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>type</td><td><span class="attribute-type">string</span><p>Тип кампании</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>num</td><td><span class="attribute-type">number</span><p>Номер кампании в системе статистики</p></td><td></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div><div id="кампании-get-1" class="action get"><div class="action-name"><span class="action-resource">Кампании</span><span class="action-dif">/</span><span class="action-title">Детали кампании</span></div><h4 class="action-heading"><a href="#кампании-get-1" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/campaigns/{id}</code></h4><div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID кампании</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width="90px">id</td><td><span class="attribute-type">number</span><p>ID кампании</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">site_id</td><td><span class="attribute-type">number</span><p>ID сайта, которому принадлежит кампания</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">caption</td><td><span class="attribute-type">string</span><p>Заголовок кампании</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">type</td><td><span class="attribute-type">string</span><p>Тип кампании</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">num</td><td><span class="attribute-type">number</span><p>Номер кампании в системе статистики</p></td><td></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
   "<span class="hljs-attribute">site_id</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
   "<span class="hljs-attribute">caption</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
@@ -1969,11 +2066,12 @@ JWT токен.</p>
       "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Номер кампании в системе статистики"</span>
     </span>}
   </span>}
-</span>}</code></pre></div></div></div></div></div><div id="кампании-delete" class="action delete"><div class="action-name">Удалить кампанию</div><h4 class="action-heading"><a href="#кампании-delete" class="method delete">DELETE</a><code class="uri">http://analitics.catkitcms.ru/api/campaigns/{id}</code></h4><div class="title"><strong>Parameters</strong><div class="collapse-button show"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID кампании</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"></div></div></div></div></div><div id="кампании-get-2" class="action get"><div class="action-name">Общая статистика кампании</div><h4 class="action-heading"><a href="#кампании-get-2" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/campaigns/{id}/statistics/summary?{from}=&amp;{to}=</code></h4><p>Возвращает объект с суммой статистик кампании за указанный период.</p>
-<div class="title"><strong>Parameters</strong><div class="collapse-button show"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID кампании</p></td></tr><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>from</td><td><span class="attribute-type">string</span><p>Дата начала периода в формате `YYYY-mm-dd`.</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>to</td><td><span class="attribute-type">string</span><p>Дата окончания периода (опционально для периода больше 1 дня).</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td>cost</td><td><span class="attribute-type">number</span><p>Потраченная сумма(руб.).</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>views</td><td><span class="attribute-type">number</span><p>Кол-во просмотров рекламных объявлений за период.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>clicks</td><td><span class="attribute-type">number</span><p>Кол-во кликов по рекламе за период.</p></td><td></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div><div id="кампании-delete" class="action delete"><div class="action-name"><span class="action-resource">Кампании</span><span class="action-dif">/</span><span class="action-title">Удалить кампанию</span></div><h4 class="action-heading"><a href="#кампании-delete" class="method delete">DELETE</a><code class="uri">http://analitics.catkitcms.ru/api/campaigns/{id}</code></h4><div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID кампании</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button">Headers</a></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div></div></div></div><div id="кампании-get-2" class="action get"><div class="action-name"><span class="action-resource">Кампании</span><span class="action-dif">/</span><span class="action-title">Общая статистика кампании</span></div><h4 class="action-heading"><a href="#кампании-get-2" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/campaigns/{id}/statistics/summary?{from}=&amp;{to}=</code></h4><p>Возвращает объект с суммой статистик кампании за указанный период.</p>
+<div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID кампании</p></td></tr><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>from</td><td><span class="attribute-type">string</span><p>Дата начала периода в формате `YYYY-mm-dd`.</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>to</td><td><span class="attribute-type">string</span><p>Дата окончания периода (опционально для периода больше 1 дня).</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width="90px">cost</td><td><span class="attribute-type">number</span><p>Потраченная сумма(руб.).</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">views</td><td><span class="attribute-type">number</span><p>Кол-во просмотров рекламных объявлений за период.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">clicks</td><td><span class="attribute-type">number</span><p>Кол-во кликов по рекламе за период.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">orders</td><td><span class="attribute-type">number</span><p>Кол-во заказов из кампании</p></td><td></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">cost</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">views</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-  "<span class="hljs-attribute">clicks</span>": <span class="hljs-value"><span class="hljs-number">1</span>
+  "<span class="hljs-attribute">clicks</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+  "<span class="hljs-attribute">orders</span>": <span class="hljs-value"><span class="hljs-number">1</span>
 </span>}</code></pre><div style="height: 1px;"></div></div><div data-tab="schema" class="tab"><pre><code>{
   "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
   "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
@@ -1989,17 +2087,22 @@ JWT токен.</p>
     "<span class="hljs-attribute">clicks</span>": <span class="hljs-value">{
       "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
       "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во кликов по рекламе за период."</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">orders</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во заказов из кампании"</span>
     </span>}
   </span>}
-</span>}</code></pre></div></div></div></div></div><div id="кампании-get-3" class="action get"><div class="action-name">Подробная статистика кампании</div><h4 class="action-heading"><a href="#кампании-get-3" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/campaigns/{id}/statistics/details?{from}=&amp;{to}=</code></h4><p>Возвращает массив объектов с суммой почасовых статистик кампании за указанный период.</p>
-<div class="title"><strong>Parameters</strong><div class="collapse-button show"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID кампании</p></td></tr><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>from</td><td><span class="attribute-type">string</span><p>Дата начала периода в формате `YYYY-mm-dd`.</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>to</td><td><span class="attribute-type">string</span><p>Дата окончания периода (опционально для периода больше 1 дня).</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td>data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>time</td><td><span class="attribute-type">string</span><p>Время, за которое предоставляется стастистика (в формате UTC).</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>statistics</td><td><span class="attribute-type">object</span><p>Объект со статистикой за указанное время</p></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div><div id="кампании-get-3" class="action get"><div class="action-name"><span class="action-resource">Кампании</span><span class="action-dif">/</span><span class="action-title">Подробная статистика кампании</span></div><h4 class="action-heading"><a href="#кампании-get-3" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/campaigns/{id}/statistics/details?{from}=&amp;{to}=</code></h4><p>Возвращает массив объектов с суммой почасовых статистик кампании за указанный период.</p>
+<div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID кампании</p></td></tr><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>from</td><td><span class="attribute-type">string</span><p>Дата начала периода в формате `YYYY-mm-dd`.</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>to</td><td><span class="attribute-type">string</span><p>Дата окончания периода (опционально для периода больше 1 дня).</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="90px">data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>time</td><td><span class="attribute-type">string</span><p>Время, за которое предоставляется стастистика (в формате UTC).</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>statistics</td><td><span class="attribute-type">object</span><p>Объект со статистикой за указанное время</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">data</span>": <span class="hljs-value">[
     {
       "<span class="hljs-attribute">time</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
       "<span class="hljs-attribute">statistics</span>": <span class="hljs-value">{
         "<span class="hljs-attribute">cost</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
         "<span class="hljs-attribute">views</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-        "<span class="hljs-attribute">clicks</span>": <span class="hljs-value"><span class="hljs-number">1</span>
+        "<span class="hljs-attribute">clicks</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+        "<span class="hljs-attribute">orders</span>": <span class="hljs-value"><span class="hljs-number">1</span>
       </span>}
     </span>}
   ]
@@ -2042,12 +2145,20 @@ JWT токен.</p>
                   <span class="hljs-number">0</span>
                 ]</span>,
                 "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во кликов по рекламе за период."</span>
+              </span>}</span>,
+              "<span class="hljs-attribute">orders</span>": <span class="hljs-value">{
+                "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+                "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+                  <span class="hljs-number">0</span>
+                ]</span>,
+                "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во заказов из кампании"</span>
               </span>}
             </span>}</span>,
             "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
               <span class="hljs-string">"cost"</span>,
               <span class="hljs-string">"views"</span>,
-              <span class="hljs-string">"clicks"</span>
+              <span class="hljs-string">"clicks"</span>,
+              <span class="hljs-string">"orders"</span>
             ]</span>,
             "<span class="hljs-attribute">additionalProperties</span>": <span class="hljs-value"><span class="hljs-literal">false</span></span>,
             "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Объект со статистикой за указанное время"</span>
@@ -2064,80 +2175,161 @@ JWT токен.</p>
   "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
     <span class="hljs-string">"data"</span>
   ]
-</span>}</code></pre></div></div></div></div></div><div id="кампании-get-4" class="action get"><div class="action-name">Текущие настройки биддера</div><h4 class="action-heading"><a href="#кампании-get-4" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/campaigns/{id}/bids</code></h4><div class="title"><strong>Parameters</strong><div class="collapse-button show"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID кампании</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td>max</td><td><span class="attribute-type">number</span><p>Максимальная ставка</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>position</td><td><span class="attribute-type">string</span><p>Позиция, строка по формуле Pnm, где n - , m -</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>increment</td><td><span class="attribute-type">number</span><p>Процент завышения ставки</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>active</td><td><span class="attribute-type">boolean</span><p>Статус (включено/выключено)</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>hit</td><td><span class="attribute-type">number</span><p>Показатель попадания ставки в процентах. Отражает количество ставок, процент завышения которых не превышал максимальное значение, к общему количеству ставок по кампании. В расчет принимаются только ставки, сделанные по этой группе настроек, - если настройки биддера для кампании были переопределены настройками группы и/или ключевой фразы, они не учитываются.</p></td><td></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
-  "<span class="hljs-attribute">max</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-  "<span class="hljs-attribute">position</span>": <span class="hljs-value"><span class="hljs-string">"P11"</span></span>,
-  "<span class="hljs-attribute">increment</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-  "<span class="hljs-attribute">active</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
-  "<span class="hljs-attribute">hit</span>": <span class="hljs-value"><span class="hljs-number">1</span>
+</span>}</code></pre></div></div></div></div></div><div id="кампании-get-4" class="action get"><div class="action-name"><span class="action-resource">Кампании</span><span class="action-dif">/</span><span class="action-title">Текущие настройки биддера</span></div><h4 class="action-heading"><a href="#кампании-get-4" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/campaigns/{id}/bids</code></h4><p>Возвращает список настроек биддера для кампании. Каждая настройка представляет собой параметры для одного часа (опция <code>hour_num</code>) определенного дня недели (опция <code>day_num</code>), и биддер будет запущен только в это время, в остальные, не указанные, диапазоны биддер выполняться не будет.</p>
+<div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID кампании</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="90px">data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>max</td><td><span class="attribute-type">number</span><p>Максимальная ставка</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>position</td><td><span class="attribute-type">string</span><p>Позиция, строка по формуле Pnm, где n - , m -</p><p><b>P11</b></p><p><b>P12</b></p><p><b>P13</b></p><p><b>P14</b></p><p><b>P21</b></p><p><b>P22</b></p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>increment</td><td><span class="attribute-type">number</span><p>Процент завышения ставки</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>active</td><td><span class="attribute-type">boolean</span><p>Статус (включено/выключено)</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>day_num</td><td><span class="attribute-type">number</span><p>Порядковый номер дня недели от 0 (понедельник) до 6, для которого должны применяться настройки</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>hour_num</td><td><span class="attribute-type">number</span><p>ПОрядковый номер часа от 0 до 23, для которого должны применяться настройки</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>hit</td><td><span class="attribute-type">number</span><p>Показатель попадания ставки в процентах. Отражает количество ставок, процент завышения которых не превышал максимальное значение, к общему количеству ставок по кампании. В расчет принимаются только ставки, сделанные по этой группе настроек, - если настройки биддера для кампании были переопределены настройками группы и/или ключевой фразы, они не учитываются. Значение для группы обновляется при каждом ее использовании биддером.</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
+  "<span class="hljs-attribute">data</span>": <span class="hljs-value">[
+    {
+      "<span class="hljs-attribute">max</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+      "<span class="hljs-attribute">position</span>": <span class="hljs-value"><span class="hljs-string">"P11"</span></span>,
+      "<span class="hljs-attribute">increment</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+      "<span class="hljs-attribute">active</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+      "<span class="hljs-attribute">day_num</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+      "<span class="hljs-attribute">hour_num</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+      "<span class="hljs-attribute">hit</span>": <span class="hljs-value"><span class="hljs-number">1</span>
+    </span>}
+  ]
 </span>}</code></pre><div style="height: 1px;"></div></div><div data-tab="schema" class="tab"><pre><code>{
   "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
   "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
   "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">max</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Максимальная ставка"</span>
-    </span>}</span>,
-    "<span class="hljs-attribute">position</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-      "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
-        <span class="hljs-string">"P11"</span>,
-        <span class="hljs-string">"P12"</span>,
-        <span class="hljs-string">"P13"</span>,
-        <span class="hljs-string">"P14"</span>,
-        <span class="hljs-string">"P21"</span>,
-        <span class="hljs-string">"P22"</span>
-      ]</span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Позиция, строка по формуле Pnm, где n - , m -"</span>
-    </span>}</span>,
-    "<span class="hljs-attribute">increment</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Процент завышения ставки"</span>
-    </span>}</span>,
-    "<span class="hljs-attribute">active</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"boolean"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Статус (включено/выключено)"</span>
-    </span>}</span>,
-    "<span class="hljs-attribute">hit</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Показатель попадания ставки в процентах. Отражает количество ставок, процент завышения которых не превышал максимальное значение, к общему количеству ставок по кампании. В расчет принимаются только ставки, сделанные по этой группе настроек, - если настройки биддера для кампании были переопределены настройками группы и/или ключевой фразы, они не учитываются."</span>
+    "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span></span>,
+      "<span class="hljs-attribute">items</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+        "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">max</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+            "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+              <span class="hljs-number">0</span>
+            ]</span>,
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Максимальная ставка"</span>
+          </span>}</span>,
+          "<span class="hljs-attribute">position</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+            "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+              <span class="hljs-string">"P11"</span>,
+              <span class="hljs-string">"P12"</span>,
+              <span class="hljs-string">"P13"</span>,
+              <span class="hljs-string">"P14"</span>,
+              <span class="hljs-string">"P21"</span>,
+              <span class="hljs-string">"P22"</span>
+            ]</span>,
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Позиция, строка по формуле Pnm, где n - , m -"</span>
+          </span>}</span>,
+          "<span class="hljs-attribute">increment</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+            "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+              <span class="hljs-number">0</span>
+            ]</span>,
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Процент завышения ставки"</span>
+          </span>}</span>,
+          "<span class="hljs-attribute">active</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"boolean"</span></span>,
+            "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+              <span class="hljs-literal">false</span>
+            ]</span>,
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Статус (включено/выключено)"</span>
+          </span>}</span>,
+          "<span class="hljs-attribute">day_num</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+            "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+              <span class="hljs-number">0</span>
+            ]</span>,
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Порядковый номер дня недели от 0 (понедельник) до 6, для которого должны применяться настройки"</span>
+          </span>}</span>,
+          "<span class="hljs-attribute">hour_num</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+            "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+              <span class="hljs-number">0</span>
+            ]</span>,
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"ПОрядковый номер часа от 0 до 23, для которого должны применяться настройки"</span>
+          </span>}</span>,
+          "<span class="hljs-attribute">hit</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+            "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+              <span class="hljs-number">0</span>
+            ]</span>,
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Показатель попадания ставки в процентах. Отражает количество ставок, процент завышения которых не превышал максимальное значение, к общему количеству ставок по кампании. В расчет принимаются только ставки, сделанные по этой группе настроек, - если настройки биддера для кампании были переопределены настройками группы и/или ключевой фразы, они не учитываются. Значение для группы обновляется при каждом ее использовании биддером."</span>
+          </span>}
+        </span>}</span>,
+        "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+          <span class="hljs-string">"max"</span>,
+          <span class="hljs-string">"position"</span>,
+          <span class="hljs-string">"increment"</span>,
+          <span class="hljs-string">"active"</span>,
+          <span class="hljs-string">"day_num"</span>,
+          <span class="hljs-string">"hour_num"</span>,
+          <span class="hljs-string">"hit"</span>
+        ]</span>,
+        "<span class="hljs-attribute">additionalProperties</span>": <span class="hljs-value"><span class="hljs-literal">false</span>
+      </span>}
     </span>}
-  </span>}
-</span>}</code></pre></div></div></div></div></div><div id="кампании-put" class="action put"><div class="action-name">Обновить настройки биддера</div><h4 class="action-heading"><a href="#кампании-put" class="method put">PUT</a><code class="uri">http://analitics.catkitcms.ru/api/campaigns/{id}/bids</code></h4><div class="title"><strong>Parameters</strong><div class="collapse-button show"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID кампании</p></td></tr></table></div><div class="title"><strong>Request</strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td>max</td><td><span class="attribute-type">number</span><p>Максимальная ставка</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>position</td><td><span class="attribute-type"></span><p>Позиция, строка по формуле Pnm, где n - , m -</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>increment</td><td><span class="attribute-type">number</span><p>Процент завышения ставки</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>active</td><td><span class="attribute-type">boolean</span><p>Статус (включено/выключено)</p></td><td></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
-  "<span class="hljs-attribute">max</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-  "<span class="hljs-attribute">position</span>": <span class="hljs-value"><span class="hljs-string">"P11"</span></span>,
-  "<span class="hljs-attribute">increment</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-  "<span class="hljs-attribute">active</span>": <span class="hljs-value"><span class="hljs-literal">true</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"data"</span>
+  ]
+</span>}</code></pre></div></div></div></div></div><div id="кампании-put" class="action put"><div class="action-name"><span class="action-resource">Кампании</span><span class="action-dif">/</span><span class="action-title">Обновить настройки биддера</span></div><h4 class="action-heading"><a href="#кампании-put" class="method put">PUT</a><code class="uri">http://analitics.catkitcms.ru/api/campaigns/{id}/bids</code></h4><p>Устанавливает новый набор настроек биддера для кампании. Все прежние диапазоны настроек будут удалены.</p>
+<div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID кампании</p></td></tr></table></div><div class="title"><strong>Request</strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width="90px">data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>max</td><td><span class="attribute-type">number</span><p>Максимальная ставка</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>position</td><td><span class="attribute-type"></span><p>Позиция, строка по формуле Pnm, где n - , m -</p><p><b>P11</b></p><p><b>P12</b></p><p><b>P13</b></p><p><b>P14</b></p><p><b>P21</b></p><p><b>P22</b></p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>increment</td><td><span class="attribute-type">number</span><p>Процент завышения ставки</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>active</td><td><span class="attribute-type">boolean</span><p>Статус (включено/выключено)</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>day_num</td><td><span class="attribute-type">number</span><p>Порядковый номер дня недели от 0 (понедельник) до 6, для которого должны применяться настройки</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>hour_num</td><td><span class="attribute-type">number</span><p>ПОрядковый номер часа от 0 до 23, для которого должны применяться настройки</p></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+  "<span class="hljs-attribute">data</span>": <span class="hljs-value">[
+    {
+      "<span class="hljs-attribute">max</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+      "<span class="hljs-attribute">position</span>": <span class="hljs-value"><span class="hljs-string">"P11"</span></span>,
+      "<span class="hljs-attribute">increment</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+      "<span class="hljs-attribute">active</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+      "<span class="hljs-attribute">day_num</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+      "<span class="hljs-attribute">hour_num</span>": <span class="hljs-value"><span class="hljs-number">1</span>
+    </span>}
+  ]
 </span>}</code></pre><div style="height: 1px;"></div></div><div data-tab="schema" class="tab"><pre><code>{
   "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
   "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">max</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Максимальная ставка"</span>
-    </span>}</span>,
-    "<span class="hljs-attribute">position</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
-        <span class="hljs-string">"P11"</span>,
-        <span class="hljs-string">"P12"</span>,
-        <span class="hljs-string">"P13"</span>,
-        <span class="hljs-string">"P14"</span>,
-        <span class="hljs-string">"P21"</span>,
-        <span class="hljs-string">"P22"</span>
-      ]</span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Позиция, строка по формуле Pnm, где n - , m -"</span>
-    </span>}</span>,
-    "<span class="hljs-attribute">increment</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Процент завышения ставки"</span>
-    </span>}</span>,
-    "<span class="hljs-attribute">active</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"boolean"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Статус (включено/выключено)"</span>
+    "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span></span>,
+      "<span class="hljs-attribute">items</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+        "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">max</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Максимальная ставка"</span>
+          </span>}</span>,
+          "<span class="hljs-attribute">position</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+              <span class="hljs-string">"P11"</span>,
+              <span class="hljs-string">"P12"</span>,
+              <span class="hljs-string">"P13"</span>,
+              <span class="hljs-string">"P14"</span>,
+              <span class="hljs-string">"P21"</span>,
+              <span class="hljs-string">"P22"</span>
+            ]</span>,
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Позиция, строка по формуле Pnm, где n - , m -"</span>
+          </span>}</span>,
+          "<span class="hljs-attribute">increment</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Процент завышения ставки"</span>
+          </span>}</span>,
+          "<span class="hljs-attribute">active</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"boolean"</span></span>,
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Статус (включено/выключено)"</span>
+          </span>}</span>,
+          "<span class="hljs-attribute">day_num</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Порядковый номер дня недели от 0 (понедельник) до 6, для которого должны применяться настройки"</span>
+          </span>}</span>,
+          "<span class="hljs-attribute">hour_num</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"ПОрядковый номер часа от 0 до 23, для которого должны применяться настройки"</span>
+          </span>}
+        </span>}</span>,
+        "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+          <span class="hljs-string">"day_num"</span>,
+          <span class="hljs-string">"hour_num"</span>
+        ]
+      </span>}
     </span>}
   </span>}</span>,
   "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span>
-</span>}</code></pre></div></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"></div></div></div></div></div><div id="кампании-get-5" class="action get"><div class="action-name">Список ключевых фраз</div><h4 class="action-heading"><a href="#кампании-get-5" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/campaigns/{id}/keywords?{mask}=&amp;{count}=</code></h4><p>Возвращает нужное кол-во ключевых фраз, принадлежащих кампании.</p>
-<div class="title"><strong>Parameters</strong><div class="collapse-button show"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID кампании</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>mask</td><td><span class="attribute-type">string</span><p>Маска для подбора ключевых фраз. Если маска не указана, ключевые фразы не будут фильтроваться.</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>count</td><td><span class="attribute-type">number</span><p>Кол-во результатов. Если не указано, будут возвращены все фразы, связанные с этой группой</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td>data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID ключевой фразы</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>keyword</td><td><span class="attribute-type">string</span><p>Ключевая фраза</p></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button">Headers</a></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div></div></div></div><div id="кампании-get-5" class="action get"><div class="action-name"><span class="action-resource">Кампании</span><span class="action-dif">/</span><span class="action-title">Список ключевых фраз</span></div><h4 class="action-heading"><a href="#кампании-get-5" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/campaigns/{id}/keywords?{mask}=&amp;{count}=</code></h4><p>Возвращает нужное кол-во ключевых фраз, принадлежащих кампании.</p>
+<div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID кампании</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>mask</td><td><span class="attribute-type">string</span><p>Маска для подбора ключевых фраз. Если маска не указана, ключевые фразы не будут фильтроваться.</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>count</td><td><span class="attribute-type">number</span><p>Кол-во результатов. Если не указано, будут возвращены все фразы, связанные с этой группой</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="90px">data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID ключевой фразы</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>keyword</td><td><span class="attribute-type">string</span><p>Ключевая фраза</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">data</span>": <span class="hljs-value">[
     {
       "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
@@ -2179,7 +2371,7 @@ JWT токен.</p>
   "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
     <span class="hljs-string">"data"</span>
   ]
-</span>}</code></pre></div></div></div></div></div><div id="кампании-get-6" class="action get"><div class="action-name">Список групп объявлений</div><h4 class="action-heading"><a href="#кампании-get-6" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/campaigns/{id}/ad_groups</code></h4><div class="title"><strong>Parameters</strong><div class="collapse-button show"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID кампании</p></td></tr></table></div><div class="title"><strong>Request</strong></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td>data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID группы</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>caption</td><td><span class="attribute-type">string</span><p>Заголовок группы</p></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div><div id="кампании-get-6" class="action get"><div class="action-name"><span class="action-resource">Кампании</span><span class="action-dif">/</span><span class="action-title">Список групп объявлений</span></div><h4 class="action-heading"><a href="#кампании-get-6" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/campaigns/{id}/ad_groups</code></h4><div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID кампании</p></td></tr></table></div><div class="title"><strong>Request</strong></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="90px">data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID группы</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>caption</td><td><span class="attribute-type">string</span><p>Заголовок группы</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">data</span>": <span class="hljs-value">[
     {
       "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
@@ -2221,8 +2413,8 @@ JWT токен.</p>
   "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
     <span class="hljs-string">"data"</span>
   ]
-</span>}</code></pre></div></div></div></div></div><div id="кампании-get-7" class="action get"><div class="action-name">Обновить содержимое кампании</div><h4 class="action-heading"><a href="#кампании-get-7" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/campaigns/{id}/sync</code></h4><p>Запускает подгрузку ключевых фраз, объявлений и статусов с серверов поисковых систем немедленно.</p>
-<div class="title"><strong>Parameters</strong><div class="collapse-button show"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID кампании</p></td></tr></table></div><div class="title"><strong>Request</strong></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"></div></div></div></div></div></div><div id="группы-объявлений" class="resource"><h3 class="resource-heading">Группы объявлений <a href="#группы-объявлений" class="permalink">&nbsp;&para;</a></h3><div id="группы-объявлений-get" class="action get"><div class="action-name">Список групп</div><h4 class="action-heading"><a href="#группы-объявлений-get" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/ad_groups</code></h4><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td>data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID группы</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>caption</td><td><span class="attribute-type">string</span><p>Заголовок группы</p></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div><div id="кампании-get-7" class="action get"><div class="action-name"><span class="action-resource">Кампании</span><span class="action-dif">/</span><span class="action-title">Обновить содержимое кампании</span></div><h4 class="action-heading"><a href="#кампании-get-7" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/campaigns/{id}/sync</code></h4><p>Запускает подгрузку ключевых фраз, объявлений и статусов с серверов поисковых систем немедленно.</p>
+<div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID кампании</p></td></tr></table></div><div class="title"><strong>Request</strong></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button">Headers</a></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div></div></div></div></div><div id="группы-объявлений" class="resource"><div id="группы-объявлений-get" class="action get"><div class="action-name"><span class="action-resource">Группы объявлений</span><span class="action-dif">/</span><span class="action-title">Список групп</span></div><h4 class="action-heading"><a href="#группы-объявлений-get" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/ad_groups</code></h4><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="90px">data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID группы</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>caption</td><td><span class="attribute-type">string</span><p>Заголовок группы</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">data</span>": <span class="hljs-value">[
     {
       "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
@@ -2264,7 +2456,7 @@ JWT токен.</p>
   "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
     <span class="hljs-string">"data"</span>
   ]
-</span>}</code></pre></div></div></div></div></div><div id="группы-объявлений-get-1" class="action get"><div class="action-name">Детали группы</div><h4 class="action-heading"><a href="#группы-объявлений-get-1" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/ad_groups/{id}</code></h4><div class="title"><strong>Parameters</strong><div class="collapse-button show"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID фразы</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td></td><td><span class="attribute-type">object</span><p></p></td><td></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div><div id="группы-объявлений-get-1" class="action get"><div class="action-name"><span class="action-resource">Группы объявлений</span><span class="action-dif">/</span><span class="action-title">Детали группы</span></div><h4 class="action-heading"><a href="#группы-объявлений-get-1" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/ad_groups/{id}</code></h4><div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID фразы</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width="90px"></td><td><span class="attribute-type">object</span><p></p></td><td></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">undefined</span>": <span class="hljs-value">{
     "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
     "<span class="hljs-attribute">caption</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span>
@@ -2287,8 +2479,8 @@ JWT токен.</p>
       </span>}
     </span>}
   </span>}
-</span>}</code></pre></div></div></div></div></div><div id="группы-объявлений-get-2" class="action get"><div class="action-name">Список ключевых фраз</div><h4 class="action-heading"><a href="#группы-объявлений-get-2" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/ad_groups/{id}/keywords?{mask}=&amp;{count}=</code></h4><p>Возвращает нужное кол-во ключевых фраз, принадлежащих группе объявлений.</p>
-<div class="title"><strong>Parameters</strong><div class="collapse-button show"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID группы объявлений</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>mask</td><td><span class="attribute-type">string</span><p>Маска для подбора ключевых фраз. Если маска не указана, ключевые фразы не будут фильтроваться.</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>count</td><td><span class="attribute-type">number</span><p>Кол-во результатов. Если не указано, будут возвращены все фразы, связанные с этой группой</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td>data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID ключевой фразы</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>keyword</td><td><span class="attribute-type">string</span><p>Ключевая фраза</p></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div><div id="группы-объявлений-get-2" class="action get"><div class="action-name"><span class="action-resource">Группы объявлений</span><span class="action-dif">/</span><span class="action-title">Список ключевых фраз</span></div><h4 class="action-heading"><a href="#группы-объявлений-get-2" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/ad_groups/{id}/keywords?{mask}=&amp;{count}=</code></h4><p>Возвращает нужное кол-во ключевых фраз, принадлежащих группе объявлений.</p>
+<div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID группы объявлений</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>mask</td><td><span class="attribute-type">string</span><p>Маска для подбора ключевых фраз. Если маска не указана, ключевые фразы не будут фильтроваться.</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>count</td><td><span class="attribute-type">number</span><p>Кол-во результатов. Если не указано, будут возвращены все фразы, связанные с этой группой</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="90px">data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID ключевой фразы</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>keyword</td><td><span class="attribute-type">string</span><p>Ключевая фраза</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">data</span>": <span class="hljs-value">[
     {
       "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
@@ -2330,7 +2522,7 @@ JWT токен.</p>
   "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
     <span class="hljs-string">"data"</span>
   ]
-</span>}</code></pre></div></div></div></div></div><div id="группы-объявлений-get-3" class="action get"><div class="action-name">Текущие настройки биддера</div><h4 class="action-heading"><a href="#группы-объявлений-get-3" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/ad_groups/{id}/bids</code></h4><div class="title"><strong>Parameters</strong><div class="collapse-button show"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID группы объявлений</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td>max</td><td><span class="attribute-type">number</span><p>Максимальная ставка</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>position</td><td><span class="attribute-type">string</span><p>Позиция, строка по формуле Pnm, где n - , m -</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>increment</td><td><span class="attribute-type">number</span><p>Процент завышения ставки</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>active</td><td><span class="attribute-type">boolean</span><p>Статус (включено/выключено)</p></td><td></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div><div id="группы-объявлений-get-3" class="action get"><div class="action-name"><span class="action-resource">Группы объявлений</span><span class="action-dif">/</span><span class="action-title">Текущие настройки биддера</span></div><h4 class="action-heading"><a href="#группы-объявлений-get-3" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/ad_groups/{id}/bids</code></h4><div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID группы объявлений</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width="90px">max</td><td><span class="attribute-type">number</span><p>Максимальная ставка</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">position</td><td><span class="attribute-type">string</span><p>Позиция, строка по формуле Pnm, где n - , m -</p><p><b>P11</b></p><p><b>P12</b></p><p><b>P13</b></p><p><b>P14</b></p><p><b>P21</b></p><p><b>P22</b></p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">increment</td><td><span class="attribute-type">number</span><p>Процент завышения ставки</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">active</td><td><span class="attribute-type">boolean</span><p>Статус (включено/выключено)</p></td><td></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">max</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">position</span>": <span class="hljs-value"><span class="hljs-string">"P11"</span></span>,
   "<span class="hljs-attribute">increment</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
@@ -2364,7 +2556,7 @@ JWT токен.</p>
       "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Статус (включено/выключено)"</span>
     </span>}
   </span>}
-</span>}</code></pre></div></div></div></div></div><div id="группы-объявлений-put" class="action put"><div class="action-name">Обновить настройки биддера</div><h4 class="action-heading"><a href="#группы-объявлений-put" class="method put">PUT</a><code class="uri">http://analitics.catkitcms.ru/api/ad_groups/{id}/bids</code></h4><div class="title"><strong>Parameters</strong><div class="collapse-button show"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID группы объявлений</p></td></tr></table></div><div class="title"><strong>Request</strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td>max</td><td><span class="attribute-type">number</span><p>Максимальная ставка</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>position</td><td><span class="attribute-type"></span><p>Позиция, строка по формуле Pnm, где n - , m -</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>increment</td><td><span class="attribute-type">number</span><p>Процент завышения ставки</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>active</td><td><span class="attribute-type">boolean</span><p>Статус (включено/выключено)</p></td><td></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div><div id="группы-объявлений-put" class="action put"><div class="action-name"><span class="action-resource">Группы объявлений</span><span class="action-dif">/</span><span class="action-title">Обновить настройки биддера</span></div><h4 class="action-heading"><a href="#группы-объявлений-put" class="method put">PUT</a><code class="uri">http://analitics.catkitcms.ru/api/ad_groups/{id}/bids</code></h4><div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID группы объявлений</p></td></tr></table></div><div class="title"><strong>Request</strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width="90px">max</td><td><span class="attribute-type">number</span><p>Максимальная ставка</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">position</td><td><span class="attribute-type"></span><p>Позиция, строка по формуле Pnm, где n - , m -</p><p><b>P11</b></p><p><b>P12</b></p><p><b>P13</b></p><p><b>P14</b></p><p><b>P21</b></p><p><b>P22</b></p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">increment</td><td><span class="attribute-type">number</span><p>Процент завышения ставки</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">active</td><td><span class="attribute-type">boolean</span><p>Статус (включено/выключено)</p></td><td></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">max</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">position</span>": <span class="hljs-value"><span class="hljs-string">"P11"</span></span>,
   "<span class="hljs-attribute">increment</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
@@ -2397,8 +2589,20 @@ JWT токен.</p>
     </span>}
   </span>}</span>,
   "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span>
-</span>}</code></pre></div></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"></div></div></div></div></div></div><div id="ключевые-фразы" class="resource"><h3 class="resource-heading">Ключевые фразы <a href="#ключевые-фразы" class="permalink">&nbsp;&para;</a></h3><p>Из-за большого количества записей нет возможности их динамической подгрузки из ресурсов поисковых систем.  В связи с этим, все методы, возвращающие список ключевых фраз, предоставляют только их снимок, который автоматически синхронизируется в течение некоторого времени. Так же при необходимости можно запустить синхронизацию немедленно, вызвав метод <a href="#%D0%BA%D0%B0%D0%BC%D0%BF%D0%B0%D0%BD%D0%B8%D0%B8-get-8">campaigns::sync</a></p>
-<div id="ключевые-фразы-get" class="action get"><div class="action-name">Детали ключевой фразы</div><h4 class="action-heading"><a href="#ключевые-фразы-get" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/keywords/{id}</code></h4><div class="title"><strong>Parameters</strong><div class="collapse-button show"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID фразы</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td>data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID ключевой фразы</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>keyword</td><td><span class="attribute-type">string</span><p>Ключевая фраза</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>campaign_id</td><td><span class="attribute-type">number</span><p>ID кампании, которой принадлежит фраза</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>ad_group_id</td><td><span class="attribute-type">number</span><p>ID группы объявлений, которой принадлежит фраза</p></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button">Headers</a></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div></div></div></div><div id="группы-объявлений-get-4" class="action get"><div class="action-name"><span class="action-resource">Группы объявлений</span><span class="action-dif">/</span><span class="action-title">Общая статистика группы объявлений</span></div><h4 class="action-heading"><a href="#группы-объявлений-get-4" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/ad_groups/{id}/statistics/summary?{from}=&amp;{to}=</code></h4><p>Возвращает объект с суммой статистик всех ключевых фраз, принадлежащих группе объявлений, за указанный период.</p>
+<div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID группы объявлений</p></td></tr><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>from</td><td><span class="attribute-type">string</span><p>Дата начала периода в формате `YYYY-mm-dd`.</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>to</td><td><span class="attribute-type">string</span><p>Дата окончания периода (опционально для периода больше 1 дня).</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width="90px">orders</td><td><span class="attribute-type">number</span><p>Кол-во заказов</p></td><td></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
+  "<span class="hljs-attribute">orders</span>": <span class="hljs-value"><span class="hljs-number">1</span>
+</span>}</code></pre><div style="height: 1px;"></div></div><div data-tab="schema" class="tab"><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">orders</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во заказов"</span>
+    </span>}
+  </span>}
+</span>}</code></pre></div></div></div></div></div></div><div id="ключевые-фразы" class="resource"><p>Из-за большого количества записей нет возможности их динамической подгрузки из ресурсов поисковых систем.  В связи с этим, все методы, возвращающие список ключевых фраз, предоставляют только их снимок, который автоматически синхронизируется в течение некоторого времени. Так же при необходимости можно запустить синхронизацию немедленно, вызвав метод <a href="#%D0%BA%D0%B0%D0%BC%D0%BF%D0%B0%D0%BD%D0%B8%D0%B8-get-8">campaigns::sync</a></p>
+<div id="ключевые-фразы-get" class="action get"><div class="action-name"><span class="action-resource">Ключевые фразы</span><span class="action-dif">/</span><span class="action-title">Детали ключевой фразы</span></div><h4 class="action-heading"><a href="#ключевые-фразы-get" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/keywords/{id}</code></h4><div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID фразы</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="90px">data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID ключевой фразы</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>keyword</td><td><span class="attribute-type">string</span><p>Ключевая фраза</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>campaign_id</td><td><span class="attribute-type">number</span><p>ID кампании, которой принадлежит фраза</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>ad_group_id</td><td><span class="attribute-type">number</span><p>ID группы объявлений, которой принадлежит фраза</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">data</span>": <span class="hljs-value">[
     {
       "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
@@ -2458,9 +2662,9 @@ JWT токен.</p>
   "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
     <span class="hljs-string">"data"</span>
   ]
-</span>}</code></pre></div></div></div></div></div><div id="ключевые-фразы-get-1" class="action get"><div class="action-name">Поиск фразы</div><h4 class="action-heading"><a href="#ключевые-фразы-get-1" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/keywords/seach?{mask}=&amp;{count}=</code></h4><p>Возвращает заданное количетсво ключевых фраз, подходящих по маске.
+</span>}</code></pre></div></div></div></div></div><div id="ключевые-фразы-get-1" class="action get"><div class="action-name"><span class="action-resource">Ключевые фразы</span><span class="action-dif">/</span><span class="action-title">Поиск фразы</span></div><h4 class="action-heading"><a href="#ключевые-фразы-get-1" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/keywords/seach?{mask}=&amp;{count}=</code></h4><p>Возвращает заданное количетсво ключевых фраз, подходящих по маске.
 Метод медленный, рекомендуется к использованию только в случае, когда неизвестны ID кампании и/или группы объявлений.</p>
-<div class="title"><strong>Parameters</strong><div class="collapse-button show"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>mask</td><td><span class="attribute-type">string</span><p>Маска для подбора ключевых фраз</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>count</td><td><span class="attribute-type">number</span><p>Кол-во результатов</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td>data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID ключевой фразы</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>keyword</td><td><span class="attribute-type">string</span><p>Ключевая фраза</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>campaign_id</td><td><span class="attribute-type">number</span><p>ID кампании, которой принадлежит фраза</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>ad_group_id</td><td><span class="attribute-type">number</span><p>ID группы объявлений, которой принадлежит фраза</p></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+<div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>mask</td><td><span class="attribute-type">string</span><p>Маска для подбора ключевых фраз</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>count</td><td><span class="attribute-type">number</span><p>Кол-во результатов</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="90px">data</td><td><span class="attribute-type">array</span><p></p></td><td></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID ключевой фразы</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>keyword</td><td><span class="attribute-type">string</span><p>Ключевая фраза</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>campaign_id</td><td><span class="attribute-type">number</span><p>ID кампании, которой принадлежит фраза</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>ad_group_id</td><td><span class="attribute-type">number</span><p>ID группы объявлений, которой принадлежит фраза</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">data</span>": <span class="hljs-value">[
     {
       "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
@@ -2520,7 +2724,7 @@ JWT токен.</p>
   "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
     <span class="hljs-string">"data"</span>
   ]
-</span>}</code></pre></div></div></div></div></div><div id="ключевые-фразы-get-2" class="action get"><div class="action-name">Текущие настройки биддера</div><h4 class="action-heading"><a href="#ключевые-фразы-get-2" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/keywords/{id}/bids</code></h4><div class="title"><strong>Parameters</strong><div class="collapse-button show"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID ключевой фразы</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td>max</td><td><span class="attribute-type">number</span><p>Максимальная ставка</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>position</td><td><span class="attribute-type">string</span><p>Позиция, строка по формуле Pnm, где n - , m -</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>increment</td><td><span class="attribute-type">number</span><p>Процент завышения ставки</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td>active</td><td><span class="attribute-type">boolean</span><p>Статус (включено/выключено)</p></td><td></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div><div id="ключевые-фразы-get-2" class="action get"><div class="action-name"><span class="action-resource">Ключевые фразы</span><span class="action-dif">/</span><span class="action-title">Текущие настройки биддера</span></div><h4 class="action-heading"><a href="#ключевые-фразы-get-2" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/keywords/{id}/bids</code></h4><div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID ключевой фразы</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width="90px">max</td><td><span class="attribute-type">number</span><p>Максимальная ставка</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">position</td><td><span class="attribute-type">string</span><p>Позиция, строка по формуле Pnm, где n - , m -</p><p><b>P11</b></p><p><b>P12</b></p><p><b>P13</b></p><p><b>P14</b></p><p><b>P21</b></p><p><b>P22</b></p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">increment</td><td><span class="attribute-type">number</span><p>Процент завышения ставки</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">active</td><td><span class="attribute-type">boolean</span><p>Статус (включено/выключено)</p></td><td></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">max</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">position</span>": <span class="hljs-value"><span class="hljs-string">"P11"</span></span>,
   "<span class="hljs-attribute">increment</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
@@ -2554,7 +2758,19 @@ JWT токен.</p>
       "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Статус (включено/выключено)"</span>
     </span>}
   </span>}
-</span>}</code></pre></div></div></div></div></div><div id="ключевые-фразы-put" class="action put"><div class="action-name">Обновить настройки биддера</div><h4 class="action-heading"><a href="#ключевые-фразы-put" class="method put">PUT</a><code class="uri">http://analitics.catkitcms.ru/api/keywords/{id}/bids</code></h4><div class="title"><strong>Parameters</strong><div class="collapse-button show"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID ключевой фразы</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><i class="fa fa-arrow-down close"></i><i class="fa fa-arrow-left open"></i></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><div class="tabs r-tabs"><div class="tabs-menu"></div></div></div></div></div></div></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 31 Oct 2017</p><script>/*
+</span>}</code></pre></div></div></div></div></div><div id="ключевые-фразы-put" class="action put"><div class="action-name"><span class="action-resource">Ключевые фразы</span><span class="action-dif">/</span><span class="action-title">Обновить настройки биддера</span></div><h4 class="action-heading"><a href="#ключевые-фразы-put" class="method put">PUT</a><code class="uri">http://analitics.catkitcms.ru/api/keywords/{id}/bids</code></h4><div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID ключевой фразы</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button">Headers</a></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div></div></div></div><div id="ключевые-фразы-get-3" class="action get"><div class="action-name"><span class="action-resource">Ключевые фразы</span><span class="action-dif">/</span><span class="action-title">Общая статистика ключевой фразы</span></div><h4 class="action-heading"><a href="#ключевые-фразы-get-3" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/keywords/{id}/statistics/summary?{from}=&amp;{to}=</code></h4><p>Возвращает объект с суммой статистик для ключевой фразы за указанный период.</p>
+<div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID ключевой фразы</p></td></tr><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>from</td><td><span class="attribute-type">string</span><p>Дата начала периода в формате `YYYY-mm-dd`.</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>to</td><td><span class="attribute-type">string</span><p>Дата окончания периода (опционально для периода больше 1 дня).</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width="90px">orders</td><td><span class="attribute-type">number</span><p>Кол-во заказов</p></td><td></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
+  "<span class="hljs-attribute">orders</span>": <span class="hljs-value"><span class="hljs-number">1</span>
+</span>}</code></pre><div style="height: 1px;"></div></div><div data-tab="schema" class="tab"><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">orders</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во заказов"</span>
+    </span>}
+  </span>}
+</span>}</code></pre></div></div></div></div></div></div></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 14 Nov 2017</p><script>/*
     Determine if a string ends with another string.
 */
 function endsWith(str, suffix) {
@@ -2712,50 +2928,8 @@ function refresh(body) {
 
     // Re-initialize the page
     init();
-    autoCollapse();
 
     document.querySelector('body').className = '';
-}
-
-/*
-    Determine which navigation items should be auto-collapsed to show as many
-    as possible on the screen, based on the current window height. This also
-    collapses them.
-*/
-function autoCollapse() {
-    var windowHeight = getWindowDimensions()[1];
-    var itemsHeight = 64; /* Account for some padding */
-    var itemsArray = Array.prototype.slice.call(
-        document.querySelectorAll('nav .resource-group .heading'));
-
-    // Get the total height of the navigation items
-    itemsArray.forEach(function (item) {
-        itemsHeight += item.parentNode.offsetHeight;
-    });
-
-    // Should we auto-collapse any nav items? Try to find the smallest item
-    // that can be collapsed to show all items on the screen. If not possible,
-    // then collapse the largest item and do it again. First, sort the items
-    // by height from smallest to largest.
-    var sortedItems = itemsArray.sort(function (a, b) {
-        return a.parentNode.offsetHeight - b.parentNode.offsetHeight;
-    });
-
-    while (sortedItems.length && itemsHeight > windowHeight) {
-        for (var i = 0; i < sortedItems.length; i++) {
-            // Will collapsing this item help?
-            var itemHeight = sortedItems[i].nextSibling.offsetHeight;
-            if ((itemsHeight - itemHeight <= windowHeight) || i === sortedItems.length - 1) {
-                // It will, so let's collapse it, remove its content height from
-                // our total and then remove it from our list of candidates
-                // that can be collapsed.
-                itemsHeight -= itemHeight;
-                toggleCollapseNav({target: sortedItems[i].children[0]}, true);
-                sortedItems.splice(i, 1);
-                break;
-            }
-        }
-    }
 }
 
 /*
