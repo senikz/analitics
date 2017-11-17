@@ -1049,7 +1049,7 @@ JWT токен.</p>
 <p>Добавлен <a href="#%D0%BA%D0%B0%D0%BC%D0%BF%D0%B0%D0%BD%D0%B8%D0%B8-get-4">временной таргетинг настроек биддера для кампании</a></p>
 </li>
 <li>
-<p>В <a href="#%D0%BA%D0%B0%D0%BC%D0%BF%D0%B0%D0%BD%D0%B8%D0%B8-get-2">статистику кампании</a> добавлено количество совершенных заказов</p>
+<p>В <a href="#%D0%BA%D0%B0%D0%BC%D0%BF%D0%B0%D0%BD%D0%B8%D0%B8-get-2">статистику кампании</a> добавлено количество заявок</p>
 </li>
 <li>
 <p>Добавлены методы получения статистики для <a href="#%D0%B3%D1%80%D1%83%D0%BF%D0%BF%D1%8B-%D0%BE%D0%B1%D1%8A%D1%8F%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B9-get-4">группы объявлений</a> и <a href="#%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%B2%D1%8B%D0%B5-%D1%84%D1%80%D0%B0%D0%B7%D1%8B-get-3">ключевой фразы</a></p>
@@ -1308,13 +1308,13 @@ JWT токен.</p>
     <span class="hljs-string">"data"</span>
   ]
 </span>}</code></pre></div></div></div></div></div><div id="проекты-get-4" class="action get"><div class="action-name"><span class="action-resource">Проекты</span><span class="action-dif">/</span><span class="action-title">Общая статистика проекта</span></div><h4 class="action-heading"><a href="#проекты-get-4" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/projects/{id}/statistics/summary?{from}=&amp;{to}=</code></h4><p>Возвращает объект с суммой статистик по кампаниям проекта за указанный период.</p>
-<div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID проекта</p></td></tr><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>from</td><td><span class="attribute-type">string</span><p>Дата начала периода в формате `YYYY-mm-dd`.</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>to</td><td><span class="attribute-type">string</span><p>Дата окончания периода (опционально для периода больше 1 дня).</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width="90px">cost</td><td><span class="attribute-type">number</span><p>Потраченная сумма(руб.).</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">views</td><td><span class="attribute-type">number</span><p>Кол-во просмотров рекламных объявлений за период.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">clicks</td><td><span class="attribute-type">number</span><p>Кол-во кликов по рекламе за период.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">calls</td><td><span class="attribute-type">number</span><p>Кол-во звонков с сайтов проекта.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">emails</td><td><span class="attribute-type">number</span><p>Кол-во писем с сайтов проекта.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">orders</td><td><span class="attribute-type">number</span><p>Кол-во заказов с сайтов проекта.</p></td><td></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
+<div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID проекта</p></td></tr><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>from</td><td><span class="attribute-type">string</span><p>Дата начала периода в формате `YYYY-mm-dd`.</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>to</td><td><span class="attribute-type">string</span><p>Дата окончания периода (опционально для периода больше 1 дня).</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width="90px">cost</td><td><span class="attribute-type">number</span><p>Потраченная сумма(руб.).</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">views</td><td><span class="attribute-type">number</span><p>Кол-во просмотров рекламных объявлений за период.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">clicks</td><td><span class="attribute-type">number</span><p>Кол-во кликов по рекламе за период.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">calls</td><td><span class="attribute-type">number</span><p>Кол-во звонков</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">emails</td><td><span class="attribute-type">number</span><p>Кол-во писем</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">orders</td><td><span class="attribute-type">number</span><p>Кол-во заказов с сайтов проекта.</p></td><td></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">cost</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">views</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">clicks</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-  "<span class="hljs-attribute">orders</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">calls</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-  "<span class="hljs-attribute">emails</span>": <span class="hljs-value"><span class="hljs-number">1</span>
+  "<span class="hljs-attribute">emails</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+  "<span class="hljs-attribute">orders</span>": <span class="hljs-value"><span class="hljs-number">1</span>
 </span>}</code></pre><div style="height: 1px;"></div></div><div data-tab="schema" class="tab"><pre><code>{
   "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
   "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
@@ -1333,11 +1333,11 @@ JWT токен.</p>
     </span>}</span>,
     "<span class="hljs-attribute">calls</span>": <span class="hljs-value">{
       "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во звонков с сайтов проекта."</span>
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во звонков"</span>
     </span>}</span>,
     "<span class="hljs-attribute">emails</span>": <span class="hljs-value">{
       "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во писем с сайтов проекта."</span>
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во писем"</span>
     </span>}</span>,
     "<span class="hljs-attribute">orders</span>": <span class="hljs-value">{
       "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
@@ -1353,9 +1353,9 @@ JWT токен.</p>
         "<span class="hljs-attribute">cost</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
         "<span class="hljs-attribute">views</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
         "<span class="hljs-attribute">clicks</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-        "<span class="hljs-attribute">orders</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
         "<span class="hljs-attribute">calls</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-        "<span class="hljs-attribute">emails</span>": <span class="hljs-value"><span class="hljs-number">1</span>
+        "<span class="hljs-attribute">emails</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+        "<span class="hljs-attribute">orders</span>": <span class="hljs-value"><span class="hljs-number">1</span>
       </span>}
     </span>}
   ]
@@ -1404,14 +1404,14 @@ JWT токен.</p>
                 "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
                   <span class="hljs-number">0</span>
                 ]</span>,
-                "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во звонков с сайтов проекта."</span>
+                "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во звонков"</span>
               </span>}</span>,
               "<span class="hljs-attribute">emails</span>": <span class="hljs-value">{
                 "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
                 "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
                   <span class="hljs-number">0</span>
                 ]</span>,
-                "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во писем с сайтов проекта."</span>
+                "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во писем"</span>
               </span>}</span>,
               "<span class="hljs-attribute">orders</span>": <span class="hljs-value">{
                 "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
@@ -1425,7 +1425,6 @@ JWT токен.</p>
               <span class="hljs-string">"cost"</span>,
               <span class="hljs-string">"views"</span>,
               <span class="hljs-string">"clicks"</span>,
-              <span class="hljs-string">"orders"</span>,
               <span class="hljs-string">"calls"</span>,
               <span class="hljs-string">"emails"</span>,
               <span class="hljs-string">"orders"</span>
@@ -1760,13 +1759,13 @@ JWT токен.</p>
     </span>}
   </span>}
 </span>}</code></pre></div></div></div></div></div><div id="сайты-get-3" class="action get"><div class="action-name"><span class="action-resource">Сайты</span><span class="action-dif">/</span><span class="action-title">Общая статистика сайта</span></div><h4 class="action-heading"><a href="#сайты-get-3" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/sites/{id}/statistics/summary?{from}=&amp;{to}=</code></h4><p>Возвращает объект с суммой статистик по всем кампаниям, принадлежащим сайту, за указанный период.</p>
-<div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID сайта</p></td></tr><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>from</td><td><span class="attribute-type">string</span><p>Дата начала периода в формате `YYYY-mm-dd`.</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>to</td><td><span class="attribute-type">string</span><p>Дата окончания периода (опционально для периода больше 1 дня).</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width="90px">cost</td><td><span class="attribute-type">number</span><p>Потраченная сумма(руб.).</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">views</td><td><span class="attribute-type">number</span><p>Кол-во просмотров рекламных объявлений за период.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">clicks</td><td><span class="attribute-type">number</span><p>Кол-во кликов по рекламе за период.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">calls</td><td><span class="attribute-type">number</span><p>Кол-во звонков с сайтов проекта.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">emails</td><td><span class="attribute-type">number</span><p>Кол-во писем с сайтов проекта.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">orders</td><td><span class="attribute-type">number</span><p>Кол-во заказов с сайтов проекта.</p></td><td></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
+<div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID сайта</p></td></tr><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>from</td><td><span class="attribute-type">string</span><p>Дата начала периода в формате `YYYY-mm-dd`.</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>to</td><td><span class="attribute-type">string</span><p>Дата окончания периода (опционально для периода больше 1 дня).</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width="90px">cost</td><td><span class="attribute-type">number</span><p>Потраченная сумма(руб.).</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">views</td><td><span class="attribute-type">number</span><p>Кол-во просмотров рекламных объявлений за период.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">clicks</td><td><span class="attribute-type">number</span><p>Кол-во кликов по рекламе за период.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">calls</td><td><span class="attribute-type">number</span><p>Кол-во звонков</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">emails</td><td><span class="attribute-type">number</span><p>Кол-во писем</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">orders</td><td><span class="attribute-type">number</span><p>Кол-во заказов с сайта</p></td><td></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">cost</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">views</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">clicks</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-  "<span class="hljs-attribute">orders</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">calls</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-  "<span class="hljs-attribute">emails</span>": <span class="hljs-value"><span class="hljs-number">1</span>
+  "<span class="hljs-attribute">emails</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+  "<span class="hljs-attribute">orders</span>": <span class="hljs-value"><span class="hljs-number">1</span>
 </span>}</code></pre><div style="height: 1px;"></div></div><div data-tab="schema" class="tab"><pre><code>{
   "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
   "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
@@ -1785,15 +1784,15 @@ JWT токен.</p>
     </span>}</span>,
     "<span class="hljs-attribute">calls</span>": <span class="hljs-value">{
       "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во звонков с сайтов проекта."</span>
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во звонков"</span>
     </span>}</span>,
     "<span class="hljs-attribute">emails</span>": <span class="hljs-value">{
       "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во писем с сайтов проекта."</span>
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во писем"</span>
     </span>}</span>,
     "<span class="hljs-attribute">orders</span>": <span class="hljs-value">{
       "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во заказов с сайтов проекта."</span>
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во заказов с сайта"</span>
     </span>}
   </span>}
 </span>}</code></pre></div></div></div></div></div><div id="сайты-get-4" class="action get"><div class="action-name"><span class="action-resource">Сайты</span><span class="action-dif">/</span><span class="action-title">Подробная статистика сайта</span></div><h4 class="action-heading"><a href="#сайты-get-4" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/sites/{id}/statistics/details?{from}=&amp;{to}=</code></h4><p>Возвращает массив объектов с суммой почасовых статистик по всем кампаниям проекта за указанный период.</p>
@@ -1805,9 +1804,9 @@ JWT токен.</p>
         "<span class="hljs-attribute">cost</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
         "<span class="hljs-attribute">views</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
         "<span class="hljs-attribute">clicks</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-        "<span class="hljs-attribute">orders</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
         "<span class="hljs-attribute">calls</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-        "<span class="hljs-attribute">emails</span>": <span class="hljs-value"><span class="hljs-number">1</span>
+        "<span class="hljs-attribute">emails</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+        "<span class="hljs-attribute">orders</span>": <span class="hljs-value"><span class="hljs-number">1</span>
       </span>}
     </span>}
   ]
@@ -1856,28 +1855,27 @@ JWT токен.</p>
                 "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
                   <span class="hljs-number">0</span>
                 ]</span>,
-                "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во звонков с сайтов проекта."</span>
+                "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во звонков"</span>
               </span>}</span>,
               "<span class="hljs-attribute">emails</span>": <span class="hljs-value">{
                 "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
                 "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
                   <span class="hljs-number">0</span>
                 ]</span>,
-                "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во писем с сайтов проекта."</span>
+                "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во писем"</span>
               </span>}</span>,
               "<span class="hljs-attribute">orders</span>": <span class="hljs-value">{
                 "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
                 "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
                   <span class="hljs-number">0</span>
                 ]</span>,
-                "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во заказов с сайтов проекта."</span>
+                "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во заказов с сайта"</span>
               </span>}
             </span>}</span>,
             "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
               <span class="hljs-string">"cost"</span>,
               <span class="hljs-string">"views"</span>,
               <span class="hljs-string">"clicks"</span>,
-              <span class="hljs-string">"orders"</span>,
               <span class="hljs-string">"calls"</span>,
               <span class="hljs-string">"emails"</span>,
               <span class="hljs-string">"orders"</span>
@@ -2067,11 +2065,12 @@ JWT токен.</p>
     </span>}
   </span>}
 </span>}</code></pre></div></div></div></div></div><div id="кампании-delete" class="action delete"><div class="action-name"><span class="action-resource">Кампании</span><span class="action-dif">/</span><span class="action-title">Удалить кампанию</span></div><h4 class="action-heading"><a href="#кампании-delete" class="method delete">DELETE</a><code class="uri">http://analitics.catkitcms.ru/api/campaigns/{id}</code></h4><div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID кампании</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button">Headers</a></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div></div></div></div><div id="кампании-get-2" class="action get"><div class="action-name"><span class="action-resource">Кампании</span><span class="action-dif">/</span><span class="action-title">Общая статистика кампании</span></div><h4 class="action-heading"><a href="#кампании-get-2" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/campaigns/{id}/statistics/summary?{from}=&amp;{to}=</code></h4><p>Возвращает объект с суммой статистик кампании за указанный период.</p>
-<div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID кампании</p></td></tr><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>from</td><td><span class="attribute-type">string</span><p>Дата начала периода в формате `YYYY-mm-dd`.</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>to</td><td><span class="attribute-type">string</span><p>Дата окончания периода (опционально для периода больше 1 дня).</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width="90px">cost</td><td><span class="attribute-type">number</span><p>Потраченная сумма(руб.).</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">views</td><td><span class="attribute-type">number</span><p>Кол-во просмотров рекламных объявлений за период.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">clicks</td><td><span class="attribute-type">number</span><p>Кол-во кликов по рекламе за период.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">orders</td><td><span class="attribute-type">number</span><p>Кол-во заказов из кампании</p></td><td></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
+<div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID кампании</p></td></tr><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>from</td><td><span class="attribute-type">string</span><p>Дата начала периода в формате `YYYY-mm-dd`.</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>to</td><td><span class="attribute-type">string</span><p>Дата окончания периода (опционально для периода больше 1 дня).</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width="90px">cost</td><td><span class="attribute-type">number</span><p>Потраченная сумма(руб.).</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">views</td><td><span class="attribute-type">number</span><p>Кол-во просмотров рекламных объявлений за период.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">clicks</td><td><span class="attribute-type">number</span><p>Кол-во кликов по рекламе за период.</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">calls</td><td><span class="attribute-type">number</span><p>Кол-во звонков</p></td><td></td></tr><tr><td class="attribute-status"><span></span></td><td width="90px">emails</td><td><span class="attribute-type">number</span><p>Кол-во писем</p></td><td></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">cost</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">views</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">clicks</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-  "<span class="hljs-attribute">orders</span>": <span class="hljs-value"><span class="hljs-number">1</span>
+  "<span class="hljs-attribute">calls</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+  "<span class="hljs-attribute">emails</span>": <span class="hljs-value"><span class="hljs-number">1</span>
 </span>}</code></pre><div style="height: 1px;"></div></div><div data-tab="schema" class="tab"><pre><code>{
   "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
   "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
@@ -2088,9 +2087,13 @@ JWT токен.</p>
       "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
       "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во кликов по рекламе за период."</span>
     </span>}</span>,
-    "<span class="hljs-attribute">orders</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">calls</span>": <span class="hljs-value">{
       "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во заказов из кампании"</span>
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во звонков"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">emails</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во писем"</span>
     </span>}
   </span>}
 </span>}</code></pre></div></div></div></div></div><div id="кампании-get-3" class="action get"><div class="action-name"><span class="action-resource">Кампании</span><span class="action-dif">/</span><span class="action-title">Подробная статистика кампании</span></div><h4 class="action-heading"><a href="#кампании-get-3" class="method get">GET</a><code class="uri">http://analitics.catkitcms.ru/api/campaigns/{id}/statistics/details?{from}=&amp;{to}=</code></h4><p>Возвращает массив объектов с суммой почасовых статистик кампании за указанный период.</p>
@@ -2102,7 +2105,8 @@ JWT токен.</p>
         "<span class="hljs-attribute">cost</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
         "<span class="hljs-attribute">views</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
         "<span class="hljs-attribute">clicks</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-        "<span class="hljs-attribute">orders</span>": <span class="hljs-value"><span class="hljs-number">1</span>
+        "<span class="hljs-attribute">calls</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+        "<span class="hljs-attribute">emails</span>": <span class="hljs-value"><span class="hljs-number">1</span>
       </span>}
     </span>}
   ]
@@ -2146,19 +2150,27 @@ JWT токен.</p>
                 ]</span>,
                 "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во кликов по рекламе за период."</span>
               </span>}</span>,
-              "<span class="hljs-attribute">orders</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">calls</span>": <span class="hljs-value">{
                 "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
                 "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
                   <span class="hljs-number">0</span>
                 ]</span>,
-                "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во заказов из кампании"</span>
+                "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во звонков"</span>
+              </span>}</span>,
+              "<span class="hljs-attribute">emails</span>": <span class="hljs-value">{
+                "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+                "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+                  <span class="hljs-number">0</span>
+                ]</span>,
+                "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во писем"</span>
               </span>}
             </span>}</span>,
             "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
               <span class="hljs-string">"cost"</span>,
               <span class="hljs-string">"views"</span>,
               <span class="hljs-string">"clicks"</span>,
-              <span class="hljs-string">"orders"</span>
+              <span class="hljs-string">"calls"</span>,
+              <span class="hljs-string">"emails"</span>
             ]</span>,
             "<span class="hljs-attribute">additionalProperties</span>": <span class="hljs-value"><span class="hljs-literal">false</span></span>,
             "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Объект со статистикой за указанное время"</span>
@@ -2770,7 +2782,7 @@ JWT токен.</p>
       "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Кол-во заказов"</span>
     </span>}
   </span>}
-</span>}</code></pre></div></div></div></div></div></div></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 14 Nov 2017</p><script>/*
+</span>}</code></pre></div></div></div></div></div></div></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 17 Nov 2017</p><script>/*
     Determine if a string ends with another string.
 */
 function endsWith(str, suffix) {
