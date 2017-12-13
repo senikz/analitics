@@ -22,7 +22,7 @@ class SitesController extends \App\Controller\Api\ApiController
 			];
 		}
 
-		$order = empty($query['order']) ? 'time' : $query['order'];
+		$order = empty($query['order']) ? 'id' : $query['order'];
 		$reverse = (empty($query['reverse']) || !$query['reverse']) ? false : true;
 
 		usort($result, function($a, $b) use($order, $reverse) {
