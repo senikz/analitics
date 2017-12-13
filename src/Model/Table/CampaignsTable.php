@@ -56,6 +56,12 @@ class CampaignsTable extends Table
         $this->hasMany('CampaignStatisticsHourly', [
             'foreignKey' => 'campaign_id'
         ]);
+        $this->hasMany('AdGroups', [
+            'foreignKey' => 'campaign_id'
+        ]);
+        $this->hasMany('Keywords', [
+            'foreignKey' => 'campaign_id'
+        ]);
 
 		$this->hasMany('BidOptions', [
 			'foreignKey' => 'rel_id',

@@ -92,4 +92,18 @@ class SiteCallsTable extends Table
 
         return $rules;
     }
+
+	public function findCountBy($conditions)
+	{
+		$query = $this->find('all', ['conditions' => $conditions,]);
+		$calls = $query
+			->select([
+				'total_calls' => $query->func()->count('*'),
+			])
+			->first();
+
+		return $calls->total_calls;
+	}
+
+
 }

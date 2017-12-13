@@ -12,18 +12,26 @@ class SitesController extends ApiController
 	public function index()
     {
 		$result = [];
+		$query = $this->request->query;
 
-		$query = $this->Sites->find('all', [
+		$sites = $this->Sites->find('all', [
 			'contain' => false
 		]);
 
-		foreach ($query as $row) {
+		foreach ($sites as $row) {
 			$result[] = [
 				'id' => $row->id,
 				'project_id' => $row->project_id,
 				'domain' => $row->domain,
 			];
 		}
+
+		$order = empty($query['order']) ? 'time' : $query['order'];
+		$reverse = (empty($query['reverse']) || !$query['reverse']) ? false : true;
+
+		usort($result, function($a, $b) use($order, $reverse) {
+			return ($a[$order] == $b[$order] ? 0 : ($a[$order] > $b[$order] ? 1 : -1)) * ($reverse ? -1 : 1);
+		});
 
 		$this->sendData($result);
     }

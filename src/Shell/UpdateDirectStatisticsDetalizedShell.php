@@ -15,9 +15,9 @@ use Biplane\YandexDirect\Api\V5\Report\DateRangeTypeEnum;
 use Biplane\YandexDirect\Api\V5\Report\FormatEnum;
 use Biplane\YandexDirect\Api\V5\Report\FilterOperatorEnum;
 
-class UpdateDirectStatisticsShell extends Shell
+class UpdateDirectStatisticsDetalizedShell extends Shell
 {
-    private $accounts = [];
+	private $reportFieldNames = [FieldEnum::CAMPAIGN_ID, FieldEnum::AD_GROUP_ID, FieldEnum::MATCHED_KEYWORD, FieldEnum::COST, FieldEnum::IMPRESSIONS, FieldEnum::CLICKS];
 
     public function initialize()
     {
@@ -46,6 +46,14 @@ class UpdateDirectStatisticsShell extends Shell
 
     public function today()
     {
+		foreach($this->getCampaigns() as $group) {
+			$this->processGroup($group);
+		}
+    }
+
+	private function getCampaigns()
+	{
+		$result = [];
 		$campaigns = $this->Campaigns->find('all', [
 			'conditions' => [
 				'credential_id >' => '0',
@@ -60,33 +68,58 @@ class UpdateDirectStatisticsShell extends Shell
 				continue;
 			}
 
-			$this->processCampaign($provider, $campaign);
+			$login = $provider->getLogin();
+
+			if(empty($result[$login])) {
+				$result[$login] = [
+					'ids' => [],
+					'provider' => $provider,
+					'campaigns' => [],
+				];
+			}
+
+			$result[$login]['ids'][] = $campaign->rel_id;
+			$result[$login]['campaigns'][] = $campaign;
 		}
-    }
 
-	private function processCampaign($provider, $campaign)
+		return $result;
+	}
+
+	private function loadReport($provider, $campaignIds)
 	{
-		$campaignId = $campaign->id;
-
-		$fieldNames = [FieldEnum::CAMPAIGN_ID, FieldEnum::COST, FieldEnum::IMPRESSIONS, FieldEnum::CLICKS];
-
 		$reportService = $provider->getReportsService();
 		$reportRequest = (new ReportRequest)
-			->setProcessingMode(ReportRequest::PROCESSING_MODE_ONLINE)
+			->setProcessingMode(ReportRequest::PROCESSING_MODE_AUTO)
 			->returnMoneyAsFloat()
 			->setDefinition(
 				(new ReportDefinitionBuilder)
-					->setFieldNames($fieldNames)
-					->setReportName('Statistics report 1001')
-					->setReportType(ReportTypeEnum::CAMPAIGN_PERFORMANCE_REPORT)
+					->setFieldNames($this->reportFieldNames)
+					->setReportName('Statistics report 1002')
+					->setReportType(ReportTypeEnum::SEARCH_QUERY_PERFORMANCE_REPORT)
+					//->setReportType(ReportTypeEnum::CUSTOM_REPORT)
 					->setDateRangeType(DateRangeTypeEnum::TODAY)
 					->includeVat()
 					->setFormat(FormatEnum::TSV)
-					->addFilter(FieldEnum::CAMPAIGN_ID, FilterOperatorEnum::IN, [$campaign->rel_id])
+					->addFilter(FieldEnum::CAMPAIGN_ID, FilterOperatorEnum::IN, $campaignIds)
 			);
 
 		$reportResult = $reportService->getReady($reportRequest);
-		$reportDetails = $this->parseReportAnswer($reportResult->getData(), $fieldNames);
+
+var_dump($reportResult);
+var_dump($reportResult->getData());
+exit;
+	}
+
+	private function processGroup($group)
+	{
+		$campaigns = $group['campaigns'];
+
+		$this->loadReport($group['provider'], $group['ids']);
+
+		exit;
+
+
+		$reportDetails = $this->parseReportAnswer($reportResult->getData(), $this->reportFieldNames);
 
 		if (empty($reportDetails)) {
             Log::write('debug', ['campaignId' => $campaignId, 'report' => 'empty'], ['shell', 'UpdateDirectStatisticsShell', 'today']);
@@ -156,8 +189,6 @@ class UpdateDirectStatisticsShell extends Shell
         $hourlyRecord->cost   = $newCostCount;
 
         $this->CampaignStatisticsHourly->save($hourlyRecord);
-
-		sleep(2);
 	}
 
 	private function parseReportAnswer($report, $fields) {

@@ -42,7 +42,7 @@ class KeywordsTable extends Table
             'foreignKey' => 'campaign_id',
             'joinType' => 'INNER'
         ]);
-        $this->belongsTo('AdwordGroups', [
+        $this->belongsTo('AdGroups', [
             'foreignKey' => 'ad_group_id',
             'joinType' => 'INNER'
         ]);

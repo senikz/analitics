@@ -23,8 +23,14 @@ class LeadsController extends \App\Controller\Api\ApiController
 				'email' => TableRegistry::get('SiteEmails'),
 			];
 
+			$page = null;
+			if(!empty($query['page'])) {
+				$page = explode(',', $query['page']);
+				$page[0]--;
+			}
+
 			foreach($tables as $type => $table) {
-				$records = $table->find('all', [
+				$conditions = [
 						'conditions' => [
 							'Sites.project_id' => $this->request->params['project_id'],
 							'time >=' => $query['from'] . ' 00:00:00',
@@ -40,8 +46,51 @@ class LeadsController extends \App\Controller\Api\ApiController
 							'time',
 						],
 						'contain' => ['Sites',],
-					])->all();
+					];
+
+				if($type == 'call') {
+					$conditions['fields']['unique'] = 'unique';
+					$conditions['fields']['phone'] = 'phone';
+					$conditions['fields']['duration'] = 'duration';
+				} else {
+					$conditions['fields']['details'] = 'details';
+				}
+
+				if($page) {
+					$conditions['offset'] = $page[0];
+					$conditions['limit'] = $page[1];
+				}
+				$records = $table->find('all', $conditions)->all();
 				foreach($records as $item) {
+
+					// Parse utm_content to find place
+					if(!empty($item->place)) {
+						$key = null;
+						$place = [];
+						foreach(explode('|', $item->place) as $k => $param) {
+						    if($k%2) {
+						        $place[$key] = $param;
+						    } else {
+						        $key = $param;
+						    }
+						}
+						if(!empty($place['position_type']) && !empty($place['position']) && in_array($place['position_type'], ['premium', 'other'])) {
+							$item->place = ($place['position_type'] == 'premium' ? '1' : '2') . $place['position'];
+						} else if(!empty($place['source'])) {
+							$item->place = $place['source'];
+						} else {
+							$item->place = null;
+						}
+					}
+
+					// Try to parse json from email & find phone number
+					if(!empty($item->details)) {
+						$details = json_decode($item->details, true, 512, JSON_UNESCAPED_UNICODE);
+						if(!empty($details['phone'])) {
+							$item->phone = $details['phone'];
+						}
+					}
+
 					$result[] = $item->toArray();
 				}
 			}

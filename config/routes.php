@@ -105,6 +105,16 @@ Router::prefix('api', function ($routes) {
 			'prefix' => 'projects',
 			'only' => ['index']
 		]);
+        $routes->resources('Orders', [
+			'prefix' => 'projects',
+			'map' => [
+				[
+					'action' => 'cost',
+					'method' => 'GET',
+					'path' => '/cost',
+				],
+			],
+		]);
 		$routes->resources('Statistics', [
 			'prefix' => 'projects',
 			'map' => $statisticsMap,
@@ -137,6 +147,16 @@ Router::prefix('api', function ($routes) {
         $routes->resources('Costs', [
 			'prefix' => 'sites',
 		]);
+        $routes->resources('Utm', [
+			'prefix' => 'sites',
+			'map' => [
+				[
+					'action' => 'edit',
+					'method' => 'PUT',
+					'path' => '/',
+				]
+			],
+		]);
     });
 
     $routes->resources('Campaigns', function ($routes) use ($statisticsMap) {
@@ -167,7 +187,7 @@ Router::prefix('api', function ($routes) {
 		]);
     });
 
-	$routes->resources('AdGroups', function ($routes) {
+	$routes->resources('AdGroups', function ($routes) use ($statisticsMap) {
 		$routes->connect('/keywords', ['controller' => 'ad-groups', 'action' => 'keywords']);
 		$routes->resources('Bids', [
 			'prefix' => 'ad_groups',
@@ -178,6 +198,10 @@ Router::prefix('api', function ($routes) {
 					'path' => '/',
 				]
 			],
+		]);
+		$routes->resources('Statistics', [
+			'prefix' => 'ad_groups',
+			'map' => $statisticsMap,
 		]);
 	});
 
@@ -193,6 +217,8 @@ Router::prefix('api', function ($routes) {
 			],
 		]);
 	});
+
+	$routes->resources('Bidder');
 
     $routes->fallbacks(DashedRoute::class);
 });

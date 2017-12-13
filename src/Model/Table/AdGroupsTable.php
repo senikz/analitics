@@ -44,6 +44,9 @@ class AdGroupsTable extends Table
         $this->hasMany('Ads', [
             'foreignKey' => 'ad_group_id'
         ]);
+        $this->hasMany('Keywords', [
+            'foreignKey' => 'ad_group_id'
+        ]);
 		$this->hasMany('BidOptions', [
 			'foreignKey' => 'rel_id',
 			'conditions' => ['BidOptions.type' => 'adgroup'],

@@ -51,13 +51,19 @@ class UpdateDirectBidsShell extends \Cake\Console\Shell
 				'credential_id >' => '0',
 				'Credentials.type' => Credential::TYPE_DIRECT,
 			],
-			'contain' => ['BidOptions',],
+			'contain' => ['BidOptions' => function($query) {
+				return $query->where([
+					'BidOptions.day_num' => (date('w')==0 ? 6 : date('w')-1),
+					'BidOptions.hour_num' => date('G'),
+					'BidOptions.status' => 1,
+				]);
+			}],
 		])->all();
 
 		foreach($campaigns as $campaign) {
 			$provider = $campaign->getProvider();
 
-			if(empty($provider) || empty($campaign->bid_options) || !$campaign->bid_options[0]->status) {
+			if(empty($provider) || empty($campaign->bid_options)) {
 				continue;
 			}
 
@@ -136,7 +142,7 @@ class UpdateDirectBidsShell extends \Cake\Console\Shell
 				if($auctionPrice->getPosition() != $options->position) {
 					continue;
 				}
-				$price = $auctionPrice->getPrice() / 1000000;
+				$price = $auctionPrice->getBid() / 1000000;
 				$newPrice = $price + ($price / 100 * $options->increment);
 
 				if(!$optionsOverride) {
@@ -158,16 +164,19 @@ class UpdateDirectBidsShell extends \Cake\Console\Shell
 		}
 
 		$campaignOptions->hit = 0;
+		$campaign->bid_hit = 0;
 		if($campaignOptionsMatches) {
-			$campaignOptions->hit = sprintf("%.2f", 100 - ($campaignOptionsHit * 100) / $campaignOptionsMatches);
+			$bhit = sprintf("%.2f", 100 - ($campaignOptionsHit * 100) / $campaignOptionsMatches);
+			$campaignOptions->hit = $bhit;
+			$campaign->bid_hit = $bhit;
 		}
 		$this->BidOptions->save($campaignOptions);
+		$this->Campaigns->save($campaign);
 
-
-		//Log::write('debug', ['campaignId' => $campaign->rel_id, 'bids' => $updateBids], ['shell', 'UpdateDirectBidsShell', 'update bids']);
+		//Log::write('debug', ['campaignId' => $campaign->id, 'bids' => $updateBids], ['shell', 'UpdateDirectBidsShell', 'update bids']);
 
 		if(!empty($updateBids)) {
-//			$bidsService->set(SetBidsRequest::create()->setBids($updateBids));
+			$bidsService->set(SetBidsRequest::create()->setBids($updateBids));
 		}
 
 		$campaign->updateLimits($bidsService);

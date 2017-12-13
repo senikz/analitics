@@ -99,4 +99,16 @@ class SiteEmailsTable extends Table
 
         return $rules;
     }
+
+	public function findCountBy($conditions)
+	{
+		$query = $this->find('all', ['conditions' => $conditions,]);
+		$calls = $query
+			->select([
+				'total_emails' => $query->func()->count('*'),
+			])
+			->first();
+
+		return $calls->total_emails;
+	}
 }

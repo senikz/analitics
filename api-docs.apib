@@ -30,7 +30,7 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 * DELETE - удаление записи
 
-### Возвращаемый результат
+### Формат ответа
 
 
 Успешный ответ будет возвращен как JSON-объект с одним из следующих
@@ -44,7 +44,7 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 Объекты `data` и` errors` не могут быть возвращены в одном запросе.
 
 
-### Объект ответа
+**Объект ответа**
 
 Для одного объекта:
 
@@ -63,7 +63,7 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 ```
 
-Для списка объектов:
+Для списка:
 
 ```json
 
@@ -87,9 +87,23 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 ### История изменений
 
+`1.2`
+
+* Добавлен метод задания [UTM меток для всех кампаний сайта](#сайты-put-1)
+* Добавлена возможность сортировки списка сайтов проекта и общего списка сайтов
+* Заявки проекта теперь могут [отображаться постранично](#проекты-get-6)
+* Добавлен [календарь стоимости заказов проекта по датам](#проекты-get-7)
+* Добавлен [временной таргетинг настроек биддера для кампании](#кампании-get-4)
+* В [статистику кампании](#кампании-get-2) добавлено количество заявок
+* В [настройки биддера кампании](#кампании-get-4) добавлена онформация о дочерних элементах с отдельными настройками.
+* Настройки биддера и информация о запуске перенсены из общих настроек в [отдельный раздел управления биддером](#биддер)
+* В [настройки биддера кампании](#кампании-get-4) добавлен показатель попадания кампании при последнем срабатывании биддера.
+
+---- * Добавлены методы получения статистики для [группы объявлений](#группы-объявлений-get-4) и [ключевой фразы](#ключевые-фразы-get-3)
+
 `1.1.1`
 
-* В состоянии биддера кампании добавлен [показатель попадания ставки](#кампании-get-4)
+* В состояние биддера кампании добавлен [показатель попадания ставки](#кампании-get-4)
 
 `1.1`
 
@@ -109,28 +123,62 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 + login: (string) - Логин
 + type: (string) - Тип
 
-## Campaign Statistics
-+ cost (number) - Потраченная сумма(руб.).
-+ views (number) - Кол-во просмотров рекламных объявлений за период.
-+ clicks (number) - Кол-во кликов по рекламе за период.
 
-## Statistics Summary
+
+## Project Statistics
 + Include Campaign Statistics
-+ calls (number) - Кол-во звонков с сайтов проекта.
-+ emails (number) - Кол-во писем с сайтов проекта.
 + orders (number) - Кол-во заказов с сайтов проекта.
 
-## Statistics Details
+## Site Statistics
++ Include Campaign Statistics
++ orders (number) - Кол-во заказов с сайта
+
+## Campaign Statistics
++ cost: (number) - Потраченная сумма(руб.).
++ views: (number) - Кол-во просмотров рекламных объявлений за период.
++ clicks: (number) - Кол-во кликов по рекламе за период.
++ calls: (number) - Кол-во звонков
++ emails: (number) - Кол-во писем
+
+## Ad Group Statistics
++ orders: (number) - Кол-во заказов
+
+## Keyword Statistics
++ orders: (number) - Кол-во заказов
+
+
+
+## Project Statistics Details
 + data: (array,fixed)
     + (object)
         + time: (string) - Время, за которое предоставляется стастистика (в формате UTC).
-        + statistics: (Statistics Summary) - Объект со статистикой за указанное время
+		+ statistics: (Project Statistics) - Объект со статистикой за указанное время
+
+## Site Statistics Details
++ data: (array,fixed)
+    + (object)
+        + time: (string) - Время, за которое предоставляется стастистика (в формате UTC).
+		+ statistics: (Site Statistics) - Объект со статистикой за указанное время
 
 ## Campaign Statistics Details
 + data: (array,fixed)
     + (object)
         + time: (string) - Время, за которое предоставляется стастистика (в формате UTC).
-        + statistics: (Campaign Statistics) - Объект со статистикой за указанное время
+		+ statistics: (Campaign Statistics) - Объект со статистикой за указанное время
+
+## Ad Group Statistics Details
++ data: (array,fixed)
+    + (object)
+        + time: (string) - Время, за которое предоставляется стастистика (в формате UTC).
+		+ statistics: (Ad Group Statistics) - Объект со статистикой за указанное время
+
+## Keyword Statistics Details
++ data: (array,fixed)
+    + (object)
+        + time: (string) - Время, за которое предоставляется стастистика (в формате UTC).
+		+ statistics: (Keyword Statistics) - Объект со статистикой за указанное время
+
+
 
 ## Project
 + id: (number) - ID проекта
@@ -183,6 +231,14 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 + increment: (number) - Процент завышения ставки
 + active: (boolean) - Статус (включено/выключено)
 
+
+
+
+
+
+
+
+
 ## Настройки [/settings]
 
 ### Список профилей поисковых систем [GET/settings/profiles]
@@ -192,13 +248,14 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
         + data (array,fixed)
             + (Profile)
 
-### Обновить настройки работы биддера [PUT/settings/bidder]
 
-+ Request
-    + Attributes
-        + period: (number) - Интервал запуска биддера в минутах
 
-+ Response 200 (application/json)
+
+
+
+
+
+
 
 ## Проекты [/projects]
 
@@ -218,11 +275,12 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
     + Attributes
         + Include Project
 
-
-### Список сайтов [GET/projects/{id}/sites]
+### Список сайтов [GET/projects/{id}/sites?{order}=&{reverse}=]
 
 + Parameters
     + id: (number, required) - ID проекта
+    + order: (string, optional) - Поле для сортировки
+    + reverse: (boolean, optional) - Сортировка в обратном порядке
 
 + Response 200 (application/json)
     + Attributes
@@ -248,7 +306,7 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
     + to: (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
 
 + Response 200 (application/json)
-    + Attributes (Statistics Summary)
+    + Attributes (Project Statistics)
 
 
 ### Подробная статистика проекта [GET/projects/{id}/statistics/details?{from}=&{to}=]
@@ -261,8 +319,7 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
     + to: (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
 
 + Response 200 (application/json)
-    + Attributes (Statistics Details)
-
+    + Attributes (Project Statistics Details)
 
 ### Список заявок [GET/projects/{id}/leads?{from}=&{to}=&{order}=&{reverse}]
 
@@ -272,17 +329,49 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
     + to: (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
     + order: (string, optional) - Поле для сортировки
     + reverse: (boolean, optional) - Сортировка в обратном порядке
+    + page: '2,50' (string,optional) - Номер страницы списка (начиная от 1) и количество результатов на странице, разделенные запятыми
 
 + Response 200 (application/json)
     + Attributes
         + data: (array,fixed)
             + (Lead)
+				+ phone: (string) - Номер телефона
+				+ unique: (number) - (опционально для звонков) Флаг уникальности звонка
+				+ duration: (number) - (опционально для звонков) Длительность звонка
+
+### Календарь стоимости заказа [GET/projects/{id}/orders/cost?{from}=&{to}=]
+
+Возвращает среднюю стоимость заказа за день по всем кампаниям проекта. Для расчета учитывается количество заказов и сумма расходов по всем кампаниям, полученная из статистики.
+
++ Parameters
+    + id: (number, required) - ID проекта
+    + from: (string, required) - Дата начала периода в формате `YYYY-mm-dd`.
+    + to: (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
+
++ Response 200 (application/json)
+    + Attributes
+        + data: (array,fixed)
+			+ (object)
+                + date: (string) - Дата
+				+ cost: (number) - Стоимость клика
+
+
+
+
+
+
+
+
 
 
 
 ## Сайты [/sites]
 
-### Список сайтов [GET]
+### Список сайтов [GET/sites?{order}=&{reverse}=]
+
++ Parameters
+    + order: (string, optional) - Поле для сортировки
+    + reverse: (boolean, optional) - Сортировка в обратном порядке
 
 + Response 200 (application/json)
     + Attributes
@@ -331,10 +420,14 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 ### Добавление заказа [POST/sites/{id}/orders]
 
-+ Attributes
-    + count (number, optional) - Количество заказов (позволяет создать заказ с количеством более 1).
-    + comment (string, optional) - Комментарий к заказу.
-    + time (string, optional) - Время заказа в формате `Y-m-d H:i:s` (по умолчанию будет установлено текущее время).
++ Parameters
+    + id: (number) - ID сайта.
+
++ Request
+	+ Attributes
+	    + count (number, optional) - Количество заказов (позволяет создать заказ с количеством более 1).
+	    + comment (string, optional) - Комментарий к заказу.
+	    + time (string, optional) - Время заказа в формате `Y-m-d H:i:s` (по умолчанию будет установлено текущее время).
 
 + Response 200 (application/json)
     + Attributes
@@ -342,10 +435,14 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 ### Добавление произвольного расхода [POST/sites/{id}/costs]
 
-+ Attributes
-    + cost (number, required) - Сумма расхода.
-    + comment (string, required) - Комментарий к заказу.
-    + time (string, optional) - Время заказа в формате `Y-m-d H:i:s` (по умолчанию будет установлено текущее время).
++ Parameters
+    + id: (number) - ID сайта.
+
++ Request
+	+ Attributes
+	    + cost (number, required) - Сумма расхода.
+	    + comment (string, required) - Комментарий к заказу.
+	    + time (string, optional) - Время заказа в формате `Y-m-d H:i:s` (по умолчанию будет установлено текущее время).
 
 + Response 200 (application/json)
     + Attributes
@@ -361,7 +458,7 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
     + to: (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
 
 + Response 200 (application/json)
-    + Attributes (Statistics Summary)
+    + Attributes (Site Statistics)
 
 ### Подробная статистика сайта [GET/sites/{id}/statistics/details?{from}=&{to}=]
 
@@ -373,7 +470,7 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
     + to: (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
 
 + Response 200 (application/json)
-    + Attributes (Statistics Details)
+    + Attributes (Site Statistics Details)
 
 ### Обновление статистики сайта [PUT/sites/{id}/statistics?{date}]
 
@@ -386,6 +483,40 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
         + orders: (number) - Количество заказов за указанный в date день
 
 + Response 200 (application/json)
+
+### Обновление UTM меток [PUT/sites/{id}/utm?{method}]
+
+Обновляет UTM метки для ссылок в объявлениях всех кампаний, принадлежащик сайту.
+
++ Parameters
+    + id: (number, required) - ID сайта
+    + method: (enum[string], optional) - Способ задания меток
+        + Default
+            + all
+        + Members
+            + `only - Установить только заданные метки, остальные удалить`
+            + `replace - Обновить заданные метки, остальные не изменять. Выбран по умолчанию`
+            + `all - Обновить заданные метки, остальные очистить`
+
++ Request
+    + Attributes
+        + utm_source: (string, optional)
+        + utm_medium: (string, optional)
+        + utm_campaign: (string, optional)
+        + utm_content: (string, optional)
+        + utm_term: (string, optional)
+
++ Response 200 (application/json)
+
+
+
+
+
+
+
+
+
+
 
 ## Кампании [/campaigns]
 
@@ -455,20 +586,37 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 ### Текущие настройки биддера [GET/campaigns/{id}/bids]
 
+Возвращает список настроек биддера для кампании, а так же информацию о дочерних элементах с индивидуальными настройками биддера. Каждая настройка представляет собой параметры для одного часа (опция `hour_num`) определенного дня недели (опция `day_num`), и биддер будет запущен только в это время, в остальные, не указанные, диапазоны биддер выполняться не будет.
+
 + Parameters
     + id: (number, required) - ID кампании
 
 + Response 200 (application/json)
-    + Attributes (Bid Options)
-        + hit: (number) - Показатель попадания ставки в процентах. Отражает количество ставок, процент завышения которых не превышал максимальное значение, к общему количеству ставок по кампании. В расчет принимаются только ставки, сделанные по этой группе настроек, - если настройки биддера для кампании были переопределены настройками группы и/или ключевой фразы, они не учитываются. Значение для группы обновляется при каждом ее использовании биддером.
+    + Attributes
+		+ data
+            + options: (array, fixed)
+                + (Bid Options)
+                    + day_num: 0 (number,required) - Порядковый номер дня недели от 0 (понедельник) до 6, для которого должны применяться настройки
+                    + hour_num: 0 (number,required) - Порядковый номер часа от 0 до 23, для которого должны применяться настройки
+                    + hit: (number) - Показатель попадания ставки в процентах за указанный час. Отражает количество ставок, процент завышения которых не превышал максимальное значение, к общему количеству ставок по кампании. В расчет принимаются только ставки, сделанные по этой группе настроек, - если настройки биддера для кампании были переопределены настройками группы объявлений и/или ключевой фразы, они не учитываются. Значение для группы настроек обновляется при каждом ее использовании биддером.
+            + overrides: - список ID дочерних элементов, которые переопределяют настройки кампании
+                + ag_group_ids: (array) - ID групп объявлений кампании, для которых указаны другие настройки биддера
+                + keyword_ids: (array) - ID ключевых фраз кампании, для которых указаны другие настройки биддера
+			+ hit: (number) - Показатель попадания ставки в процентах, рассчитанный при последнем срабатывании биддера для этой кампании.
 
 ### Обновить настройки биддера [PUT/campaigns/{id}/bids]
+
+Устанавливает новый набор настроек биддера для кампании. Все прежние диапазоны настроек будут удалены.
 
 + Parameters
     + id: (number, required) - ID кампании
 
 + Request
-    + Attributes (Bid Options)
+    + Attributes
+		+ data (array,fixed)
+			+ (Bid Options)
+				+ day_num: (number,required) - Порядковый номер дня недели от 0 (понедельник) до 6, для которого должны применяться настройки
+				+ hour_num: (number,required) - Порядковый номер часа от 0 до 23, для которого должны применяться настройки
 
 + Response 200 (application/json)
 
@@ -508,6 +656,14 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 + Request
 
 + Response 200 (application/json)
+
+
+
+
+
+
+
+
 
 
 ## Группы объявлений [/ad_groups]
@@ -560,6 +716,25 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 + Response 200 (application/json)
 
+### Общая статистика группы объявлений [GET/ad_groups/{id}/statistics/summary?{from}=&{to}=]
+Возвращает объект с суммой статистик всех ключевых фраз, принадлежащих группе объявлений, за указанный период.
+
++ Parameters
+    + id: (number, required) - ID группы объявлений
+    + from: (string, required) - Дата начала периода в формате `YYYY-mm-dd`.
+    + to: (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
+
++ Response 200 (application/json)
+    + Attributes (Ad Group Statistics)
+
+
+
+
+
+
+
+
+
 
 ## Ключевые фразы [/keywords]
 
@@ -609,5 +784,67 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
     + id: (number, required) - ID ключевой фразы
 
 + Attributes (Bid Options)
+
++ Response 200 (application/json)
+
+### Общая статистика ключевой фразы [GET/keywords/{id}/statistics/summary?{from}=&{to}=]
+Возвращает объект с суммой статистик для ключевой фразы за указанный период.
+
++ Parameters
+    + id: (number, required) - ID ключевой фразы
+    + from: (string, required) - Дата начала периода в формате `YYYY-mm-dd`.
+    + to: (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
+
++ Response 200 (application/json)
+    + Attributes (Keyword Statistics)
+
+
+
+
+
+
+
+## Биддер [/bidder]
+
+### Получить информацию о запуске биддера [GET/bidder/info]
+
++ Response 200 (application/json)
+	+ Attributes
+		+ data
+			+ period: (number) - Интервал запуска биддера в минутах
+			+ last_run: (string) - Время последнего запуска
+
+### Обновить настройки запуска биддера [PUT/bidder/period]
+
++ Request
+    + Attributes
+        + period: (number) - Интервал запуска биддера в минутах
+
++ Response 200 (application/json)
+
+
+
+
+
+
+
+
+## Звонки [/calls]
+
+### Добавление информации о новом звонке [GET/calls/push]
+
++ Request
+	+ Attributes
+		+ unique
+		+ site
+		+ callerphone
+		+ duration
+		+ reclink
+		+ timestamp
+		+ utm_source
+		+ utm_medium
+		+ utm_campaign
+		+ utm_content
+		+ utm_term
 
 + Response 200 (application/json)
