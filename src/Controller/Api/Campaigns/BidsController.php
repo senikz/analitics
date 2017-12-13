@@ -94,8 +94,7 @@ class BidsController extends \App\Controller\Api\ApiController
             $option->status = @(int)$data['active'];
 
             $BidOptions->save($option);
-
-            $this->sendData([]);
         }
+		$this->sendData([]);
     }
 }

@@ -28,8 +28,8 @@ class ValidatorComponent extends Component
 
         foreach ($fields as $key) {
             if (!isset($data[$key])
-                || (empty($data[$key]) && $data[$key] !==0)
-                || ($strict && (empty($data[$key]) || $data[$key] ===0))) {
+                || (empty($data[$key]) && $data[$key] != 0)
+                || ($strict && (empty($data[$key]) || $data[$key] == 0))) {
                 $isValid = false;
                 $this->lastErrors[] = sprintf(MSG_ERROR_FIELD, $key);
             }
