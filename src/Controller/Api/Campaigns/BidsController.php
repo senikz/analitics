@@ -70,17 +70,17 @@ class BidsController extends \App\Controller\Api\ApiController
         $data = $this->request->getData();
         $campaignId = $this->request->getParam('campaign_id');
 
+		$BidOptions = TableRegistry::get('BidOptions');
+
+		$BidOptions->deleteAll([
+			'type' => 'campaign',
+			'rel_id' => $campaignId,
+		]);
+
         foreach ($data['data'] as $item) {
             if (!$this->Validator->required($item, ['max', 'position', 'increment', 'day_num', 'hour_num'])) {
                 $this->sendError($this->Validator->getLastError());
             }
-
-            $BidOptions = TableRegistry::get('BidOptions');
-
-            $BidOptions->deleteAll([
-                'type' => 'campaign',
-                'rel_id' => $campaignId,
-            ]);
 
             $option = $BidOptions->newEntity();
 
