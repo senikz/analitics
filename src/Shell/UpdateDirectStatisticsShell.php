@@ -168,7 +168,9 @@ class UpdateDirectStatisticsShell extends Shell
 			$lines = array_filter($lines);
 
 			for($lineId = 2; $lineId<(count($lines)-1); $lineId++ ) {
-				$line = array_filter(preg_split('/[\s]+/', $lines[$lineId]));
+				$line = array_filter(preg_split('/[\s]+/', $lines[$lineId]), function($item) {
+				    return $item !== '';
+				});
 
 				if(!empty($line) && count($line) == count($fields)) {
 					$reportLine = [];
