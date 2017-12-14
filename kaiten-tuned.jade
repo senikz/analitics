@@ -215,7 +215,8 @@ mixin Content()
                         h4.action-heading
                             a.method(class=action.methodLower, href=action.elementLink)
                                 = action.method
-                            code.uri= self.urldec(self.api.host + action.uriTemplate)
+                            div.code
+                                = self.urldec(self.api.host + action.uriTemplate)
                         if action.description
                             != self.markdown(action.description)
 
@@ -307,7 +308,8 @@ mixin ContentTriple()
                             .name!= action.name
                             a.method(class=action.methodLower, href=action.elementLink)
                                 = action.method
-                            code.uri= self.urldec(action.uriTemplate)
+                            div.code
+                                = self.urldec(action.uriTemplate)
                         if action.description
                             != self.markdown(action.description)
 
@@ -322,6 +324,7 @@ mixin ContentTriple()
 html
     head
         meta(charset="utf-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
         title= self.api.name || 'API Documentation'
         link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css")
         style(type='text/css').
@@ -1032,28 +1035,6 @@ html
                     width: 526px;
                 }
             }
-            @media (max-width: 768px) {
-                nav {
-                    display: none;
-                }
-                .container {
-                    width: 95%;
-                    max-width: none;
-                }
-                .container .row .content,
-                .container-fluid .row .content,
-                .container-fluid.triple .row .content {
-                    margin-left: auto;
-                    margin-right: auto;
-                    width: 95%;
-                }
-                #nav-background {
-                    display: none;
-                }
-                #right-panel-background {
-                    width: 48.6%;
-                }
-            }
             /* Context-specific and API color classes */
             .back-to-top {
                 position: fixed;
@@ -1154,7 +1135,7 @@ html
                 color: #fff !important;
                 float: left;
             }
-            .action h4.action-heading code {
+            .action h4.action-heading .code {
                 height: 40px;
                 display: block;
                 line-height: 40px;
@@ -1162,6 +1143,7 @@ html
                 background-color: transparent;
                 padding: 0;
                 border: none;
+                font-family:monospace;
             }
             .action dl.inner {
                 padding-bottom: 2px;
@@ -1201,49 +1183,49 @@ html
                 color: #666;
             }
             .action.get h4.action-heading,
-            .action.get h4.action-heading code {
+            .action.get h4.action-heading .code {
                 color: #337ab7;
             }
             .action.get h4.action-heading .method {
                 background-color: #337ab7;
             }
             .action.head h4.action-heading,
-            .action.head h4.action-heading code {
+            .action.head h4.action-heading .code {
                 color: #337ab7;
             }
             .action.head h4.action-heading .method {
                 background-color: #337ab7;
             }
             .action.options h4.action-heading,
-            .action.options h4.action-heading code {
+            .action.options h4.action-heading .code {
                 color: #337ab7;
             }
             .action.options h4.action-heading .method {
                 background-color: #337ab7;
             }
             .action.post h4.action-heading,
-            .action.post h4.action-heading code {
+            .action.post h4.action-heading .code {
                 color: #5cb85c;
             }
             .action.post h4.action-heading .method {
                 background-color: #5cb85c;
             }
             .action.put h4.action-heading,
-            .action.put h4.action-heading code {
+            .action.put h4.action-heading .code {
                 color: #ed9c28;
             }
             .action.put h4.action-heading .method {
                 background-color: #ed9c28;
             }
             .action.patch h4.action-heading,
-            .action.patch h4.action-heading code {
+            .action.patch h4.action-heading .code {
                 color: #ed9c28;
             }
             .action.patch h4.action-heading .method {
                 background-color: #ed9c28;
             }
             .action.delete h4.action-heading,
-            .action.delete h4.action-heading code {
+            .action.delete h4.action-heading .code {
                 color: #d9534f;
             }
             .action.delete h4.action-heading .method {
@@ -1295,6 +1277,85 @@ html
             }
             r-tabs .tab.active {
                 display: block;
+            }
+            @media (max-width: 768px) {
+                nav {
+                    display: none;
+                }
+                .container {
+                    width: 95%;
+                    max-width: none;
+                }
+                .container .row .content,
+                .container-fluid .row .content,
+                .container-fluid.triple .row .content {
+                    margin: auto;
+                    width: 95%;
+                    padding:0;
+                }
+                #nav-background {
+                    display: none;
+                }
+                #right-panel-background {
+                    width: 48.6%;
+                }
+                .action {
+                    padding: 5px 10px 0;
+                }
+                .action .action-resource {
+                    font-size: 12px;
+                }
+                .action .action-dif {
+                    padding: 0 4px;
+                }
+                .action .action-name {
+                    font-size: 12px;
+                    height: 19px;
+                }
+                .action h4.action-heading .method {
+                    padding: 0;
+                    margin-right: 6px;
+                    line-height: 26px;
+                    height: 26px;
+                    width: 42px;
+                    font-size: 11px;
+                }
+                .action h4.action-heading {
+                    padding: 0;
+                    margin: 0px 0 4px;
+                    border-radius: 4px;
+                    height: 26px;
+                }
+                .action h4.action-heading .code {
+                    height: 26px;
+                    line-height: 26px;
+                    font-size: 12px;
+                    font-family:monospace;
+                    overflow-x: auto;
+                    padding-right: 6px;
+                }
+                table td.attribute-status {
+                    width: auto;
+                }
+                table td {
+                    padding: 3px 3px 0;
+                }
+                .action .title {
+                    padding: 8px 0 4px 0;
+                    font-size: 13px;
+                }
+                .r-tabs .tabs-menu {
+                    margin: -24px 0 10px 0;
+                }
+                .r-tabs .tabs-menu a {
+                    line-height: 22px;
+                    height: 24px;
+                    font-size: 10px;
+                    padding: 0 4px;
+                }
+                .action .div {
+                    margin: 10px 0 0 0;
+                }
             }
 
     body.preload
