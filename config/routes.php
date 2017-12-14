@@ -185,6 +185,9 @@ Router::prefix('api', function ($routes) {
 				]
 			],
 		]);
+		$routes->resources('AdGroups', [
+			'prefix' => 'campaigns',
+		]);
     });
 
 	$routes->resources('AdGroups', function ($routes) use ($statisticsMap) {
