@@ -367,6 +367,9 @@ table .attribute-type {
 header {
     margin-top: 24px;
 }
+.menu-actions {
+    display: none;
+}
 nav {
     position: fixed;
     top: 0;
@@ -374,6 +377,7 @@ nav {
     overflow-y: auto;                
     padding: 28px 18px;
     box-sizing: border-box;
+    width: 26%;
 }
 nav .resource-group {
     padding: 0 0 25px 0;
@@ -495,6 +499,13 @@ nav > div > div > ul > li:first-child > a {
 .collapse-button {
     float: right;
 }
+nav .collapse-button {
+    float: left;
+    width: 100%;
+    position: absolute;
+    padding-left: 90%;
+    box-sizing: border-box;
+}
 .collapse-button .close {
     display: none;
     color: #428bca;
@@ -514,10 +525,6 @@ nav > div > div > ul > li:first-child > a {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease-in-out;
-}
-/* Layout classes */
-nav {
-    width: 220px;
 }
 .container {
     max-width: 940px;
@@ -539,9 +546,6 @@ nav {
     content: '';
     display: block;
     clear: both;
-}
-.container-fluid nav {
-    width: 26%;
 }
 .container-fluid .row .content {
     margin-left: 26.5%;
@@ -680,30 +684,6 @@ nav {
     width: 48.6%;
     background-color: #333;
     z-index: -1;
-}
-@media (max-width: 1200px) {
-    nav {
-        width: 198px;
-    }
-    .container {
-        max-width: 840px;
-    }
-    .container .row .content {
-        margin-left: 224px;
-        width: 606px;
-    }
-}
-@media (max-width: 992px) {
-    nav {
-        width: 169.4px;
-    }
-    .container {
-        max-width: 720px;
-    }
-    .container .row .content {
-        margin-left: 194px;
-        width: 526px;
-    }
 }
 /* Context-specific and API color classes */
 .back-to-top {
@@ -948,9 +928,67 @@ nav .resource-group .collapse-content {
 r-tabs .tab.active {
     display: block;
 }
+@media (max-width: 1200px) {
+    .container {
+        max-width: 840px;
+    }
+    .container .row .content {
+        margin-left: 224px;
+        width: 606px;
+    }
+}
+@media (max-width: 992px) {
+    .container {
+        max-width: 720px;
+    }
+    .container .row .content {
+        margin-left: 194px;
+        width: 526px;
+    }
+}
 @media (max-width: 768px) {
+    body {
+        margin: 38px 0 0 0;
+    }
+    .menu-actions {
+        position: fixed;
+        height: 36px;
+        width: 100%;
+        background: #fff;
+        top: 0;
+        display: block;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    }
+    .menu-action {
+        float: right;
+        display: block;
+        height: 100%;
+        width: 40px;
+        font-size: 16px;
+        font-weight: bold;
+        padding: 7px 13px;
+        box-sizing: border-box;
+        cursor: pointer;
+    }
     nav {
         display: none;
+        background: #fff;
+        width: 80%;
+        border-right: 1px solid #bababa;
+        z-index: 10000;
+        max-width: 360px;
+        box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
+    }
+    nav.show {
+        display: block;
+    }
+    nav ul a {
+        font-size: 14px;
+        line-height: 32px;
+    }
+    nav ul ul a {
+        font-size: 13px;
+        padding: 0 0 0 10px;
     }
     .container {
         width: 95%;
@@ -1027,7 +1065,7 @@ r-tabs .tab.active {
         margin: 10px 0 0 0;
     }
 }
-</style></head><body class="preload"><a href="#top" class="text-muted back-to-top"><i class="fa fa-toggle-up"></i>&nbsp;Back to top</a><div class="container-fluid"><div class="row"><nav><div class="resource-group"><div class="heading"><span>Overview</span></div><div><ul><li><a href="#header-аутентификация">Аутентификация</a></li><li><a href="#header-rest">REST</a></li><li><a href="#header-формат-ответа">Формат ответа</a></li><li><a href="#header-история-изменений">История изменений</a></li></ul></div></div><div class="resource-group"><div class="heading"><span>Reference</span></div><div><ul><li><a href="#настройки-get"><span class="badge get"></span>Список профилей поисковых систем</a></li><li><a href="#проекты"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Проекты</span></a><div class="collapse-content"><ul><li><a href="#проекты-get"><span class="badge get"></span>Список проектов</a></li><li><a href="#проекты-get-1"><span class="badge get"></span>Детали проекта</a></li><li><a href="#проекты-get-2"><span class="badge get"></span>Список сайтов</a></li><li><a href="#проекты-get-3"><span class="badge get"></span>Список кампаний</a></li><li><a href="#проекты-get-4"><span class="badge get"></span>Общая статистика проекта</a></li><li><a href="#проекты-get-5"><span class="badge get"></span>Подробная статистика проекта</a></li><li><a href="#проекты-get-6"><span class="badge get"></span>Список заявок</a></li><li><a href="#проекты-get-7"><span class="badge get"></span>Календарь стоимости заказа</a></li></ul></div></li><li><a href="#сайты"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Сайты</span></a><div class="collapse-content"><ul><li><a href="#сайты-get"><span class="badge get"></span>Список сайтов</a></li><li><a href="#сайты-post"><span class="badge post"></span>Добавить новый сайт</a></li><li><a href="#сайты-get-1"><span class="badge get"></span>Детали сайта</a></li><li><a href="#сайты-delete"><span class="badge delete"></span>Удалить сайт</a></li><li><a href="#сайты-get-2"><span class="badge get"></span>Список кампаний</a></li><li><a href="#сайты-post-1"><span class="badge post"></span>Добавление заказа</a></li><li><a href="#сайты-post-2"><span class="badge post"></span>Добавление произвольного расхода</a></li><li><a href="#сайты-get-3"><span class="badge get"></span>Общая статистика сайта</a></li><li><a href="#сайты-get-4"><span class="badge get"></span>Подробная статистика сайта</a></li><li><a href="#сайты-put"><span class="badge put"></span>Обновление статистики сайта</a></li><li><a href="#сайты-put-1"><span class="badge put"></span>Обновление UTM меток</a></li></ul></div></li><li><a href="#кампании"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Кампании</span></a><div class="collapse-content"><ul><li><a href="#кампании-get"><span class="badge get"></span>Список кампаний</a></li><li><a href="#кампании-post"><span class="badge post"></span>Добавить новую кампанию</a></li><li><a href="#кампании-get-1"><span class="badge get"></span>Детали кампании</a></li><li><a href="#кампании-delete"><span class="badge delete"></span>Удалить кампанию</a></li><li><a href="#кампании-get-2"><span class="badge get"></span>Общая статистика кампании</a></li><li><a href="#кампании-get-3"><span class="badge get"></span>Подробная статистика кампании</a></li><li><a href="#кампании-get-4"><span class="badge get"></span>Текущие настройки биддера</a></li><li><a href="#кампании-put"><span class="badge put"></span>Обновить настройки биддера</a></li><li><a href="#кампании-get-5"><span class="badge get"></span>Список ключевых фраз</a></li><li><a href="#кампании-get-6"><span class="badge get"></span>Список групп объявлений</a></li><li><a href="#кампании-get-7"><span class="badge get"></span>Обновить содержимое кампании</a></li></ul></div></li><li><a href="#группы-объявлений"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Группы объявлений</span></a><div class="collapse-content"><ul><li><a href="#группы-объявлений-get"><span class="badge get"></span>Список групп</a></li><li><a href="#группы-объявлений-get-1"><span class="badge get"></span>Детали группы</a></li><li><a href="#группы-объявлений-get-2"><span class="badge get"></span>Список ключевых фраз</a></li><li><a href="#группы-объявлений-get-3"><span class="badge get"></span>Текущие настройки биддера</a></li><li><a href="#группы-объявлений-put"><span class="badge put"></span>Обновить настройки биддера</a></li><li><a href="#группы-объявлений-get-4"><span class="badge get"></span>Общая статистика группы объявлений</a></li></ul></div></li><li><a href="#ключевые-фразы"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Ключевые фразы</span></a><div class="collapse-content"><ul><li><a href="#ключевые-фразы-get"><span class="badge get"></span>Детали ключевой фразы</a></li><li><a href="#ключевые-фразы-get-1"><span class="badge get"></span>Поиск фразы</a></li><li><a href="#ключевые-фразы-get-2"><span class="badge get"></span>Текущие настройки биддера</a></li><li><a href="#ключевые-фразы-put"><span class="badge put"></span>Обновить настройки биддера</a></li><li><a href="#ключевые-фразы-get-3"><span class="badge get"></span>Общая статистика ключевой фразы</a></li></ul></div></li><li><a href="#биддер"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Биддер</span></a><div class="collapse-content"><ul><li><a href="#биддер-get"><span class="badge get"></span>Получить информацию о запуске биддера</a></li><li><a href="#биддер-put"><span class="badge put"></span>Обновить настройки запуска биддера</a></li></ul></div></li><li><a href="#звонки-get"><span class="badge get"></span>Добавление информации о новом звонке</a></li></ul></div></div></nav><div class="content"><header><h1 id="top">Аналитика</h1></header><h2 class="group-heading">Overview</h2><div class="hostname"><a href="http://analitics.catkitcms.ru/api">http://analitics.catkitcms.ru/api</a></div><h3 id="header-аутентификация">Аутентификация <a class="permalink" href="#header-аутентификация" aria-hidden="true">¶</a></h3>
+</style></head><body class="preload"><a href="#top" class="text-muted back-to-top"><i class="fa fa-toggle-up"></i>&nbsp;Back to top</a><div class="menu-actions"><a id="nav-toggle" class="menu-action">M</a></div><div class="container-fluid"><div class="row"><nav id="navi"><div class="resource-group"><div class="heading"><span>Overview</span></div><div><ul><li><a href="#header-аутентификация">Аутентификация</a></li><li><a href="#header-rest">REST</a></li><li><a href="#header-формат-ответа">Формат ответа</a></li><li><a href="#header-история-изменений">История изменений</a></li></ul></div></div><div class="resource-group"><div class="heading"><span>Reference</span></div><div><ul><li><a href="#настройки"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Настройки</span></a><div class="collapse-content"><ul><li><a href="#настройки-get"><span class="badge get"></span>Список профилей поисковых систем</a></li></ul></div></li><li><a href="#проекты"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Проекты</span></a><div class="collapse-content"><ul><li><a href="#проекты-get"><span class="badge get"></span>Список проектов</a></li><li><a href="#проекты-get-1"><span class="badge get"></span>Детали проекта</a></li><li><a href="#проекты-get-2"><span class="badge get"></span>Список сайтов</a></li><li><a href="#проекты-get-3"><span class="badge get"></span>Список кампаний</a></li><li><a href="#проекты-get-4"><span class="badge get"></span>Общая статистика проекта</a></li><li><a href="#проекты-get-5"><span class="badge get"></span>Подробная статистика проекта</a></li><li><a href="#проекты-get-6"><span class="badge get"></span>Список заявок</a></li><li><a href="#проекты-get-7"><span class="badge get"></span>Календарь стоимости заказа</a></li></ul></div></li><li><a href="#сайты"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Сайты</span></a><div class="collapse-content"><ul><li><a href="#сайты-get"><span class="badge get"></span>Список сайтов</a></li><li><a href="#сайты-post"><span class="badge post"></span>Добавить новый сайт</a></li><li><a href="#сайты-get-1"><span class="badge get"></span>Детали сайта</a></li><li><a href="#сайты-delete"><span class="badge delete"></span>Удалить сайт</a></li><li><a href="#сайты-get-2"><span class="badge get"></span>Список кампаний</a></li><li><a href="#сайты-post-1"><span class="badge post"></span>Добавление заказа</a></li><li><a href="#сайты-post-2"><span class="badge post"></span>Добавление произвольного расхода</a></li><li><a href="#сайты-get-3"><span class="badge get"></span>Общая статистика сайта</a></li><li><a href="#сайты-get-4"><span class="badge get"></span>Подробная статистика сайта</a></li><li><a href="#сайты-put"><span class="badge put"></span>Обновление статистики сайта</a></li><li><a href="#сайты-put-1"><span class="badge put"></span>Обновление UTM меток</a></li></ul></div></li><li><a href="#кампании"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Кампании</span></a><div class="collapse-content"><ul><li><a href="#кампании-get"><span class="badge get"></span>Список кампаний</a></li><li><a href="#кампании-post"><span class="badge post"></span>Добавить новую кампанию</a></li><li><a href="#кампании-get-1"><span class="badge get"></span>Детали кампании</a></li><li><a href="#кампании-delete"><span class="badge delete"></span>Удалить кампанию</a></li><li><a href="#кампании-get-2"><span class="badge get"></span>Общая статистика кампании</a></li><li><a href="#кампании-get-3"><span class="badge get"></span>Подробная статистика кампании</a></li><li><a href="#кампании-get-4"><span class="badge get"></span>Текущие настройки биддера</a></li><li><a href="#кампании-put"><span class="badge put"></span>Обновить настройки биддера</a></li><li><a href="#кампании-get-5"><span class="badge get"></span>Список ключевых фраз</a></li><li><a href="#кампании-get-6"><span class="badge get"></span>Список групп объявлений</a></li><li><a href="#кампании-get-7"><span class="badge get"></span>Обновить содержимое кампании</a></li></ul></div></li><li><a href="#группы-объявлений"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Группы объявлений</span></a><div class="collapse-content"><ul><li><a href="#группы-объявлений-get"><span class="badge get"></span>Список групп</a></li><li><a href="#группы-объявлений-get-1"><span class="badge get"></span>Детали группы</a></li><li><a href="#группы-объявлений-get-2"><span class="badge get"></span>Список ключевых фраз</a></li><li><a href="#группы-объявлений-get-3"><span class="badge get"></span>Текущие настройки биддера</a></li><li><a href="#группы-объявлений-put"><span class="badge put"></span>Обновить настройки биддера</a></li><li><a href="#группы-объявлений-get-4"><span class="badge get"></span>Общая статистика группы объявлений</a></li></ul></div></li><li><a href="#ключевые-фразы"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Ключевые фразы</span></a><div class="collapse-content"><ul><li><a href="#ключевые-фразы-get"><span class="badge get"></span>Детали ключевой фразы</a></li><li><a href="#ключевые-фразы-get-1"><span class="badge get"></span>Поиск фразы</a></li><li><a href="#ключевые-фразы-get-2"><span class="badge get"></span>Текущие настройки биддера</a></li><li><a href="#ключевые-фразы-put"><span class="badge put"></span>Обновить настройки биддера</a></li><li><a href="#ключевые-фразы-get-3"><span class="badge get"></span>Общая статистика ключевой фразы</a></li></ul></div></li><li><a href="#биддер"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Биддер</span></a><div class="collapse-content"><ul><li><a href="#биддер-get"><span class="badge get"></span>Получить информацию о запуске биддера</a></li><li><a href="#биддер-put"><span class="badge put"></span>Обновить настройки запуска биддера</a></li></ul></div></li><li><a href="#звонки"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Звонки</span></a><div class="collapse-content"><ul><li><a href="#звонки-get"><span class="badge get"></span>Добавление информации о новом звонке</a></li></ul></div></li></ul></div></div></nav><div class="content"><header><h1 id="top">Аналитика</h1></header><h2 class="group-heading">Overview</h2><div class="hostname"><a href="http://analitics.catkitcms.ru/api">http://analitics.catkitcms.ru/api</a></div><h3 id="header-аутентификация">Аутентификация <a class="permalink" href="#header-аутентификация" aria-hidden="true">¶</a></h3>
 <p>Для авторизации приложения используется механизм JWT токенов. При каждом
 запросе к API должен передаваться HTTP-заголовок <code>User-Token</code>, содержащий
 JWT токен.</p>
@@ -3089,7 +3127,7 @@ function getWindowDimensions() {
     Collapse or show a request/response example.
 */
 function toggleCollapseButton(event) {
-    var button = event.target.parentNode;
+    var button = event.target;
     var content = button.parentNode.nextSibling;
     var inner = content.children[0];
 
@@ -3142,6 +3180,17 @@ function toggleTabButton(event) {
 
 }
 
+document.getElementById('nav-toggle').onclick = toggleNav;
+
+function toggleNav() {
+    var nav = document.getElementById('navi');
+    if (nav.className == 'show') {
+        nav.className = '';
+    } else {
+        nav.className = 'show';
+    }
+}
+
 /*
     Collapse or show a navigation menu. It will not be hidden unless it
     is currently selected or `force` has been passed.
@@ -3165,7 +3214,7 @@ function toggleCollapseNav(event, force) {
         }
     } else {
         // Currently hidden, so let's show it
-        content.style.maxHeight = inner.offsetHeight + 32 + 'px';
+        //content.style.maxHeight = inner.offsetHeight + 32 + 'px';
     }
 }
 

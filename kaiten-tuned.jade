@@ -23,7 +23,7 @@ mixin Badge(method)
 mixin Nav()
     //- Draw a navigation bar, which includes links to individual
     //- resources and actions.
-    nav
+    nav(id="navi")
         if self.api.navItems && self.api.navItems.length
             .resource-group
                 .heading
@@ -43,21 +43,15 @@ mixin Nav()
                                 a(href=item[1])!= item[0]
                         each resource in resourceGroup.resources || []
                             li
-                                if !self.condenseNav || (resource.actions.length != 1)
-                                    a(href=resource.elementLink)
-                                        .chevron.collapse-button
-                                            i.open.fa.fa-angle-down
-                                        span!= resource.name || 'Resource'
-                                    .collapse-content
-                                        ul: each action in resource.actions || []
-                                            li: a(href=action.elementLink)
-                                                +Badge(action.method)
-                                                != action.name || action.method + ' ' + (action.attributes && action.attributes.uriTemplate || resource.uriTemplate)
-                                else
-                                    - var action = resource.actions[0]
-                                    a(href=action.elementLink)
-                                        +Badge(action.method)
-                                        != action.name || resource.name || action.method + ' ' + (action.attributes && action.attributes.uriTemplate || resource.uriTemplate)
+                                a(href=resource.elementLink)
+                                    .chevron.collapse-button
+                                        i.open.fa.fa-angle-down
+                                    span!= resource.name || 'Resource'
+                                .collapse-content
+                                    ul: each action in resource.actions || []
+                                        li: a(href=action.elementLink)
+                                            +Badge(action.method)
+                                            != action.name || action.method + ' ' + (action.attributes && action.attributes.uriTemplate || resource.uriTemplate)
 
 mixin Parameters(params)
     //- Draw a definition list of parameter names, types, defaults,
@@ -697,6 +691,9 @@ html
             header {
                 margin-top: 24px;
             }
+            .menu-actions {
+                display: none;
+            }
             nav {
                 position: fixed;
                 top: 0;
@@ -704,6 +701,7 @@ html
                 overflow-y: auto;                
                 padding: 28px 18px;
                 box-sizing: border-box;
+                width: 26%;
             }
             nav .resource-group {
                 padding: 0 0 25px 0;
@@ -825,6 +823,13 @@ html
             .collapse-button {
                 float: right;
             }
+            nav .collapse-button {
+                float: left;
+                width: 100%;
+                position: absolute;
+                padding-left: 90%;
+                box-sizing: border-box;
+            }
             .collapse-button .close {
                 display: none;
                 color: #428bca;
@@ -844,10 +849,6 @@ html
                 max-height: 0;
                 overflow: hidden;
                 transition: max-height 0.3s ease-in-out;
-            }
-            /* Layout classes */
-            nav {
-                width: 220px;
             }
             .container {
                 max-width: 940px;
@@ -869,9 +870,6 @@ html
                 content: '';
                 display: block;
                 clear: both;
-            }
-            .container-fluid nav {
-                width: 26%;
             }
             .container-fluid .row .content {
                 margin-left: 26.5%;
@@ -1010,30 +1008,6 @@ html
                 width: 48.6%;
                 background-color: #333;
                 z-index: -1;
-            }
-            @media (max-width: 1200px) {
-                nav {
-                    width: 198px;
-                }
-                .container {
-                    max-width: 840px;
-                }
-                .container .row .content {
-                    margin-left: 224px;
-                    width: 606px;
-                }
-            }
-            @media (max-width: 992px) {
-                nav {
-                    width: 169.4px;
-                }
-                .container {
-                    max-width: 720px;
-                }
-                .container .row .content {
-                    margin-left: 194px;
-                    width: 526px;
-                }
             }
             /* Context-specific and API color classes */
             .back-to-top {
@@ -1278,9 +1252,67 @@ html
             r-tabs .tab.active {
                 display: block;
             }
+            @media (max-width: 1200px) {
+                .container {
+                    max-width: 840px;
+                }
+                .container .row .content {
+                    margin-left: 224px;
+                    width: 606px;
+                }
+            }
+            @media (max-width: 992px) {
+                .container {
+                    max-width: 720px;
+                }
+                .container .row .content {
+                    margin-left: 194px;
+                    width: 526px;
+                }
+            }
             @media (max-width: 768px) {
+                body {
+                    margin: 38px 0 0 0;
+                }
+                .menu-actions {
+                    position: fixed;
+                    height: 36px;
+                    width: 100%;
+                    background: #fff;
+                    top: 0;
+                    display: block;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+                }
+                .menu-action {
+                    float: right;
+                    display: block;
+                    height: 100%;
+                    width: 40px;
+                    font-size: 16px;
+                    font-weight: bold;
+                    padding: 7px 13px;
+                    box-sizing: border-box;
+                    cursor: pointer;
+                }
                 nav {
                     display: none;
+                    background: #fff;
+                    width: 80%;
+                    border-right: 1px solid #bababa;
+                    z-index: 10000;
+                    max-width: 360px;
+                    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
+                }
+                nav.show {
+                    display: block;
+                }
+                nav ul a {
+                    font-size: 14px;
+                    line-height: 32px;
+                }
+                nav ul ul a {
+                    font-size: 13px;
+                    padding: 0 0 0 10px;
                 }
                 .container {
                     width: 95%;
@@ -1362,6 +1394,9 @@ html
         a.text-muted.back-to-top(href='#top')
             i.fa.fa-toggle-up
             | &nbsp;Back to top
+        div.menu-actions
+            a.menu-action(id="nav-toggle")
+                ='M'
         div(class='container-fluid')
             .row
                 block nav
@@ -1445,7 +1480,7 @@ html
                 Collapse or show a request/response example.
             */
             function toggleCollapseButton(event) {
-                var button = event.target.parentNode;
+                var button = event.target;
                 var content = button.parentNode.nextSibling;
                 var inner = content.children[0];
 
@@ -1498,6 +1533,17 @@ html
 
             }
 
+            document.getElementById('nav-toggle').onclick = toggleNav;
+
+            function toggleNav() {
+                var nav = document.getElementById('navi');
+                if (nav.className == 'show') {
+                    nav.className = '';
+                } else {
+                    nav.className = 'show';
+                }
+            }
+
             /*
                 Collapse or show a navigation menu. It will not be hidden unless it
                 is currently selected or `force` has been passed.
@@ -1521,7 +1567,7 @@ html
                     }
                 } else {
                     // Currently hidden, so let's show it
-                    content.style.maxHeight = inner.offsetHeight + 32 + 'px';
+                    //content.style.maxHeight = inner.offsetHeight + 32 + 'px';
                 }
             }
 
