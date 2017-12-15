@@ -13,6 +13,9 @@ class AdGroupsController extends \App\Controller\Api\ApiController
 				'caption' => $group->name,
 			];
 		}, $this->AdGroups->find('all', [
+			'conditions' => [
+				'campaign_id' => $this->request->getParam('campaign_id'),
+			],
             'contain' => []
         ])->toArray()));
     }
