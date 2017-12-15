@@ -1,5 +1,5 @@
 <?php
-namespace App\Controller\Api\AdGroups;
+namespace App\Controller\Api\Keywords;
 
 use Cake\ORM\TableRegistry;
 
@@ -9,33 +9,32 @@ class StatisticsController extends \App\Controller\Api\ApiController
     {
         parent::initialize();
         $this->loadComponent('Validator');
-        $this->loadModel('AdGroups');
-        $this->loadModel('Keywords');
         $this->loadModel('Campaigns');
-        $this->loadModel('AdGroupStatisticsDaily');
-		$this->loadModel('SiteCalls');
-		$this->loadModel('SiteEmails');
+        $this->loadModel('Keywords');
+        $this->loadModel('KeywordStatisticsDaily');
+        $this->loadModel('SiteCalls');
+        $this->loadModel('SiteEmails');
     }
 
     public function summary()
     {
         $fields = $this->request->query;
-        $adGroupId = $this->request->getParam('ad_group_id');
+        $keywordId = $this->request->getParam('keyword_id');
 
         if (!$this->Validator->required($fields, ['from', 'to'])) {
             $this->sendError($this->Validator->getLastError());
         }
 
-		try {
-        	$adGroup = $this->AdGroups->get($adGroupId);
-			$campaign = $this->Campaigns->get($adGroup->campaign_id);
-		} catch (\Exception $e) {
-			$this->sendError('Invalid AdGroup ID');
-		}
+        try {
+            $keyword = $this->Keywords->get($keywordId);
+			$campaign = $this->Campaigns->get($keyword->campaign_id);
+        } catch (\Exception $e) {
+            $this->sendError('Invalid Keyword ID');
+        }
 
-        $query = $this->AdGroupStatisticsDaily->find('all', [
+        $query = $this->KeywordStatisticsDaily->find('all', [
             'conditions' => [
-                'ad_group_id' => $adGroupId,
+                'keyword_id' => $keywordId,
                 'date >=' => $fields['from'],
                 'date <=' => $fields['to']
             ],
@@ -49,18 +48,15 @@ class StatisticsController extends \App\Controller\Api\ApiController
             ])
             ->first();
 
-		$keywordsList = $this->Keywords->find('list', ['keyField' => 'id', 'valueField' => 'rel_id'])->toArray();
-
 		$calls = $this->SiteCalls->findCountBy([
 				'utm_campaign' => $campaign->rel_id,
-				'utm_term IN' => array_values($keywordsList),
+				'utm_term' => $keyword->keyword,
 				'time >=' => $fields['from'] . ' 00:00:00',
 				'time <=' => $fields['to'] . ' 23:59:59',
 			]);
-
 		$emails = $this->SiteEmails->findCountBy([
 				'utm_campaign LIKE' => '%' . $campaign->rel_id,
-				'utm_term REGEXP' => join('|', array_values($keywordsList)),
+				'utm_term LIKE' => '%' . $keyword->rel_id,
 				'time >=' => $fields['from'] . ' 00:00:00',
 				'time <=' => $fields['to'] . ' 23:59:59',
 			]);

@@ -208,7 +208,7 @@ Router::prefix('api', function ($routes) {
 		]);
 	});
 
-	$routes->resources('Keywords', function ($routes) {
+	$routes->resources('Keywords', function ($routes) use ($statisticsMap) {
 		$routes->resources('Bids', [
 			'prefix' => 'keywords',
 			'map' => [
@@ -218,6 +218,10 @@ Router::prefix('api', function ($routes) {
 					'path' => '/',
 				]
 			],
+		]);
+		$routes->resources('Statistics', [
+			'prefix' => 'keywords',
+			'map' => $statisticsMap,
 		]);
 	});
 

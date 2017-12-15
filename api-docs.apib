@@ -87,6 +87,10 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 ### История изменений
 
+`1.3`
+
+* Добавлены методы получения статистики для [группы объявлений](#группы-объявлений-get-4) и [ключевой фразы](#ключевые-фразы-get-3)
+
 `1.2`
 
 * Добавлен метод задания [UTM меток для всех кампаний сайта](#сайты-put-1)
@@ -98,8 +102,6 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 * В [настройки биддера кампании](#кампании-get-4) добавлена онформация о дочерних элементах с отдельными настройками.
 * Настройки биддера и информация о запуске перенсены из общих настроек в [отдельный раздел управления биддером](#биддер)
 * В [настройки биддера кампании](#кампании-get-4) добавлен показатель попадания кампании при последнем срабатывании биддера.
-
----- * Добавлены методы получения статистики для [группы объявлений](#группы-объявлений-get-4) и [ключевой фразы](#ключевые-фразы-get-3)
 
 `1.1.1`
 
@@ -141,10 +143,18 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 + emails: (number) - Кол-во писем
 
 ## Ad Group Statistics
-+ orders: (number) - Кол-во заказов
++ cost: (number) - Потраченная сумма(руб.).
++ views: (number) - Кол-во просмотров за период.
++ clicks: (number) - Кол-во кликов по рекламе за период.
++ calls: (number) - Кол-во звонков с указанным utm_term, принадлежащим этой группе объявлений
++ emails: (number) - Кол-во писем с указанным utm_term, принадлежащим этой группе объявлений
 
 ## Keyword Statistics
-+ orders: (number) - Кол-во заказов
++ cost: (number) - Потраченная сумма(руб.).
++ views: (number) - Кол-во просмотров за период.
++ clicks: (number) - Кол-во кликов по рекламе за период.
++ calls: (number) - Кол-во звонков с указанным utm_term для данного ключевого слова
++ emails: (number) - Кол-во писем с указанным utm_term для данного ключевого слова
 
 
 
@@ -666,6 +676,8 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 
 
+
+
 ## Группы объявлений [/ad_groups]
 
 ### Список групп [GET]
@@ -725,7 +737,8 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
     + to: (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
 
 + Response 200 (application/json)
-    + Attributes (Ad Group Statistics)
+    + Attributes
+		+ data (Ad Group Statistics)
 
 
 
@@ -796,7 +809,8 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
     + to: (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
 
 + Response 200 (application/json)
-    + Attributes (Keyword Statistics)
+    + Attributes
+		+ data (Keyword Statistics)
 
 
 
