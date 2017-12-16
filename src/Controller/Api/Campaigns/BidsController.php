@@ -24,43 +24,50 @@ class BidsController extends \App\Controller\Api\ApiController
             'contain' => ['BidOptions', 'AdGroups' => ['BidOptions'], 'Keywords' => ['BidOptions']],
         ])->first();
 
+        if (empty($campaign)) {
+            $this->sendError('Invalid Campaign ID');
+        }
+
         if (!empty($campaign->bid_options)) {
             foreach ($campaign->bid_options as $option) {
                 $res = $option->getObject();
-
                 $res['hit'] = $option->hit;
-                $res['day_num'] = $option->day_num;
-                $res['hour_num'] = $option->hour_num;
-
                 $result['options'][] = $res;
             }
         }
 
-		$keywords = $groups = [];
+        $keywords = $groups = [];
 
-		if(!empty($campaign->ad_groups)) {
-			foreach($campaign->ad_groups as $adGroup) {
-				if(!empty($adGroup->bid_options)) {
-					$groups[] = $adGroup->id;
-				}
-			}
-		}
-		if(!empty($campaign->keywords)) {
-			foreach($campaign->keywords as $keyword) {
-				if(!empty($keyword->bid_options)) {
-					$keywords[] = $keyword->id;
-				}
-			}
-		}
+        if (!empty($campaign->ad_groups)) {
+            foreach ($campaign->ad_groups as $adGroup) {
+                if (!empty($adGroup->bid_options)) {
+                    $groups[] = [
+                        'id' => $adGroup->id,
+                        'name' => $adGroup->name,
+                    ];
+                }
+            }
+        }
+        if (!empty($campaign->keywords)) {
+            foreach ($campaign->keywords as $keyword) {
+                if (!empty($keyword->bid_options)) {
+                    $keywords[] = [
+                        'id' => $keyword->id,
+                        'ad_group_id' => $keyword->ad_group_id,
+                        'keyword' => $keyword->keyword,
+                    ];
+                }
+            }
+        }
 
-		if(!empty($keywords)) {
-			$result['overrides']['keyword_ids'] = $keywords;
-		}
-		if(!empty($groups)) {
-			$result['overrides']['ad_group_ids'] = $groups;
-		}
+        if (!empty($keywords)) {
+            $result['overrides']['keywords'] = $keywords;
+        }
+        if (!empty($groups)) {
+            $result['overrides']['ad_groups'] = $groups;
+        }
 
-		$result['hit'] = $campaign->bid_hit;
+        $result['hit'] = $campaign->bid_hit;
 
         $this->sendData($result);
     }
@@ -70,12 +77,12 @@ class BidsController extends \App\Controller\Api\ApiController
         $data = $this->request->getData();
         $campaignId = $this->request->getParam('campaign_id');
 
-		$BidOptions = TableRegistry::get('BidOptions');
+        $BidOptions = TableRegistry::get('BidOptions');
 
-		$BidOptions->deleteAll([
-			'type' => 'campaign',
-			'rel_id' => $campaignId,
-		]);
+        $BidOptions->deleteAll([
+            'type' => 'campaign',
+            'rel_id' => $campaignId,
+        ]);
 
         foreach ($data['data'] as $item) {
             if (!$this->Validator->required($item, ['max', 'position', 'increment', 'day_num', 'hour_num'])) {
@@ -91,10 +98,10 @@ class BidsController extends \App\Controller\Api\ApiController
             $option->increment = $item['increment'];
             $option->day_num = $item['day_num'];
             $option->hour_num = $item['hour_num'];
-            $option->status = @(int)$data['active'];
+            $option->status = @(int)$item['active'];
 
             $BidOptions->save($option);
         }
-		$this->sendData([]);
+        $this->sendData([]);
     }
 }

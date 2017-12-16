@@ -9,23 +9,46 @@ class BidsController extends \App\Controller\Api\ApiController
     {
         parent::initialize();
         $this->loadComponent('Validator');
+        $this->loadModel('AdGroups');
+        $this->loadModel('BidOptions');
     }
 
     public function index()
     {
-        $result = null;
+        $result = ['options' => [], 'overrides' => []];
 
-        $groupsTable = TableRegistry::get('AdGroups');
-
-        $group = $groupsTable->find('all', [
+        $adGroup = $this->AdGroups->find('all', [
             'conditions' => [
                 'id' => $this->request->getParam('ad_group_id'),
             ],
-            'contain' => ['BidOptions',],
+            'contain' => ['BidOptions', 'Keywords' => ['BidOptions']],
         ])->first();
 
-        if (!empty($group->bid_options)) {
-            $result = $group->bid_options[0]->getObject();
+        if (empty($adGroup)) {
+            $this->sendError('Invalid Ad Group ID');
+        }
+
+        if (!empty($adGroup->bid_options)) {
+            foreach ($adGroup->bid_options as $option) {
+                $result['options'][] = $option->getObject();
+            }
+        }
+
+        $keywords = [];
+
+        if (!empty($adGroup->keywords)) {
+            foreach ($adGroup->keywords as $keyword) {
+                if (!empty($keyword->bid_options)) {
+                    $keywords[] = [
+                        'id' => $keyword->id,
+                        'keyword' => $keyword->keyword,
+                    ];
+                }
+            }
+        }
+
+        if (!empty($keywords)) {
+            $result['overrides']['keywords'] = $keywords;
         }
 
         $this->sendData($result);
@@ -34,29 +57,31 @@ class BidsController extends \App\Controller\Api\ApiController
     public function edit()
     {
         $data = $this->request->getData();
-        $groupId = $this->request->getParam('ad_group_id');
+        $adGroupId = $this->request->getParam('ad_group_id');
 
-        if ($this->Validator->required($data, ['max', 'position', 'increment'])) {
+        $this->BidOptions->deleteAll([
+            'type' => 'ad_group',
+            'rel_id' => $adGroupId,
+        ]);
 
-			$BidOptions = TableRegistry::get('BidOptions');
+        foreach ($data['data'] as $item) {
+            if (!$this->Validator->required($item, ['max', 'position', 'increment', 'day_num', 'hour_num'])) {
+                $this->sendError($this->Validator->getLastError());
+            }
 
-            $BidOptions->deleteAll([
-                'type' => 'adgroup',
-                'rel_id' => $groupId,
-            ]);
+            $option = $this->BidOptions->newEntity();
 
-			$option = $BidOptions->newEntity();
-			$option->type = 'adgroup';
-			$option->rel_id = $groupId;
-			$option->max = $data['max'];
-			$option->position = $data['position'];
-			$option->increment = $data['increment'];
-			$option->status = @(int)$data['active'];
-			$BidOptions->save($option);
+            $option->type = 'ad_group';
+            $option->rel_id = $adGroupId;
+            $option->max = $item['max'];
+            $option->position = $item['position'];
+            $option->increment = $item['increment'];
+            $option->day_num = $item['day_num'];
+            $option->hour_num = $item['hour_num'];
+            $option->status = @(int)$item['active'];
 
-            $this->sendData([]);
+            $this->BidOptions->save($option);
         }
-
-        $this->sendError($this->Validator->getLastError());
+        $this->sendData([]);
     }
 }

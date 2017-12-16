@@ -41,6 +41,8 @@ class BidOption extends Entity
 			'position' => $this->position,
 			'increment' => $this->increment,
 			'active' => $this->status,
+			'day_num' => $this->day_num,
+			'hour_num' => $this->hour_num,
 		];
 	}
 }

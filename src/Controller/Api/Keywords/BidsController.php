@@ -9,23 +9,29 @@ class BidsController extends \App\Controller\Api\ApiController
     {
         parent::initialize();
         $this->loadComponent('Validator');
+        $this->loadModel('Keywords');
+        $this->loadModel('BidOptions');
     }
 
     public function index()
     {
-        $result = null;
+        $result = ['options' => [], 'overrides' => []];
 
-        $keywordsTable = TableRegistry::get('Keywords');
-
-        $keyword = $keywordsTable->find('all', [
+        $keyword = $this->Keywords->find('all', [
             'conditions' => [
                 'id' => $this->request->getParam('keyword_id'),
             ],
-            'contain' => ['BidOptions',],
+            'contain' => ['BidOptions'],
         ])->first();
 
+        if (empty($keyword)) {
+            $this->sendError('Invalid Keyword ID');
+        }
+
         if (!empty($keyword->bid_options)) {
-            $result = $keyword->bid_options[0]->getObject();
+            foreach ($keyword->bid_options as $option) {
+                $result['options'][] = $option->getObject();
+            }
         }
 
         $this->sendData($result);
@@ -36,27 +42,29 @@ class BidsController extends \App\Controller\Api\ApiController
         $data = $this->request->getData();
         $keywordId = $this->request->getParam('keyword_id');
 
-        if ($this->Validator->required($data, ['max', 'position', 'increment'])) {
+        $this->BidOptions->deleteAll([
+            'type' => 'keyword',
+            'rel_id' => $keywordId,
+        ]);
 
-			$BidOptions = TableRegistry::get('BidOptions');
+        foreach ($data['data'] as $item) {
+            if (!$this->Validator->required($item, ['max', 'position', 'increment', 'day_num', 'hour_num'])) {
+                $this->sendError($this->Validator->getLastError());
+            }
 
-            $BidOptions->deleteAll([
-                'type' => 'keyword',
-                'rel_id' => $keywordId,
-            ]);
+            $option = $this->BidOptions->newEntity();
 
-			$option = $BidOptions->newEntity();
-			$option->type = 'keyword';
-			$option->rel_id = $keywordId;
-			$option->max = $data['max'];
-			$option->position = $data['position'];
-			$option->increment = $data['increment'];
-			$option->status = @(int)$data['active'];
-			$BidOptions->save($option);
+            $option->type = 'keyword';
+            $option->rel_id = $keywordId;
+            $option->max = $item['max'];
+            $option->position = $item['position'];
+            $option->increment = $item['increment'];
+            $option->day_num = $item['day_num'];
+            $option->hour_num = $item['hour_num'];
+            $option->status = @(int)$item['active'];
 
-            $this->sendData([]);
+            $this->BidOptions->save($option);
         }
-
-        $this->sendError($this->Validator->getLastError());
+        $this->sendData([]);
     }
 }

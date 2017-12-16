@@ -1,6 +1,6 @@
 FORMAT: 1A
 HOST: http://analitics.catkitcms.ru/api
-VERSION: 1.1.1
+VERSION: 1.4
 
 # Аналитика
 
@@ -86,6 +86,10 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 ```
 
 ### История изменений
+
+`1.4`
+
+* Изменены методы получения и установки настроек биддера для [кампаний](#кампании-get-4), [групп объявлений](#группы-объявлений-get-3) и [ключевых фраз](#ключевые-фразы-get-2).
 
 `1.3`
 
@@ -228,7 +232,7 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 + time: (string) - Время заявки
 
 
-## Bid Options
+## Bid Option
 + max: (number) - Максимальная ставка
 + position: (enum[string]) - Позиция, строка по формуле Pnm, где n - , m -
     + Members
@@ -240,6 +244,12 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
         + P22
 + increment: (number) - Процент завышения ставки
 + active: (boolean) - Статус (включено/выключено)
++ day_num: 0 (number,required) - Порядковый номер дня недели от 0 (понедельник) до 6, для которого должны применяться настройки
++ hour_num: 0 (number,required) - Порядковый номер часа от 0 до 23, для которого должны применяться настройки
+
+## Bid Options
+
+
 
 
 
@@ -605,13 +615,18 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
     + Attributes
 		+ data
             + options: (array, fixed)
-                + (Bid Options)
-                    + day_num: 0 (number,required) - Порядковый номер дня недели от 0 (понедельник) до 6, для которого должны применяться настройки
-                    + hour_num: 0 (number,required) - Порядковый номер часа от 0 до 23, для которого должны применяться настройки
+                + (Bid Option)
                     + hit: (number) - Показатель попадания ставки в процентах за указанный час. Отражает количество ставок, процент завышения которых не превышал максимальное значение, к общему количеству ставок по кампании. В расчет принимаются только ставки, сделанные по этой группе настроек, - если настройки биддера для кампании были переопределены настройками группы объявлений и/или ключевой фразы, они не учитываются. Значение для группы настроек обновляется при каждом ее использовании биддером.
             + overrides: - список ID дочерних элементов, которые переопределяют настройки кампании
-                + ag_group_ids: (array) - ID групп объявлений кампании, для которых указаны другие настройки биддера
-                + keyword_ids: (array) - ID ключевых фраз кампании, для которых указаны другие настройки биддера
+                + ag_groups: (array, fixed) - Группы объявлений кампании, для которых указаны другие настройки биддера
+				 	+ (object)
+						+ id: (number) - ID группы объявлений
+						+ name: (string) - Название группы объявлений
+                + keywords: (array, fixed) - Ключевые фразы кампании, для которых указаны другие настройки биддера
+					+ (object)
+						+ id: (number) - ID ключевой фразы
+						+ ad_group_id: (number) - ID группы объявлений, к которой принадлежит ключевая фраза
+						+ keyword: (string) - Текст ключевой фразы
 			+ hit: (number) - Показатель попадания ставки в процентах, рассчитанный при последнем срабатывании биддера для этой кампании.
 
 ### Обновить настройки биддера [PUT/campaigns/{id}/bids]
@@ -624,9 +639,7 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 + Request
     + Attributes
 		+ data (array,fixed)
-			+ (Bid Options)
-				+ day_num: (number,required) - Порядковый номер дня недели от 0 (понедельник) до 6, для которого должны применяться настройки
-				+ hour_num: (number,required) - Порядковый номер часа от 0 до 23, для которого должны применяться настройки
+			+ (Bid Option)
 
 + Response 200 (application/json)
 
@@ -716,7 +729,15 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
     + id: (number, required) - ID группы объявлений
 
 + Response 200 (application/json)
-    + Attributes (Bid Options)
+    + Attributes
+		+ data
+			+ options: (array, fixed)
+				+ (Bid Option)
+			+ overrides: - список ID дочерних элементов, которые переопределяют настройки кампании
+				+ keywords: (array, fixed) - Ключевые фразы кампании, для которых указаны другие настройки биддера
+					+ (object)
+						+ id: (number) - ID ключевой фразы
+						+ keyword: (string) - Текст ключевой фразы
 
 ### Обновить настройки биддера [PUT/ad_groups/{id}/bids]
 
@@ -724,7 +745,7 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
     + id: (number, required) - ID группы объявлений
 
 + Request
-    + Attributes (Bid Options)
+    + Attributes (Bid Option)
 
 + Response 200 (application/json)
 
@@ -789,14 +810,17 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
     + id: (number, required) - ID ключевой фразы
 
 + Response 200 (application/json)
-    + Attributes (Bid Options)
+    + Attributes
+		+ data
+			+ options: (array, fixed)
+				+ (Bid Option)
 
 ### Обновить настройки биддера [PUT/keywords/{id}/bids]
 
 + Parameters
     + id: (number, required) - ID ключевой фразы
 
-+ Attributes (Bid Options)
++ Attributes (Bid Option)
 
 + Response 200 (application/json)
 
