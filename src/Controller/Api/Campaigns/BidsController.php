@@ -98,7 +98,7 @@ class BidsController extends \App\Controller\Api\ApiController
             $option->increment = $item['increment'];
             $option->day_num = $item['day_num'];
             $option->hour_num = $item['hour_num'];
-            $option->status = @(int)$item['active'];
+            $option->status = @$item['active'];
 
             $BidOptions->save($option);
         }
