@@ -32,6 +32,8 @@ class UpdateDirectBidsShell extends \Cake\Console\Shell
 		$this->globalOptions = $this->BidOptions->find('all', [
 				'conditions' => [
 					'BidOptions.type IN' => ['keyword', 'adgroup'],
+					'BidOptions.day_num' => (date('w')==0 ? 6 : date('w')-1),
+					'BidOptions.hour_num' => date('G'),
 					'BidOptions.status' => 1,
 				],
 				'contain' => [
