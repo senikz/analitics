@@ -20,7 +20,7 @@ class BidderController extends ApiController
 
         $this->sendData([
 			'period' => $periodOption->value,
-			'last_run' => $lastTimeOption->value,
+			'last_run' => date(DATE_ATOM, strtotime($lastTimeOption->value)),
 		]);
     }
 

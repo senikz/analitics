@@ -52,7 +52,7 @@ class StatisticsController extends \App\Controller\Api\ApiController
 		$keywordsList = $this->Keywords->find('list', ['keyField' => 'id', 'valueField' => 'rel_id'])->toArray();
 
 		$calls = $this->SiteCalls->findCountBy([
-				'utm_campaign' => $campaign->rel_id,
+				'utm_campaign LIKE' => '%' . $campaign->rel_id,
 				'utm_term IN' => array_values($keywordsList),
 				'time >=' => $fields['from'] . ' 00:00:00',
 				'time <=' => $fields['to'] . ' 23:59:59',

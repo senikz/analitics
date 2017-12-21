@@ -41,7 +41,7 @@ class StatisticsController extends \App\Controller\Api\ApiController
 				->first();
 
 			$calls = $CallsTable->findCountBy([
-					'utm_campaign' => $campaign->rel_id,
+					'utm_campaign LIKE' => '%' . $campaign->rel_id,
 					'time >=' => $fields['from'] . ' 00:00:00',
 					'time <=' => $fields['to'] . ' 23:59:59',
 				]);
@@ -64,54 +64,6 @@ class StatisticsController extends \App\Controller\Api\ApiController
 
 		$this->sendError($this->Validator->getLastError());
     }
-
-    /*public function summary()
-    {
-		if($this->Validator->required($this->request->query, ['from', 'to'])) {
-
-			$query = $this->request->query;
-
-			$interval = date_diff(new \DateTime($query['from']), new \DateTime($query['to']));
-
-			if($interval->format('%d')) {
-				$CampaignStatistics = TableRegistry::get('CampaignStatisticsDaily');
-				$timeSelect = [
-					'date >=' => $query['from'],
-					'date <=' => $query['to']
-				];
-			} else {
-				$CampaignStatistics = TableRegistry::get('CampaignStatisticsHourly');
-				$timeSelect = [
-					'time >=' => $query['from'] . ' 00:00:00',
-					'time <=' => $query['to'] . ' 23:59:59'
-				];
-			}
-
-			$query = $CampaignStatistics->find('all', [
-				'conditions' => array_merge([
-					'campaign_id' => $this->request->getParam('campaign_id'),
-				], $timeSelect),
-			]);
-
-			$statistics = $query
-    			->select([
-					'total_clicks' => $query->func()->sum('clicks'),
-					'total_cost' => $query->func()->sum('cost'),
-					'total_views' => $query->func()->sum('views'),
-				])
-				->first();
-
-			if($statistics) {
-				$this->sendData([
-					'clicks' => $statistics->total_clicks,
-					'views' => $statistics->total_views,
-					'cost' => sprintf('%.2f', $statistics->total_cost),
-				]);
-			}
-		}
-
-		$this->sendError($this->Validator->getLastError());
-    }*/
 
 	public function details() {
 

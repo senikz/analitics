@@ -49,7 +49,7 @@ class StatisticsController extends \App\Controller\Api\ApiController
             ->first();
 
 		$calls = $this->SiteCalls->findCountBy([
-				'utm_campaign' => $campaign->rel_id,
+				'utm_campaign LIKE' => '%' . $campaign->rel_id,
 				'utm_term' => $keyword->keyword,
 				'time >=' => $fields['from'] . ' 00:00:00',
 				'time <=' => $fields['to'] . ' 23:59:59',
