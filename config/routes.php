@@ -227,7 +227,8 @@ Router::prefix('api', function ($routes) {
 
 	$routes->resources('Bidder');
 
-    $routes->fallbacks(DashedRoute::class);
+    $routes->fallbacks(InflectedRoute::class);
+    //$routes->fallbacks(DashedRoute::class);
 });
 
 /**
