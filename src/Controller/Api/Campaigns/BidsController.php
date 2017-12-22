@@ -104,4 +104,17 @@ class BidsController extends \App\Controller\Api\ApiController
         }
         $this->sendData([]);
     }
+
+    public function delete()
+    {
+        $campaignId = $this->request->getParam('campaign_id');
+
+        $BidOptions = TableRegistry::get('BidOptions');
+        $BidOptions->deleteAll([
+            'type' => 'campaign',
+            'rel_id' => $campaignId,
+        ]);
+
+        $this->sendData([]);
+    }
 }

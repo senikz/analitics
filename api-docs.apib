@@ -87,6 +87,10 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 ### История изменений
 
+`1.5`
+
+* Добавлены методы удаления настроек биддера для кампаний, групп объявлений и ключевых фраз.
+
 `1.4`
 
 * Изменены методы получения и установки настроек биддера для [кампаний](#кампании-get-4), [групп объявлений](#группы-объявлений-get-3) и [ключевых фраз](#ключевые-фразы-get-2).
@@ -680,6 +684,14 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 + Response 200 (application/json)
 
+### Удалить настройки биддера [DELETE/campaigns/{id}/bids]
+
++ Parameters
+    + id: (number, required) - ID кампании
+
++ Response 200 (application/json)
+
+
 
 
 
@@ -761,6 +773,13 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
     + Attributes
 		+ data (Ad Group Statistics)
 
+### Удалить настройки биддера [DELETE/ad_groups/{id}/bids]
+
++ Parameters
+    + id: (number, required) - ID группы объявлений
+
++ Response 200 (application/json)
+
 
 
 
@@ -836,6 +855,12 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
     + Attributes
 		+ data (Keyword Statistics)
 
+### Удалить настройки биддера [DELETE/keywords/{id}/bids]
+
++ Parameters
+    + id: (number, required) - ID ключевой фразы
+
++ Response 200 (application/json)
 
 
 

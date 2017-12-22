@@ -76,156 +76,166 @@ Router::scope('/', function (RouteBuilder $routes) {
 });
 
 Router::prefix('api', function ($routes) {
+    $routes->resources('Users');
 
-	$routes->resources('Users');
-
-	$statisticsMap = [
-		'summary' => [
-			'action' => 'summary',
-			'method' => 'GET',
-			'path' => '/summary'
-		],
-		'details' => [
-			'action' => 'details',
-			'method' => 'GET',
-			'path' => '/details'
-		]
-	];
+    $statisticsMap = [
+        'summary' => [
+            'action' => 'summary',
+            'method' => 'GET',
+            'path' => '/summary'
+        ],
+        'details' => [
+            'action' => 'details',
+            'method' => 'GET',
+            'path' => '/details'
+        ]
+    ];
 
     $routes->resources('Projects', function ($routes) use ($statisticsMap) {
         $routes->resources('Sites', [
-			'prefix' => 'projects',
-			'only' => ['index']
-		]);
+            'prefix' => 'projects',
+            'only' => ['index']
+        ]);
         $routes->resources('Campaigns', [
-			'prefix' => 'projects',
-			'only' => ['index']
-		]);
+            'prefix' => 'projects',
+            'only' => ['index']
+        ]);
         $routes->resources('Leads', [
-			'prefix' => 'projects',
-			'only' => ['index']
-		]);
+            'prefix' => 'projects',
+            'only' => ['index']
+        ]);
         $routes->resources('Orders', [
-			'prefix' => 'projects',
-			'map' => [
-				[
-					'action' => 'cost',
-					'method' => 'GET',
-					'path' => '/cost',
-				],
-			],
-		]);
-		$routes->resources('Statistics', [
-			'prefix' => 'projects',
-			'map' => $statisticsMap,
-		]);
+            'prefix' => 'projects',
+            'map' => [
+                [
+                    'action' => 'cost',
+                    'method' => 'GET',
+                    'path' => '/cost',
+                ],
+            ],
+        ]);
+        $routes->resources('Statistics', [
+            'prefix' => 'projects',
+            'map' => $statisticsMap,
+        ]);
     });
 
     $routes->resources('Sites', function ($routes) use ($statisticsMap) {
         $routes->resources('Campaigns', [
-			'prefix' => 'sites',
-			'only' => ['index']
-		]);
+            'prefix' => 'sites',
+            'only' => ['index']
+        ]);
         $routes->resources('Leads', [
-			'prefix' => 'sites',
-			'only' => ['index']
-		]);
+            'prefix' => 'sites',
+            'only' => ['index']
+        ]);
         $routes->resources('Statistics', [
-			'prefix' => 'sites',
-			'only' => null,
-			'map' => array_merge($statisticsMap, [
-				[
-					'action' => 'edit',
-					'method' => 'PUT',
-					'path' => '/',
-				]
-			]),
-		]);
+            'prefix' => 'sites',
+            'only' => null,
+            'map' => array_merge($statisticsMap, [
+                [
+                    'action' => 'edit',
+                    'method' => 'PUT',
+                    'path' => '/',
+                ]
+            ]),
+        ]);
         $routes->resources('Orders', [
-			'prefix' => 'sites',
-		]);
+            'prefix' => 'sites',
+        ]);
         $routes->resources('Costs', [
-			'prefix' => 'sites',
-		]);
+            'prefix' => 'sites',
+        ]);
         $routes->resources('Utm', [
-			'prefix' => 'sites',
-			'map' => [
-				[
-					'action' => 'edit',
-					'method' => 'PUT',
-					'path' => '/',
-				]
-			],
-		]);
+            'prefix' => 'sites',
+            'map' => [
+                [
+                    'action' => 'edit',
+                    'method' => 'PUT',
+                    'path' => '/',
+                ]
+            ],
+        ]);
     });
 
     $routes->resources('Campaigns', function ($routes) use ($statisticsMap) {
-
-		$routes->connect('/sync', ['controller' => 'campaigns', 'action' => 'sync']);
-		$routes->connect('/keywords', ['controller' => 'campaigns', 'action' => 'keywords']);
+        $routes->connect('/sync', ['controller' => 'campaigns', 'action' => 'sync']);
+        $routes->connect('/keywords', ['controller' => 'campaigns', 'action' => 'keywords']);
 
         $routes->resources('Statistics', [
-			'prefix' => 'campaigns',
-			//'only' => false,
-			'map' => array_merge($statisticsMap, [
-		        'loadCostFromXml' => [
-		            'action' => 'loadCostFromXml',
-		            'method' => 'GET',
-		            'path' => '/load_cost_from_xml'
-		        ],
-		    ]),
-		]);
-		$routes->resources('Bids', [
-			'prefix' => 'campaigns',
-			'map' => [
-				[
-					'action' => 'edit',
-					'method' => 'PUT',
-					'path' => '/',
-				]
-			],
-		]);
-		$routes->resources('AdGroups', [
-			'prefix' => 'campaigns',
-		]);
+            'prefix' => 'campaigns',
+            //'only' => false,
+            'map' => array_merge($statisticsMap, [
+                'loadCostFromXml' => [
+                    'action' => 'loadCostFromXml',
+                    'method' => 'GET',
+                    'path' => '/load_cost_from_xml'
+                ],
+            ]),
+        ]);
+        $routes->resources('Bids', [
+            'prefix' => 'campaigns',
+            'map' => [
+                [
+                    'action' => 'edit',
+                    'method' => 'PUT',
+                    'path' => '/',
+                ], [
+                    'action' => 'delete',
+                    'method' => 'DELETE',
+                    'path' => '/',
+                ],
+            ],
+        ]);
+        $routes->resources('AdGroups', [
+            'prefix' => 'campaigns',
+        ]);
     });
 
-	$routes->resources('AdGroups', function ($routes) use ($statisticsMap) {
-		$routes->connect('/keywords', ['controller' => 'ad-groups', 'action' => 'keywords']);
-		$routes->resources('Bids', [
-			'prefix' => 'ad_groups',
-			'map' => [
-				[
-					'action' => 'edit',
-					'method' => 'PUT',
-					'path' => '/',
-				]
-			],
-		]);
-		$routes->resources('Statistics', [
-			'prefix' => 'ad_groups',
-			'map' => $statisticsMap,
-		]);
-	});
+    $routes->resources('AdGroups', function ($routes) use ($statisticsMap) {
+        $routes->connect('/keywords', ['controller' => 'ad-groups', 'action' => 'keywords']);
+        $routes->resources('Bids', [
+            'prefix' => 'ad_groups',
+            'map' => [
+                [
+                    'action' => 'edit',
+                    'method' => 'PUT',
+                    'path' => '/',
+                ], [
+                    'action' => 'delete',
+                    'method' => 'DELETE',
+                    'path' => '/',
+                ],
+            ],
+        ]);
+        $routes->resources('Statistics', [
+            'prefix' => 'ad_groups',
+            'map' => $statisticsMap,
+        ]);
+    });
 
-	$routes->resources('Keywords', function ($routes) use ($statisticsMap) {
-		$routes->resources('Bids', [
-			'prefix' => 'keywords',
-			'map' => [
-				[
-					'action' => 'edit',
-					'method' => 'PUT',
-					'path' => '/',
-				]
-			],
-		]);
-		$routes->resources('Statistics', [
-			'prefix' => 'keywords',
-			'map' => $statisticsMap,
-		]);
-	});
+    $routes->resources('Keywords', function ($routes) use ($statisticsMap) {
+        $routes->resources('Bids', [
+            'prefix' => 'keywords',
+            'map' => [
+                [
+                    'action' => 'edit',
+                    'method' => 'PUT',
+                    'path' => '/',
+                ], [
+                    'action' => 'delete',
+                    'method' => 'DELETE',
+                    'path' => '/',
+                ],
+            ],
+        ]);
+        $routes->resources('Statistics', [
+            'prefix' => 'keywords',
+            'map' => $statisticsMap,
+        ]);
+    });
 
-	$routes->resources('Bidder');
+    $routes->resources('Bidder');
 
     $routes->fallbacks(InflectedRoute::class);
     //$routes->fallbacks(DashedRoute::class);

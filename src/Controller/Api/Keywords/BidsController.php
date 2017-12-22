@@ -67,4 +67,15 @@ class BidsController extends \App\Controller\Api\ApiController
         }
         $this->sendData([]);
     }
+
+    public function delete()
+    {
+        $keywordId = $this->request->getParam('keyword_id');
+        $this->BidOptions->deleteAll([
+            'type' => 'keyword',
+            'rel_id' => $keywordId,
+        ]);
+
+        $this->sendData([]);
+    }
 }

@@ -60,7 +60,7 @@ class BidsController extends \App\Controller\Api\ApiController
         $adGroupId = $this->request->getParam('ad_group_id');
 
         $this->BidOptions->deleteAll([
-            'type' => 'ad_group',
+            'type' => 'adgroup',
             'rel_id' => $adGroupId,
         ]);
 
@@ -71,7 +71,7 @@ class BidsController extends \App\Controller\Api\ApiController
 
             $option = $this->BidOptions->newEntity();
 
-            $option->type = 'ad_group';
+            $option->type = 'adgroup';
             $option->rel_id = $adGroupId;
             $option->max = $item['max'];
             $option->position = $item['position'];
@@ -82,6 +82,18 @@ class BidsController extends \App\Controller\Api\ApiController
 
             $this->BidOptions->save($option);
         }
+        $this->sendData([]);
+    }
+
+    public function delete()
+    {
+        $adGroupId = $this->request->getParam('ad_group_id');
+
+        $this->BidOptions->deleteAll([
+            'type' => 'adgroup',
+            'rel_id' => $adGroupId,
+        ]);
+
         $this->sendData([]);
     }
 }
