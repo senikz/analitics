@@ -89,7 +89,17 @@ class UpdateDirectStatisticsDetalizedShell extends Shell
                 if (empty($adGroup)) {
                     continue;
                 }
-                $record = $this->AdGroupStatisticsDaily->newEntity();
+
+				$record = $this->AdGroupStatisticsDaily->find('all')
+					->where([
+						'ad_group_id' => $adGroup->id,
+						'date' => $date,
+					])
+					->first();
+
+				if(empty($record)) {
+					$record = $this->AdGroupStatisticsDaily->newEntity();
+				}
 
                 $record->ad_group = $adGroup;
                 $record->cost = $gStat['cost'];
@@ -105,7 +115,17 @@ class UpdateDirectStatisticsDetalizedShell extends Shell
                 if (empty($keyword)) {
                     continue;
                 }
-                $record = $this->KeywordStatisticsDaily->newEntity();
+
+				$record = $this->KeywordStatisticsDaily->find('all')
+					->where([
+						'keyword_id' => $keyword->id,
+						'date' => $date,
+					])
+					->first();
+
+				if(empty($record)) {
+					$record = $this->KeywordStatisticsDaily->newEntity();
+				}
 
                 $record->keyword = $keyword;
                 $record->cost = $kStat['cost'];
