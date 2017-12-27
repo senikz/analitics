@@ -30,7 +30,7 @@ class AggregateStatisticsShell extends \Cake\Console\Shell
 
 			if($details = $call->getContentDetails()) {
 				if(!empty($details['phrase_id'])) {
-					$keyword = $this->Keywords->fing('all')->where(['rel_id' => $details['phrase_id']])->first()
+					$keyword = $this->Keywords->fing('all')->where(['rel_id' => $details['phrase_id']])->first();
 					if(!empty($keyword)) {
 						$call->keyword_id = $keyword->id;
 						$call->ad_group_id = $keyword->ad_group_id;
