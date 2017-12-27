@@ -37,9 +37,7 @@ class AggregateStatisticsShell extends \Cake\Console\Shell
         $from = $date . ' 00:00:00';
         $to = $date . ' 23:59:59';
 
-        $adGroups = $this->AdGroups->find('all')
-            ->where(['id' => 2780])
-        ->all();
+        $adGroups = $this->AdGroups->find('all')->all();
         foreach ($adGroups as $adGroup) {
             $record = $this->AdGroupStatisticsDaily->find('all')
                 ->where([
