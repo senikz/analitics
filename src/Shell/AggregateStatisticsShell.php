@@ -22,9 +22,14 @@ class AggregateStatisticsShell extends \Cake\Console\Shell
 		$this->SiteEmails = TableRegistry::get('SiteEmails');
     }
 
-    public function today()
+    public function yesterday()
     {
 		$this->forDate(date('Y-m-d'));
+    }
+
+    public function today()
+    {
+		$this->forDate(date('Y-m-d', strtotime('-1 day')));
     }
 
 	private function forDate($date)
@@ -61,7 +66,7 @@ class AggregateStatisticsShell extends \Cake\Console\Shell
 			$record->calls = $this->SiteCalls->findCountBy($conditions);
 			$record->emails = $this->SiteCalls->findCountBy($conditions);
 
-			$this->AdGroupStatisticsDaily->save($record);
+			$this->AdGroupStatisticsDaily->saveStatistics($record);
 		}
 	}
 

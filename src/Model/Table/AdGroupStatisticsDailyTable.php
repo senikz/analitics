@@ -90,4 +90,11 @@ class AdGroupStatisticsDailyTable extends Table
 
         return $rules;
     }
+
+	public function saveStatistics($record)
+	{
+		if($record->cost || $record->views || $record->calls || $record->emails || $record->clicks) {
+			$this->save($record);
+		}
+	}
 }
