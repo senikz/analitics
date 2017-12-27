@@ -21,6 +21,7 @@ use Cake\Validation\Validator;
  */
 class AdGroupStatisticsDailyTable extends Table
 {
+	use \App\Model\StatisticsTableHelper;
 
     /**
      * Initialize method
@@ -90,11 +91,4 @@ class AdGroupStatisticsDailyTable extends Table
 
         return $rules;
     }
-
-	public function saveStatistics($record)
-	{
-		if($record->cost || $record->views || $record->calls || $record->emails || $record->clicks) {
-			$this->save($record);
-		}
-	}
 }

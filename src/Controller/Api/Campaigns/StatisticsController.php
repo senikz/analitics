@@ -9,60 +9,23 @@ class StatisticsController extends \App\Controller\Api\ApiController
 	public function initialize() {
 		parent::initialize();
 		$this->loadComponent('Validator');
-		//$this->loadComponent('Cewi/Excel.Import');
+		$this->loadModel('CampaignStatisticsDaily');
 	}
 
     public function summary()
     {
-		if($this->Validator->required($this->request->query, ['from', 'to'])) {
+		$fields = $this->request->query;
+		$campaignId = $this->request->getParam('campaign_id');
 
-			$fields = $this->request->query;
-
-			$CampaignStatistics = TableRegistry::get('CampaignStatisticsDaily');
-			$CampaignsTable = TableRegistry::get('Campaigns');
-			$CallsTable = TableRegistry::get('SiteCalls');
-			$EmailsTable = TableRegistry::get('SiteEmails');
-
-			$campaign = $CampaignsTable->get($this->request->getParam('campaign_id'));
-
-			$query = $CampaignStatistics->find('all', [
-				'conditions' => [
-					'campaign_id' => $campaign->id,
-					'date >=' => $fields['from'],
-					'date <=' => $fields['to']
-				],
-			]);
-			$statistics = $query
-    			->select([
-					'total_clicks' => $query->func()->sum('clicks'),
-					'total_cost' => $query->func()->sum('cost'),
-					'total_views' => $query->func()->sum('views'),
-				])
-				->first();
-
-			$calls = $CallsTable->findCountBy([
-					'utm_campaign LIKE' => '%' . $campaign->rel_id,
-					'time >=' => $fields['from'] . ' 00:00:00',
-					'time <=' => $fields['to'] . ' 23:59:59',
-				]);
-			$emails = $EmailsTable->findCountBy([
-					'utm_campaign LIKE' => '%' . $campaign->rel_id,
-					'time >=' => $fields['from'] . ' 00:00:00',
-					'time <=' => $fields['to'] . ' 23:59:59',
-				]);
-
-			if($statistics) {
-				$this->sendData([
-					'clicks' => $statistics->total_clicks,
-					'views' => $statistics->total_views,
-					'cost' => sprintf('%.2f', $statistics->total_cost),
-					'calls' => $calls,
-					'emails' => $emails,
-				]);
-			}
+		if (!$this->Validator->required($fields, ['from', 'to'])) {
+			$this->sendError($this->Validator->getLastError());
 		}
 
-		$this->sendError($this->Validator->getLastError());
+		$this->sendData($this->CampaignStatisticsDaily->calcTotal([
+			'campaign_id' => $campaignId,
+			'date >=' => $fields['from'],
+			'date <=' => $fields['to'],
+		]));
     }
 
 	public function details() {
