@@ -32,6 +32,16 @@ class AggregateStatisticsShell extends \Cake\Console\Shell
         $this->forDate(date('Y-m-d', strtotime('-1 day')));
     }
 
+    public function month()
+    {
+        $startDate = date('Y-m-d', strtotime('-1 month'));
+        $today = date('Y-m-d');
+        while ($startDate < $today) {
+            $this->forDate($startDate);
+            $startDate = date('Y-m-d', strtotime($startDate . ' +1 day'));
+        }
+    }
+
     private function forDate($date)
     {
         $from = $date . ' 00:00:00';
