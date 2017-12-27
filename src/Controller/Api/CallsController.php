@@ -65,6 +65,7 @@ class CallsController extends ApiController
 				if(!empty($keyword)) {
 					$call->keyword_id = $keyword->id;
 					$call->ad_group_id = $keyword->ad_group_id;
+					$call->campaign_id = $keyword->campaign_id;
 				}
 			}
 		}

@@ -16,6 +16,7 @@ class EmailsController extends ApiController
 		}
 
 		$Sites = TableRegistry::get('Sites');
+		$tableKeywords = TableRegistry::get('Keywords');
 		$SiteEmails = TableRegistry::get('SiteEmails');
 
 		if(!$site = $Sites->find('all', ['conditions' => ['domain' => $fields['site']]])->first()) {
@@ -51,6 +52,17 @@ class EmailsController extends ApiController
 		}
 
 		$email->details = json_encode($details);
+
+		if($details = $email->getContentDetails()) {
+			if(!empty($details['phrase_id'])) {
+				$keyword = $tableKeywords->find('all')->where(['rel_id' => $details['phrase_id']])->first();
+				if(!empty($keyword)) {
+					$email->keyword_id = $keyword->id;
+					$email->ad_group_id = $keyword->ad_group_id;
+					$email->campaign_id = $keyword->campaign_id;
+				}
+			}
+		}
 
 		$SiteEmails->save($email);
 	}
