@@ -24,7 +24,7 @@ class AggregateStatisticsShell extends \Cake\Console\Shell
 
     public function yesterday()
     {
-		$calls = $this->SiteCalls->find('all')->all();
+		/*$calls = $this->SiteCalls->find('all')->all();
 
 		foreach($calls as $call) {
 
@@ -39,6 +39,21 @@ class AggregateStatisticsShell extends \Cake\Console\Shell
 				$this->SiteCalls->save($call);
 			}
 
+		}*/
+
+		$calls = $this->SiteCalls->find('all')->all();
+
+		foreach($calls as $call) {
+
+			if(empty($call->keyword_id) || $call->keyword_id == 0) {
+				continue;
+			}
+
+			$keyword = $this->Keywords->get($call->keyword_id);
+
+			$call->campaign_id = $keyword->campaign_id;
+
+			$this->SiteCalls->save($call);
 		}
 
 		return;
