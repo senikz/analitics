@@ -61,7 +61,7 @@ class AggregateLeadsStatisticsShell extends \Cake\Console\Shell
 
 		$src = [
 			[
-				'table' => $this->AdGroup,
+				'table' => $this->AdGroups,
 				'statistics' => $this->AdGroupStatisticsDaily,
 				'key' => 'ad_group_id',
 			],
@@ -89,7 +89,7 @@ class AggregateLeadsStatisticsShell extends \Cake\Console\Shell
 				$conditions[$table['key']] = $item->id;
 
 	            $record->calls = $this->SiteCalls->findCountBy($conditions);
-	            $record->emails = $this->SiteCalls->findCountBy($conditions);
+	            $record->emails = $this->SiteEmails->findCountBy($conditions);
 
 	            $table['statistics']->saveStatistics($record);
 	        }
