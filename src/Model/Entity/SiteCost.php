@@ -30,25 +30,4 @@ class SiteCost extends Entity
         '*' => true,
         'id' => false
     ];
-
-	public function getContentDetails()
-	{
-
-		if(empty($this->utm_content)) {
-			return [];
-		}
-
-		$key = null;
-		$details = [];
-
-		foreach (explode('||', $this->utm_content) as $k => $param) {
-			if ($k%2) {
-				$details[$key] = $param;
-			} else {
-				$key = $param;
-			}
-		}
-
-		return $details;
-	}
 }
