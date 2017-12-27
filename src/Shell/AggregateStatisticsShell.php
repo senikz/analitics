@@ -53,8 +53,12 @@ class AggregateStatisticsShell extends \Cake\Console\Shell
 				$record->date = $date;
 			}
 
-			$campaign = $this->Campaigns->get($adGroup->campaign_id);
-			$keywordsList = $this->Keywords->find('list', ['keyField' => 'id', 'valueField' => 'rel_id'])->where(['campaign_id' => $campaign->id,])->toArray();
+			$campaign = $this->Campaigns->find('all')->where(['id' => $adGroup->campaign_id])->first();
+			$keywordsList = $this->Keywords->find('list', ['keyField' => 'id', 'valueField' => 'rel_id'])->where(['campaign_id' => $adGroup->campaign_id,])->toArray();
+
+			if(empty($campaign) || empty($keywordsList)) {
+				continue;
+			}
 
 			$conditions = [
 				'utm_campaign LIKE' => '%' . $campaign->rel_id . '%',
