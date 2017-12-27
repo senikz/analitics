@@ -4,16 +4,18 @@ namespace App\Shell;
 use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
 
-class AggregateStatisticsShell extends \Cake\Console\Shell
+class AggregateLeadsStatisticsShell extends \Cake\Console\Shell
 {
     public function initialize()
     {
         parent::initialize();
 
         $this->Options = TableRegistry::get('Options');
-        $this->Campaigns = TableRegistry::get('Campaigns');
+
         $this->Keywords = TableRegistry::get('Keywords');
 
+		$this->Campaigns = TableRegistry::get('Campaigns');
+		$this->CampaignStatisticsDaily = TableRegistry::get('CampaignStatisticsDaily');
 
         $this->AdGroups = TableRegistry::get('AdGroups');
         $this->AdGroupStatisticsDaily = TableRegistry::get('AdGroupStatisticsDaily');
@@ -57,31 +59,41 @@ class AggregateStatisticsShell extends \Cake\Console\Shell
         $from = $date . ' 00:00:00';
         $to = $date . ' 23:59:59';
 
-        $adGroups = $this->AdGroups->find('all')->all();
-        foreach ($adGroups as $adGroup) {
-            $record = $this->AdGroupStatisticsDaily->find('all')
-                ->where([
-                    'ad_group_id' => $adGroup->id,
-                    'date' => $date,
-                ])
-                ->first();
+		$src = [
+			[
+				'table' => $this->AdGroup,
+				'statistics' => $this->AdGroupStatisticsDaily,
+				'key' => 'ad_group_id',
+			],
+		];
 
-            if (empty($record)) {
-                $record = $this->AdGroupStatisticsDaily->newEntity();
-                $record->ad_group_id = $adGroup->id;
-                $record->date = $date;
-            }
+		foreach($src as $table) {
+			$items = $table['table']->find('all')->all();
+	        foreach ($items as $item) {
 
-            $conditions = [
-                'ad_group_id' => $adGroup->id,
-                'time >=' => $from,
-                'time <=' => $to,
-            ];
+				$recordWhere = ['date' => $date];
+				$recordWhere[$table['key']] = $item->id;
 
-            $record->calls = $this->SiteCalls->findCountBy($conditions);
-            $record->emails = $this->SiteCalls->findCountBy($conditions);
+				$record = $table['statistics']->find('all')->where($recordWhere)->first();
 
-            $this->AdGroupStatisticsDaily->saveStatistics($record);
-        }
+	            if (empty($record)) {
+	                $record = $table['statistics']->newEntity();
+	                $record->{$table['key']} = $item->id;
+	                $record->date = $date;
+	            }
+
+	            $conditions = [
+	                'time >=' => $from,
+	                'time <=' => $to,
+	            ];
+				$conditions[$table['key']] = $item->id;
+
+	            $record->calls = $this->SiteCalls->findCountBy($conditions);
+	            $record->emails = $this->SiteCalls->findCountBy($conditions);
+
+	            $table['statistics']->saveStatistics($record);
+	        }
+		}
+
     }
 }
