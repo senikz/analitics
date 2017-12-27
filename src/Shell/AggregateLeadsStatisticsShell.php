@@ -13,6 +13,7 @@ class AggregateLeadsStatisticsShell extends \Cake\Console\Shell
         $this->Options = TableRegistry::get('Options');
 
         $this->Keywords = TableRegistry::get('Keywords');
+		$this->KeywordStatisticsDaily = TableRegistry::get('KeywordStatisticsDaily');
 
 		$this->Campaigns = TableRegistry::get('Campaigns');
 		$this->CampaignStatisticsDaily = TableRegistry::get('CampaignStatisticsDaily');
@@ -64,6 +65,16 @@ class AggregateLeadsStatisticsShell extends \Cake\Console\Shell
 				'table' => $this->AdGroups,
 				'statistics' => $this->AdGroupStatisticsDaily,
 				'key' => 'ad_group_id',
+			],
+			[
+				'table' => $this->Campaigns,
+				'statistics' => $this->CampaignStatisticsDaily,
+				'key' => 'campaign_id',
+			],
+			[
+				'table' => $this->Keywords,
+				'statistics' => $this->KeywordStatisticsDaily,
+				'key' => 'keyword_id',
 			],
 		];
 
