@@ -61,7 +61,7 @@ class CallsController extends ApiController
 
 		if($details = $call->getContentDetails()) {
 			if(!empty($details['phrase_id'])) {
-				$keyword = $tableKeywords->fing('all')->where(['rel_id' => $details['phrase_id']])->first();
+				$keyword = $tableKeywords->find('all')->where(['rel_id' => $details['phrase_id']])->first();
 				if(!empty($keyword)) {
 					$call->keyword_id = $keyword->id;
 					$call->ad_group_id = $keyword->ad_group_id;
