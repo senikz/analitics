@@ -24,6 +24,24 @@ class AggregateStatisticsShell extends \Cake\Console\Shell
 
     public function yesterday()
     {
+		$calls = $this->SiteCalls->find('all')->all();
+
+		foreach($calls as $call) {
+
+			if($details = $call->getContentDetails()) {
+				if(!empty($details['phrase_id'])) {
+					$keyword = $this->Keywords->fing('all')->where(['rel_id' => $details['phrase_id']])->first()
+					if(!empty($keyword)) {
+						$call->keyword_id = $keyword->id;
+						$call->ad_group_id = $keyword->ad_group_id;
+					}
+				}
+				$this->SiteCalls->save($call);
+			}
+
+		}
+
+		return;
 		$this->forDate(date('Y-m-d'));
     }
 
@@ -37,7 +55,9 @@ class AggregateStatisticsShell extends \Cake\Console\Shell
 		$from = $date . ' 00:00:00';
 		$to = $date . ' 23:59:59';
 
-		$adGroups = $this->AdGroups->find('all')->all();
+		$adGroups = $this->AdGroups->find('all')
+			->where(['id' => 2780])
+		->all();
 		foreach($adGroups as $adGroup) {
 
 			$record = $this->AdGroupStatisticsDaily->find('all')
@@ -54,21 +74,28 @@ class AggregateStatisticsShell extends \Cake\Console\Shell
 			}
 
 			$campaign = $this->Campaigns->find('all')->where(['Campaigns.id' => $adGroup->campaign_id])->contain(false)->first();
-			$keywordsList = $this->Keywords->find('list', ['keyField' => 'id', 'valueField' => 'rel_id'])->where(['campaign_id' => $adGroup->campaign_id,])->toArray();
+			$keywords = $this->Keywords->find('all')->select(['rel_id', 'keyword'])->where(['campaign_id' => $adGroup->campaign_id,])->toArray();
 
-			if(empty($campaign) || empty($keywordsList)) {
+			if(empty($campaign) || empty($keywords)) {
 				continue;
 			}
 
-			$conditions = [
+			$record->calls = $this->SiteCalls->findCountBy([
 				'utm_campaign LIKE' => '%' . $campaign->rel_id . '%',
-				'utm_term IN' => array_values($keywordsList),
+				'utm_term IN' => array_map(function($item) {
+					return $item->keyword;
+				}, $keywords),
 				'time >=' => $from,
 				'time <=' => $to,
-			];
-
-			$record->calls = $this->SiteCalls->findCountBy($conditions);
-			$record->emails = $this->SiteCalls->findCountBy($conditions);
+			]);
+			$record->emails = $this->SiteCalls->findCountBy([
+				'utm_campaign LIKE' => '%' . $campaign->rel_id . '%',
+				'utm_term REGEXP' => join('|', array_map(function($item) {
+					return $item->rel_id;
+				}, $keywords)),
+				'time >=' => $from,
+				'time <=' => $to,
+			]);
 
 			$this->AdGroupStatisticsDaily->saveStatistics($record);
 		}

@@ -15,6 +15,7 @@ class CallsController extends ApiController
 		}
 
 		$Sites = TableRegistry::get('Sites');
+		$tableKeywords = TableRegistry::get('Keywords');
 		$SiteCalls = TableRegistry::get('SiteCalls');
 
 		if(!$site = $Sites->find('all', ['conditions' => ['domain' => $fields['site']]])->first()) {
@@ -55,6 +56,16 @@ class CallsController extends ApiController
 				case 'utm_term' :
 					$call->utm_term = $value;
 					break;
+			}
+		}
+
+		if($details = $call->getContentDetails()) {
+			if(!empty($details['phrase_id'])) {
+				$keyword = $tableKeywords->fing('all')->where(['rel_id' => $details['phrase_id']])->first()
+				if(!empty($keyword)) {
+					$call->keyword_id = $keyword->id;
+					$call->ad_group_id = $keyword->ad_group_id;
+				}
 			}
 		}
 
