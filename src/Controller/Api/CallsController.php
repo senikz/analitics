@@ -60,6 +60,7 @@ class CallsController extends ApiController
 		}
 
 		if($details = $call->getContentDetails()) {
+
 			if(!empty($details['phrase_id'])) {
 				$keyword = $tableKeywords->find('all')->where(['rel_id' => $details['phrase_id']])->first();
 				if(!empty($keyword)) {
@@ -67,6 +68,10 @@ class CallsController extends ApiController
 					$call->ad_group_id = $keyword->ad_group_id;
 					$call->campaign_id = $keyword->campaign_id;
 				}
+			}
+
+			if (!empty($details['position_type']) && !empty($details['position']) && in_array($details['position_type'], ['premium', 'other'])) {
+				$call->position = ($details['position_type'] == 'premium' ? '1' : '2') . $details['position'];
 			}
 		}
 

@@ -39,36 +39,24 @@ class AdGroupsController extends ApiController
 
     public function keywords()
     {
-        $fields = $this->request->query;
-        $groupId = $this->request->getParam('ad_group_id');
+		$fields = $this->request->query;
+		$groupId = $this->request->getParam('ad_group_id');
 
-        $count = empty($fields['count']) ? 5 : $fields['count'];
+		$query = TableRegistry::get('Keywords')->find()
+			->where(['ad_group_id' => $groupId,])
+			->contain(false);
 
-        $result = [];
+		if (!empty($fields['mask'])) {
+			$query->where(['keyword LIKE' => '%' . $fields['mask'] . '%', ]);
+		}
 
-        $keywordsTable = TableRegistry::get('Keywords');
+		$this->paginateQuery($query);
 
-        $conditions = [
-            'ad_group_id' => $groupId,
-        ];
-
-        if (!empty($fields['mask'])) {
-            $conditions['keyword LIKE'] = '%' . $fields['mask'] . '%';
-        }
-
-        $keywords = $keywordsTable->find('all', [
-            'conditions' => $conditions,
-            'contain' => false,
-            'limit' => $count,
-        ]);
-
-        foreach ($keywords as $keyword) {
-            $result[] = [
-                'id' => $keyword->id,
-                'keyword' => $keyword->keyword,
-            ];
-        }
-
-        $this->sendData($result);
+		$this->sendData(array_map(function ($keyword) {
+			return [
+				'id' => $keyword->id,
+				'keyword' => $keyword->keyword,
+			];
+		}, $query->toArray()));
     }
 }

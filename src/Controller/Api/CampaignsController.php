@@ -93,33 +93,21 @@ class CampaignsController extends ApiController
         $fields = $this->request->query;
         $campaignId = $this->request->getParam('campaign_id');
 
-        $count = empty($fields['count']) ? 5 : $fields['count'];
-
-        $result = [];
-
-        $keywordsTable = TableRegistry::get('Keywords');
-
-        $conditions = [
-            'campaign_id' => $campaignId,
-        ];
+        $query = TableRegistry::get('Keywords')->find()
+            ->where(['campaign_id' => $campaignId,])
+            ->contain(false);
 
         if (!empty($fields['mask'])) {
-            $conditions['keyword LIKE'] = '%' . $fields['mask'] . '%';
+            $query->where(['keyword LIKE' => '%' . $fields['mask'] . '%', ]);
         }
 
-        $keywords = $keywordsTable->find('all', [
-            'conditions' => $conditions,
-            'contain' => false,
-            'limit' => $count,
-        ]);
+        $this->paginateQuery($query);
 
-        foreach ($keywords as $keyword) {
-            $result[] = [
+        $this->sendData(array_map(function ($keyword) {
+            return [
                 'id' => $keyword->id,
                 'keyword' => $keyword->keyword,
             ];
-        }
-
-        $this->sendData($result);
+        }, $query->toArray()));
     }
 }

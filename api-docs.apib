@@ -87,6 +87,11 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 ### История изменений
 
+`1.6`
+
+* В методах получения групп объявлений и ключевых фраз кампании добавлена пагинация.
+* В методах получения ключевых фраз группы объявлений добавлена пагинация.
+
 `1.5`
 
 * Добавлены методы удаления настроек биддера для кампаний, групп объявлений и ключевых фраз.
@@ -345,7 +350,7 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 + Response 200 (application/json)
     + Attributes (Project Statistics Details)
 
-### Список заявок [GET/projects/{id}/leads?{from}=&{to}=&{order}=&{reverse}]
+### Список заявок [GET/projects/{id}/leads?{from}=&{to}=&{order}=&{reverse}=&{page}]
 
 + Parameters
     + id: (number, required) - ID проекта
@@ -647,24 +652,25 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 + Response 200 (application/json)
 
-### Список ключевых фраз [GET/campaigns/{id}/keywords?{mask}=&{count}=]
+### Список ключевых фраз [GET/campaigns/{id}/keywords?{mask}=&{page}=&]
 
 Возвращает нужное кол-во ключевых фраз, принадлежащих кампании.
 
 + Parameters
     + id: (number, required) - ID кампании
     + mask: (string, optional) - Маска для подбора ключевых фраз. Если маска не указана, ключевые фразы не будут фильтроваться.
-    + count: (number, optional) - Кол-во результатов. Если не указано, будут возвращены все фразы, связанные с этой группой
+	+ page: '2,50' (string,optional) - Номер страницы списка (начиная от 1) и количество результатов на странице, разделенные запятыми
 
 + Response 200 (application/json)
     + Attributes
         + data (array,fixed)
             + (Keyword)
 
-### Список групп объявлений [GET/campaigns/{id}/ad_groups]
+### Список групп объявлений [GET/campaigns/{id}/ad_groups?{page}=&]
 
 + Parameters
     + id: (number, required) - ID кампании
+    + page: '2,50' (string,optional) - Номер страницы списка (начиная от 1) и количество результатов на странице, разделенные запятыми
 
 + Request
 
@@ -721,14 +727,14 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
     + Attributes
         + (AdGroup)
 
-### Список ключевых фраз [GET/ad_groups/{id}/keywords?{mask}=&{count}=]
+### Список ключевых фраз [GET/ad_groups/{id}/keywords?{mask}=&{page}=&]
 
 Возвращает нужное кол-во ключевых фраз, принадлежащих группе объявлений.
 
 + Parameters
     + id: (number, required) - ID группы объявлений
     + mask: (string, optional) - Маска для подбора ключевых фраз. Если маска не указана, ключевые фразы не будут фильтроваться.
-    + count: (number, optional) - Кол-во результатов. Если не указано, будут возвращены все фразы, связанные с этой группой
+	+ page: '2,50' (string,optional) - Номер страницы списка (начиная от 1) и количество результатов на странице, разделенные запятыми
 
 + Response 200 (application/json)
     + Attributes
