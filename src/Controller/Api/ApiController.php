@@ -113,6 +113,17 @@ class ApiController extends Controller
             $page = [1, 10];
         }
 
-		$query->limit($page[1])->page($page[0]);
+        $query->limit($page[1])->page($page[0]);
+    }
+
+    public function orderQuery(&$query)
+    {
+        $fields = $this->request->query;
+
+        if (!empty($fields['order'])) {
+            $query->order([
+                $fields['order'] => (empty($fields['reverse']) ? 'ASC' : 'DESC')
+            ]);
+        }
     }
 }
