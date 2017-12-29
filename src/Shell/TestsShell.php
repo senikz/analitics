@@ -19,7 +19,7 @@ class TestsShell extends \Cake\Console\Shell
 
     public function main()
     {
-		foreach($this->SiteEmails->find()->all() as $email) {
+		/*foreach($this->SiteEmails->find()->all() as $email) {
 			try {
 				$details = json_decode($email->details, true);
 
@@ -35,6 +35,6 @@ class TestsShell extends \Cake\Console\Shell
 				}
 
 			} catch (\Exception $e) {}
-		}
+		}*/
     }
 }

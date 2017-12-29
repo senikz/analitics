@@ -109,8 +109,10 @@ class ApiController extends Controller
     {
         $page = empty($this->request->query['page']) ? null : explode(',', $this->request->query['page']);
 
-        if (is_array($page) && count($page) == 2) {
-            $query->limit($page[1])->page($page[0]);
+        if (!is_array($page) || count($page) != 2) {
+            $page = [1, 10];
         }
+
+		$query->limit($page[1])->page($page[0]);
     }
 }
