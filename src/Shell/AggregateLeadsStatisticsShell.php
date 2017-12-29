@@ -25,12 +25,12 @@ class AggregateLeadsStatisticsShell extends \Cake\Console\Shell
         $this->SiteEmails = TableRegistry::get('SiteEmails');
     }
 
-    public function yesterday()
+    public function today()
     {
         $this->forDate(date('Y-m-d'));
     }
 
-    public function today()
+    public function yesterday()
     {
         $this->forDate(date('Y-m-d', strtotime('-1 day')));
     }
