@@ -105,7 +105,7 @@ class ApiController extends Controller
         exit;
     }
 
-    protected function paginateQuery(&$query)
+    public function paginateQuery(&$query)
     {
         $page = empty($this->request->query['page']) ? null : explode(',', $this->request->query['page']);
 
