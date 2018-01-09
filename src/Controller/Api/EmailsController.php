@@ -39,6 +39,9 @@ class EmailsController extends ApiController
                     break;
                 case 'utm_campaign':
                     $email->utm_campaign = $value;
+					if(preg_match('/[0-9]{8,20}/', $value, $matches)) {
+						$email->campaign_id = $matches[0];
+					}
                     break;
                 case 'utm_content':
                     $email->utm_content = $value;

@@ -19,22 +19,29 @@ class TestsShell extends \Cake\Console\Shell
 
     public function main()
     {
-		/*foreach($this->SiteEmails->find()->all() as $email) {
-			try {
-				$details = json_decode($email->details, true);
+		foreach($this->SiteEmails->find()->all() as $email) {
 
-				if(!empty($details)) {
-					if(!empty($details['phone'])) {
-						$email->phone = $details['phone'];
-					}
-					if(!empty($details['email'])) {
-						$email->email = $details['email'];
-					}
+			if(!empty($email->campaign_id)) {
+				continue;
+			}
 
-					$this->SiteEmails->save($email);
-				}
+			if(preg_match('/[0-9]{8,20}/', $email->utm_campaign, $matches)) {
+				$email->campaign_id = $matches[0];
+				$this->SiteEmails->save($email);
+			}
+		}
 
-			} catch (\Exception $e) {}
-		}*/
+
+		foreach($this->SiteCalls->find()->all() as $call) {
+
+			if(!empty($call->campaign_id)) {
+				continue;
+			}
+
+			if(preg_match('/[0-9]{8,20}/', $call->utm_campaign, $matches)) {
+				$call->campaign_id = $matches[0];
+				$this->SiteCalls->save($call);
+			}
+		}
     }
 }

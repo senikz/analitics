@@ -49,6 +49,9 @@ class CallsController extends ApiController
 					break;
 				case 'utm_campaign' :
 					$call->utm_campaign = $value;
+					if(preg_match('/[0-9]{8,20}/', $value, $matches)) {
+						$call->campaign_id = $matches[0];
+					}
 					break;
 				case 'utm_content' :
 					$call->utm_content = $value;
