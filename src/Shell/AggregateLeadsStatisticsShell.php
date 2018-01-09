@@ -55,6 +55,16 @@ class AggregateLeadsStatisticsShell extends \Cake\Console\Shell
         }
     }
 
+	public function quarterly()
+    {
+        $startDate = date('Y-m-d', strtotime('-3 month'));
+        $today = date('Y-m-d');
+        while ($startDate < $today) {
+            $this->forDate($startDate);
+            $startDate = date('Y-m-d', strtotime($startDate . ' +1 day'));
+        }
+    }
+
     private function forDate($date)
     {
         $from = $date . ' 00:00:00';
