@@ -87,6 +87,13 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 ### История изменений
 
+`1.7`
+
+* Добавлено поле order для сайтов, позволяющее сортировать список произвольним образов,
+а так же метод обновления информации сайта. Поле order используется для сортировки по умолчанию.
+* Добавлена пагинация списка кампаний сайта.
+* Для всех запросов с пагинацией добавлен заголовок RecordsCount с общим количеством найденных записей.
+
 `1.6`
 
 * В методах получения групп объявлений и ключевых фраз кампании добавлена пагинация.
@@ -438,10 +445,12 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 + Response 200 (application/json)
 
 
-### Список кампаний [GET/sites/{id}/campaigns]
+### Список кампаний [GET/sites/{id}/campaigns?{order}=&{reverse}=]
 
 + Parameters
     + id: (number) - ID сайта.
+	+ order: (string, optional) - Поле для сортировки
+    + reverse: (boolean, optional) - Сортировка в обратном порядке
 
 + Response 200 (application/json)
     + Attributes
@@ -538,11 +547,17 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 + Response 200 (application/json)
 
+### Обновление данных сайта [PUT/sites/{id}]
 
+Обновление информации сайта.
 
++ Parameters
+    + id: (number, required) - ID сайта
 
-
-
++ Request
+	+ Attributes
+	    + domain: (string) - Доменное имя
+		+ order: (number) - Значение для сортировки по умолчанию
 
 
 

@@ -3,37 +3,36 @@ namespace App\Controller\Api;
 
 class SitesController extends ApiController
 {
-	public function initialize()
-	{
-		parent::initialize();
-		$this->loadComponent('Validator');
-	}
-
-	public function index()
+    public function initialize()
     {
-		$result = [];
-		$query = $this->request->query;
+        parent::initialize();
+        $this->loadComponent('Validator');
+    }
 
-		$sites = $this->Sites->find('all', [
-			'contain' => false
-		]);
+    public function index()
+    {
+        $result = [];
 
-		foreach ($sites as $row) {
-			$result[] = [
-				'id' => $row->id,
-				'project_id' => $row->project_id,
-				'domain' => $row->domain,
-			];
-		}
+        if (empty($this->request->query['order'])) {
+            $this->request->query['order'] = 'order';
+        }
 
-		$order = empty($query['order']) ? 'time' : $query['order'];
-		$reverse = (empty($query['reverse']) || !$query['reverse']) ? false : true;
+        $sites = $this->Sites->find()
+            ->contain(false);
 
-		usort($result, function($a, $b) use($order, $reverse) {
-			return ($a[$order] == $b[$order] ? 0 : ($a[$order] > $b[$order] ? 1 : -1)) * ($reverse ? -1 : 1);
-		});
+        $this->orderQuery($sites);
 
-		$this->sendData($result);
+        $sites = $sites->all();
+
+        foreach ($sites as $row) {
+            $result[] = [
+                'id' => $row->id,
+                'project_id' => $row->project_id,
+                'domain' => $row->domain,
+            ];
+        }
+
+        $this->sendData($result);
     }
 
     public function view($id = null)
@@ -42,16 +41,16 @@ class SitesController extends ApiController
             'contain' => []
         ]);
 
-		$result = [
-			'id' => $site->id,
-			'project_id' => $site->project_id,
-			'caption' => $site->domain,
-		];
+        $result = [
+            'id' => $site->id,
+            'project_id' => $site->project_id,
+            'caption' => $site->domain,
+        ];
 
-		$this->sendData($result);
+        $this->sendData($result);
     }
 
-	public function add()
+    public function add()
     {
         if ($this->request->is('post')) {
             $data = $this->request->getData();
@@ -85,15 +84,14 @@ class SitesController extends ApiController
         }
     }
 
-	public function edit($id = null)
+    public function edit($id = null)
     {
         if ($this->request->is('put')) {
-
-			$data = $this->request->getData();
+            $data = $this->request->getData();
             $site = $this->Sites->patchEntity($this->Sites->get($id, ['contain' => []]), $data);
 
             if ($this->Sites->save($site)) {
-				$this->sendData([]);
+                $this->sendData([]);
             }
             $this->sendError(__('Can`t save site details'));
         }

@@ -126,4 +126,9 @@ class ApiController extends Controller
             ]);
         }
     }
+
+	public function setQueryCount($query)
+	{
+		$this->response->header('RecordsCount', $query->count());
+	}
 }

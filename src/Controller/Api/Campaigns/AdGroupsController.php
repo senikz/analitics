@@ -11,6 +11,7 @@ class AdGroupsController extends \App\Controller\Api\ApiController
 			->where(['campaign_id' => $this->request->getParam('campaign_id'),])
 			->contain(false);
 
+		$this->setQueryCount($query);
 		$this->paginateQuery($query);
 
 		$this->sendData(array_map(function($group) {

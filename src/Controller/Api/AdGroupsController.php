@@ -50,6 +50,7 @@ class AdGroupsController extends ApiController
 			$query->where(['keyword LIKE' => '%' . $fields['mask'] . '%', ]);
 		}
 
+		$this->setQueryCount($query);
 		$this->paginateQuery($query);
 
 		$this->sendData(array_map(function ($keyword) {

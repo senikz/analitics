@@ -47,6 +47,7 @@ class LeadsComponent extends Component
         $controller->orderQuery($paginationQuery);
 
         $unionQuery = $callsQuery->unionAll($emailsQuery);
+		$controller->setQueryCount($unionQuery);
         $unionQuery->epilog($paginationQuery);
 
         return $unionQuery->toArray();
