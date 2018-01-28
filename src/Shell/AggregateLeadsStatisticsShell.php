@@ -86,6 +86,16 @@ class AggregateLeadsStatisticsShell extends \Cake\Console\Shell
 				'statistics' => $this->KeywordStatisticsDaily,
 				'key' => 'keyword_id',
 			],
+			[
+				'table' => $this->Sites,
+				'statistics' => $this->SiteStatisticsDaily,
+				'key' => 'site_id',
+			],
+			[
+				'table' => $this->Projects,
+				'statistics' => $this->ProjectStatisticsDaily,
+				'key' => 'project_id',
+			],
 		];
 
 		foreach($src as $table) {
@@ -111,6 +121,8 @@ class AggregateLeadsStatisticsShell extends \Cake\Console\Shell
 
 	            $record->calls = $this->SiteCalls->findCountBy($conditions);
 	            $record->emails = $this->SiteEmails->findCountBy($conditions);
+
+				$record->leads = $record->emails + $record->calls;
 
 	            $table['statistics']->saveStatistics($record);
 	        }

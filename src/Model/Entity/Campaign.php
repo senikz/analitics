@@ -27,4 +27,5 @@ class Campaign extends Entity
 	{
 		return false;
 	}
+
 }

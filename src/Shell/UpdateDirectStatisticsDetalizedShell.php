@@ -146,6 +146,7 @@ class UpdateDirectStatisticsDetalizedShell extends Shell
                 'credential_id >' => '0',
                 'Credentials.type' => Credential::TYPE_DIRECT,
             ],
+			'contain' => ['Credentials'],
         ])->all();
 
         foreach ($campaigns as $campaign) {

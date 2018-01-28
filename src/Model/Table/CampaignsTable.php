@@ -63,11 +63,11 @@ class CampaignsTable extends Table
             'foreignKey' => 'campaign_id'
         ]);
 
-		$this->hasMany('BidOptions', [
-			'foreignKey' => 'rel_id',
-			'conditions' => ['BidOptions.type' => 'campaign'],
+        $this->hasMany('BidOptions', [
+            'foreignKey' => 'rel_id',
+            'conditions' => ['BidOptions.type' => 'campaign'],
             'joinType' => 'LEFT',
-		]);
+        ]);
     }
 
     /**
@@ -104,33 +104,44 @@ class CampaignsTable extends Table
         return $rules;
     }
 
-	public function beforeFind($event, $query, $options, $primary)
-	{
-		$query->contain(['Credentials']);
-		$containsMap = $query->getEagerLoader()->associationsMap($this);
+    public function beforeFind($event, $query, $options, $primary)
+    {
+        $containsMap = $query->getEagerLoader()->associationsMap($this);
 
-		$query->hydrate(false)->formatResults(function($results) use ($containsMap) {
-			return $results->map(function ($row) use ($containsMap) {
-				if(!empty($containsMap)) {
-					foreach($containsMap as $contain) {
-						if(empty($row[$contain['targetProperty']])) {
-							continue;
-						}
-						if($contain['canBeJoined']) {
-							$row[$contain['targetProperty']] = new $contain['entityClass']($row[$contain['targetProperty']]);
-						} else {
-							foreach($row[$contain['targetProperty']] as $key => $prop) {
-								$row[$contain['targetProperty']][$key] = new $contain['entityClass']($prop);
-							}
-						}
-					}
-				}
-				$entityClassName = $this->getEntityClass();
-				if(!empty($row['credential']['type'])) {
-					$entityClassName .= '\\' . ucfirst($row['credential']['type']);
-				}
-				return new $entityClassName($row);
-			});
-		});
-	}
+        $needCredentials = false;
+        foreach ($containsMap as $cont) {
+            if ($cont['alias'] == 'Credentials') {
+                $needCredentials = true;
+                break;
+            }
+        }
+
+        if (!$needCredentials) {
+            return $query;
+        }
+
+        $query->hydrate(false)->formatResults(function ($results) use ($containsMap) {
+            return $results->map(function ($row) use ($containsMap) {
+                if (!empty($containsMap)) {
+                    foreach ($containsMap as $contain) {
+                        if (empty($row[$contain['targetProperty']])) {
+                            continue;
+                        }
+                        if ($contain['canBeJoined']) {
+                            $row[$contain['targetProperty']] = new $contain['entityClass']($row[$contain['targetProperty']]);
+                        } else {
+                            foreach ($row[$contain['targetProperty']] as $key => $prop) {
+                                $row[$contain['targetProperty']][$key] = new $contain['entityClass']($prop);
+                            }
+                        }
+                    }
+                }
+                $entityClassName = $this->getEntityClass();
+                if (!empty($row['credential']['type'])) {
+                    $entityClassName .= '\\' . ucfirst($row['credential']['type']);
+                }
+                return new $entityClassName($row);
+            });
+        });
+    }
 }

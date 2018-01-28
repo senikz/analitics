@@ -11,11 +11,13 @@ class ReportParser
 		if($lines = explode(PHP_EOL, $report)) {
 
 			$lines = array_filter($lines);
-			$fields = explode(',', $lines[1]);
+			$fields = empty($options['fields']) ? explode(',', $lines[1]) : $options['fields'];
 
-			for($lineId = 2; $lineId<(count($lines)-1); $lineId++ ) {
+			for($lineId = 2; $lineId<=(count($lines)-1); $lineId++ ) {
 
-				$line = array_filter(preg_split('/['. $options['col_delimiter'] .']+/', $lines[$lineId]));
+				$line = array_filter(preg_split('/['. $options['col_delimiter'] .']+/', $lines[$lineId]), function ($item) {
+                    return $item !== '';
+                });
 
 				if(!empty($line) && count($line) == count($fields)) {
 					$reportLine = [];

@@ -18,17 +18,31 @@ class CreateSiteStatisticsDaily extends AbstractMigration
             'limit' => 11,
             'null' => false,
         ]);
+        $table->addColumn('cost', 'float', [
+            'default' => null,
+            'null' => false,
+        ]);
+        $table->addColumn('views', 'integer', [
+            'default' => null,
+            'limit' => 11,
+            'null' => false,
+        ]);
+        $table->addColumn('clicks', 'integer', [
+            'default' => null,
+            'limit' => 11,
+            'null' => false,
+        ]);
         $table->addColumn('calls', 'integer', [
             'default' => null,
             'limit' => 11,
             'null' => false,
         ]);
-        $table->addColumn('mails', 'integer', [
+        $table->addColumn('emails', 'integer', [
             'default' => null,
             'limit' => 11,
             'null' => false,
         ]);
-        $table->addColumn('orders', 'integer', [
+        $table->addColumn('leads', 'integer', [
             'default' => null,
             'limit' => 11,
             'null' => false,

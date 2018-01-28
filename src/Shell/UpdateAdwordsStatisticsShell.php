@@ -4,8 +4,9 @@ namespace App\Shell;
 use Cake\Log\Log;
 use Cake\Console\Shell;
 use Cake\ORM\TableRegistry;
+use \App\Model\Entity\Credential;
 
-use App\Utility\ReportParser;
+use Google\AdsApi\AdWords\Reporting\v201708\ReportDefinitionDateRangeType;
 
 use Google\AdsApi\AdWords\AdWordsServices;
 use Google\AdsApi\AdWords\AdWordsSession;
@@ -22,7 +23,6 @@ use Google\AdsApi\AdWords\Reporting\v201705\ReportDownloader;
 use Google\AdsApi\AdWords\Reporting\v201705\DownloadFormat;
 use Google\AdsApi\AdWords\ReportSettingsBuilder;
 
-use Google\AdsApi\Common\OAuth2TokenBuilder;
 
 class UpdateAdwordsStatisticsShell extends Shell
 {
@@ -35,10 +35,41 @@ class UpdateAdwordsStatisticsShell extends Shell
         parent::initialize();
         $this->loadModel('CampaignStatisticsDaily');
         $this->loadModel('CampaignStatisticsHourly');
-		$this->Campaign = TableRegistry::get('Campaigns');
+
+
+		$this->Campaigns = TableRegistry::get('Campaigns');
     }
 
-    public static function getCampaigns(AdWordsServices $adWordsServices, AdWordsSession $session)
+	public function today()
+    {
+		foreach($this->getCampaigns() as $campaign) {
+			$this->process($campaign, ReportDefinitionDateRangeType::YESTERDAY);
+		}
+    }
+
+	private function getCampaigns()
+	{
+		$campaigns = $this->Campaigns->find('all', [
+			'conditions' => [
+				'credential_id >' => '0',
+				'Credentials.type' => Credential::TYPE_ADWORDS,
+			],
+			'contain' => ['Credentials'],
+		])->all();
+
+		return $campaigns;
+	}
+
+	private function process($campaign, $period)
+	{
+		$result = $campaign->loadStatisticsReport($this->reportFields, $period);
+		var_dump($result);
+		exit;
+	}
+
+
+
+    /*public static function getCampaigns(AdWordsServices $adWordsServices, AdWordsSession $session)
     {
         $campaignService = $adWordsServices->get($session, CampaignService::class);
 	    // Create selector.
@@ -66,10 +97,10 @@ class UpdateAdwordsStatisticsShell extends Shell
 	        $selector->getPaging()->getStartIndex() + self::PAGE_LIMIT);
 	        } while ($selector->getPaging()->getStartIndex() < $totalNumEntries);
 	        printf("Number of results found: %d\n", $totalNumEntries);
-    }
+    }*/
 
 
-	public static function getReportFields(AdWordsServices $adWordsServices, AdWordsSession $session) {
+	/*public static function getReportFields(AdWordsServices $adWordsServices, AdWordsSession $session) {
 		$reportDefinitionService = $adWordsServices->get($session, ReportDefinitionService::class);
 		// The type of the report to get fields for.
 		$reportType = ReportDefinitionReportType::CAMPAIGN_PERFORMANCE_REPORT;
@@ -85,29 +116,7 @@ class UpdateAdwordsStatisticsShell extends Shell
 			}
 			print "\n";
 		}
-	}
-
-	public function downloadCriteriaReportWithAwql(AdWordsSession $session) {
-
-		// Create report query to get the data for last 7 days.
-		$reportQuery = 'SELECT ' . join(',', $this->reportFields) . ' FROM CAMPAIGN_PERFORMANCE_REPORT DURING TODAY';
-
-		// Download report as a string.
-		$reportDownloader = new ReportDownloader($session);
-
-		// Optional: If you need to adjust report settings just for this one
-		// request, you can create and supply the settings override here. Otherwise,
-		// default values from the configuration file (adsapi_php.ini) are used.
-		$reportSettingsOverride = (new ReportSettingsBuilder())
-			->includeZeroImpressions(false)
-			->build();
-
-		$reportDownloadResult = $reportDownloader->downloadReportWithAwql($reportQuery, DownloadFormat::CSV, $reportSettingsOverride);
-
-		return ReportParser::parseCsv($reportDownloadResult->getAsString(), ['col_delimiter' => ',']);
-	}
-
-
+	}*/
 
 
 
@@ -117,10 +126,8 @@ class UpdateAdwordsStatisticsShell extends Shell
 		// self::getReportFields(new AdWordsServices(), $session);
     }
 
-	public function today() {
-		$session = $this->getSession();
-		$report = $this->downloadCriteriaReportWithAwql($session);
-var_dump($report); exit;
+	public function todaym() {
+
 		if(!empty($report)) {
 
 			$currentDate = date('Y-m-d');
@@ -194,14 +201,4 @@ var_dump($report); exit;
 		}
 	}
 
-	public function getSession() {
-		$oAuth2Credential = (new OAuth2TokenBuilder())
-	    	->fromFile(ADWORDS_CONF_PATH)
-	    	->build();
-
-	    return (new AdWordsSessionBuilder())
-	    	->fromFile(ADWORDS_CONF_PATH)
-	    	->withOAuth2Credential($oAuth2Credential)
-	    	->build();
-	}
 }

@@ -15,33 +15,45 @@ class TestsShell extends \Cake\Console\Shell
         $this->Keywords = TableRegistry::get('Keywords');
         $this->AdGroups = TableRegistry::get('AdGroups');
         $this->BidOptions = TableRegistry::get('BidOptions');
+
+		$this->KSD = TableRegistry::get('KeywordStatisticsDaily');
+		$this->CSD = TableRegistry::get('CampaignStatisticsDaily');
+		$this->AGSD = TableRegistry::get('AdGroupStatisticsDaily');
     }
 
     public function main()
     {
-		foreach($this->SiteEmails->find()->all() as $email) {
-
-			if(!empty($email->campaign_id)) {
-				continue;
-			}
-
-			if(preg_match('/[0-9]{8,20}/', $email->utm_campaign, $matches)) {
-				$email->campaign_id = $matches[0];
-				$this->SiteEmails->save($email);
-			}
-		}
 
 
-		foreach($this->SiteCalls->find()->all() as $call) {
-
-			if(!empty($call->campaign_id)) {
-				continue;
-			}
-
-			if(preg_match('/[0-9]{8,20}/', $call->utm_campaign, $matches)) {
-				$call->campaign_id = $matches[0];
-				$this->SiteCalls->save($call);
-			}
-		}
+		$this->fill_leads();
     }
+
+	public function fill_leads()
+	{
+		foreach($this->KSD->find()->all() as $stat) {
+			$leads = $stat->calls + $stat->emails;
+			if(!$leads) {
+				continue;
+			}
+			$stat->leads = $leads;
+			$this->KSD->save($stat);
+		}
+		foreach($this->CSD->find()->all() as $stat) {
+			$leads = $stat->calls + $stat->emails;
+			if(!$leads) {
+				continue;
+			}
+			$stat->leads = $leads;
+			$this->CSD->save($stat);
+		}
+		foreach($this->AGSD->find()->all() as $stat) {
+			$leads = $stat->calls + $stat->emails;
+			if(!$leads) {
+				continue;
+			}
+			$stat->leads = $leads;
+			$this->AGSD->save($stat);
+		}
+	}
+
 }

@@ -59,7 +59,7 @@ class UpdateDirectBidsShell extends \Cake\Console\Shell
 					'BidOptions.hour_num' => date('G'),
 					'BidOptions.status' => 1,
 				]);
-			}],
+			}, 'Credentials'],
 		])->all();
 
 		foreach($campaigns as $campaign) {

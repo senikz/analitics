@@ -28,9 +28,18 @@ class SiteStatisticsDailyTableTest extends TestCase
         'app.sites',
         'app.projects',
         'app.campaigns',
+        'app.credentials',
         'app.campaign_statistics_daily',
         'app.campaign_statistics_hourly',
-        'app.site_statistics_hourly'
+        'app.ad_groups',
+        'app.ads',
+        'app.keywords',
+        'app.bid_options',
+        'app.site_statistics_hourly',
+        'app.site_calls',
+        'app.site_emails',
+        'app.site_orders',
+        'app.site_costs'
     ];
 
     /**
