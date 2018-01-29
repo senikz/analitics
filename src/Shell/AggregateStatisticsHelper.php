@@ -1,7 +1,7 @@
 <?php
 namespace App\Shell;
 
-class AggregateStatisticsHelper extends \Cake\Console\Shell
+trait AggregateStatisticsHelper
 {
     public function today()
     {
