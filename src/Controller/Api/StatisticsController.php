@@ -56,7 +56,7 @@ class StatisticsController extends ApiController
 		}
 
 		$this->StatTable = TableRegistry::get('SiteStatisticsDaily');
-		$query = $this->getQuery()
+		$query = $this->getQuery($fields)
 			->select(['site_id'])
 			->group('site_id');
 
@@ -100,7 +100,7 @@ class StatisticsController extends ApiController
 		}
 
 		$this->StatTable = TableRegistry::get('CampaignStatisticsDaily');
-		$query = $this->getQuery()
+		$query = $this->getQuery($fields)
 			->select(['campaign_id'])
 			->group('campaign_id');
 
@@ -149,7 +149,7 @@ class StatisticsController extends ApiController
 		}
 
 		$this->StatTable = TableRegistry::get('AdGroupStatisticsDaily');
-		$query = $this->getQuery()
+		$query = $this->getQuery($fields)
 			->select(['ad_group_id'])
 			->group('ad_group_id');
 
@@ -193,7 +193,7 @@ class StatisticsController extends ApiController
 		}
 
 		$this->StatTable = TableRegistry::get('KeywordStatisticsDaily');
-		$query = $this->getQuery()
+		$query = $this->getQuery($fields)
 			->select(['keyword_id'])
 			->group('keyword_id');
 
@@ -236,7 +236,7 @@ class StatisticsController extends ApiController
 	}
 
 
-	private function getQuery()
+	private function getQuery($fields)
 	{
 		$query = $this->StatTable->find('all');
 
@@ -247,6 +247,11 @@ class StatisticsController extends ApiController
 			'calls' => $query->func()->sum('calls'),
 			'emails' => $query->func()->sum('emails'),
 			'leads' => $query->func()->sum('leads'),
+		]);
+
+		$query->where([
+			'date >=' => $fields['from'] . ' 00:00:00',
+			'date <=' => $fields['from'] . ' 23:59:59',
 		]);
 
 		return $query;

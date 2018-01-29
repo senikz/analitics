@@ -933,3 +933,54 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 		+ utm_term
 
 + Response 200 (application/json)
+
+
+## Сервис общей статистики [/statistics]
+
+Сервис предоставляет предварительно кэшированную статистику для всех ресурсов с возможностью сортировки и пагинации.
+Каждый ресурс принимает дополнительные параметры `page=page,count`, `order=field`, `reverse=1` и возвращает заголовок `RecordsCount` с общим количеством найденных результатов.
+
+### Статистика ключевых фраз [GET/statistics/keywords?{campaign_id}=&{ad_group_id}=&{keyword_ids}=]
+
++ Parameters
+    + campaign_id: (number) - ID кампании для подбора ключевых фраз
+    + ad_group_id: (number) - ID группы объявлений для подбора ключевых фраз
+    + keyword_ids: (array) - список ID ключевых фраз (массив, или разделенные запятой значения)
+
++ Response 200 (application/json)
+    + Attributes
+		+ data (Keyword Statistics)
+			+ orders: (number) - Кол-во заказов.
+
+### Статистика групп объявлений [GET/statistics/ad_groups?{campaign_id}=&{ad_group_ids}=]
+
++ Parameters
+    + campaign_id: (number) - ID кампании для подбора групп объявлений
+    + ad_group_ids: (array) - список ID групп объявлений (массив, или разделенные запятой значения)
+
++ Response 200 (application/json)
+    + Attributes
+		+ data (Ad Group Statistics)
+			+ orders: (number) - Кол-во заказов.
+
+### Статистика кампаний [GET/statistics/campaigns?{site_id}=&{campaign_ids}=]
+
++ Parameters
+    + site_id: (number) - ID сайта для подбора кампаний
+    + campaign_ids: (array) - список ID кампаний (массив, или разделенные запятой значения)
+
++ Response 200 (application/json)
+    + Attributes
+		+ data (Campaign Statistics)
+			+ orders: (number) - Кол-во заказов.
+
+### Статистика сайтов [GET/statistics/campaigns?{project_id}=&{site_ids}=]
+
++ Parameters
+    + project_id: (number) - ID проекта для подбора сайтов
+    + site_ids: (array) - список ID сайтов (массив, или разделенные запятой значения)
+
++ Response 200 (application/json)
+    + Attributes
+		+ data (Site Statistics)
+			+ orders: (number) - Кол-во заказов.
