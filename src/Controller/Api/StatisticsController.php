@@ -244,14 +244,20 @@ class StatisticsController extends ApiController
 			'cost' => $query->func()->sum('cost'),
 			'views' => $query->func()->sum('views'),
 			'clicks' => $query->func()->sum('clicks'),
+			'ctr' => $query->func()->avg('ctr'),
 			'calls' => $query->func()->sum('calls'),
 			'emails' => $query->func()->sum('emails'),
 			'leads' => $query->func()->sum('leads'),
+			'lead_perc' => $query->func()->avg('lead_perc'),
+			'lead_cost' => $query->func()->avg('lead_cost'),
+			'orders' => $query->func()->sum('orders'),
+			'order_perc' => $query->func()->avg('order_perc'),
+			'order_cost' => $query->func()->avg('order_cost'),
 		]);
 
 		$query->where([
-			'date >=' => $fields['from'] . ' 00:00:00',
-			'date <=' => $fields['from'] . ' 23:59:59',
+			'date >=' => $fields['from'],
+			'date <=' => $fields['to'],
 		]);
 
 		return $query;
@@ -263,10 +269,15 @@ class StatisticsController extends ApiController
 			'cost' => $item->cost,
 			'views' => $item->views,
 			'clicks' => $item->clicks,
+			'ctr' => $item->ctr,
 			'calls' => $item->calls,
 			'emails' => $item->emails,
 			'leads' => $item->leads,
+			'lead_perc' => $item->lead_perc,
+			'lead_cost' => $item->lead_cost,
 			'orders' => $item->orders,
+			'order_perc' => $item->order_perc,
+			'order_cost' => $item->order_cost,
 		];
 	}
 
