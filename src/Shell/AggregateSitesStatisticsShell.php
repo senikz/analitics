@@ -6,6 +6,8 @@ use Cake\ORM\TableRegistry;
 
 class AggregateSitesStatisticsShell extends \Cake\Console\Shell
 {
+	use \App\Shell\AggregateStatisticsHelper;
+
     public function initialize()
     {
         parent::initialize();
@@ -17,56 +19,6 @@ class AggregateSitesStatisticsShell extends \Cake\Console\Shell
 		$this->CSD = TableRegistry::get('CampaignStatisticsDaily');
 
 		$this->SiteOrders = TableRegistry::get('SiteOrders');
-    }
-
-    public function today()
-    {
-        $this->forDate(date('Y-m-d'));
-    }
-
-    public function yesterday()
-    {
-        $this->forDate(date('Y-m-d', strtotime('-1 day')));
-    }
-
-    public function month()
-    {
-        $startDate = date('Y-m-d', strtotime('-1 month'));
-        $today = date('Y-m-d');
-        while ($startDate < $today) {
-            $this->forDate($startDate);
-            $startDate = date('Y-m-d', strtotime($startDate . ' +1 day'));
-        }
-    }
-
-	public function doublemonth()
-    {
-        $startDate = date('Y-m-d', strtotime('-2 month'));
-        $today = date('Y-m-d');
-        while ($startDate < $today) {
-            $this->forDate($startDate);
-            $startDate = date('Y-m-d', strtotime($startDate . ' +1 day'));
-        }
-    }
-
-	public function quarterly()
-    {
-        $startDate = date('Y-m-d', strtotime('-3 month'));
-        $today = date('Y-m-d');
-        while ($startDate < $today) {
-            $this->forDate($startDate);
-            $startDate = date('Y-m-d', strtotime($startDate . ' +1 day'));
-        }
-    }
-
-	public function semiannually()
-    {
-        $startDate = date('Y-m-d', strtotime('-6 month'));
-        $today = date('Y-m-d');
-        while ($startDate < $today) {
-            $this->forDate($startDate);
-            $startDate = date('Y-m-d', strtotime($startDate . ' +1 day'));
-        }
     }
 
     private function forDate($date)
@@ -127,12 +79,20 @@ class AggregateSitesStatisticsShell extends \Cake\Console\Shell
 			}
 
 			$record->cost = $item->cost;
+			
 			$record->views = $item->views;
 			$record->clicks = $item->clicks;
+			$record->ctr = ($item->views > 0 ? round(($item->clicks * 100 / $item->views), 2) : 0);
+
 			$record->calls = $item->calls;
 			$record->emails = $item->emails;
 			$record->leads = $item->leads;
+			$record->lead_perc = ($item->clicks > 0 ? round(($item->leads * 100 / $item->clicks), 2) : 0);
+			$record->lead_cost = ($item->leads > 0 ? round(($item->cost / $item->leads), 2) : 0);
+
 			$record->orders = $ordersItem->count;
+			$record->order_perc = ($item->leads > 0 ? round(($item->orders * 100 / $item->leads), 2) : 0);
+			$record->order_cost = ($item->orders > 0 ? round(($item->cost / $item->orders), 2) : 0);
 
 			$this->SSD->save($record);
 		}

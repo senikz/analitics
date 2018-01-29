@@ -6,6 +6,8 @@ use Cake\ORM\TableRegistry;
 
 class AggregateLeadsStatisticsShell extends \Cake\Console\Shell
 {
+	use \App\Shell\AggregateStatisticsHelper;
+
     public function initialize()
     {
         parent::initialize();
@@ -23,46 +25,6 @@ class AggregateLeadsStatisticsShell extends \Cake\Console\Shell
 
         $this->SiteCalls = TableRegistry::get('SiteCalls');
         $this->SiteEmails = TableRegistry::get('SiteEmails');
-    }
-
-    public function today()
-    {
-        $this->forDate(date('Y-m-d'));
-    }
-
-    public function yesterday()
-    {
-        $this->forDate(date('Y-m-d', strtotime('-1 day')));
-    }
-
-    public function month()
-    {
-        $startDate = date('Y-m-d', strtotime('-1 month'));
-        $today = date('Y-m-d');
-        while ($startDate < $today) {
-            $this->forDate($startDate);
-            $startDate = date('Y-m-d', strtotime($startDate . ' +1 day'));
-        }
-    }
-
-	public function doublemonth()
-    {
-        $startDate = date('Y-m-d', strtotime('-2 month'));
-        $today = date('Y-m-d');
-        while ($startDate < $today) {
-            $this->forDate($startDate);
-            $startDate = date('Y-m-d', strtotime($startDate . ' +1 day'));
-        }
-    }
-
-	public function quarterly()
-    {
-        $startDate = date('Y-m-d', strtotime('-3 month'));
-        $today = date('Y-m-d');
-        while ($startDate < $today) {
-            $this->forDate($startDate);
-            $startDate = date('Y-m-d', strtotime($startDate . ' +1 day'));
-        }
     }
 
     private function forDate($date)
