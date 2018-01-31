@@ -20,6 +20,8 @@ class CampaignsController extends ApiController
                 'contain' => false,
             ]);
 
+		$this->prepareApiQuery($query);
+
         foreach ($query as $row) {
             $result[] = [
                     'id' => $row->id,

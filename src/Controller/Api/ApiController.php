@@ -131,4 +131,10 @@ class ApiController extends Controller
 	{
 		$this->response->header('RecordsCount', $query->count());
 	}
+
+	public function prepareApiQuery($query) {
+		$this->paginateQuery($query);
+		$this->orderQuery($query);
+		$this->setQueryCount($query);
+	}
 }
