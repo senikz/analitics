@@ -12,7 +12,7 @@ class CampaignsController extends \App\Controller\Api\ApiController
                 'site_id' => $this->request->params['site_id']
             ]);
 
-        $this->paginateQuery($query);
+        $this->prepareApiQuery($query);
 
         $query = $query->all();
 
