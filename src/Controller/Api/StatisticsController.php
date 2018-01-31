@@ -73,7 +73,7 @@ class StatisticsController extends ApiController
 			$query
 				->leftJoinWith('Sites', function ($q) use ($fields) {
 			        return $q
-						->where(['Site.project_id' => $fields['project_id']]);
+						->where(['Sites.project_id' => $fields['project_id']]);
 			    });
 		}
 
