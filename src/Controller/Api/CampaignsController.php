@@ -88,7 +88,7 @@ class CampaignsController extends ApiController
     public function sync()
     {
 		$campaign = $this->Campaigns->find('all')
-			->where(['id' => $this->request->getParam('campaign_id')])
+			->where(['Campaigns.id' => $this->request->getParam('campaign_id')])
 			->contain(['Credentials'])
 			->first();
 
