@@ -36,8 +36,22 @@ class CampaignsController extends ApiController
     public function view($id = null)
     {
         $campaign = $this->Campaigns->get($id, [
-                'contain' => []
+                'contain' => ['BidOptions' => [
+						'conditions' => [
+							'BidOptions.day_num' => (date('w')==0 ? 6 : date('w')-1),
+							'BidOptions.hour_num' => date('G'),
+						]
+					]]
             ]);
+
+		$bidsCurrent = 0;
+
+		if(!empty($campaign->bid_options)) {
+			$bidsCurrent = [
+				'max' => $campaign->bid_options[0]->max,
+				'position' => $campaign->bid_options[0]->position,
+			];
+		}
 
         $result = [
                 'id' => $campaign->id,
@@ -45,6 +59,9 @@ class CampaignsController extends ApiController
                 'caption' => $campaign->caption,
                 'type' => $campaign->getTypeHuman(),
                 'num' => $campaign->rel_id,
+				'bids' => [
+					'current' => $bidsCurrent,
+				],
             ];
 
         $this->sendData($result);
