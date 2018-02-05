@@ -87,6 +87,10 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 ### История изменений
 
+`1.9`
+
+* В методы детального просмотра кампаний, групп объявлений и ключевых фраз добавлены свойства с текущими значениями биддера.
+
 `1.8`
 
 * Добавлены методы для получения статистики всех объектов.
@@ -601,6 +605,12 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
         + site_id: (number) - ID сайта, которому принадлежит кампания
         + type: (string) - Тип кампании
         + num: (number) - Номер кампании в системе статистики
+		+ bids: (array,fixed) - Настройки биддера для кампании
+			+ (object)
+				+ current: (array,fixed) - Настройки для текущего времени
+					+ (object)
+						+ max: (number)
+						+ position: (string)
 
 ### Удалить кампанию [DELETE/campaigns/{id}]
 
@@ -746,6 +756,12 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 + Response 200 (application/json)
     + Attributes
         + (AdGroup)
+			+ bids: (array,fixed) - Настройки биддера для группы
+				+ (object)
+					+ current: (array,fixed) - Настройки для текущего времени
+						+ (object)
+							+ max: (number)
+							+ position: (string)
 
 ### Список ключевых фраз [GET/ad_groups/{id}/keywords?{mask}=&{page}=&]
 
@@ -830,6 +846,12 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
             + (Keyword)
                 + campaign_id: (number) - ID кампании, которой принадлежит фраза
                 + ad_group_id: (number) - ID группы объявлений, которой принадлежит фраза
+				+ bids: (array,fixed) - Настройки биддера для фразы
+					+ (object)
+						+ current: (array,fixed) - Настройки для текущего времени
+							+ (object)
+								+ max: (number)
+								+ position: (string)
 
 
 ### Поиск фразы [GET/keywords/seach?{mask}=&{count}=]

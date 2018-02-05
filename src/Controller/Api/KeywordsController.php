@@ -12,6 +12,7 @@ class KeywordsController extends ApiController
 						'conditions' => [
 							'BidOptions.day_num' => (date('w')==0 ? 6 : date('w')-1),
 							'BidOptions.hour_num' => date('G'),
+							'BidOptions.status' => '1',
 						]
 					]]
             ]);
