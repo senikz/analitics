@@ -87,6 +87,10 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 ### История изменений
 
+`1.8`
+
+* Добавлены методы для получения статистики всех объектов.
+
 `1.7`
 
 * Добавлено поле order для сайтов, позволяющее сортировать список произвольним образов,
@@ -955,6 +959,11 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 + Response 200 (application/json)
     + Attributes
 		+ data (Keyword Statistics)
+			+ ctr: (number) - CTR
+			+ lead_perc: (number) - Суммарное число заявок/клики
+			+ lead_cost: (number) - Суммарное число заявок/расход
+			+ order_perc: (number) - Заказы/суммарное число заявок
+			+ order_cost: (number) - Заказы/расход
 			+ orders: (number) - Кол-во заказов.
 
 ### Статистика групп объявлений [GET/statistics/ad_groups?{campaign_id}=&{ad_group_ids}=]
@@ -966,6 +975,11 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 + Response 200 (application/json)
     + Attributes
 		+ data (Ad Group Statistics)
+			+ ctr: (number) - CTR
+			+ lead_perc: (number) - Суммарное число заявок/клики
+			+ lead_cost: (number) - Суммарное число заявок/расход
+			+ order_perc: (number) - Заказы/суммарное число заявок
+			+ order_cost: (number) - Заказы/расход
 			+ orders: (number) - Кол-во заказов.
 
 ### Статистика кампаний [GET/statistics/campaigns?{site_id}=&{campaign_ids}=]
@@ -977,6 +991,11 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 + Response 200 (application/json)
     + Attributes
 		+ data (Campaign Statistics)
+			+ ctr: (number) - CTR
+			+ lead_perc: (number) - Суммарное число заявок/клики
+			+ lead_cost: (number) - Суммарное число заявок/расход
+			+ order_perc: (number) - Заказы/суммарное число заявок
+			+ order_cost: (number) - Заказы/расход
 			+ orders: (number) - Кол-во заказов.
 
 ### Статистика сайтов [GET/statistics/campaigns?{project_id}=&{site_ids}=]
@@ -988,4 +1007,19 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 + Response 200 (application/json)
     + Attributes
 		+ data (Site Statistics)
+			+ orders: (number) - Кол-во заказов.
+
+### Статистика проектов [GET/statistics/projects?{project_id}=]
+
++ Parameters
+    + project_id: (number) - ID проекта для получения статистики
+
++ Response 200 (application/json)
+    + Attributes
+		+ data (Site Statistics)
+			+ ctr: (number) - CTR
+			+ lead_perc: (number) - Суммарное число заявок/клики
+			+ lead_cost: (number) - Суммарное число заявок/расход
+			+ order_perc: (number) - Заказы/суммарное число заявок
+			+ order_cost: (number) - Заказы/расход
 			+ orders: (number) - Кол-во заказов.
