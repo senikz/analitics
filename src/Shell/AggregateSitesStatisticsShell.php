@@ -60,7 +60,7 @@ class AggregateSitesStatisticsShell extends \Cake\Console\Shell
 
 			$ordersQuery = $this->SiteOrders->find('all');
 			$ordersItem = $ordersQuery->select([
-				'count' => $query->func()->count('*')
+				'count' => $query->func()->sum('count')
 			])->where([
 				'site_id' => $site->id,
 				'time >=' => $date . ' 00:00:00',
@@ -79,7 +79,7 @@ class AggregateSitesStatisticsShell extends \Cake\Console\Shell
 			}
 
 			$record->cost = $item->cost;
-			
+
 			$record->views = $item->views;
 			$record->clicks = $item->clicks;
 			$record->ctr = ($item->views > 0 ? round(($item->clicks * 100 / $item->views), 2) : 0);
