@@ -16,6 +16,7 @@ class EmailsController extends ApiController
         }
 
         $Sites = TableRegistry::get('Sites');
+        $Campaigns = TableRegistry::get('Campaigns');
         $tableKeywords = TableRegistry::get('Keywords');
         $SiteEmails = TableRegistry::get('SiteEmails');
 
@@ -40,7 +41,10 @@ class EmailsController extends ApiController
                 case 'utm_campaign':
                     $email->utm_campaign = $value;
 					if(preg_match('/[0-9]{8,20}/', $value, $matches)) {
-						$email->campaign_id = $matches[0];
+						$camp = $Campaigns->find('all')->where(['rel_id' => $matches[0]])->first();
+						if(!empty($camp)) {
+							$email->campaign_id = $camp->id;
+						}
 					}
                     break;
                 case 'utm_content':

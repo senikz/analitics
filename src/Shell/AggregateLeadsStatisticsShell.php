@@ -53,11 +53,6 @@ class AggregateLeadsStatisticsShell extends \Cake\Console\Shell
 				'statistics' => $this->SiteStatisticsDaily,
 				'key' => 'site_id',
 			],
-			[
-				'table' => $this->Projects,
-				'statistics' => $this->ProjectStatisticsDaily,
-				'key' => 'project_id',
-			],
 		];
 
 		foreach($src as $table) {
