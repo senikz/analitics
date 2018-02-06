@@ -8,7 +8,8 @@
 Ежедневно загружает статистику из API Яндекса параметры `clicks`, `views`, `cost` для каждой группы объявлений и ключевого слова, и сохраняет их в `ad_group_statistics_daily` и `keyword_statistics_daily` соответственно.
 
 * AggregateLeadsStatisticsShell (2:00)
-Заполняет поля `calls`, `emails`, `leads` во всех таблицах статистики из таблиц `site_calls` и `site_emails`.
+Заполняет поля `calls`, `emails`, `leads` из таблиц `site_calls` и `site_emails` в таблицы
+`campaign_statistics_daily`, `ad_group_statistics_daily` и `keyword_statistics_daily`.
 
 * AggregateKeywordsStatisticsShell (2:01)
 Заполняет расчетные значения (CTR и др.) для статистики ключевых фраз.
@@ -19,8 +20,11 @@
 
 * AggregateSitesStatisticsShell (2:04)
 Заполняет таблицу статистики сайтов `site_statistics_daily` из таблицы статистики кампаний `campaign_statistics_daily`.
-Поля `clicks`, `views`, `cost`, `calls`, `emails` берутся из указанной таблицы, а поле `orders` - из таблицы `site_orders`.
+(поля `clicks`, `views`, `cost`), из таблицы `site_calls` (поле `calls`), `site_emails` (поле `emails`),
+`site_orders` (поле `orders`). Остальные поля рассчитываются.
 
+* AggregateProjectsStatisticsShell (2:06)
+Заполняет таблицу `project_statistics_daily` из таблицы `site_statistics_daily`
 
 ## Сборка файла с документацией
 
