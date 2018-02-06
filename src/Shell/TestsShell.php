@@ -30,29 +30,23 @@ class TestsShell extends \Cake\Console\Shell
 
 	public function fill_leads()
 	{
-		foreach($this->KSD->find()->all() as $stat) {
-			$leads = $stat->calls + $stat->emails;
-			if(!$leads) {
-				continue;
+		foreach($this->SiteCalls->find()->all() as $call) {
+			if($call->campaign_id > 100000) {
+				$camp = $this->Campaigns->find('all')->where(['rel_id' => $call->campaign_id])->first();
+				if(!empty($camp)) {
+					$call->campaign_id = $camp->id;
+					$this->SiteCalls->save($call);
+				}
 			}
-			$stat->leads = $leads;
-			$this->KSD->save($stat);
 		}
-		foreach($this->CSD->find()->all() as $stat) {
-			$leads = $stat->calls + $stat->emails;
-			if(!$leads) {
-				continue;
+		foreach($this->SiteEmails->find()->all() as $call) {
+			if($call->campaign_id > 100000) {
+				$camp = $this->Campaigns->find('all')->where(['rel_id' => $call->campaign_id])->first();
+				if(!empty($camp)) {
+					$call->campaign_id = $camp->id;
+					$this->SiteEmails->save($call);
+				}
 			}
-			$stat->leads = $leads;
-			$this->CSD->save($stat);
-		}
-		foreach($this->AGSD->find()->all() as $stat) {
-			$leads = $stat->calls + $stat->emails;
-			if(!$leads) {
-				continue;
-			}
-			$stat->leads = $leads;
-			$this->AGSD->save($stat);
 		}
 	}
 
