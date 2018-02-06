@@ -19,6 +19,8 @@ class AggregateSitesStatisticsShell extends \Cake\Console\Shell
 		$this->CSD = TableRegistry::get('CampaignStatisticsDaily');
 
 		$this->SiteOrders = TableRegistry::get('SiteOrders');
+		$this->SiteCalls = TableRegistry::get('SiteCalls');
+		$this->SiteEmails = TableRegistry::get('SiteEmails');
     }
 
     private function forDate($date)
@@ -45,7 +47,6 @@ class AggregateSitesStatisticsShell extends \Cake\Console\Shell
 					'clicks' => $query->func()->sum('clicks'),
 					'calls' => $query->func()->sum('calls'),
 					'emails' => $query->func()->sum('emails'),
-					'leads' => $query->func()->sum('leads'),
 				])
 				->group('date')
 				->where([
@@ -58,14 +59,27 @@ class AggregateSitesStatisticsShell extends \Cake\Console\Shell
 				continue;
 			}
 
+			// Orders
 			$ordersQuery = $this->SiteOrders->find('all');
 			$ordersItem = $ordersQuery->select([
-				'count' => $query->func()->sum('count')
+				'count' => $ordersQuery->func()->sum('count')
 			])->where([
 				'site_id' => $site->id,
 				'time >=' => $date . ' 00:00:00',
 				'time <=' => $date . ' 23:59:59',
 			])->first();
+
+			// Leads
+			$callsQuery = $this->SiteCalls->find('all');
+			$callsItem = $callsQuery->where([
+					'site_id' => $site->id,
+					'date >=' => $date . ' 00:00:00',
+					'date <=' => $date . ' 23:59:59',
+				])
+				->select([
+					'count' => $callsQuery->func()->count('*'),
+				])
+				->first();
 
 			$record = $this->SSD->find('all')->where([
 				'date' => $date,
@@ -86,7 +100,7 @@ class AggregateSitesStatisticsShell extends \Cake\Console\Shell
 
 			$record->calls = $item->calls;
 			$record->emails = $item->emails;
-			$record->leads = $item->leads;
+			$record->leads = $callsItem->count;
 			$record->lead_perc = ($item->clicks > 0 ? round(($item->leads * 100 / $item->clicks), 2) : 0);
 			$record->lead_cost = ($item->leads > 0 ? round(($item->cost / $item->leads), 2) : 0);
 
