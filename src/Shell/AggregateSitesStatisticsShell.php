@@ -73,8 +73,8 @@ class AggregateSitesStatisticsShell extends \Cake\Console\Shell
 			$callsQuery = $this->SiteCalls->find('all');
 			$callsItem = $callsQuery->where([
 					'site_id' => $site->id,
-					'date >=' => $date . ' 00:00:00',
-					'date <=' => $date . ' 23:59:59',
+					'time >=' => $date . ' 00:00:00',
+					'time <=' => $date . ' 23:59:59',
 				])
 				->select([
 					'count' => $callsQuery->func()->count('*'),
