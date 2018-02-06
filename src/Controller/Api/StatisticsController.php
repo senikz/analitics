@@ -21,8 +21,7 @@ class StatisticsController extends ApiController
 		$this->StatTable = TableRegistry::get('ProjectStatisticsDaily');
 
 		$query = $this->getQuery($fields)
-			->select(['project_id'])
-			->group('project_id');
+			->select(['key_id' => 'project_id']);
 
 		if(!empty($fields['project_id'])) {
 			$query->where([
@@ -31,18 +30,7 @@ class StatisticsController extends ApiController
 		}
 
 		$this->completeQuery($query);
-
-		$result = [];
-
-		foreach ($query as $item) {
-		    $result[] = array_merge([
-					'project_id' => $item->project_id,
-				],
-				$this->getItem($item)
-			);
-		}
-
-		$this->sendData($result);
+		$this->sendData($this->buildResult($query));
 	}
 
     public function sites()
@@ -54,8 +42,7 @@ class StatisticsController extends ApiController
 
 		$this->StatTable = TableRegistry::get('SiteStatisticsDaily');
 		$query = $this->getQuery($fields)
-			->select(['site_id'])
-			->group('site_id');
+			->select(['key_id' => 'site_id']);
 
 		if(!empty($fields['site_ids'])) {
 			if(is_string($fields['site_ids'])) {
@@ -75,18 +62,7 @@ class StatisticsController extends ApiController
 		}
 
 		$this->completeQuery($query);
-
-		$result = [];
-
-		foreach ($query as $item) {
-		    $result[] = array_merge([
-					'site_id' => $item->site_id,
-				],
-				$this->getItem($item)
-			);
-		}
-
-		$this->sendData($result);
+		$this->sendData($this->buildResult($query));
 	}
 
     public function campaigns()
@@ -98,8 +74,7 @@ class StatisticsController extends ApiController
 
 		$this->StatTable = TableRegistry::get('CampaignStatisticsDaily');
 		$query = $this->getQuery($fields)
-			->select(['campaign_id'])
-			->group('campaign_id');
+			->select(['key_id' => 'campaign_id']);
 
 		if(!empty($fields['campaign_ids'])) {
 			if(is_string($fields['campaign_ids'])) {
@@ -124,21 +99,10 @@ class StatisticsController extends ApiController
 		}
 
 		$this->completeQuery($query);
-
-		$result = [];
-
-		foreach ($query as $item) {
-		    $result[] = array_merge([
-					'campaign_id' => $item->campaign_id,
-				],
-				$this->getItem($item)
-			);
-		}
-
-		$this->sendData($result);
+		$this->sendData($this->buildResult($query));
 	}
 
-    public function adGroups()
+    public function ad_groups()
     {
 		$fields = $this->request->query;
 		if (!$this->Validator->required($fields, ['from', 'to'])) {
@@ -147,8 +111,7 @@ class StatisticsController extends ApiController
 
 		$this->StatTable = TableRegistry::get('AdGroupStatisticsDaily');
 		$query = $this->getQuery($fields)
-			->select(['ad_group_id'])
-			->group('ad_group_id');
+			->select(['key_id' => 'ad_group_id']);
 
 		if(!empty($fields['ad_group_ids'])) {
 			if(is_string($fields['ad_group_ids'])) {
@@ -168,18 +131,7 @@ class StatisticsController extends ApiController
 		}
 
 		$this->completeQuery($query);
-
-		$result = [];
-
-		foreach ($query as $item) {
-		    $result[] = array_merge([
-					'ad_group_id' => $item->ad_group_id,
-				],
-				$this->getItem($item)
-			);
-		}
-
-		$this->sendData($result);
+		$this->sendData($this->buildResult($query));
 	}
 
     public function keywords()
@@ -191,8 +143,7 @@ class StatisticsController extends ApiController
 
 		$this->StatTable = TableRegistry::get('KeywordStatisticsDaily');
 		$query = $this->getQuery($fields)
-			->select(['keyword_id'])
-			->group('keyword_id');
+			->select(['keyword_id as key_id']);
 
 		if(!empty($fields['keyword_ids'])) {
 			if(is_string($fields['keyword_ids'])) {
@@ -218,18 +169,7 @@ class StatisticsController extends ApiController
 		}
 
 		$this->completeQuery($query);
-
-		$result = [];
-
-		foreach ($query as $item) {
-		    $result[] = array_merge([
-					'keyword_id' => $item->keyword_id,
-				],
-				$this->getItem($item)
-			);
-		}
-
-		$this->sendData($result);
+		$this->sendData($this->buildResult($query));
 	}
 
 
@@ -257,12 +197,15 @@ class StatisticsController extends ApiController
 			'date <=' => $fields['to'],
 		]);
 
+		$query->group('key_id');
+
 		return $query;
 	}
 
 	private function getItem($item)
 	{
 		return [
+			'key_id' => $item->key_id,
 			'cost' => $item->cost,
 			'views' => $item->views,
 			'clicks' => $item->clicks,
@@ -276,6 +219,15 @@ class StatisticsController extends ApiController
 			'order_perc' => $item->order_perc,
 			'order_cost' => $item->order_cost,
 		];
+	}
+
+	private function buildResult($query)
+	{
+		$result = [];
+		foreach ($query as $item) {
+		    $result[] = $this->getItem($item);
+		}
+		return $result;
 	}
 
 	private function completeQuery(&$query)
