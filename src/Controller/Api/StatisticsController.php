@@ -20,7 +20,7 @@ class StatisticsController extends ApiController
 
 		$this->StatTable = TableRegistry::get('ProjectStatisticsDaily');
 
-		$query = $this->getQuery()
+		$query = $this->getQuery($fields)
 			->select(['project_id'])
 			->group('project_id');
 
