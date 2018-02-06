@@ -69,7 +69,7 @@ class AggregateSitesStatisticsShell extends \Cake\Console\Shell
 				'time <=' => $date . ' 23:59:59',
 			])->first();
 
-			// Leads
+			// Calls
 			$callsQuery = $this->SiteCalls->find('all');
 			$callsItem = $callsQuery->where([
 					'site_id' => $site->id,
@@ -78,6 +78,18 @@ class AggregateSitesStatisticsShell extends \Cake\Console\Shell
 				])
 				->select([
 					'count' => $callsQuery->func()->count('*'),
+				])
+				->first();
+
+			// Emails
+			$emailsQuery = $this->SiteEmails->find('all');
+			$emailsItem = $emailsQuery->where([
+					'site_id' => $site->id,
+					'time >=' => $date . ' 00:00:00',
+					'time <=' => $date . ' 23:59:59',
+				])
+				->select([
+					'count' => $emailsQuery->func()->count('*'),
 				])
 				->first();
 
@@ -98,9 +110,9 @@ class AggregateSitesStatisticsShell extends \Cake\Console\Shell
 			$record->clicks = $item->clicks;
 			$record->ctr = ($item->views > 0 ? round(($item->clicks * 100 / $item->views), 2) : 0);
 
-			$record->calls = $item->calls;
-			$record->emails = $item->emails;
-			$record->leads = $callsItem->count;
+			$record->calls = $callsItem->count;
+			$record->emails = $emailsItem->count;
+			$record->leads = $callsItem->count + $emailsItem->count;
 			$record->lead_perc = ($item->clicks > 0 ? round(($item->leads * 100 / $item->clicks), 2) : 0);
 			$record->lead_cost = ($item->leads > 0 ? round(($item->cost / $item->leads), 2) : 0);
 
