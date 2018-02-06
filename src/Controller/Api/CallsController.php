@@ -15,6 +15,7 @@ class CallsController extends ApiController
 		}
 
 		$Sites = TableRegistry::get('Sites');
+		$Campaigns = TableRegistry::get('Campaigns');
 		$tableKeywords = TableRegistry::get('Keywords');
 		$SiteCalls = TableRegistry::get('SiteCalls');
 
@@ -50,7 +51,10 @@ class CallsController extends ApiController
 				case 'utm_campaign' :
 					$call->utm_campaign = $value;
 					if(preg_match('/[0-9]{8,20}/', $value, $matches)) {
-						$call->campaign_id = $matches[0];
+						$camp = $Campaigns->find('all')->where(['rel_id' => $matches[0]])->first();
+						if(!empty($camp)) {
+							$call->campaign_id = $camp->id;
+						}
 					}
 					break;
 				case 'utm_content' :
