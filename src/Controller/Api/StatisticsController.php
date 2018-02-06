@@ -138,7 +138,7 @@ class StatisticsController extends ApiController
 
 		$this->StatTable = TableRegistry::get('KeywordStatisticsDaily');
 		$query = $this->getQuery($fields)
-			->select(['keyword_id as key_id']);
+			->select(['key_id' => 'keyword_id']);
 
 		if(!empty($fields['keyword_ids'])) {
 			if(is_string($fields['keyword_ids'])) {
