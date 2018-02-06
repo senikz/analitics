@@ -87,15 +87,12 @@ class StatisticsController extends ApiController
 
 		if(!empty($fields['site_id'])) {
 			$query
-				->leftJoinWith('Campaigns', function ($q) use ($fields) {
-			        return $q
-						->where(['Campaigns.site_id' => $fields['site_id']]);
-			    });
+				->leftJoinWith('Campaigns')
+				->where(['Campaigns.site_id' => $fields['site_id']]);
 		} else if(!empty($fields['project_id'])) {
-			$query = $query
-				->leftJoinWith('Campaigns.Sites', function ($q) use ($fields) {
-			        return $q->where(['Sites.project_id' => $fields['project_id']]);
-			    });
+			$query
+				->leftJoinWith('Campaigns.Sites')
+				->where(['Sites.project_id' => $fields['project_id']]);
 		}
 
 		$this->completeQuery($query);
@@ -124,10 +121,8 @@ class StatisticsController extends ApiController
 
 		if(!empty($fields['campaign_id'])) {
 			$query
-				->leftJoinWith('AdGroups', function ($q) use ($fields) {
-			        return $q
-						->where(['AdGroups.campaign_id' => $fields['campaign_id']]);
-			    });
+				->leftJoinWith('AdGroups')
+				->where(['AdGroups.campaign_id' => $fields['campaign_id']]);
 		}
 
 		$this->completeQuery($query);
@@ -155,17 +150,14 @@ class StatisticsController extends ApiController
 		}
 
 		if(!empty($fields['campaign_id']) || !empty($fields['ad_group_id'])) {
-			$query
-				->leftJoinWith('Keywords', function ($q) use ($fields) {
-					if(!empty($fields['campaign_id'])) {
-						$q->where(['Keywords.campaign_id' => $fields['campaign_id']]);
-					}
-					if(!empty($fields['ad_group_id'])) {
-						$q->where(['Keywords.ad_group_id' => $fields['ad_group_id']]);
-					}
-			        return $q;
-			    });
+			$query->leftJoinWith('Keywords');
 
+			if(!empty($fields['campaign_id'])) {
+				$query->where(['Keywords.campaign_id' => $fields['campaign_id']]);
+			}
+			if(!empty($fields['ad_group_id'])) {
+				$query->where(['Keywords.ad_group_id' => $fields['ad_group_id']]);
+			}
 		}
 
 		$this->completeQuery($query);
