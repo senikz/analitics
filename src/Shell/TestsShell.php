@@ -25,7 +25,7 @@ class TestsShell extends \Cake\Console\Shell
     {
 
 
-		//$this->fill_leads();
+		$this->fill_leads();
     }
 
 	public function fill_leads()
