@@ -14,7 +14,7 @@ class StatisticsController extends ApiController
     public function projects()
     {
 		$fields = $this->request->query;
-		if (!$this->Validator->required($fields, ['from', 'to', 'project_id'])) {
+		if (!$this->Validator->required($fields, ['from', 'to', 'project_ids'])) {
 			$this->sendError($this->Validator->getLastError());
 		}
 
@@ -23,9 +23,12 @@ class StatisticsController extends ApiController
 		$query = $this->getQuery($fields)
 			->select(['key_id' => 'project_id']);
 
-		if(!empty($fields['project_id'])) {
+		if(!empty($fields['project_ids'])) {
+			if(is_string($fields['project_ids'])) {
+				$fields['project_ids'] = explode(',', $fields['project_ids']);
+			}
 			$query->where([
-				'project_id' => $fields['project_id'],
+				'project_id IN' => $fields['project_ids'],
 			]);
 		}
 
