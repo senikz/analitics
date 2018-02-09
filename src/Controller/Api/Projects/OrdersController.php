@@ -34,6 +34,10 @@ class OrdersController extends \App\Controller\Api\ApiController
                     'orders' => 0,
                 ];
             }
+			$details[$fields['to']] = [
+				'cost' => 0,
+				'orders' => 0,
+			];
 
             $Projects = TableRegistry::get('Projects');
 
