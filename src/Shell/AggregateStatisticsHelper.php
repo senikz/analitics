@@ -3,6 +3,15 @@ namespace App\Shell;
 
 trait AggregateStatisticsHelper
 {
+	public function select($from, $to)
+	{
+		$startDate = $from;
+        while ($startDate <= $to) {
+            $this->forDate($startDate);
+            $startDate = date('Y-m-d', strtotime($startDate . ' +1 day'));
+        }
+	}
+
     public function today()
     {
         $this->forDate(date('Y-m-d'));
