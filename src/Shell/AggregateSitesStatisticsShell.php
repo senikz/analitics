@@ -113,12 +113,12 @@ class AggregateSitesStatisticsShell extends \Cake\Console\Shell
 			$record->calls = $callsItem->count;
 			$record->emails = $emailsItem->count;
 			$record->leads = $callsItem->count + $emailsItem->count;
-			$record->lead_perc = ($item->clicks > 0 ? round(($item->leads * 100 / $item->clicks), 2) : 0);
-			$record->lead_cost = ($item->leads > 0 ? round(($item->cost / $item->leads), 2) : 0);
+			$record->lead_perc = ($record->clicks > 0 ? round(($record->leads * 100 / $record->clicks), 2) : 0);
+			$record->lead_cost = ($record->leads > 0 ? round(($record->cost / $record->leads), 2) : 0);
 
 			$record->orders = $ordersItem->count;
-			$record->order_perc = ($item->leads > 0 ? round(($item->orders * 100 / $item->leads), 2) : 0);
-			$record->order_cost = ($item->orders > 0 ? round(($item->cost / $item->orders), 2) : 0);
+			$record->order_perc = ($record->leads > 0 ? round(($record->orders * 100 / $record->leads), 2) : 0);
+			$record->order_cost = ($record->orders > 0 ? round(($record->cost / $record->orders), 2) : 0);
 
 			$this->SSD->save($record);
 		}
