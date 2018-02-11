@@ -180,11 +180,11 @@ class StatisticsController extends ApiController
 			'calls' => $query->func()->sum('calls'),
 			'emails' => $query->func()->sum('emails'),
 			'leads' => $query->func()->sum('leads'),
-			'lead_perc' => $query->func()->avg('lead_perc'),
-			'lead_cost' => $query->func()->avg('lead_cost'),
+			'lead_perc' => $query->newExpr('sum(leads) * 100 / sum(clicks)'),
+			'lead_cost' => $query->newExpr('sum(cost) / sum(leads)'),
 			'orders' => $query->func()->sum('orders'),
-			'order_perc' => $query->func()->avg('order_perc'),
-			'order_cost' => $query->func()->avg('order_cost'),
+			'order_perc' => $query->newExpr('sum(orders) * 100 / sum(leads)'),
+			'order_cost' => $query->newExpr('sum(cost) / sum(orders)'),
 		]);
 
 		$query->where([
@@ -218,6 +218,7 @@ class StatisticsController extends ApiController
 
 	private function buildResult($query)
 	{
+		//var_dump($query);exit;
 		$result = [];
 		foreach ($query as $item) {
 		    $result[] = $this->getItem($item);
@@ -228,7 +229,11 @@ class StatisticsController extends ApiController
 	private function completeQuery(&$query)
 	{
 		$this->paginateQuery($query);
+
+		$fields = $this->request->query;
 		$this->orderQuery($query);
 		$this->setQueryCount($query);
+
+
 	}
 }
