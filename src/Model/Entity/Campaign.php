@@ -3,7 +3,6 @@ namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
-use App\Model\Entity\Credential;
 
 class Campaign extends Entity
 {
@@ -20,12 +19,25 @@ class Campaign extends Entity
 	public function getTypeHuman()
 	{}
 
-	public function getProvider()
-	{}
-
 	public function sync()
 	{
 		return false;
 	}
+
+    public function getSource()
+    {
+        if (empty($this->Sources)) {
+            $sourceOptionsTable = TableRegistry::get('SourceOptions');
+            $this->SourceOptions = $sourceOptionsTable->find()->where(['source_id' => $this->id])->all();
+        }
+
+        foreach ($this->SourceOptions as $option) {
+            if ($option->name == $name) {
+                return $option->value;
+            }
+        }
+
+        return null;
+    }
 
 }

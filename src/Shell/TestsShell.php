@@ -3,14 +3,19 @@ namespace App\Shell;
 
 use Cake\ORM\TableRegistry;
 
+use Google\AdsApi\AdWords\Reporting\v201802\ReportDefinitionDateRangeType;
+
 class TestsShell extends \Cake\Console\Shell
 {
     public function initialize()
     {
         parent::initialize();
 
+		$this->Sources = TableRegistry::get('Sources');
+
         $this->SiteCalls = TableRegistry::get('SiteCalls');
         $this->SiteEmails = TableRegistry::get('SiteEmails');
+        $this->Sources = TableRegistry::get('Sources');
         $this->Campaigns = TableRegistry::get('Campaigns');
         $this->Keywords = TableRegistry::get('Keywords');
         $this->AdGroups = TableRegistry::get('AdGroups');
@@ -24,8 +29,29 @@ class TestsShell extends \Cake\Console\Shell
     public function main()
     {
 
+		$a = $this->Sources->find()->where(['id' => 3])->first();
 
-		$this->fill_leads();
+		//var_dump($a);
+		//$a->syncCampaigns();
+
+
+		//$c = $this->Campaigns->find()->where(['id' => 79])->first();
+		//$rep = $a->loadCampaignStatisticsReport($c, ReportDefinitionDateRangeType::YESTERDAY, ['CampaignId', 'AdGroupId', 'Criteria', 'Id', 'Impressions', 'Clicks', 'Cost']);
+
+		$this->CSD->create([], date('Y-m-d'));
+
+
+        /*$a = $this->Campaigns->find()->contain(['Sources'])->first();
+        var_dump($a->source->getProvider());
+        //$a = $this->Sources->find()->contain(['SourceOptions'])->first();
+        //var_dump($a);
+        exit;
+*/
+		// Заполнить site_costs по полю comment
+		// Заполнить user_id единицами
+		//
+
+		//$this->fill_leads();
     }
 
 	public function fill_leads()

@@ -21,7 +21,6 @@ use Cake\Validation\Validator;
  */
 class SiteCallsTable extends Table
 {
-
     /**
      * Initialize method
      *

@@ -37,4 +37,9 @@ trait StatisticsTableHelper
             'emails' => (int)$statistics->total_emails,
         ];
     }
+
+	public function create($statRecord, $date, $entity = false)
+	{
+
+	}
 }

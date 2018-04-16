@@ -5,6 +5,7 @@ use \Firebase\JWT\JWT;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Network\Exception\BadRequestException;
+use Cake\ORM\TableRegistry;
 
 class ApiController extends Controller
 {
@@ -38,6 +39,8 @@ class ApiController extends Controller
             } else {
                 try {
                     $decoded = JWT::decode($headers['User-Token'], Configure::read('JWT.key'), array('HS256'));
+					$usersTable = TableRegistry::get('Users');
+					$this->request->user = $usersTable->get($decoded->data->id);
                 } catch (\UnexpectedValueException $e) {
                     $this->sendError('Invalid token.', 403);
                 }

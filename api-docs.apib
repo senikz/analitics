@@ -149,11 +149,10 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 # Data Structures
 
-## Profile
-+ id: (number) - ID профиля
-+ login: (string) - Логин
-+ type: (string) - Тип
-
+## Source
++ id: (number) - ID
++ type: (string) -  Тип
++ caption: (string) - Название
 
 
 ## Project Statistics
@@ -284,16 +283,28 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 
 
-## Настройки [/settings]
+## Источники трафика [/sources]
 
-### Список профилей поисковых систем [GET/settings/profiles]
+### Список источников трафика [GET/sources]
 
 + Response 200 (application/json)
     + Attributes
         + data (array,fixed)
-            + (Profile)
+            + (Source)
 
 
+### Подробная информация и настройки [GET/sources/{id}]
+
++ Parameters
+    + id: (number, required) - ID источника трафика
+
++ Response 200 (application/json)
+    + Attributes
+        + (Source)
+			+ settings: (array,fixed)
+				+ Object
+					+ name: (string) - Настройка
+					+ value: (string) - Значение
 
 
 

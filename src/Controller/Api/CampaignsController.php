@@ -2,7 +2,6 @@
 namespace App\Controller\Api;
 
 use Cake\ORM\TableRegistry;
-use \App\Model\Entity\Credential;
 
 class CampaignsController extends ApiController
 {
@@ -76,7 +75,7 @@ class CampaignsController extends ApiController
             if ($this->Validator->required($data, ['site_id', 'profile_id', 'caption', 'key'])) {
                 $campaign = $this->Campaigns->newEntity();
                 $campaign->rel_id = $data['key'];
-                $campaign->credential = $this->Campaigns->Credentials->get($data['profile_id']);
+                $campaign->source = $this->Campaigns->Sources->get($data['source_id']);
                 $campaign = $this->Campaigns->patchEntity($campaign, $data);
 
                 if ($a = $this->Campaigns->save($campaign)) {
@@ -107,11 +106,11 @@ class CampaignsController extends ApiController
     {
 		$campaign = $this->Campaigns->find('all')
 			->where(['Campaigns.id' => $this->request->getParam('campaign_id')])
-			->contain(['Credentials'])
+			->contain(['Sources'])
 			->first();
 
 		if(!empty($campaign)) {
-			$campaign->sync();
+			$campaign->source->syncCampaign($campaign);
 		}
     }
 

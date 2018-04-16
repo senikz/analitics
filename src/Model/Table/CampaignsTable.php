@@ -43,8 +43,8 @@ class CampaignsTable extends Table
             'foreignKey' => 'site_id',
             'joinType' => 'INNER'
         ]);
-        $this->belongsTo('Credentials', [
-            'foreignKey' => 'credential_id',
+        $this->belongsTo('Sources', [
+            'foreignKey' => 'source_id',
         ]);
         /*$this->belongsTo('Rels', [
             'foreignKey' => 'rel_id',
@@ -102,46 +102,5 @@ class CampaignsTable extends Table
         //$rules->add($rules->existsIn(['rel_id'], 'Rels'));
 
         return $rules;
-    }
-
-    public function beforeFind($event, $query, $options, $primary)
-    {
-        $containsMap = $query->getEagerLoader()->associationsMap($this);
-
-        $needCredentials = false;
-        foreach ($containsMap as $cont) {
-            if ($cont['alias'] == 'Credentials') {
-                $needCredentials = true;
-                break;
-            }
-        }
-
-        if (!$needCredentials) {
-            return $query;
-        }
-
-        $query->hydrate(false)->formatResults(function ($results) use ($containsMap) {
-            return $results->map(function ($row) use ($containsMap) {
-                if (!empty($containsMap)) {
-                    foreach ($containsMap as $contain) {
-                        if (empty($row[$contain['targetProperty']])) {
-                            continue;
-                        }
-                        if ($contain['canBeJoined']) {
-                            $row[$contain['targetProperty']] = new $contain['entityClass']($row[$contain['targetProperty']]);
-                        } else {
-                            foreach ($row[$contain['targetProperty']] as $key => $prop) {
-                                $row[$contain['targetProperty']][$key] = new $contain['entityClass']($prop);
-                            }
-                        }
-                    }
-                }
-                $entityClassName = $this->getEntityClass();
-                if (!empty($row['credential']['type'])) {
-                    $entityClassName .= '\\' . ucfirst($row['credential']['type']);
-                }
-                return new $entityClassName($row);
-            });
-        });
     }
 }

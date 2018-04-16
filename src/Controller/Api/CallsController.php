@@ -15,56 +15,45 @@ class CallsController extends ApiController
 		}
 
 		$Sites = TableRegistry::get('Sites');
-		$Campaigns = TableRegistry::get('Campaigns');
-		$tableKeywords = TableRegistry::get('Keywords');
 		$SiteCalls = TableRegistry::get('SiteCalls');
 
-		if(!$site = $Sites->find('all', ['conditions' => ['domain' => $fields['site']]])->first()) {
+		if(!$site = $Sites->find()->where(['domain' => $fields['site'], 'user_id' => $this->request->user->id])->first()) {
 			$this->sendError(__('Unknown site'));
 		}
+
+		$fieldsMatch = [
+			'phone' => 'callerphone',
+			'duration',
+			'link' => 'reclink',
+			'time' => 'timestamp',
+			'utm_source',
+			'utm_medium',
+			'utm_campaign',
+			'utm_content',
+			'utm_term',
+		];
 
 		$call = $SiteCalls->newEntity();
 
 		$call->site_id = $site->id;
 		$call->unique = empty($fields['unique']) ? 0 : 1;
 
-		foreach($fields as $key => $value) {
-			switch ($key) {
-				case 'callerphone' :
-					$call->phone = $value;
-					break;
-				case 'duration' :
-					$call->duration = $value;
-					break;
-				case 'reclink' :
-					$call->link = $value;
-					break;
-				case 'timestamp' :
-					$call->time = date('Y-m-d H:i:s', $value);
-					break;
-				case 'utm_source' :
-					$call->utm_source = $value;
-					break;
-				case 'utm_medium' :
-					$call->utm_medium = $value;
-					break;
-				case 'utm_campaign' :
-					$call->utm_campaign = $value;
-					if(preg_match('/[0-9]{8,20}/', $value, $matches)) {
-						$camp = $Campaigns->find('all')->where(['rel_id' => $matches[0]])->first();
-						if(!empty($camp)) {
-							$call->campaign_id = $camp->id;
-						}
-					}
-					break;
-				case 'utm_content' :
-					$call->utm_content = $value;
-					break;
-				case 'utm_term' :
-					$call->utm_term = $value;
-					break;
+		$call->fillUtm($fields, $fieldsMatch);
+
+
+var_dump($call);exit;
+
+
+		if(!empty($call->utm_campaign)) {
+			$call->utm_campaign = $value;
+			if(preg_match('/[0-9]{8,20}/', $value, $matches)) {
+				$camp = $Campaigns->find('all')->where(['rel_id' => $matches[0]])->first();
+				if(!empty($camp)) {
+					$call->campaign_id = $camp->id;
+				}
 			}
 		}
+
 
 		if($details = $call->getContentDetails()) {
 

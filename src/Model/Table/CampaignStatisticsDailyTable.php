@@ -91,4 +91,26 @@ class CampaignStatisticsDailyTable extends Table
 
         return $rules;
     }
+
+	public function saveCampaignReport(integer $campaignId, array $report, $date)
+	{
+		$today = date('Y-m-d');
+		$calcHourly = $today == $date;
+
+		$measures = [
+			'Clicks' => 'clicks',
+			'Impressions' => 'views',
+			'Cost' => 'cost',
+		];
+
+		$campaignTotal = [];
+
+		//$keywordsTable = 
+
+		foreach ($report as $row) {
+
+			//
+
+		}
+	}
 }
