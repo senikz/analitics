@@ -14,7 +14,7 @@
         "Cewi/Excel": "dev-master",
         "queencitycodefactory/cakesoap": "^3.3",
         "googleads/googleads-php-lib": "^28.0",
-        "biplane/yandex-direct": "4.1.x-dev"
+        "biplane/yandex-direct": "4.3.*"
     },
     "require-dev": {
         "psy/psysh": "@stable",
