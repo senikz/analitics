@@ -10,8 +10,10 @@ use Biplane\YandexDirect\Api\V5\Contract\LimitOffset;
 use Biplane\YandexDirect\Api\V5\Contract\BidFieldEnum;
 use Biplane\YandexDirect\Api\V5\Contract\CampaignFieldEnum;
 use Biplane\YandexDirect\Api\V5\Contract\GetBidsRequest;
+use Biplane\YandexDirect\Api\V5\Contract\GetKeywordBidsRequest;
 use Biplane\YandexDirect\Api\V5\Contract\GetCampaignsRequest;
 use Biplane\YandexDirect\Api\V5\Contract\BidsSelectionCriteria;
+use Biplane\YandexDirect\Api\V5\Contract\KeywordBidsSelectionCriteria;
 use Biplane\YandexDirect\Api\V5\Contract\CampaignsSelectionCriteria;
 use Biplane\YandexDirect\Api\V5\Contract\SetBidsRequest;
 
@@ -45,7 +47,7 @@ class UpdateDirectBidsShell extends \Cake\Console\Shell
     public function main()
     {
 		if(!$this->checkRunTime()) {
-			return;
+			//return;
 		}
 
 		$campaigns = $this->Campaigns->find('all', [
@@ -56,7 +58,7 @@ class UpdateDirectBidsShell extends \Cake\Console\Shell
 			'contain' => ['BidOptions' => function($query) {
 				return $query->where([
 					'BidOptions.day_num' => (date('w')==0 ? 6 : date('w')-1),
-					'BidOptions.hour_num' => date('G'),
+				//	'BidOptions.hour_num' => date('G'),
 					'BidOptions.status' => 1,
 				]);
 			}, 'Credentials'],
@@ -94,20 +96,18 @@ class UpdateDirectBidsShell extends \Cake\Console\Shell
 	{
 		//Log::write('debug', ['campaignId' => $campaign->rel_id, 'options' => [$maxPrice, $incPrice, $position]], ['shell', 'UpdateDirectBidsShell', 'processCampaign']);
 
-		$bidsService = $user->getBidsService();
+		$bidsService = $user->getKeywordBidsService();
 
-		$bids = $bidsService->get(GetBidsRequest::create()
-			->setSelectionCriteria(BidsSelectionCriteria::create()->setCampaignIds([$campaign->rel_id]))
+		$bids = $bidsService->get(GetKeywordBidsRequest::create()
+			->setSelectionCriteria(KeywordBidsSelectionCriteria::create()->setCampaignIds([$campaign->rel_id]))
 			->setFieldNames([
 				BidFieldEnum::KEYWORD_ID,
 				BidFieldEnum::CAMPAIGN_ID,
 				BidFieldEnum::AD_GROUP_ID,
-				BidFieldEnum::BID,
-				BidFieldEnum::AUCTION_BIDS,
 			])
-			//->setPage(
-			//	LimitOffset::create()->setLimit(3)->setOffset(0)
-			//)
+			->setPage(
+				LimitOffset::create()->setLimit(3)->setOffset(0)
+			)
 		);
 
 		$updateBids = [];
@@ -117,9 +117,10 @@ class UpdateDirectBidsShell extends \Cake\Console\Shell
 		$campaignOptionsMatches = 0;
 		$campaignOptionsHit = 0;
 
-		foreach($bids->getBids() as $bid) {
-
-			$prices = $bid->getAuctionBids();
+		foreach($bids->getKeywordBids() as $bid) {
+var_dump( $bid->getSearch() );exit;
+			$prices = $bid->getSearch()->getAuctionBids()->getAuctionBidItems();
+			var_dump($prices);exit;
 
 			if(empty($prices)) {
 				continue;
