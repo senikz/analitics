@@ -71,7 +71,7 @@ class UpdateDirectStatisticsShell extends Shell
 		$fieldNames = [FieldEnum::CAMPAIGN_ID, FieldEnum::COST, FieldEnum::IMPRESSIONS, FieldEnum::CLICKS];
 
 		$reportService = $provider->getReportsService();
-		var_dump($reportService);exit;
+		//var_dump($reportService);exit;
 		$reportRequest = (new ReportRequest)
 			->setProcessingMode(ReportRequest::PROCESSING_MODE_ONLINE)
 			->returnMoneyAsFloat()
@@ -88,7 +88,7 @@ class UpdateDirectStatisticsShell extends Shell
 
 		$reportResult = $reportService->getReady($reportRequest);
 		$reportDetails = $this->parseReportAnswer($reportResult->getData(), $fieldNames);
-
+var_dump( $reportDetails );return;
 		if (empty($reportDetails)) {
             Log::write('debug', ['campaignId' => $campaignId, 'report' => 'empty'], ['shell', 'UpdateDirectStatisticsShell', 'today']);
             return;

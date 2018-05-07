@@ -2,17 +2,30 @@
 namespace App\Model\Entity\Source;
 
 use Cake\ORM\TableRegistry;
+use App\Utility\ReportParser;
 
 use Biplane\YandexDirect\User;
 use Biplane\YandexDirect\Api\V5\Contract\KeywordFieldEnum;
 use Biplane\YandexDirect\Api\V5\Contract\AdGroupFieldEnum;
+use Biplane\YandexDirect\Api\V5\Contract\CampaignFieldEnum;
+use Biplane\YandexDirect\Api\V5\Contract\GetCampaignsRequest;
+use Biplane\YandexDirect\Api\V5\Contract\GetReportsRequest;
+use Biplane\YandexDirect\Api\V5\Report\ReportRequest;
+use Biplane\YandexDirect\Api\V5\Report\ReportDefinitionBuilder;
+use Biplane\YandexDirect\Api\V5\Report\FieldEnum;
+use Biplane\YandexDirect\Api\V5\Report\ReportTypeEnum;
+use Biplane\YandexDirect\Api\V5\Report\DateRangeTypeEnum;
+use Biplane\YandexDirect\Api\V5\Report\FormatEnum;
+use Biplane\YandexDirect\Api\V5\Report\FilterOperatorEnum;
 
 class Direct extends \App\Model\Entity\Source
 {
 	const TYPE = 'direct';
 	const TYPE_HUMAN = 'Яндекс.Директ';
 
-    public function getProvider()
+	const SYNC_STATES = ['ON'];
+
+    protected function getProvider()
     {
         return new User([
             'access_token' => $this->option('token'),
@@ -25,6 +38,59 @@ class Direct extends \App\Model\Entity\Source
     {
         $this->credential->updateLimits($service->getUnits()->getRest());
     }*/
+
+	public function syncCampaigns()
+	{
+		$campaignsTable = TableRegistry::get('Campaigns');
+		$provider = $this->getProvider();
+
+		if (!$provider) {
+            return false;
+        }
+
+		$campaignsService = $provider->getCampaignsService();
+		$campaigns = $campaignsService->get(
+			GetCampaignsRequest::create()
+				->setFieldNames([
+					CampaignFieldEnum::ID,
+					CampaignFieldEnum::NAME,
+					CampaignFieldEnum::STATE,
+				])
+		)->getCampaigns();
+
+		if ($campaigns === null) {
+			return;
+		}
+
+		$campaignsFoundIds = [];
+
+		foreach ($campaigns as $campaign) {
+			if (!in_array($campaign->getState(), self::SYNC_STATES)) {
+				continue;
+			}
+
+			$campaignsFoundIds[] = $campaign->getId();
+			$found = $campaignsTable->find()->where(['source_id' => $this->id, 'rel_id' => $campaign->getId()])->first();
+
+			if (!$found) {
+				$found = $campaignsTable->newEntity();
+				$found->source_id = $this->id;
+				$found->rel_id = $campaign->getId();
+			}
+
+			$found->caption = $campaign->getName();
+			$found = $campaignsTable->save($found);
+
+			$this->syncCampaign($found);
+		}
+
+		if (!empty($campaignsFoundIds)) {
+			$campaignsTable->deleteAll([
+				'source_id' => $this->id,
+				'rel_id NOT IN' => $campaignsFoundIds,
+			]);
+		}
+	}
 
     public function syncCampaign(\App\Model\Entity\Campaign $campaign)
     {
@@ -105,5 +171,38 @@ class Direct extends \App\Model\Entity\Source
         }
     }
 
+	public function loadDailyStatisticsReport($date = null)
+	{
+		$fieldNames = [FieldEnum::CAMPAIGN_ID, FieldEnum::COST, FieldEnum::IMPRESSIONS, FieldEnum::CLICKS];
 
+		$provider = $this->getProvider();
+		$reportService = $provider->getReportsService();
+
+		$reportRequest = (new ReportRequest)
+			->setProcessingMode(ReportRequest::PROCESSING_MODE_ONLINE)
+			->returnMoneyAsFloat()
+			->setDefinition(
+				(new ReportDefinitionBuilder)
+					->setFieldNames($fieldNames)
+					->setReportName('Statistics report 1001')
+					->setReportType(ReportTypeEnum::CAMPAIGN_PERFORMANCE_REPORT)
+					->setDateRangeType(DateRangeTypeEnum::TODAY)
+					->includeVat()
+					->setFormat(FormatEnum::TSV)
+			);
+
+		return ReportParser::parseCsv($reportService->getReady($reportRequest)->getData(), ['col_delimiter' => '\t']);
+	}
+
+	public function updateCampaignsDailyStatistics($date)
+	{
+		$report = $this->loadDailyStatisticsReport($date);
+		$statDailyTable = TableRegistry::get('CampaignStatisticsDaily');
+
+		if (empty($report)) {
+			return false;
+		}
+
+		$statDailyTable->saveCampaignsReport($report, $date, 'CampaignId');
+	}
 }

@@ -29,16 +29,26 @@ class TestsShell extends \Cake\Console\Shell
     public function main()
     {
 
-		$a = $this->Sources->find()->where(['id' => 3])->first();
+		//$a = $this->Sources->find()->where(['id' => 3])->first();
+		$b = $this->Sources->find()->where(['id' => 1])->first();
 
 		//var_dump($a);
 		//$a->syncCampaigns();
 
+		/*$this->CSD->saveCampaignsReport([
+			[
+				'CampaignId' => 281898304,
+				'Impressions' => 100,
+				'Clicks' => 14,
+				'Cost' => 10.10,
+			]
+		], '2018-05-05');*/
 
-		//$c = $this->Campaigns->find()->where(['id' => 79])->first();
+		$c = $this->Campaigns->find()->where(['id' => 79])->first();
 		//$rep = $a->loadCampaignStatisticsReport($c, ReportDefinitionDateRangeType::YESTERDAY, ['CampaignId', 'AdGroupId', 'Criteria', 'Id', 'Impressions', 'Clicks', 'Cost']);
-
-		$this->CSD->create([], date('Y-m-d'));
+		$rep = $b->updateCampaignsDailyStatistics('2018-05-02');
+var_dump($rep);
+		//$this->CSD->create([], date('Y-m-d'));
 
 
         /*$a = $this->Campaigns->find()->contain(['Sources'])->first();

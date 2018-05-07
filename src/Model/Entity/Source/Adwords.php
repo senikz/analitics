@@ -2,7 +2,6 @@
 namespace App\Model\Entity\Source;
 
 use Cake\ORM\TableRegistry;
-
 use App\Utility\ReportParser;
 
 use Google\AdsApi\AdWords\AdWordsSession;
@@ -17,11 +16,14 @@ use Google\AdsApi\AdWords\AdWordsServices;
 use Google\AdsApi\AdWords\v201802\cm\Selector;
 use Google\AdsApi\AdWords\v201802\cm\Predicate;
 use Google\AdsApi\AdWords\v201802\cm\Paging;
+use Google\AdsApi\AdWords\v201802\cm\DateRange;
 use Google\AdsApi\AdWords\v201802\cm\PredicateOperator;
 use Google\AdsApi\AdWords\v201802\cm\CampaignService;
 use Google\AdsApi\AdWords\v201802\cm\AdGroupService;
 use Google\AdsApi\AdWords\v201802\cm\AdGroupCriterionService;
 use Google\AdsApi\AdWords\v201802\cm\CriterionType;
+use Google\AdsApi\AdWords\Reporting\v201802\ReportDefinitionDateRangeType;
+
 
 
 class Adwords extends \App\Model\Entity\Source
@@ -55,16 +57,16 @@ class Adwords extends \App\Model\Entity\Source
 		return (new AdWordsServices())->get($this->getSession(), $classname);
 	}
 
-    public function loadCampaignStatisticsReport(\App\Model\Entity\Campaign $campaign, $period, array $fields, $perfomance = ReportDefinitionReportType::CRITERIA_PERFORMANCE_REPORT)
+    public function loadCampaignStatisticsReport(\App\Model\Entity\Campaign $campaign, $period, array $fields)
     {
-		$selector = (new Selector())
-        	->setFields($fields)
-			->setPredicates(
+		$perfomance = ReportDefinitionReportType::CRITERIA_PERFORMANCE_REPORT;
+		$selector = (new Selector())->setFields($fields);
+			/*->setPredicates(
 				[
-                	new Predicate('CampaignId', PredicateOperator::EQUALS, [$campaign->rel_id]),
+                	//new Predicate('CampaignId', PredicateOperator::EQUALS, [$campaign->rel_id]),
 					new Predicate('AdGroupId', PredicateOperator::EQUALS, [49600285846])
             	]
-			);
+			);*/
 
         $reportDefinition = new ReportDefinition();
         $reportDefinition->setSelector($selector);
@@ -80,11 +82,48 @@ class Adwords extends \App\Model\Entity\Source
 		            ->includeZeroImpressions(true)
 		            ->build()
 			);
-echo ($reportDownloadResult->getAsString());
-//print_r(ReportParser::parseCsv($reportDownloadResult->getAsString(), ['col_delimiter' => ',']));
-exit;
+		//echo ($reportDownloadResult->getAsString());
+		//print_r(ReportParser::parseCsv($reportDownloadResult->getAsString(), ['col_delimiter' => ',']));
+		//exit;
         return ReportParser::parseCsv($reportDownloadResult->getAsString(), ['col_delimiter' => ',']);
     }
+
+	public function loadDailyStatisticsReport($date = null)
+	{
+		$fields = ['CampaignId', 'Impressions', 'Clicks', 'Cost'];
+		$perfomance = ReportDefinitionReportType::CAMPAIGN_PERFORMANCE_REPORT;
+
+		$selector = (new Selector())
+			->setFields($fields);
+
+		$reportDefinition = new ReportDefinition();
+
+		if ($date) {
+			$date = date('Ymd', strtotime($date));
+			$reportDefinition->setDateRangeType(ReportDefinitionDateRangeType::CUSTOM_DATE);
+			$selector->setDateRange((new DateRange())
+				->setMin($date)
+				->setMax($date)
+			);
+		} else {
+			$reportDefinition->setDateRangeType(ReportDefinitionDateRangeType::TODAY);
+		}
+
+		$reportDefinition->setSelector($selector);
+		$reportDefinition->setReportName('Criteria performance report #' . uniqid());
+		$reportDefinition->setReportType($perfomance);
+		$reportDefinition->setDownloadFormat(DownloadFormat::CSV);
+
+		$reportDownloadResult = (new ReportDownloader($this->getSession()))
+			->downloadReport(
+				$reportDefinition,
+				(new ReportSettingsBuilder())
+					->includeZeroImpressions(true)
+					->build()
+			);
+
+		return ReportParser::parseCsv($reportDownloadResult->getAsString(), ['col_delimiter' => ',']);
+	}
 
 	public function syncCampaigns()
 	{
@@ -95,7 +134,7 @@ exit;
 		$selector = new Selector();
 
 		$campaignService = $services->get($session, CampaignService::class);
-		$selector->setFields(['Id']);
+		$selector->setFields(['Id', 'Name']);
 		$campaigns = $campaignService->get($selector)->getEntries();
 
 		if ($campaigns === null) {
@@ -112,16 +151,20 @@ exit;
 				$found = $campaignsTable->newEntity();
 				$found->source_id = $this->id;
 				$found->rel_id = $campaign->getId();
-				$found = $campaignsTable->save($found);
 			}
+
+			$found->caption = $campaign->getName();
+			$found = $campaignsTable->save($found);
 
 			$this->syncCampaign($found);
 		}
 
-		$campaignsTable->deleteAll([
-			'source_id' => $this->id,
-			'rel_id NOT IN' => $campaignsFoundIds,
-		]);
+		if (!empty($campaignsFoundIds)) {
+			$campaignsTable->deleteAll([
+				'source_id' => $this->id,
+				'rel_id NOT IN' => $campaignsFoundIds,
+			]);
+		}
 	}
 
 	public function syncCampaign(\App\Model\Entity\Campaign $campaign)
@@ -230,4 +273,25 @@ exit;
 			);
 		} while ($kSelector->getPaging()->getStartIndex() < $totalNumEntries);
 	}
+
+	public function updateCampaignsDailyStatistics($date)
+	{
+		$report = $this->loadDailyStatisticsReport($date);
+		$statDailyTable = TableRegistry::get('CampaignStatisticsDaily');
+
+		if (empty($report)) {
+			return false;
+		}
+
+		$statDailyTable->saveCampaignsReport($report, $date, 'Campaign ID');
+	}
+
+	/**
+	 * Loads statistics for
+	 * @param  [type] $campaignId [description]
+	 * @param  [type] $date       [description]
+	 * @return [type]             [description]
+	 */
+	public function updateKeywordsDailyStatistics($campaignId, $date)
+	{}
 }

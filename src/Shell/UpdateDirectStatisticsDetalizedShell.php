@@ -19,33 +19,6 @@ class UpdateDirectStatisticsDetalizedShell extends Shell
 {
     private $reportFieldNames = [FieldEnum::CAMPAIGN_ID, FieldEnum::AD_GROUP_ID,  FieldEnum::CRITERIA_TYPE, FieldEnum::CRITERIA_ID, FieldEnum::COST, FieldEnum::IMPRESSIONS, FieldEnum::CLICKS];
 
-    public function initialize()
-    {
-        parent::initialize();
-        $this->loadModel('AdGroups');
-        $this->loadModel('Keywords');
-        $this->loadModel('AdGroupStatisticsDaily');
-        $this->loadModel('KeywordStatisticsDaily');
-
-        $this->Campaigns = TableRegistry::get('Campaigns');
-    }
-
-    public function getOptionParser()
-    {
-        $parser = parent::getOptionParser();
-
-        $parser->addSubcommand('yesterday', [
-            'help' => 'Update the `yesterday` statistics for ad_groups & keywords'
-        ]);
-
-        return $parser;
-    }
-
-    public function main()
-    {
-        $this->out($this->OptionParser->help());
-    }
-
     public function yesterday()
     {
         $date = date('Y-m-d', strtotime('-1 day'));
@@ -138,41 +111,6 @@ class UpdateDirectStatisticsDetalizedShell extends Shell
         }
     }
 
-    private function getCampaigns()
-    {
-        $result = [];
-        $campaigns = $this->Campaigns->find('all', [
-            'conditions' => [
-                'credential_id >' => '0',
-                'Credentials.type' => Credential::TYPE_DIRECT,
-            ],
-			'contain' => ['Credentials'],
-        ])->all();
-
-        foreach ($campaigns as $campaign) {
-            $provider = $campaign->getProvider();
-
-            if (empty($provider)) {
-                continue;
-            }
-
-            $login = $provider->getLogin();
-
-            if (empty($result[$login])) {
-                $result[$login] = [
-                    'ids' => [],
-                    'provider' => $provider,
-                    'campaigns' => [],
-                ];
-            }
-
-            $result[$login]['ids'][] = $campaign->rel_id;
-            $result[$login]['campaigns'][] = $campaign;
-        }
-
-        return $result;
-    }
-
     private function loadReport($provider, $campaignIds, $date)
     {
         $reportService = $provider->getReportsService();
@@ -201,28 +139,4 @@ class UpdateDirectStatisticsDetalizedShell extends Shell
         return $reportDetails;
     }
 
-    private function parseReportAnswer($report, $fields)
-    {
-        $reportContent = [];
-
-        if ($lines = explode(PHP_EOL, $report)) {
-            $lines = array_filter($lines);
-
-            for ($lineId = 2; $lineId<(count($lines)-1); $lineId++) {
-                $line = array_filter(preg_split('/[\s]+/', $lines[$lineId]), function ($item) {
-                    return $item !== '';
-                });
-
-                if (!empty($line) && count($line) == count($fields)) {
-                    $reportLine = [];
-                    foreach ($fields as $num => $field) {
-                        $reportLine[$field] = $line[$num];
-                    }
-                    $reportContent[] = $reportLine;
-                }
-            }
-        }
-
-        return $reportContent;
-    }
 }

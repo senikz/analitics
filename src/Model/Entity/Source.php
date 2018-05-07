@@ -46,6 +46,11 @@ class Source extends Entity
         return null;
     }
 
+	public function hasCampaigns()
+	{
+		return false;
+	}
+
 	public function syncCampaigns()
 	{
 		return true;
@@ -55,4 +60,17 @@ class Source extends Entity
 	{
 		return true;
 	}
+
+	/**
+	 * Loads all campaigns statistics for specified date.
+	 *
+	 * @param  [string] $date
+	 */
+	public function updateCampaignsDailyStatistics($date)
+	{
+		return true;
+	}
+
+	public function updateDetalizedStatistics($date)
+	{}
 }

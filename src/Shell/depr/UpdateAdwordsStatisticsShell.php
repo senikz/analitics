@@ -6,7 +6,7 @@ use Cake\Console\Shell;
 use Cake\ORM\TableRegistry;
 use \App\Model\Entity\Credential;
 
-use Google\AdsApi\AdWords\Reporting\v201802\ReportDefinitionDateRangeType;
+
 
 use Google\AdsApi\AdWords\AdWordsServices;
 use Google\AdsApi\AdWords\AdWordsSession;

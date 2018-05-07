@@ -13,7 +13,7 @@
         "firebase/php-jwt": "^4.0",
         "Cewi/Excel": "dev-master",
         "queencitycodefactory/cakesoap": "^3.3",
-        "biplane/yandex-direct": "4.1.x-dev",
+        "biplane/yandex-direct": "4.4.x-dev",
         "googleads/googleads-php-lib": "34.0"
     },
     "require-dev": {

@@ -4,6 +4,7 @@ namespace App\Model\Table;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
+use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator;
 
 /**
@@ -92,25 +93,77 @@ class CampaignStatisticsDailyTable extends Table
         return $rules;
     }
 
-	public function saveCampaignReport(integer $campaignId, array $report, $date)
+	public function saveCampaignsReport(array $report, $date, $campaignKey = 'CampaignId', $measures = null)
 	{
 		$today = date('Y-m-d');
 		$calcHourly = $today == $date;
+		$campaignsTable = TableRegistry::get('Campaigns');
 
-		$measures = [
-			'Clicks' => 'clicks',
-			'Impressions' => 'views',
-			'Cost' => 'cost',
-		];
+		if ($calcHourly) {
+			$hourlyTable = TableRegistry::get('CampaignStatisticsHourly');
+		}
 
-		$campaignTotal = [];
-
-		//$keywordsTable = 
+		if (empty($measures)) {
+			$measures = [
+				'Clicks' => 'clicks',
+				'Impressions' => 'views',
+				'Cost' => 'cost',
+			];
+		}
 
 		foreach ($report as $row) {
+			$campaign = $campaignsTable->find()->where(['rel_id' => $row[$campaignKey]])->first();
+			if (empty($campaign)) {
+				continue;
+			}
 
-			//
+			$newCounts = [];
 
+			// проверить запись в дневной статистике, есть ли текущий день
+			$dailyRecord = $this->find()
+				->where([
+					'campaign_id' => $campaign->id,
+					'date' => $date,
+				])
+				->first();
+
+			if (empty($dailyRecord)) {
+				$dailyRecord = $this->newEntity();
+				$dailyRecord->campaign_id = $campaign->id;
+				$dailyRecord->date = $date;
+			}
+
+			foreach ($measures as $mKey => $measure) {
+				if (array_key_exists($mKey, $row)) {
+					$newCounts[$measure] = $row[$mKey] - (empty($dailyRecord->$measure) ? 0 : $dailyRecord->$measure);
+					$dailyRecord->$measure = $row[$mKey];
+				}
+			}
+
+			$this->save($dailyRecord);
+
+			if (!$calcHourly) {
+				continue;
+			}
+
+			$hourlyRecord = $hourlyTable->find()
+				->where([
+					'campaign_id' => $campaign->id,
+					'time >=' => date('Y-m-d H:00:00')
+				])
+				->first();
+
+			if (empty($hourlyRecord)) {
+				$hourlyRecord = $hourlyTable->newEntity();
+				$hourlyRecord->campaign_id = $campaign->id;
+			}
+
+			foreach ($measures as $mKey => $measure) {
+				$hourlyRecord->$measure += $newCounts[$measure];
+			}
+
+			$hourlyRecord->time = date('Y-m-d H:i:s');
+			$hourlyTable->save($hourlyRecord);
 		}
 	}
 }
