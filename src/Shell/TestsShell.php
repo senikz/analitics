@@ -32,6 +32,7 @@ class TestsShell extends \Cake\Console\Shell
 		//$a = $this->Sources->find()->where(['id' => 3])->first();
 		$b = $this->Sources->find()->where(['id' => 1])->first();
 
+		var_dump($b);
 		//var_dump($a);
 		//$a->syncCampaigns();
 
@@ -44,10 +45,10 @@ class TestsShell extends \Cake\Console\Shell
 			]
 		], '2018-05-05');*/
 
-		$c = $this->Campaigns->find()->where(['id' => 79])->first();
+		//$c = $this->Campaigns->find()->where(['id' => 79])->first();
 		//$rep = $a->loadCampaignStatisticsReport($c, ReportDefinitionDateRangeType::YESTERDAY, ['CampaignId', 'AdGroupId', 'Criteria', 'Id', 'Impressions', 'Clicks', 'Cost']);
-		$rep = $b->updateCampaignsDailyStatistics('2018-05-02');
-var_dump($rep);
+		//$rep = $b->updateCampaignsContentStatistics('2018-05-02');
+//var_dump($rep);
 		//$this->CSD->create([], date('Y-m-d'));
 
 

@@ -1,0 +1,8 @@
+msgid "sources.options.token"
+msgstr "Токен"
+
+msgid "sources.options.login"
+msgstr "Логин"
+
+msgid "sources.options.clientCustomerId"
+msgstr "ID клиента"

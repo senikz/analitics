@@ -30,10 +30,16 @@ class Adwords extends \App\Model\Entity\Source
 {
 	const TYPE = 'adwords';
 	const TYPE_HUMAN = 'Google Adwords';
+	const OPTIONS = ['clientCustomerId'];
 
 	const PAGE_LIMIT = 200;
 
     protected $session;
+
+	public function isCampaignable()
+	{
+		return true;
+	}
 
     public function getSession()
     {
@@ -57,61 +63,33 @@ class Adwords extends \App\Model\Entity\Source
 		return (new AdWordsServices())->get($this->getSession(), $classname);
 	}
 
-    public function loadCampaignStatisticsReport(\App\Model\Entity\Campaign $campaign, $period, array $fields)
-    {
-		$perfomance = ReportDefinitionReportType::CRITERIA_PERFORMANCE_REPORT;
-		$selector = (new Selector())->setFields($fields);
-			/*->setPredicates(
-				[
-                	//new Predicate('CampaignId', PredicateOperator::EQUALS, [$campaign->rel_id]),
-					new Predicate('AdGroupId', PredicateOperator::EQUALS, [49600285846])
-            	]
-			);*/
-
-        $reportDefinition = new ReportDefinition();
-        $reportDefinition->setSelector($selector);
-    	$reportDefinition->setReportName('Criteria performance report #' . uniqid());
-    	$reportDefinition->setDateRangeType($period);
-        $reportDefinition->setReportType($perfomance);
-        $reportDefinition->setDownloadFormat(DownloadFormat::CSV);
-
-        $reportDownloadResult = (new ReportDownloader($this->getSession()))
-			->downloadReport(
-				$reportDefinition,
-				(new ReportSettingsBuilder())
-		            ->includeZeroImpressions(true)
-		            ->build()
-			);
-		//echo ($reportDownloadResult->getAsString());
-		//print_r(ReportParser::parseCsv($reportDownloadResult->getAsString(), ['col_delimiter' => ',']));
-		//exit;
-        return ReportParser::parseCsv($reportDownloadResult->getAsString(), ['col_delimiter' => ',']);
-    }
-
-	public function loadDailyStatisticsReport($date = null)
+	public function loadDailyStatisticsReport($date, $type, $fields, $predicates = null)
 	{
-		$fields = ['CampaignId', 'Impressions', 'Clicks', 'Cost'];
 		$perfomance = ReportDefinitionReportType::CAMPAIGN_PERFORMANCE_REPORT;
 
 		$selector = (new Selector())
 			->setFields($fields);
 
+		if (!empty($predicate)) {
+			$selector->setPredicates($predicates);
+		}
+
 		$reportDefinition = new ReportDefinition();
 
-		if ($date) {
+		if ($date == date('Y-m-d')) {
+			$reportDefinition->setDateRangeType(ReportDefinitionDateRangeType::TODAY);
+		} else {
 			$date = date('Ymd', strtotime($date));
 			$reportDefinition->setDateRangeType(ReportDefinitionDateRangeType::CUSTOM_DATE);
 			$selector->setDateRange((new DateRange())
 				->setMin($date)
 				->setMax($date)
 			);
-		} else {
-			$reportDefinition->setDateRangeType(ReportDefinitionDateRangeType::TODAY);
 		}
 
 		$reportDefinition->setSelector($selector);
 		$reportDefinition->setReportName('Criteria performance report #' . uniqid());
-		$reportDefinition->setReportType($perfomance);
+		$reportDefinition->setReportType($type);
 		$reportDefinition->setDownloadFormat(DownloadFormat::CSV);
 
 		$reportDownloadResult = (new ReportDownloader($this->getSession()))
@@ -276,7 +254,11 @@ class Adwords extends \App\Model\Entity\Source
 
 	public function updateCampaignsDailyStatistics($date)
 	{
-		$report = $this->loadDailyStatisticsReport($date);
+		$report = $this->loadDailyStatisticsReport(
+			$date,
+			ReportDefinitionReportType::CAMPAIGN_PERFORMANCE_REPORT,
+			['CampaignId', 'Impressions', 'Clicks', 'Cost']
+		);
 		$statDailyTable = TableRegistry::get('CampaignStatisticsDaily');
 
 		if (empty($report)) {
@@ -286,12 +268,26 @@ class Adwords extends \App\Model\Entity\Source
 		$statDailyTable->saveCampaignsReport($report, $date, 'Campaign ID');
 	}
 
-	/**
-	 * Loads statistics for
-	 * @param  [type] $campaignId [description]
-	 * @param  [type] $date       [description]
-	 * @return [type]             [description]
-	 */
-	public function updateKeywordsDailyStatistics($campaignId, $date)
-	{}
+	public function updateCampaignsContentStatistics($date)
+	{
+		$campaignsTable = TableRegistry::get('Campaigns');
+		$campaignIds = $campaignsTable->find('list', ['valueField' => 'rel_id'])->where(['source_id' => $this->id])->toArray();
+
+		$report = $this->loadDailyStatisticsReport(
+			$date,
+			ReportDefinitionReportType::CRITERIA_PERFORMANCE_REPORT,
+			['CampaignId', 'AdGroupId', 'Criteria', 'Id', 'Impressions', 'Clicks', 'Cost'],
+			//['CampaignId', 'AdGroupId', 'Criteria', 'Impressions', 'Clicks', 'Cost'],
+			[
+				new Predicate('CampaignId', PredicateOperator::EQUALS, $campaignIds),
+			]
+		);
+
+		if (empty($report)) {
+			return false;
+		}
+
+		$statDailyTable = TableRegistry::get('CampaignStatisticsDaily');
+		$statDailyTable->saveCampaignsContentReport($report, $date, 'Ad group ID', 'Keyword ID');
+	}
 }

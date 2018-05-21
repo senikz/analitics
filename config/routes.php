@@ -121,7 +121,45 @@ Router::prefix('api', function ($routes) {
     });
 
     $routes->resources('Sites', function ($routes) use ($statisticsMap) {
-        $routes->resources('Campaigns', [
+        $routes->resources('Sources', [
+            'prefix' => 'sites',
+            'only' => ['index']
+        ]);
+        $routes->resources('Leads', [
+            'prefix' => 'sites',
+            'only' => ['index']
+        ]);
+        $routes->resources('Statistics', [
+            'prefix' => 'sites',
+            'only' => null,
+            'map' => array_merge($statisticsMap, [
+                [
+                    'action' => 'edit',
+                    'method' => 'PUT',
+                    'path' => '/',
+                ]
+            ]),
+        ]);
+        $routes->resources('Orders', [
+            'prefix' => 'sites',
+        ]);
+        $routes->resources('Utm', [
+            'prefix' => 'sites',
+            'map' => [
+                [
+                    'action' => 'edit',
+                    'method' => 'PUT',
+                    'path' => '/',
+                ]
+            ],
+        ]);
+    });
+
+	$routes->resources('Sources', function ($routes) use ($statisticsMap) {
+		$routes->resources('Costs', [
+            'prefix' => 'sources',
+        ]);
+        /*$routes->resources('Campaigns', [
             'prefix' => 'sites',
             'only' => ['index']
         ]);
@@ -155,7 +193,7 @@ Router::prefix('api', function ($routes) {
                     'path' => '/',
                 ]
             ],
-        ]);
+        ]);*/
     });
 
     $routes->resources('Campaigns', function ($routes) use ($statisticsMap) {

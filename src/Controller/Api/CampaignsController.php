@@ -24,7 +24,7 @@ class CampaignsController extends ApiController
         foreach ($query as $row) {
             $result[] = [
                     'id' => $row->id,
-                    'site_id' => $row->site_id,
+                    'source_id' => $row->source_id,
                     'caption' => $row->caption,
                 ];
         }
@@ -55,7 +55,7 @@ class CampaignsController extends ApiController
 
         $result = [
                 'id' => $campaign->id,
-                'site_id' => $campaign->site_id,
+                'source_id' => $campaign->source_id,
                 'caption' => $campaign->caption,
                 'type' => $campaign->getTypeHuman(),
                 'num' => $campaign->rel_id,
@@ -65,41 +65,6 @@ class CampaignsController extends ApiController
             ];
 
         $this->sendData($result);
-    }
-
-    public function add()
-    {
-        if ($this->request->is('post')) {
-            $data = $this->request->getData();
-
-            if ($this->Validator->required($data, ['site_id', 'profile_id', 'caption', 'key'])) {
-                $campaign = $this->Campaigns->newEntity();
-                $campaign->rel_id = $data['key'];
-                $campaign->source = $this->Campaigns->Sources->get($data['source_id']);
-                $campaign = $this->Campaigns->patchEntity($campaign, $data);
-
-                if ($a = $this->Campaigns->save($campaign)) {
-                    $this->sendData([
-                        'id' => $campaign->id
-                    ]);
-                }
-
-                $this->sendError(__('Can`t add campaign'));
-            }
-
-            $this->sendError($this->Validator->getLastError());
-        }
-    }
-
-    public function delete($id = null)
-    {
-        if ($this->request->is('delete') && $id) {
-            if ($this->Campaigns->deleteAll(['id' => $id])) {
-                $this->sendData([]);
-            } else {
-                $this->sendError(__('Can`t delete campaign'));
-            }
-        }
     }
 
     public function sync()

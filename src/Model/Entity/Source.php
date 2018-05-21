@@ -32,12 +32,7 @@ class Source extends Entity
 
     public function option($name)
     {
-        if (empty($this->source_options)) {
-            $sourceOptionsTable = TableRegistry::get('SourceOptions');
-            $this->source_options = $sourceOptionsTable->find()->where(['source_id' => $this->id])->all();
-        }
-
-        foreach ($this->source_options as $option) {
+        foreach ($this->options() as $option) {
             if ($option->name == $name) {
                 return $option->value;
             }
@@ -46,9 +41,24 @@ class Source extends Entity
         return null;
     }
 
-	public function hasCampaigns()
+	public function options()
+	{
+		if (empty($this->source_options)) {
+            $sourceOptionsTable = TableRegistry::get('SourceOptions');
+            $this->source_options = $sourceOptionsTable->find()->where(['source_id' => $this->id])->all();
+        }
+
+		return $this->source_options;
+	}
+
+	public function isCampaignable()
 	{
 		return false;
+	}
+
+	public function getType()
+	{
+		return static::TYPE_HUMAN;
 	}
 
 	public function syncCampaigns()
@@ -71,6 +81,8 @@ class Source extends Entity
 		return true;
 	}
 
-	public function updateDetalizedStatistics($date)
-	{}
+	public function updateCampaignsContentStatistics($date)
+	{
+		return true;
+	}
 }

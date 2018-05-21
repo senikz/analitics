@@ -166,4 +166,96 @@ class CampaignStatisticsDailyTable extends Table
 			$hourlyTable->save($hourlyRecord);
 		}
 	}
+
+	public function saveCampaignsContentReport(array $report, $date, $adGroupKey = 'AdGroupId', $keywordKey = 'CriteriaId',  $measures = null)
+	{
+		$AdGroupsTable = TableRegistry::get('AdGroups');
+		$KeywordsTable = TableRegistry::get('Keywords');
+		$AdGroupsStatisticsTable = TableRegistry::get('AdGroupStatisticsDaily');
+		$keywordsStatisticsTable = TableRegistry::get('KeywordStatisticsDaily');
+
+		if (empty($measures)) {
+			$measures = [
+				'Clicks' => 'clicks',
+				'Impressions' => 'views',
+				'Cost' => 'cost',
+			];
+		}
+
+		$keywords = [];
+		$adGroups = [];
+
+		$statProto = [];
+		foreach ($measures as $mKey => $measure) {
+			$statProto[$measure] = 0;
+		}
+
+		foreach ($report as $row) {
+			if (!isset($adGroups[ $row[$adGroupKey] ])) {
+				$adGroups[ $row[$adGroupKey] ] = $statProto;
+			}
+			if (!isset($keywords[ $row[$keywordKey] ])) {
+				$keywords[ $row[$keywordKey] ] = $statProto;
+			}
+
+			foreach ($measures as $mKey => $measure) {
+				if (array_key_exists($mKey, $row)) {
+					$adGroups[ $row[$adGroupKey] ][$measure] += (float)$row[$mKey];
+					$keywords[ $row[$keywordKey] ][$measure] += (float)$row[$mKey];
+				}
+			}
+		}
+
+		foreach ($adGroups as $gId => $gStat) {
+			$adGroup = $AdGroupsTable->find('all', ['conditions' => ['rel_id' => $gId,]])->first();
+			if (empty($adGroup)) {
+				continue;
+			}
+
+			$record = $AdGroupsStatisticsTable->find('all')
+				->where([
+					'ad_group_id' => $adGroup->id,
+					'date' => $date,
+				])
+				->first();
+
+			if(empty($record)) {
+				$record = $AdGroupsStatisticsTable->newEntity();
+			}
+
+			$record->ad_group = $adGroup;
+			foreach ($measures as $mKey => $measure) {
+				$record->$measure = $gStat[$measure];
+			}
+
+			$record->date = $date;
+			$AdGroupsStatisticsTable->save($record);
+		}
+
+		foreach ($keywords as $kId => $kStat) {
+			$keyword = $KeywordsTable->find('all', ['conditions' => ['rel_id' => $kId,]])->first();
+			if (empty($keyword)) {
+				continue;
+			}
+
+			$record = $keywordsStatisticsTable->find('all')
+				->where([
+					'keyword_id' => $keyword->id,
+					'date' => $date,
+				])
+				->first();
+
+			if(empty($record)) {
+				$record = $keywordsStatisticsTable->newEntity();
+			}
+
+			$record->keyword = $keyword;
+			foreach ($measures as $mKey => $measure) {
+				$record->$measure = $kStat[$measure];
+			}
+			$record->date = $date;
+
+			$keywordsStatisticsTable->save($record);
+		}
+	}
 }

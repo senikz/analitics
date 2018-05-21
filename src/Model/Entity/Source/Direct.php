@@ -22,8 +22,14 @@ class Direct extends \App\Model\Entity\Source
 {
 	const TYPE = 'direct';
 	const TYPE_HUMAN = 'Яндекс.Директ';
+	const OPTIONS = ['login', 'token'];
 
 	const SYNC_STATES = ['ON'];
+
+	public function isCampaignable()
+	{
+		return true;
+	}
 
     protected function getProvider()
     {
@@ -171,32 +177,45 @@ class Direct extends \App\Model\Entity\Source
         }
     }
 
-	public function loadDailyStatisticsReport($date = null)
+	public function loadDailyStatisticsReport($date, $type, $fields, $filter = null)
 	{
-		$fieldNames = [FieldEnum::CAMPAIGN_ID, FieldEnum::COST, FieldEnum::IMPRESSIONS, FieldEnum::CLICKS];
-
 		$provider = $this->getProvider();
 		$reportService = $provider->getReportsService();
 
+		$reportDefinition = (new ReportDefinitionBuilder)
+			->setFieldNames($fields)
+			->setReportName('Statistics report #' . uniqid())
+			->setReportType($type);
+
+		if ($date == date('Y-m-d')) {
+			$reportDefinition->setDateRangeType(DateRangeTypeEnum::TODAY);
+		} else {
+			$reportDefinition->setDateRangeType(DateRangeTypeEnum::CUSTOM_DATE, $date, $date);
+		}
+
+		$reportDefinition
+			->includeVat()
+			->setFormat(FormatEnum::TSV);
+
+		if ($filter) {
+			call_user_func_array([$reportDefinition, 'addFilter'], $filter);
+		}
+
 		$reportRequest = (new ReportRequest)
-			->setProcessingMode(ReportRequest::PROCESSING_MODE_ONLINE)
+			->setProcessingMode(ReportRequest::PROCESSING_MODE_AUTO)
 			->returnMoneyAsFloat()
-			->setDefinition(
-				(new ReportDefinitionBuilder)
-					->setFieldNames($fieldNames)
-					->setReportName('Statistics report 1001')
-					->setReportType(ReportTypeEnum::CAMPAIGN_PERFORMANCE_REPORT)
-					->setDateRangeType(DateRangeTypeEnum::TODAY)
-					->includeVat()
-					->setFormat(FormatEnum::TSV)
-			);
+			->setDefinition($reportDefinition);
 
 		return ReportParser::parseCsv($reportService->getReady($reportRequest)->getData(), ['col_delimiter' => '\t']);
 	}
 
 	public function updateCampaignsDailyStatistics($date)
 	{
-		$report = $this->loadDailyStatisticsReport($date);
+		$report = $this->loadDailyStatisticsReport(
+			$date,
+			ReportTypeEnum::CAMPAIGN_PERFORMANCE_REPORT,
+			[FieldEnum::CAMPAIGN_ID, FieldEnum::COST, FieldEnum::IMPRESSIONS, FieldEnum::CLICKS]
+		);
 		$statDailyTable = TableRegistry::get('CampaignStatisticsDaily');
 
 		if (empty($report)) {
@@ -204,5 +223,25 @@ class Direct extends \App\Model\Entity\Source
 		}
 
 		$statDailyTable->saveCampaignsReport($report, $date, 'CampaignId');
+	}
+
+	public function updateCampaignsContentStatistics($date)
+	{
+		$campaignsTable = TableRegistry::get('Campaigns');
+		$campaignIds = $campaignsTable->find('list', ['valueField' => 'rel_id'])->where(['source_id' => $this->id])->toArray();
+
+		$report = $this->loadDailyStatisticsReport(
+			$date,
+			ReportTypeEnum::SEARCH_QUERY_PERFORMANCE_REPORT,
+			[FieldEnum::CAMPAIGN_ID, FieldEnum::AD_GROUP_ID,  FieldEnum::CRITERIA_TYPE, FieldEnum::CRITERIA_ID, FieldEnum::COST, FieldEnum::IMPRESSIONS, FieldEnum::CLICKS],
+			[FieldEnum::CAMPAIGN_ID, FilterOperatorEnum::IN, [$campaignIds]]
+		);
+
+		if (empty($report)) {
+			return false;
+		}
+
+		$statDailyTable = TableRegistry::get('CampaignStatisticsDaily');
+		$statDailyTable->saveCampaignsContentReport($report, $date);
 	}
 }

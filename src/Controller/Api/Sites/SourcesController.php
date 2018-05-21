@@ -1,13 +1,13 @@
 <?php
 namespace App\Controller\Api\Sites;
 
-class CampaignsController extends \App\Controller\Api\ApiController
+class SourcesController extends \App\Controller\Api\ApiController
 {
     public function index()
     {
         $result = [];
 
-        $query = $this->Campaigns->find()
+        $query = $this->Sources->find()
             ->where([
                 'site_id' => $this->request->params['site_id']
             ]);

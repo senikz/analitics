@@ -42,6 +42,12 @@ class SourcesTable extends Table
         $this->hasMany('Campaigns', [
             'foreignKey' => 'source_id'
         ]);
+        $this->belongsTo('Users', [
+            'foreignKey' => 'user_id'
+        ]);
+        $this->belongsTo('Sites', [
+            'foreignKey' => 'site_id'
+        ]);
     }
 
     /**

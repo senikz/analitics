@@ -1,5 +1,5 @@
 <?php
-namespace App\Controller\Api\Sites;
+namespace App\Controller\Api\Sources;
 
 use Cake\ORM\TableRegistry;
 
@@ -26,23 +26,35 @@ class CostsController extends \App\Controller\Api\ApiController
     public function add()
     {
 		if ($this->request->is('post')) {
+			$sourceId = $this->request->params['source_id'];
 
-			$SiteCosts = TableRegistry::get('SiteCosts');
+			$sourcesTable = TableRegistry::get('sources');
+			$costsTable = TableRegistry::get('SiteCosts');
+
+			$source = $sourcesTable->get($sourceId);
+			if (empty($source)) {
+				$this->sendError(__('Source not found'), 404);
+			}
 
 			$data = $this->request->getData();
-			$cost = $SiteCosts->newEntity();
+			$from = empty($data['date']['from']) ? date('y-m-d') : $data['date']['from'];
+			$to = empty($data['date']['to']) ? date('y-m-d') : $data['date']['to'];
 
-			$cost->site_id = $this->request->params['site_id'];
-			$cost->cost = isset($data['cost']) ? $data['cost'] : 0;
-			$cost->comment = isset($data['comment']) ? $data['comment'] : '';
-			$cost->time = isset($data['time']) ? $data['time'] : date('Y-m-d H:i:s');
+			$interval = (new \DateTime($from))->diff(new \DateTime($to));
+			$days = $interval->days + 1;
+			$amount = $days == 1 ? $data['cost'] : $data['cost'] / $days;
 
-			if ($SiteCosts->save($cost)) {
-				$this->sendData([
-					'id' => $cost->id
-				]);
-			} else {
-				$this->sendError(__('Can`t add costs'));
+			$date = date('Y-m-d 10:00:00', strtotime($from . ' -1 day'));
+			for ($i = 1; $i <= $days; $i++) {
+				$cost = $costsTable->newEntity();
+
+				$cost->site_id = $source->site_id;
+				$cost->source_id = $source->id;
+				$cost->cost = $amount;
+				$cost->comment = isset($data['comment']) ? $data['comment'] : '';
+				$cost->time = $date = date('Y-m-d 10:00:00', strtotime($date . ' +1 day'));;
+
+				$costsTable->save($cost);
 			}
 		}
     }

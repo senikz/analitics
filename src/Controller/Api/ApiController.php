@@ -79,6 +79,12 @@ class ApiController extends Controller
 
     protected function sendData($data)
     {
+		if (!empty($this->request->params['requested'])) {
+			$this->response->type('json');
+			$this->response->body(json_encode($data));
+			return $this->response;
+		}
+
         $query = $this->request->query;
         foreach ($this->request->params as $key => $param) {
             if (preg_match('/^id|([a-z]*_id)$/', $key)) {
@@ -140,5 +146,10 @@ class ApiController extends Controller
 		$this->paginateQuery($query);
 		$this->orderQuery($query);
 		$this->setQueryCount($query);
+	}
+
+	public function requestAction($url, array $extra = [])
+	{
+		return json_decode(parent::requestAction($url, $extra), true);
 	}
 }

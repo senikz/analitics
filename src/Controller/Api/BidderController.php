@@ -11,6 +11,31 @@ class BidderController extends ApiController
 		$this->loadComponent('Validator');
 	}
 
+	public function index()
+	{
+		$bidsTable = TableRegistry::get('BidOptions');
+
+		$query = $bidsTable->find('all');
+		$bids = $query
+			->select([
+				'type',
+				'rel_id',
+			])
+			->group($query->func()->concat([
+				'type' => 'identifier',
+				'rel_id' => 'identifier',
+			]))
+			->all()
+			->toArray();
+
+		$this->sendData(array_map(function ($bid) {
+			return [
+				'type' => $bid->type,
+				'rel_id' => $bid->rel_id,
+			];
+		}, $bids));
+	}
+
 	public function info()
     {
         $optionsTable = TableRegistry::get('Options');

@@ -3,7 +3,7 @@ namespace App\Shell;
 
 use Cake\ORM\TableRegistry;
 
-class SyncSourcesShell extends \Cake\Console\Shell
+class SourcesShell extends \Cake\Console\Shell
 {
     public function initialize()
     {
@@ -11,10 +11,9 @@ class SyncSourcesShell extends \Cake\Console\Shell
 		$this->Sources = TableRegistry::get('Sources');
     }
 
-	public function all()
+	public function sync()
 	{
 		$sources = $this->Sources->find()->all();
-
 		foreach ($sources as $source) {
 			$source->syncCampaigns();
 		}
