@@ -87,6 +87,16 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 ### История изменений
 
+`2.0`
+
+* Добавлен раздел `Источники трафика`;
+* В раздел сайтов добавлен метод получения всех источников трафика для отдельного сайта;
+* Из раздела сайтов удален метод получения всех кампаний сайта;
+* Из кампаний удалено поле `site_id`, теперь кампании связаны с сайтами через источники трафика;
+* Удален метод добавления новой кампании, теперь это происходит автоматически при синхронизации источников трафика;
+* В методы получения информации о кампании добавлено поле `source_id`;
+* Метод добавления расходов перенесет из раздела `Сайты` в раздел `Источники трафика` и добавлен способ добавления расхода на период;
+
 `1.9`
 
 * В методы детального просмотра кампаний, групп объявлений и ключевых фраз добавлены свойства с текущими значениями биддера.
@@ -149,13 +159,6 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 # Data Structures
 
-## Profile
-+ id: (number) - ID профиля
-+ login: (string) - Логин
-+ type: (string) - Тип
-
-
-
 ## Project Statistics
 + Include Campaign Statistics
 + orders (number) - Кол-во заказов с сайтов проекта.
@@ -163,6 +166,11 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 ## Site Statistics
 + Include Campaign Statistics
 + orders (number) - Кол-во заказов с сайта
+
+## Source
++ id: (number) - ID
++ type: (string) -  Тип
++ caption: (string) - Название
 
 ## Campaign Statistics
 + cost: (number) - Потраченная сумма(руб.).
@@ -278,20 +286,6 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 
 
-
-
-
-
-
-
-## Настройки [/settings]
-
-### Список профилей поисковых систем [GET/settings/profiles]
-
-+ Response 200 (application/json)
-    + Attributes
-        + data (array,fixed)
-            + (Profile)
 
 
 
@@ -452,8 +446,7 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 + Response 200 (application/json)
 
-
-### Список кампаний [GET/sites/{id}/campaigns?{order}=&{reverse}=]
+### Список источников трафика [GET/sites/{id}/sources?{order}=&{reverse}=]
 
 + Parameters
     + id: (number) - ID сайта.
@@ -463,7 +456,7 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 + Response 200 (application/json)
     + Attributes
         + data (array,fixed)
-            + (Campaign)
+            + (Source)
 
 ### Добавление заказа [POST/sites/{id}/orders]
 
@@ -479,21 +472,6 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 + Response 200 (application/json)
     + Attributes
         + id: (number) - ID добавленного заказа
-
-### Добавление произвольного расхода [POST/sites/{id}/costs]
-
-+ Parameters
-    + id: (number) - ID сайта.
-
-+ Request
-	+ Attributes
-	    + cost (number, required) - Сумма расхода.
-	    + comment (string, required) - Комментарий к заказу.
-	    + time (string, optional) - Время заказа в формате `Y-m-d H:i:s` (по умолчанию будет установлено текущее время).
-
-+ Response 200 (application/json)
-    + Attributes
-        + id: (number) - ID добавленной записи
 
 ### Общая статистика сайта [GET/sites/{id}/statistics/summary?{from}=&{to}=]
 
@@ -571,6 +549,102 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 
 
+
+## Источники трафика [/sources]
+
+### Список доступных типов и настроек [GET/sources/types]
+
++ Response 200 (application/json)
+    + Attributes
+        + (array,fixed)
+			+ (object)
+				+ type: (number) - Ключ для типа источника трафика
+				+ human: (string) - Название типа источника
+				+ options: (array,fixed)
+					+ Object
+						+ name: (string) - Настройка
+						+ caption: (string) - Название поля
+
+### Список источников трафика [GET/sources]
+
++ Response 200 (application/json)
+    + Attributes
+        + data (array,fixed)
+            + (Source)
+
+
+### Подробная информация и настройки [GET/sources/{id}]
+
++ Parameters
+    + id: (number, required) - ID источника трафика
+
++ Response 200 (application/json)
+    + Attributes
+        + (Source)
+			+ site_id: (number) - ID свзанного сайта
+			+ human: (string) - Название типа источника
+			+ options: (array,fixed)
+				+ Object
+					+ name: (string) - Настройка
+					+ value: (string) - Значение
+
+### Добавить новый источник трафика [POST]
+
++ Request
+    + Attributes
+        + site_id: (number, required) - ID сайта, к которому относится источник
+        + type: (string, required) - Ключ типа источника
+        + caption: (string,required) - Название источника
+		+ options: (object) - Массив настроек для источника трафика в виде name-value
+			+ `name - value`
+
++ Response 200 (application/json)
+    + Attributes
+        + data
+            + id: (number) - ID добавленного источника
+
+### Редактировать источник трафика [PUT]
+
++ Request
+    + Attributes
+        + site_id: (number, required) - ID сайта, к которому относится источник
+        + caption: (string,required) - Название источника
+		+ options: (object) - Массив настроек для источника трафика в виде name-value
+			+ `name - value`
+
++ Response 200 (application/json)
+    + Attributes
+        + data
+            + id: (number) - ID источника
+
+### Удалить источник [DELETE/sources/{id}]
+
++ Parameters
+    + id: (number) - ID источника
+
++ Response 200 (application/json)
+
+
+### Добавление произвольного расхода [POST/sources/{id}/costs]
+
++ Parameters
+    + id: (number) - ID источника трафика.
+
++ Request
+	+ Attributes
+	    + cost (number, required) - Сумма расхода.
+	    + comment (string, optional) - Комментарий к расходу.
+	    + date (object, optional) - Период расхода в виде интервала; если не указано, будет установлено текущее время
+			+ from: (string) - Дата в формате `Y-m-d`
+			+ to: (string) - Дата в формате `Y-m-d`
+
+
+
+
+
+
+
+
 ## Кампании [/campaigns]
 
 ### Список кампаний [GET]
@@ -580,20 +654,6 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
         + data (array,fixed)
             + (Campaign)
                 + site_id: (number) - ID сайта, которому принадлежит кампания
-
-### Добавить новую кампанию [POST]
-
-+ Request
-    + Attributes
-        + site_id: (number, required) - ID сайта, к которому относится кампания
-        + profile_id: (number, required) - ID профиля, которому принадлежит кампания
-        + key: (number, required) - Идентификатор кампании в соответствующей профилю системе
-        + caption: (string) - Название кампании
-
-+ Response 200 (application/json)
-    + Attributes
-        + data
-            + id: (number) - ID добавленной кампании
 
 ### Детали кампании [GET/campaigns/{id}]
 

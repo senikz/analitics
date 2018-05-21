@@ -4,21 +4,17 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * SiteCall Entity
+ * SourceOption Entity
  *
  * @property int $id
- * @property int $site_id
- * @property string $phone
- * @property int $duration
- * @property string $link
- * @property string $details
- * @property \Cake\I18n\FrozenTime $time
+ * @property int $source_id
+ * @property string $name
+ * @property string $value
  *
- * @property \App\Model\Entity\Site $site
+ * @property \App\Model\Entity\Source $source
  */
-class SiteCall extends Entity
+class SourceOption extends Entity
 {
-	use \App\Model\LeadHelperTrait;
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().

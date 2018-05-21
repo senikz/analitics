@@ -30,3 +30,11 @@
 
 Install `aglio`
 Run `aglio -o src/Template/Docs/index.ctp -i api-docs.apib --theme-template ./kaiten-tuned.jade`
+
+
+## Новые кроны
+
+* UpdateCampaignsStatistics - проходит по всем источникам и запускает метод updateCampaignsDailyStatistics, который загружает суточную сводку по кампаниям и сохраняет в таблицы статистики кампаний;
+* SyncSources
+ 	* all - для каждого источника запускает syncCampaigns, таким образом синхронизируя кампании, группы объявлений, ключевые слова и прочие данные с соответствущими значениями на сервере;
+*

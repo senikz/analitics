@@ -37,4 +37,20 @@ trait StatisticsTableHelper
             'emails' => (int)$statistics->total_emails,
         ];
     }
+
+	public function create($statRecord, $date, $entity = false)
+	{
+
+	}
+
+	public function beforeSave(\Cake\Event\Event $event, $entity, \ArrayObject $options)
+	{
+		$entity->ctr = ($entity->views > 0 ? round(($entity->clicks * 100 / $entity->views), 2) : 0);
+		$entity->lead_perc = ($entity->clicks > 0 ? round(($entity->leads * 100 / $entity->clicks), 2) : 0);
+		$entity->lead_cost = ($entity->leads > 0 ? round(($entity->cost / $entity->leads), 2) : 0);
+		$entity->order_perc = ($entity->leads > 0 ? round(($entity->orders * 100 / $entity->leads), 2) : 0);
+		$entity->order_cost = ($entity->orders > 0 ? round(($entity->cost / $entity->orders), 2) : 0);
+
+		return true;
+	}
 }

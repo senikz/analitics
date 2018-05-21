@@ -4,7 +4,7 @@ namespace App\Shell;
 use Cake\Log\Log;
 use Cake\Console\Shell;
 use Cake\ORM\TableRegistry;
-use \App\Model\Entity\Credential;
+use \App\Model\Entity\Source\Direct;
 
 use Biplane\YandexDirect\Api\V5\Contract\GetReportsRequest;
 use Biplane\YandexDirect\Api\V5\Report\ReportRequest;
@@ -48,14 +48,13 @@ class UpdateDirectStatisticsShell extends Shell
     {
 		$campaigns = $this->Campaigns->find('all', [
 			'conditions' => [
-				'credential_id >' => '0',
-				'Credentials.type' => Credential::TYPE_DIRECT,
+				'Sources.type' => Direct::TYPE,
 			],
-			'contain' => ['Credentials'],
+			'contain' => ['Sources'],
 		])->all();
 
 		foreach($campaigns as $campaign) {
-			$provider = $campaign->getProvider();
+			$provider = $campaign->source->getProvider();
 
 			if(empty($provider)) {
 				continue;
@@ -72,6 +71,7 @@ class UpdateDirectStatisticsShell extends Shell
 		$fieldNames = [FieldEnum::CAMPAIGN_ID, FieldEnum::COST, FieldEnum::IMPRESSIONS, FieldEnum::CLICKS];
 
 		$reportService = $provider->getReportsService();
+		//var_dump($reportService);exit;
 		$reportRequest = (new ReportRequest)
 			->setProcessingMode(ReportRequest::PROCESSING_MODE_ONLINE)
 			->returnMoneyAsFloat()
@@ -88,7 +88,7 @@ class UpdateDirectStatisticsShell extends Shell
 
 		$reportResult = $reportService->getReady($reportRequest);
 		$reportDetails = $this->parseReportAnswer($reportResult->getData(), $fieldNames);
-
+var_dump( $reportDetails );return;
 		if (empty($reportDetails)) {
             Log::write('debug', ['campaignId' => $campaignId, 'report' => 'empty'], ['shell', 'UpdateDirectStatisticsShell', 'today']);
             return;

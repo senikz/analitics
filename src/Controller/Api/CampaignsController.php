@@ -2,7 +2,6 @@
 namespace App\Controller\Api;
 
 use Cake\ORM\TableRegistry;
-use \App\Model\Entity\Credential;
 
 class CampaignsController extends ApiController
 {
@@ -25,7 +24,7 @@ class CampaignsController extends ApiController
         foreach ($query as $row) {
             $result[] = [
                     'id' => $row->id,
-                    'site_id' => $row->site_id,
+                    'source_id' => $row->source_id,
                     'caption' => $row->caption,
                 ];
         }
@@ -56,7 +55,7 @@ class CampaignsController extends ApiController
 
         $result = [
                 'id' => $campaign->id,
-                'site_id' => $campaign->site_id,
+                'source_id' => $campaign->source_id,
                 'caption' => $campaign->caption,
                 'type' => $campaign->getTypeHuman(),
                 'num' => $campaign->rel_id,
@@ -68,50 +67,15 @@ class CampaignsController extends ApiController
         $this->sendData($result);
     }
 
-    public function add()
-    {
-        if ($this->request->is('post')) {
-            $data = $this->request->getData();
-
-            if ($this->Validator->required($data, ['site_id', 'profile_id', 'caption', 'key'])) {
-                $campaign = $this->Campaigns->newEntity();
-                $campaign->rel_id = $data['key'];
-                $campaign->credential = $this->Campaigns->Credentials->get($data['profile_id']);
-                $campaign = $this->Campaigns->patchEntity($campaign, $data);
-
-                if ($a = $this->Campaigns->save($campaign)) {
-                    $this->sendData([
-                        'id' => $campaign->id
-                    ]);
-                }
-
-                $this->sendError(__('Can`t add campaign'));
-            }
-
-            $this->sendError($this->Validator->getLastError());
-        }
-    }
-
-    public function delete($id = null)
-    {
-        if ($this->request->is('delete') && $id) {
-            if ($this->Campaigns->deleteAll(['id' => $id])) {
-                $this->sendData([]);
-            } else {
-                $this->sendError(__('Can`t delete campaign'));
-            }
-        }
-    }
-
     public function sync()
     {
 		$campaign = $this->Campaigns->find('all')
 			->where(['Campaigns.id' => $this->request->getParam('campaign_id')])
-			->contain(['Credentials'])
+			->contain(['Sources'])
 			->first();
 
 		if(!empty($campaign)) {
-			$campaign->sync();
+			$campaign->source->syncCampaign($campaign);
 		}
     }
 

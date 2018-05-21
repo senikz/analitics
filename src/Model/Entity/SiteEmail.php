@@ -20,6 +20,7 @@ use Cake\ORM\Entity;
  */
 class SiteEmail extends Entity
 {
+	use \App\Model\LeadHelperTrait;
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().

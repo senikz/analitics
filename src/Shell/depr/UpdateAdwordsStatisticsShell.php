@@ -6,7 +6,7 @@ use Cake\Console\Shell;
 use Cake\ORM\TableRegistry;
 use \App\Model\Entity\Credential;
 
-use Google\AdsApi\AdWords\Reporting\v201708\ReportDefinitionDateRangeType;
+
 
 use Google\AdsApi\AdWords\AdWordsServices;
 use Google\AdsApi\AdWords\AdWordsSession;
@@ -163,6 +163,8 @@ class UpdateAdwordsStatisticsShell extends Shell
 							'time >=' => date('Y-m-d H:00:00'),
 						]
 					])->first();
+
+					// $this->CampaignStatisticsDaily->create($dailyRecord, $date);
 
 					if(empty($dailyRecord)) {
 						$dailyRecord = $this->CampaignStatisticsDaily->newEntity();
