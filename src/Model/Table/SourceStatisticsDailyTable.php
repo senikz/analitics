@@ -7,19 +7,19 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * SiteStatisticsDaily Model
+ * SourceStatisticsDaily Model
  *
- * @property \Cake\ORM\Association\BelongsTo $Sites
+ * @property \App\Model\Table\SourcesTable|\Cake\ORM\Association\BelongsTo $Sources
  *
- * @method \App\Model\Entity\SiteStatisticsDaily get($primaryKey, $options = [])
- * @method \App\Model\Entity\SiteStatisticsDaily newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\SiteStatisticsDaily[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\SiteStatisticsDaily|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\SiteStatisticsDaily patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\SiteStatisticsDaily[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\SiteStatisticsDaily findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\SourceStatisticsDaily get($primaryKey, $options = [])
+ * @method \App\Model\Entity\SourceStatisticsDaily newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\SourceStatisticsDaily[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\SourceStatisticsDaily|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\SourceStatisticsDaily patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\SourceStatisticsDaily[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\SourceStatisticsDaily findOrCreate($search, callable $callback = null, $options = [])
  */
-class SiteStatisticsDailyTable extends Table
+class SourceStatisticsDailyTable extends Table
 {
 	use \App\Model\StatisticsTableHelper;
 
@@ -33,12 +33,12 @@ class SiteStatisticsDailyTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('site_statistics_daily');
+        $this->setTable('source_statistics_daily');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Sites', [
-            'foreignKey' => 'site_id',
+        $this->belongsTo('Sources', [
+            'foreignKey' => 'source_id',
             'joinType' => 'INNER'
         ]);
     }
@@ -71,6 +71,11 @@ class SiteStatisticsDailyTable extends Table
             ->notEmpty('clicks');
 
         $validator
+            ->numeric('ctr')
+            ->requirePresence('ctr', 'create')
+            ->notEmpty('ctr');
+
+        $validator
             ->integer('calls')
             ->requirePresence('calls', 'create')
             ->notEmpty('calls');
@@ -84,6 +89,31 @@ class SiteStatisticsDailyTable extends Table
             ->integer('leads')
             ->requirePresence('leads', 'create')
             ->notEmpty('leads');
+
+        $validator
+            ->numeric('lead_perc')
+            ->requirePresence('lead_perc', 'create')
+            ->notEmpty('lead_perc');
+
+        $validator
+            ->numeric('lead_cost')
+            ->requirePresence('lead_cost', 'create')
+            ->notEmpty('lead_cost');
+
+        $validator
+            ->integer('orders')
+            ->requirePresence('orders', 'create')
+            ->notEmpty('orders');
+
+        $validator
+            ->numeric('order_perc')
+            ->requirePresence('order_perc', 'create')
+            ->notEmpty('order_perc');
+
+        $validator
+            ->numeric('order_cost')
+            ->requirePresence('order_cost', 'create')
+            ->notEmpty('order_cost');
 
         $validator
             ->date('date')
@@ -102,7 +132,7 @@ class SiteStatisticsDailyTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['site_id'], 'Sites'));
+        $rules->add($rules->existsIn(['source_id'], 'Sources'));
 
         return $rules;
     }

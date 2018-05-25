@@ -18,7 +18,7 @@ class UpdateCampaignsStatisticsShell extends Base
 		 * Every N minutes run daily statistics loading.
 		 */
 		if ($this->checkRunTime('CampaignsLastStatistics')) {
-			//$this->campaignsLoad(date('Y-m-d'));
+			$this->campaignsLoad(date('Y-m-d'));
 		}
 
 		/**
@@ -35,6 +35,10 @@ class UpdateCampaignsStatisticsShell extends Base
 		$this->campaignsContentLoad($date);
 	}
 
+	/**
+	 * Loads daily statistics for every campaign of each
+	 * source (which has campaigns)
+	 */
 	protected function campaignsLoad($date)
 	{
 		foreach ($this->Sources->find()->all() as $source) {
@@ -44,6 +48,10 @@ class UpdateCampaignsStatisticsShell extends Base
 		}
 	}
 
+	/**
+	 * Loads daily statistics for content (ad groups, keywords etc.)
+	 * of every campaign of each source (which has campaigns)
+	 */
 	protected function campaignsContentLoad($date)
 	{
 		foreach ($this->Sources->find()->all() as $source) {
