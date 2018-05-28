@@ -2,4 +2,6 @@
 /config/app.php
 /tmp/*
 /logs/*
+composer.lock
 /config/Migrations/schema-dump-default.lock
+config/Migrations/schema-dump-default.lock
