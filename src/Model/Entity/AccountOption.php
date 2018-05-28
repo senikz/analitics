@@ -2,18 +2,18 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
-use Cake\ORM\TableRegistry;
 
 /**
- * Source Entity
+ * AccountOption Entity
  *
  * @property int $id
- * @property string $type
- * @property string $caption
+ * @property int $source_id
+ * @property string $name
+ * @property string $value
  *
- * @property \App\Model\Entity\SourceOption[] $source_options
+ * @property \App\Model\Entity\Source $source
  */
-class Source extends Entity
+class AccountOption extends Entity
 {
 
     /**

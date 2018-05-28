@@ -7,19 +7,19 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * SourceOptions Model
+ * AccountOptions Model
  *
- * @property \Cake\ORM\Association\BelongsTo $Sources
+ * @property \App\Model\Table\SourcesTable|\Cake\ORM\Association\BelongsTo $Sources
  *
- * @method \App\Model\Entity\SourceOption get($primaryKey, $options = [])
- * @method \App\Model\Entity\SourceOption newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\SourceOption[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\SourceOption|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\SourceOption patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\SourceOption[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\SourceOption findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\AccountOption get($primaryKey, $options = [])
+ * @method \App\Model\Entity\AccountOption newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\AccountOption[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\AccountOption|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\AccountOption patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\AccountOption[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\AccountOption findOrCreate($search, callable $callback = null, $options = [])
  */
-class SourceOptionsTable extends Table
+class AccountOptionsTable extends Table
 {
 
     /**
@@ -32,12 +32,12 @@ class SourceOptionsTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('source_options');
+        $this->setTable('account_options');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Sources', [
-            'foreignKey' => 'source_id',
+        $this->belongsTo('Accounts', [
+            'foreignKey' => 'account_id',
             'joinType' => 'INNER'
         ]);
     }
@@ -74,10 +74,8 @@ class SourceOptionsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['source_id'], 'Sources'));
+        $rules->add($rules->existsIn(['account_id'], 'Accounts'));
 
         return $rules;
     }
-
-	
 }

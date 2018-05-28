@@ -17,7 +17,8 @@ class CallsController extends ApiController
 		$Sites = TableRegistry::get('Sites');
 		$SiteCalls = TableRegistry::get('SiteCalls');
 
-		if(!$site = $Sites->find()->where(['domain' => $fields['site'], 'user_id' => $this->request->user->id])->first()) {
+		//if(!$site = $Sites->find()->where(['domain' => $fields['site'], 'user_id' => $this->request->user->id])->first()) {
+		if(!$site = $Sites->find()->where(['domain' => $fields['site']])->first()) {
 			$this->sendError(__('Unknown site'));
 		}
 
@@ -39,37 +40,6 @@ class CallsController extends ApiController
 		$call->unique = empty($fields['unique']) ? 0 : 1;
 
 		$call->fillUtm($fields, $fieldsMatch);
-
-
-var_dump($call);exit;
-
-
-		if(!empty($call->utm_campaign)) {
-			$call->utm_campaign = $value;
-			if(preg_match('/[0-9]{8,20}/', $value, $matches)) {
-				$camp = $Campaigns->find('all')->where(['rel_id' => $matches[0]])->first();
-				if(!empty($camp)) {
-					$call->campaign_id = $camp->id;
-				}
-			}
-		}
-
-
-		if($details = $call->getContentDetails()) {
-
-			if(!empty($details['phrase_id'])) {
-				$keyword = $tableKeywords->find('all')->where(['rel_id' => $details['phrase_id']])->first();
-				if(!empty($keyword)) {
-					$call->keyword_id = $keyword->id;
-					$call->ad_group_id = $keyword->ad_group_id;
-					$call->campaign_id = $keyword->campaign_id;
-				}
-			}
-
-			if (!empty($details['position_type']) && !empty($details['position']) && in_array($details['position_type'], ['premium', 'other'])) {
-				$call->position = ($details['position_type'] == 'premium' ? '1' : '2') . $details['position'];
-			}
-		}
 
 		$SiteCalls->save($call);
 	}

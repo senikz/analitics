@@ -2,18 +2,29 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
-use Cake\ORM\TableRegistry;
 
 /**
- * Source Entity
+ * SourceStatisticsDaily Entity
  *
  * @property int $id
- * @property string $type
- * @property string $caption
+ * @property int $source_id
+ * @property float $cost
+ * @property int $views
+ * @property int $clicks
+ * @property float $ctr
+ * @property int $calls
+ * @property int $emails
+ * @property int $leads
+ * @property float $lead_perc
+ * @property float $lead_cost
+ * @property int $orders
+ * @property float $order_perc
+ * @property float $order_cost
+ * @property \Cake\I18n\FrozenDate $date
  *
- * @property \App\Model\Entity\SourceOption[] $source_options
+ * @property \App\Model\Entity\Source $source
  */
-class Source extends Entity
+class SourceStatisticsDaily extends Entity
 {
 
     /**
