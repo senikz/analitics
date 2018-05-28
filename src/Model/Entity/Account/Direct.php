@@ -1,5 +1,5 @@
 <?php
-namespace App\Model\Entity\Source;
+namespace App\Model\Entity\Account;
 
 use Cake\ORM\TableRegistry;
 use App\Utility\ReportParser;
@@ -18,7 +18,7 @@ use Biplane\YandexDirect\Api\V5\Report\DateRangeTypeEnum;
 use Biplane\YandexDirect\Api\V5\Report\FormatEnum;
 use Biplane\YandexDirect\Api\V5\Report\FilterOperatorEnum;
 
-class Direct extends \App\Model\Entity\Source
+class Direct extends \App\Model\Entity\Account
 {
 	const TYPE = 'direct';
 	const TYPE_HUMAN = 'Яндекс.Директ';
@@ -76,11 +76,11 @@ class Direct extends \App\Model\Entity\Source
 			}
 
 			$campaignsFoundIds[] = $campaign->getId();
-			$found = $campaignsTable->find()->where(['source_id' => $this->id, 'rel_id' => $campaign->getId()])->first();
+			$found = $campaignsTable->find()->where(['account_id' => $this->id, 'rel_id' => $campaign->getId()])->first();
 
 			if (!$found) {
 				$found = $campaignsTable->newEntity();
-				$found->source_id = $this->id;
+				$found->account_id = $this->id;
 				$found->rel_id = $campaign->getId();
 			}
 
@@ -92,7 +92,7 @@ class Direct extends \App\Model\Entity\Source
 
 		if (!empty($campaignsFoundIds)) {
 			$campaignsTable->deleteAll([
-				'source_id' => $this->id,
+				'account_id' => $this->id,
 				'rel_id NOT IN' => $campaignsFoundIds,
 			]);
 		}
@@ -228,13 +228,17 @@ class Direct extends \App\Model\Entity\Source
 	public function updateCampaignsContentStatistics($date)
 	{
 		$campaignsTable = TableRegistry::get('Campaigns');
-		$campaignIds = $campaignsTable->find('list', ['valueField' => 'rel_id'])->where(['source_id' => $this->id])->toArray();
+		$campaignIds = $campaignsTable->find('list', ['valueField' => 'rel_id'])->where(['account_id' => $this->id])->toArray();
+
+		if (empty($campaignIds)) {
+			return true;
+		}
 
 		$report = $this->loadDailyStatisticsReport(
 			$date,
 			ReportTypeEnum::SEARCH_QUERY_PERFORMANCE_REPORT,
 			[FieldEnum::CAMPAIGN_ID, FieldEnum::AD_GROUP_ID,  FieldEnum::CRITERIA_TYPE, FieldEnum::CRITERIA_ID, FieldEnum::COST, FieldEnum::IMPRESSIONS, FieldEnum::CLICKS],
-			[FieldEnum::CAMPAIGN_ID, FilterOperatorEnum::IN, [$campaignIds]]
+			[FieldEnum::CAMPAIGN_ID, FilterOperatorEnum::IN, $campaignIds]
 		);
 
 		if (empty($report)) {

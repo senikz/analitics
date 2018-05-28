@@ -1,5 +1,5 @@
 <?php
-namespace App\Model\Entity\Source;
+namespace App\Model\Entity\Account;
 
 use Cake\ORM\TableRegistry;
 use App\Utility\ReportParser;
@@ -26,13 +26,13 @@ use Google\AdsApi\AdWords\Reporting\v201802\ReportDefinitionDateRangeType;
 
 
 
-class Adwords extends \App\Model\Entity\Source
+class Adwords extends \App\Model\Entity\Account
 {
 	const TYPE = 'adwords';
 	const TYPE_HUMAN = 'Google Adwords';
 	const OPTIONS = ['clientCustomerId'];
 
-	const PAGE_LIMIT = 200;
+	const PAGE_LIMIT = 2000;
 
     protected $session;
 
@@ -123,11 +123,11 @@ class Adwords extends \App\Model\Entity\Source
 
 		foreach ($campaigns as $campaign) {
 			$campaignsFoundIds[] = $campaign->getId();
-			$found = $campaignsTable->find()->where(['source_id' => $this->id, 'rel_id' => $campaign->getId()])->first();
+			$found = $campaignsTable->find()->where(['account_id' => $this->id, 'rel_id' => $campaign->getId()])->first();
 
 			if (!$found) {
 				$found = $campaignsTable->newEntity();
-				$found->source_id = $this->id;
+				$found->account_id = $this->id;
 				$found->rel_id = $campaign->getId();
 			}
 
@@ -139,7 +139,7 @@ class Adwords extends \App\Model\Entity\Source
 
 		if (!empty($campaignsFoundIds)) {
 			$campaignsTable->deleteAll([
-				'source_id' => $this->id,
+				'account_id' => $this->id,
 				'rel_id NOT IN' => $campaignsFoundIds,
 			]);
 		}
@@ -235,15 +235,17 @@ class Adwords extends \App\Model\Entity\Source
 					]);
 				}
 
-				$kUpdate
-					->epilog('ON DUPLICATE KEY UPDATE `keyword`=VALUES(`keyword`)')
-					->execute();
+				if (!empty($keywordsFoundIds)) {
+					$kUpdate
+						->epilog('ON DUPLICATE KEY UPDATE `keyword`=VALUES(`keyword`)')
+						->execute();
 
-				$keywordsTable->deleteAll([
-					'ad_group_id' => $adGroup->id,
-					'campaign_id' => $adGroup->campaign_id,
-					'rel_id NOT IN' => $keywordsFoundIds,
-				]);
+					$keywordsTable->deleteAll([
+						'ad_group_id' => $adGroup->id,
+						'campaign_id' => $adGroup->campaign_id,
+						'rel_id NOT IN' => $keywordsFoundIds,
+					]);
+				}
 			}
 
 			$kSelector->getPaging()->setStartIndex(
@@ -259,25 +261,28 @@ class Adwords extends \App\Model\Entity\Source
 			ReportDefinitionReportType::CAMPAIGN_PERFORMANCE_REPORT,
 			['CampaignId', 'Impressions', 'Clicks', 'Cost']
 		);
-		$statDailyTable = TableRegistry::get('CampaignStatisticsDaily');
 
 		if (empty($report)) {
 			return false;
 		}
 
+		$statDailyTable = TableRegistry::get('CampaignStatisticsDaily');
 		$statDailyTable->saveCampaignsReport($report, $date, 'Campaign ID');
 	}
 
 	public function updateCampaignsContentStatistics($date)
 	{
 		$campaignsTable = TableRegistry::get('Campaigns');
-		$campaignIds = $campaignsTable->find('list', ['valueField' => 'rel_id'])->where(['source_id' => $this->id])->toArray();
+		$campaignIds = $campaignsTable->find('list', ['valueField' => 'rel_id'])->where(['account_id' => $this->id])->toArray();
+
+		if (empty($campaignIds)) {
+			return true;
+		}
 
 		$report = $this->loadDailyStatisticsReport(
 			$date,
 			ReportDefinitionReportType::CRITERIA_PERFORMANCE_REPORT,
 			['CampaignId', 'AdGroupId', 'Criteria', 'Id', 'Impressions', 'Clicks', 'Cost'],
-			//['CampaignId', 'AdGroupId', 'Criteria', 'Impressions', 'Clicks', 'Cost'],
 			[
 				new Predicate('CampaignId', PredicateOperator::EQUALS, $campaignIds),
 			]

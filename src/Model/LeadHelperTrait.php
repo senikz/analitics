@@ -48,7 +48,18 @@ trait LeadHelperTrait
 			}
 		}
 
-		
+		if (empty($this->source_id) && !empty($this->site_id) && !empty($this->utm_content)) {
+			$sources = TableRegistry::get('Sources')->find('all')->where(['site_id' => $this->site_id])->all();
+			foreach ($sources as $source) {
+				if (empty($source->criteria)) {
+					continue;
+				}
+				if (strpos($this->utm_content, $source->criteria) !== false) {
+					$this->source_id = $source->id;
+					break;
+				}
+			}
+		}
 
 		return $this;
 	}

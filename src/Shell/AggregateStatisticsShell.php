@@ -2,6 +2,7 @@
 namespace App\Shell;
 
 use Cake\ORM\TableRegistry;
+use Cake\Log\Log;
 
 class AggregateStatisticsShell extends \Cake\Console\Shell
 {
@@ -34,6 +35,17 @@ class AggregateStatisticsShell extends \Cake\Console\Shell
 	{
 		$date = date('Y-m-d', strtotime('-1 day'));
 
+		Log::write('debug', [$date], ['shell', 'AggregateStatisticsShell', 'main']);
+
+		$this->leads($date);
+
+		$this->sources($date);
+		$this->sites($date);
+		$this->projects($date);
+	}
+
+	public function date($date)
+	{
 		$this->leads($date);
 
 		$this->sources($date);
@@ -106,30 +118,6 @@ class AggregateStatisticsShell extends \Cake\Console\Shell
 				'time <=' => $date . ' 23:59:59',
 			])->first();
 
-			// Calls
-			$callsQuery = $this->SiteCalls->find('all');
-			$callsItem = $callsQuery->where([
-					'site_id' => $site->id,
-					'time >=' => $date . ' 00:00:00',
-					'time <=' => $date . ' 23:59:59',
-				])
-				->select([
-					'count' => $callsQuery->func()->count('*'),
-				])
-				->first();
-
-			// Emails
-			$emailsQuery = $this->SiteEmails->find('all');
-			$emailsItem = $emailsQuery->where([
-					'site_id' => $site->id,
-					'time >=' => $date . ' 00:00:00',
-					'time <=' => $date . ' 23:59:59',
-				])
-				->select([
-					'count' => $emailsQuery->func()->count('*'),
-				])
-				->first();
-
 			$record = $this->SSD->findOrCreateRecord([
 				'date' => $date,
 				'site_id' => $site->id,
@@ -139,6 +127,7 @@ class AggregateStatisticsShell extends \Cake\Console\Shell
 			$sIds = array_map(function($source) {
 				return $source->id;
 			}, $sources);
+
 			if(!empty($sIds)) {
 				$item = $this->SOSD->findSum([
 					'source_id IN' => $sIds,
@@ -152,8 +141,6 @@ class AggregateStatisticsShell extends \Cake\Console\Shell
 				}
 			}
 
-			$record->calls = $callsItem->count ? $callsItem->count : 0;
-			$record->emails = $emailsItem->count ? $emailsItem->count : 0;
 			$record->orders = $ordersItem->count ? $ordersItem->count : 0;
 
 			$this->SSD->save($record);
@@ -183,31 +170,6 @@ class AggregateStatisticsShell extends \Cake\Console\Shell
 				continue;
 			}
 
-			// Calls
-		/*	$callsQuery = $this->SiteCalls->find('all');
-			$callsItem = $callsQuery->where([
-					'source_id' => $source->id,
-					'time >=' => $date . ' 00:00:00',
-					'time <=' => $date . ' 23:59:59',
-				])
-				->select([
-					'count' => $callsQuery->func()->count('*'),
-				])
-				->first();
-
-			// Emails
-			$emailsQuery = $this->SiteEmails->find('all');
-			$emailsItem = $emailsQuery->where([
-					'source_id' => $source->id,
-					'time >=' => $date . ' 00:00:00',
-					'time <=' => $date . ' 23:59:59',
-				])
-				->select([
-					'count' => $emailsQuery->func()->count('*'),
-				])
-				->first();
-			*/
-
 			$record = $this->SOSD->findOrCreateRecord([
 				'date' => $date,
 				'source_id' => $source->id,
@@ -216,8 +178,6 @@ class AggregateStatisticsShell extends \Cake\Console\Shell
 			$record->cost = $item->cost;
 			$record->views = $item->views;
 			$record->clicks = $item->clicks;
-			//$record->calls = $callsItem->count;
-			//$record->emails = $emailsItem->count;
 
 			$this->SOSD->save($record);
 		}
@@ -258,6 +218,10 @@ class AggregateStatisticsShell extends \Cake\Console\Shell
 				'table' => $this->Keywords,
 				'statistics' => $this->KSD,
 				'key' => 'keyword_id',
+			], [
+				'table' => $this->Sites,
+				'statistics' => $this->SSD,
+				'key' => 'site_id',
 			],
 		];
 

@@ -3,7 +3,6 @@ namespace App\Shell;
 
 use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
-use \App\Model\Entity\Credential;
 
 use Biplane\YandexDirect\User;
 use Biplane\YandexDirect\Api\V5\Contract\LimitOffset;
@@ -50,8 +49,8 @@ class UpdateDirectBidsShell extends \Cake\Console\Shell
 
 		$campaigns = $this->Campaigns->find('all', [
 			'conditions' => [
-				'credential_id >' => '0',
-				'Credentials.type' => Credential::TYPE_DIRECT,
+				'account_id >' => '0',
+				'Accounts.type' => 'direct',
 			],
 			'contain' => ['BidOptions' => function($query) {
 				return $query->where([
@@ -59,11 +58,11 @@ class UpdateDirectBidsShell extends \Cake\Console\Shell
 					'BidOptions.hour_num' => date('G'),
 					'BidOptions.status' => 1,
 				]);
-			}, 'Credentials'],
+			}, 'Accounts'],
 		])->all();
 
 		foreach($campaigns as $campaign) {
-			$provider = $campaign->getProvider();
+			$provider = $campaign->account->getProvider();
 
 			if(empty($provider) || empty($campaign->bid_options)) {
 				continue;
@@ -175,7 +174,7 @@ class UpdateDirectBidsShell extends \Cake\Console\Shell
 		$this->BidOptions->save($campaignOptions);
 		$this->Campaigns->save($campaign);
 
-		//Log::write('debug', ['campaignId' => $campaign->id, 'bids' => $updateBids], ['shell', 'UpdateDirectBidsShell', 'update bids']);
+		Log::write('debug', ['campaignId' => $campaign->id, 'bids' => $updateBids], ['shell', 'UpdateDirectBidsShell', 'update bids']);
 
 		if(!empty($updateBids)) {
 			$bidsService->set(SetBidsRequest::create()->setBids($updateBids));

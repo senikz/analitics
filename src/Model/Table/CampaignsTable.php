@@ -46,6 +46,9 @@ class CampaignsTable extends Table
         $this->belongsTo('Sources', [
             'foreignKey' => 'source_id',
         ]);
+        $this->belongsTo('Accounts', [
+            'foreignKey' => 'account_id',
+        ]);
         /*$this->belongsTo('Rels', [
             'foreignKey' => 'rel_id',
             'joinType' => 'INNER'

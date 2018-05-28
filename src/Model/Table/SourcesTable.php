@@ -36,9 +36,6 @@ class SourcesTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->hasMany('SourceOptions', [
-            'foreignKey' => 'source_id'
-        ]);
         $this->hasMany('Campaigns', [
             'foreignKey' => 'source_id'
         ]);
@@ -73,35 +70,4 @@ class SourcesTable extends Table
         return $validator;
     }
 
-	public function beforeFind($event, $query, $options, $primary)
-    {
-        $containsMap = $query->getEagerLoader()->associationsMap($this);
-
-        $query->hydrate(false)->formatResults(function ($results) use ($containsMap) {
-            return $results->map(function ($row) use ($containsMap) {
-				if (is_object($row)) {
-					$row = $row->toArray();
-				}
-                if (!empty($containsMap)) {
-                    foreach ($containsMap as $contain) {
-                        if (empty($row[$contain['targetProperty']])) {
-                            continue;
-                        }
-                        if ($contain['canBeJoined']) {
-                            $row[$contain['targetProperty']] = new $contain['entityClass']($row[$contain['targetProperty']]);
-                        } else {
-                            foreach ($row[$contain['targetProperty']] as $key => $prop) {
-                                $row[$contain['targetProperty']][$key] = new $contain['entityClass']($prop);
-                            }
-                        }
-                    }
-                }
-                $entityClassName = $this->getEntityClass();
-                if (!empty($row['type'])) {
-                    $entityClassName .= '\\' . ucfirst($row['type']);
-                }
-                return new $entityClassName($row);
-            });
-        });
-	}
 }
