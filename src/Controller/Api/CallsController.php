@@ -26,7 +26,6 @@ class CallsController extends ApiController
 			'phone' => 'callerphone',
 			'duration',
 			'link' => 'reclink',
-			'time' => 'timestamp',
 			'utm_source',
 			'utm_medium',
 			'utm_campaign',
@@ -38,6 +37,7 @@ class CallsController extends ApiController
 
 		$call->site_id = $site->id;
 		$call->unique = empty($fields['unique']) ? 0 : 1;
+		$call->time = date('Y-m-d H:i:s', $fields['timestamp']);
 
 		$call->fillUtm($fields, $fieldsMatch);
 

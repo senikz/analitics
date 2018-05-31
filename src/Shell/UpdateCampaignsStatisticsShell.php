@@ -2,7 +2,6 @@
 namespace App\Shell;
 
 use Cake\ORM\TableRegistry;
-use Cake\Log\Log;
 
 class UpdateCampaignsStatisticsShell extends Base
 {
@@ -14,13 +13,10 @@ class UpdateCampaignsStatisticsShell extends Base
 
 	public function main()
 	{
-		Log::write('debug', [], ['shell', 'UpdateCampaignsStatisticsShell', 'main']);
-
 		/**
 		 * Every N minutes run daily statistics loading.
 		 */
 		if ($this->checkRunTime('CampaignsLastStatistics')) {
-			Log::write('debug', [], ['shell', 'UpdateCampaignsStatisticsShell', 'main:campaignsLoad']);
 			$this->campaignsLoad(date('Y-m-d'));
 		}
 
@@ -28,7 +24,6 @@ class UpdateCampaignsStatisticsShell extends Base
 		 * At specified time run gathering yesterday statistics once per day.
 		 */
 		if ($this->checkRunTime('CampaignsContentStatistics')) {
-			Log::write('debug', [], ['shell', 'UpdateCampaignsStatisticsShell', 'main:campaignsContentLoad']);
 			$this->campaignsContentLoad(date('Y-m-d', strtotime('-1 day')));
 		}
 	}

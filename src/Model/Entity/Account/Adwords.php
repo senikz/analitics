@@ -19,6 +19,7 @@ use Google\AdsApi\AdWords\v201802\cm\Paging;
 use Google\AdsApi\AdWords\v201802\cm\DateRange;
 use Google\AdsApi\AdWords\v201802\cm\PredicateOperator;
 use Google\AdsApi\AdWords\v201802\cm\CampaignService;
+use Google\AdsApi\AdWords\v201802\cm\CampaignCriterionService;
 use Google\AdsApi\AdWords\v201802\cm\AdGroupService;
 use Google\AdsApi\AdWords\v201802\cm\AdGroupCriterionService;
 use Google\AdsApi\AdWords\v201802\cm\CriterionType;
@@ -109,11 +110,9 @@ class Adwords extends \App\Model\Entity\Account
 
 		$services = new AdWordsServices();
 		$session = $this->getSession();
-		$selector = new Selector();
 
 		$campaignService = $services->get($session, CampaignService::class);
-		$selector->setFields(['Id', 'Name']);
-		$campaigns = $campaignService->get($selector)->getEntries();
+		$campaigns = $campaignService->get((new Selector())->setFields(['Id', 'Name']))->getEntries();
 
 		if ($campaigns === null) {
 			return;
@@ -148,6 +147,7 @@ class Adwords extends \App\Model\Entity\Account
 	public function syncCampaign(\App\Model\Entity\Campaign $campaign)
 	{
 		$this->syncCampaignAdGroups($campaign);
+		$this->syncCampaignKeywords($campaign);
 	}
 
 	public function syncCampaignAdGroups(\App\Model\Entity\Campaign $campaign)
@@ -157,7 +157,7 @@ class Adwords extends \App\Model\Entity\Account
 		$adGSelector = (new Selector())
 			->setFields(['Id', 'Name'])
 			->setPredicates([
-	                new Predicate('CampaignId', PredicateOperator::EQUALS, [$campaign->rel_id])
+	                new Predicate('CampaignId', PredicateOperator::EQUALS, $campaign->rel_id)
             ])
 	        ->setPaging(new Paging(0, self::PAGE_LIMIT));
 
@@ -187,12 +187,6 @@ class Adwords extends \App\Model\Entity\Account
 					'campaign_id' => $campaign->id,
 					'rel_id NOT IN' => $adGroupsFoundIds,
 				]);
-
-				$adGroupsLocal = $adGroupsTable->find()->where(['rel_id', $adGroupsFoundIds])->all();
-
-				foreach ($adGroupsLocal as $adGroup) {
-					$this->syncAdGroupKeywords($adGroup);
-				}
 			}
 
 			$adGSelector->getPaging()->setStartIndex(
@@ -201,14 +195,22 @@ class Adwords extends \App\Model\Entity\Account
 		} while ($adGSelector->getPaging()->getStartIndex() < $totalNumEntries);
 	}
 
-	public function syncAdGroupKeywords(\App\Model\Entity\AdGroup $adGroup)
+	public function syncCampaignKeywords(\App\Model\Entity\Campaign $campaign)
 	{
+		$adGroupIds = [];
+		$adGroupsTable = TableRegistry::get('AdGroups');
+		$adGroupsLocal = $adGroupsTable->find()->where(['campaign_id' => $campaign->id])->all();
+
+		foreach ($adGroupsLocal as $ag) {
+			$adGroupIds[] = $ag->rel_id;
+		}
+
 		$keywordsService = $this->getService(AdGroupCriterionService::class);
 		$keywordsTable = TableRegistry::get('Keywords');
 		$kSelector = (new Selector())
-			->setFields(['Id', 'KeywordText'])
+			->setFields(['Id', 'KeywordText', 'AdGroupId', 'BaseCampaignId'])
 			->setPredicates([
-	                new Predicate('AdGroupId', PredicateOperator::EQUALS, [$adGroup->rel_id])
+	                new Predicate('AdGroupId', PredicateOperator::IN, $adGroupIds)
             ])
 	        ->setPaging(new Paging(0, self::PAGE_LIMIT));
 
@@ -219,18 +221,27 @@ class Adwords extends \App\Model\Entity\Account
 			$kUpdate = $keywordsTable->query()
 				->insert(['rel_id', 'ad_group_id', 'campaign_id', 'keyword']);
 
-			if ($kPage->getEntries() !== null) {
+			$entries = $kPage->getEntries();
+
+			if ($entries !== null) {
 				$totalNumEntries = $kPage->getTotalNumEntries();
-				foreach ($kPage->getEntries() as $criterion) {
+				foreach ($entries as $criterion) {
 					$keyword = $criterion->getCriterion();
-					if ($keyword->getType !== CriterionType::KEYWORD) {
+					if ($keyword->getType() !== CriterionType::KEYWORD) {
 						continue;
 					}
+					foreach ($adGroupsLocal as $ag) {
+						if ($ag->rel_id == $criterion->getAdGroupId()) {
+							$adGroup = $ag;
+							break;
+						}
+					}
+
 					$keywordsFoundIds[] = $keyword->getId();
 					$kUpdate->values([
 						'rel_id' => $keyword->getId(),
 						'ad_group_id' => $adGroup->id,
-						'campaign_id' => $adGroup->campaign_id,
+						'campaign_id' => $campaign->id,
 						'keyword' => $keyword->getText(),
 					]);
 				}
