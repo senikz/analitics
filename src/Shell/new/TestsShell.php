@@ -11,6 +11,7 @@ class TestsShell extends \Cake\Console\Shell
     {
         parent::initialize();
 
+		$this->Accounts = TableRegistry::get('Accounts');
 		$this->Sources = TableRegistry::get('Sources');
 
         $this->SiteCalls = TableRegistry::get('SiteCalls');
@@ -29,10 +30,13 @@ class TestsShell extends \Cake\Console\Shell
     public function main()
     {
 
-		//$a = $this->Sources->find()->where(['id' => 3])->first();
-		$b = $this->Sources->find()->where(['id' => 1])->first();
+		$account = $this->Accounts->find()->where(['id' => 4])->first();
+		$campaign = $this->Campaigns->find()->where(['id' => 85])->first();
 
-		var_dump($b);
+		//$account->syncCampaignAdGroups($campaign);
+		//$account->syncCampaignKeywords($campaign);
+
+		//var_dump($b);
 		//var_dump($a);
 		//$a->syncCampaigns();
 
