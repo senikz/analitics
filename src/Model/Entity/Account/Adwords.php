@@ -304,6 +304,6 @@ class Adwords extends \App\Model\Entity\Account
 		}
 
 		$statDailyTable = TableRegistry::get('CampaignStatisticsDaily');
-		$statDailyTable->saveCampaignsContentReport($report, $date, 'Ad group ID', 'Keyword ID');
+		$statDailyTable->saveCampaignsContentReport($report, $date, 'Ad group ID', 'Keyword ID', null, 1000000);
 	}
 }
