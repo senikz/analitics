@@ -93,7 +93,7 @@ class CampaignStatisticsDailyTable extends Table
         return $rules;
     }
 
-	public function saveCampaignsReport(array $report, $date, $campaignKey = 'CampaignId', $measures = null)
+	public function saveCampaignsReport(array $report, $date, $campaignKey = 'CampaignId', $measures = null, $division = 1)
 	{
 		$today = date('Y-m-d');
 		$calcHourly = $today == $date;
@@ -159,7 +159,7 @@ class CampaignStatisticsDailyTable extends Table
 			}
 
 			foreach ($measures as $mKey => $measure) {
-				$hourlyRecord->$measure += $newCounts[$measure];
+				$hourlyRecord->$measure += $newCounts[$measure] / $division;
 			}
 
 			$hourlyRecord->time = date('Y-m-d H:i:s');
@@ -167,7 +167,7 @@ class CampaignStatisticsDailyTable extends Table
 		}
 	}
 
-	public function saveCampaignsContentReport(array $report, $date, $adGroupKey = 'AdGroupId', $keywordKey = 'CriteriaId',  $measures = null)
+	public function saveCampaignsContentReport(array $report, $date, $adGroupKey = 'AdGroupId', $keywordKey = 'CriteriaId',  $measures = null, $division = 1)
 	{
 		$AdGroupsTable = TableRegistry::get('AdGroups');
 		$KeywordsTable = TableRegistry::get('Keywords');
@@ -225,7 +225,7 @@ class CampaignStatisticsDailyTable extends Table
 
 			$record->ad_group = $adGroup;
 			foreach ($measures as $mKey => $measure) {
-				$record->$measure = $gStat[$measure];
+				$record->$measure = $gStat[$measure] / $division;
 			}
 
 			$record->date = $date;
@@ -251,7 +251,7 @@ class CampaignStatisticsDailyTable extends Table
 
 			$record->keyword = $keyword;
 			foreach ($measures as $mKey => $measure) {
-				$record->$measure = $kStat[$measure];
+				$record->$measure = $kStat[$measure] / $division;
 			}
 			$record->date = $date;
 
