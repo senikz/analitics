@@ -157,7 +157,7 @@ class Adwords extends \App\Model\Entity\Account
 		$adGSelector = (new Selector())
 			->setFields(['Id', 'Name'])
 			->setPredicates([
-	                new Predicate('CampaignId', PredicateOperator::EQUALS, $campaign->rel_id)
+	                new Predicate('CampaignId', PredicateOperator::IN, [$campaign->rel_id])
             ])
 	        ->setPaging(new Paging(0, self::PAGE_LIMIT));
 
