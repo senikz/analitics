@@ -93,7 +93,7 @@ class CampaignStatisticsDailyTable extends Table
         return $rules;
     }
 
-	public function saveCampaignsReport(array $report, $date, $campaignKey = 'CampaignId', $measures = null, $division = 1)
+	public function saveCampaignsReport(array $report, $date, $campaignKey = 'CampaignId', $measures = null, $costDivision = 1)
 	{
 		$today = date('Y-m-d');
 		$calcHourly = $today == $date;
@@ -135,6 +135,12 @@ class CampaignStatisticsDailyTable extends Table
 
 			foreach ($measures as $mKey => $measure) {
 				if (array_key_exists($mKey, $row)) {
+
+					// Divide cost
+					if ($measure == 'cost') {
+						$row[$mKey] = $row[$mKey] / $costDivision;
+					}
+
 					$newCounts[$measure] = $row[$mKey] - (empty($dailyRecord->$measure) ? 0 : $dailyRecord->$measure);
 					$dailyRecord->$measure = $row[$mKey];
 				}
@@ -159,7 +165,7 @@ class CampaignStatisticsDailyTable extends Table
 			}
 
 			foreach ($measures as $mKey => $measure) {
-				$hourlyRecord->$measure += $newCounts[$measure] / $division;
+				$hourlyRecord->$measure += $newCounts[$measure];
 			}
 
 			$hourlyRecord->time = date('Y-m-d H:i:s');
@@ -167,7 +173,7 @@ class CampaignStatisticsDailyTable extends Table
 		}
 	}
 
-	public function saveCampaignsContentReport(array $report, $date, $adGroupKey = 'AdGroupId', $keywordKey = 'CriteriaId',  $measures = null, $division = 1)
+	public function saveCampaignsContentReport(array $report, $date, $adGroupKey = 'AdGroupId', $keywordKey = 'CriteriaId',  $measures = null, $costDivision = 1)
 	{
 		$AdGroupsTable = TableRegistry::get('AdGroups');
 		$KeywordsTable = TableRegistry::get('Keywords');
@@ -200,6 +206,11 @@ class CampaignStatisticsDailyTable extends Table
 
 			foreach ($measures as $mKey => $measure) {
 				if (array_key_exists($mKey, $row)) {
+
+					// Divide cost
+					if ($measure == 'cost') {
+						$row[$mKey] = (float)$row[$mKey] / $costDivision;
+					}
 					$adGroups[ $row[$adGroupKey] ][$measure] += (float)$row[$mKey];
 					$keywords[ $row[$keywordKey] ][$measure] += (float)$row[$mKey];
 				}
@@ -225,7 +236,7 @@ class CampaignStatisticsDailyTable extends Table
 
 			$record->ad_group = $adGroup;
 			foreach ($measures as $mKey => $measure) {
-				$record->$measure = $gStat[$measure] / $division;
+				$record->$measure = $gStat[$measure];
 			}
 
 			$record->date = $date;
@@ -251,7 +262,7 @@ class CampaignStatisticsDailyTable extends Table
 
 			$record->keyword = $keyword;
 			foreach ($measures as $mKey => $measure) {
-				$record->$measure = $kStat[$measure] / $division;
+				$record->$measure = $kStat[$measure];
 			}
 			$record->date = $date;
 
