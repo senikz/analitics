@@ -1066,7 +1066,7 @@ r-tabs .tab.active {
         margin: 10px 0 0 0;
     }
 }
-</style></head><body class="preload"><a href="#top" class="text-muted back-to-top"><i class="fa fa-toggle-up"></i>&nbsp;Back to top</a><div class="menu-actions"><a id="nav-toggle" class="menu-action">☰</a></div><div class="container-fluid"><div class="row"><nav id="navi"><div class="resource-group"><div class="heading"><span>Overview</span></div><div><ul><li><a href="#header-аутентификация">Аутентификация</a></li><li><a href="#header-rest">REST</a></li><li><a href="#header-формат-ответа">Формат ответа</a></li><li><a href="#header-история-изменений">История изменений</a></li></ul></div></div><div class="resource-group"><div class="heading"><span>Reference</span></div><div><ul><li><a href="#проекты"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Проекты</span></a><div class="collapse-content"><ul><li><a href="#проекты-get"><span class="badge get"></span>Список проектов</a></li><li><a href="#проекты-get-1"><span class="badge get"></span>Детали проекта</a></li><li><a href="#проекты-get-2"><span class="badge get"></span>Список сайтов</a></li><li><a href="#проекты-get-3"><span class="badge get"></span>Список кампаний</a></li><li><a href="#проекты-get-4"><span class="badge get"></span>Общая статистика проекта</a></li><li><a href="#проекты-get-5"><span class="badge get"></span>Подробная статистика проекта</a></li><li><a href="#проекты-get-6"><span class="badge get"></span>Список заявок</a></li><li><a href="#проекты-get-7"><span class="badge get"></span>Календарь стоимости заказа</a></li></ul></div></li><li><a href="#сайты"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Сайты</span></a><div class="collapse-content"><ul><li><a href="#сайты-get"><span class="badge get"></span>Список сайтов</a></li><li><a href="#сайты-post"><span class="badge post"></span>Добавить новый сайт</a></li><li><a href="#сайты-get-1"><span class="badge get"></span>Детали сайта</a></li><li><a href="#сайты-delete"><span class="badge delete"></span>Удалить сайт</a></li><li><a href="#сайты-get-2"><span class="badge get"></span>Список источников трафика</a></li><li><a href="#сайты-post-1"><span class="badge post"></span>Добавление заказа</a></li><li><a href="#сайты-get-3"><span class="badge get"></span>Общая статистика сайта</a></li><li><a href="#сайты-get-4"><span class="badge get"></span>Подробная статистика сайта</a></li><li><a href="#сайты-put"><span class="badge put"></span>Обновление статистики сайта</a></li><li><a href="#сайты-put-1"><span class="badge put"></span>Обновление UTM меток</a></li><li><a href="#сайты-put-2"><span class="badge put"></span>Обновление данных сайта</a></li></ul></div></li><li><a href="#источники-трафика"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Источники трафика</span></a><div class="collapse-content"><ul><li><a href="#источники-трафика-get"><span class="badge get"></span>Список доступных типов и настроек</a></li><li><a href="#источники-трафика-get-1"><span class="badge get"></span>Список источников трафика</a></li><li><a href="#источники-трафика-get-2"><span class="badge get"></span>Подробная информация и настройки</a></li><li><a href="#источники-трафика-post"><span class="badge post"></span>Добавить новый источник трафика</a></li><li><a href="#источники-трафика-put"><span class="badge put"></span>Редактировать источник трафика</a></li><li><a href="#источники-трафика-delete"><span class="badge delete"></span>Удалить источник</a></li><li><a href="#источники-трафика-post-1"><span class="badge post"></span>Добавление произвольного расхода</a></li></ul></div></li><li><a href="#кампании"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Кампании</span></a><div class="collapse-content"><ul><li><a href="#кампании-get"><span class="badge get"></span>Список кампаний</a></li><li><a href="#кампании-get-1"><span class="badge get"></span>Детали кампании</a></li><li><a href="#кампании-delete"><span class="badge delete"></span>Удалить кампанию</a></li><li><a href="#кампании-get-2"><span class="badge get"></span>Общая статистика кампании</a></li><li><a href="#кампании-get-3"><span class="badge get"></span>Подробная статистика кампании</a></li><li><a href="#кампании-get-4"><span class="badge get"></span>Текущие настройки биддера</a></li><li><a href="#кампании-put"><span class="badge put"></span>Обновить настройки биддера</a></li><li><a href="#кампании-get-5"><span class="badge get"></span>Список ключевых фраз</a></li><li><a href="#кампании-get-6"><span class="badge get"></span>Список групп объявлений</a></li><li><a href="#кампании-get-7"><span class="badge get"></span>Обновить содержимое кампании</a></li><li><a href="#кампании-delete-1"><span class="badge delete"></span>Удалить настройки биддера</a></li></ul></div></li><li><a href="#группы-объявлений"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Группы объявлений</span></a><div class="collapse-content"><ul><li><a href="#группы-объявлений-get"><span class="badge get"></span>Список групп</a></li><li><a href="#группы-объявлений-get-1"><span class="badge get"></span>Детали группы</a></li><li><a href="#группы-объявлений-get-2"><span class="badge get"></span>Список ключевых фраз</a></li><li><a href="#группы-объявлений-get-3"><span class="badge get"></span>Текущие настройки биддера</a></li><li><a href="#группы-объявлений-put"><span class="badge put"></span>Обновить настройки биддера</a></li><li><a href="#группы-объявлений-get-4"><span class="badge get"></span>Общая статистика группы объявлений</a></li><li><a href="#группы-объявлений-delete"><span class="badge delete"></span>Удалить настройки биддера</a></li></ul></div></li><li><a href="#ключевые-фразы"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Ключевые фразы</span></a><div class="collapse-content"><ul><li><a href="#ключевые-фразы-get"><span class="badge get"></span>Детали ключевой фразы</a></li><li><a href="#ключевые-фразы-get-1"><span class="badge get"></span>Поиск фразы</a></li><li><a href="#ключевые-фразы-get-2"><span class="badge get"></span>Текущие настройки биддера</a></li><li><a href="#ключевые-фразы-put"><span class="badge put"></span>Обновить настройки биддера</a></li><li><a href="#ключевые-фразы-get-3"><span class="badge get"></span>Общая статистика ключевой фразы</a></li><li><a href="#ключевые-фразы-delete"><span class="badge delete"></span>Удалить настройки биддера</a></li></ul></div></li><li><a href="#биддер"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Биддер</span></a><div class="collapse-content"><ul><li><a href="#биддер-get"><span class="badge get"></span>Получить информацию о запуске биддера</a></li><li><a href="#биддер-put"><span class="badge put"></span>Обновить настройки запуска биддера</a></li></ul></div></li><li><a href="#звонки"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Звонки</span></a><div class="collapse-content"><ul><li><a href="#звонки-get"><span class="badge get"></span>Добавление информации о новом звонке</a></li></ul></div></li><li><a href="#сервис-общей-статистики"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Сервис общей статистики</span></a><div class="collapse-content"><ul><li><a href="#сервис-общей-статистики-get"><span class="badge get"></span>Статистика ключевых фраз</a></li><li><a href="#сервис-общей-статистики-get-1"><span class="badge get"></span>Статистика групп объявлений</a></li><li><a href="#сервис-общей-статистики-get-2"><span class="badge get"></span>Статистика кампаний</a></li><li><a href="#сервис-общей-статистики-get-3"><span class="badge get"></span>Статистика сайтов</a></li><li><a href="#сервис-общей-статистики-get-4"><span class="badge get"></span>Статистика проектов</a></li></ul></div></li></ul></div></div></nav><div class="content"><header><h1 id="top">Аналитика</h1></header><h2 class="group-heading">Overview</h2><div class="hostname"><a href="http://analitics.catkitcms.ru/api">http://analitics.catkitcms.ru/api</a></div><h3 id="header-аутентификация">Аутентификация <a class="permalink" href="#header-аутентификация" aria-hidden="true">¶</a></h3>
+</style></head><body class="preload"><a href="#top" class="text-muted back-to-top"><i class="fa fa-toggle-up"></i>&nbsp;Back to top</a><div class="menu-actions"><a id="nav-toggle" class="menu-action">☰</a></div><div class="container-fluid"><div class="row"><nav id="navi"><div class="resource-group"><div class="heading"><span>Overview</span></div><div><ul><li><a href="#header-аутентификация">Аутентификация</a></li><li><a href="#header-rest">REST</a></li><li><a href="#header-формат-ответа">Формат ответа</a></li><li><a href="#header-история-изменений">История изменений</a></li></ul></div></div><div class="resource-group"><div class="heading"><span>Reference</span></div><div><ul><li><a href="#проекты"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Проекты</span></a><div class="collapse-content"><ul><li><a href="#проекты-get"><span class="badge get"></span>Список проектов</a></li><li><a href="#проекты-get-1"><span class="badge get"></span>Детали проекта</a></li><li><a href="#проекты-get-2"><span class="badge get"></span>Список сайтов</a></li><li><a href="#проекты-get-3"><span class="badge get"></span>Список кампаний</a></li><li><a href="#проекты-get-4"><span class="badge get"></span>Общая статистика проекта</a></li><li><a href="#проекты-get-5"><span class="badge get"></span>Подробная статистика проекта</a></li><li><a href="#проекты-get-6"><span class="badge get"></span>Список заявок</a></li><li><a href="#проекты-get-7"><span class="badge get"></span>Календарь стоимости заказа</a></li></ul></div></li><li><a href="#аккаунты"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Аккаунты</span></a><div class="collapse-content"><ul><li><a href="#аккаунты-get"><span class="badge get"></span>Список доступных типов и настроек</a></li><li><a href="#аккаунты-get-1"><span class="badge get"></span>Список аккаунтов</a></li><li><a href="#аккаунты-get-2"><span class="badge get"></span>Подробная информация и настройки</a></li><li><a href="#аккаунты-post"><span class="badge post"></span>Добавить новый аккаунт</a></li><li><a href="#аккаунты-delete"><span class="badge delete"></span>Удалить аккаунт</a></li></ul></div></li><li><a href="#сайты"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Сайты</span></a><div class="collapse-content"><ul><li><a href="#сайты-get"><span class="badge get"></span>Список сайтов</a></li><li><a href="#сайты-post"><span class="badge post"></span>Добавить новый сайт</a></li><li><a href="#сайты-get-1"><span class="badge get"></span>Детали сайта</a></li><li><a href="#сайты-delete"><span class="badge delete"></span>Удалить сайт</a></li><li><a href="#сайты-get-2"><span class="badge get"></span>Список источников трафика</a></li><li><a href="#сайты-post-1"><span class="badge post"></span>Добавление заказа</a></li><li><a href="#сайты-get-3"><span class="badge get"></span>Общая статистика сайта</a></li><li><a href="#сайты-get-4"><span class="badge get"></span>Подробная статистика сайта</a></li><li><a href="#сайты-put"><span class="badge put"></span>Обновление статистики сайта</a></li><li><a href="#сайты-put-1"><span class="badge put"></span>Обновление UTM меток</a></li><li><a href="#сайты-put-2"><span class="badge put"></span>Обновление данных сайта</a></li></ul></div></li><li><a href="#источники-трафика"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Источники трафика</span></a><div class="collapse-content"><ul><li><a href="#источники-трафика-get"><span class="badge get"></span>Список источников трафика</a></li><li><a href="#источники-трафика-get-1"><span class="badge get"></span>Подробная информация и настройки</a></li><li><a href="#источники-трафика-post"><span class="badge post"></span>Добавить новый источник трафика</a></li><li><a href="#источники-трафика-put"><span class="badge put"></span>Редактировать источник трафика</a></li><li><a href="#источники-трафика-delete"><span class="badge delete"></span>Удалить источник</a></li><li><a href="#источники-трафика-post-1"><span class="badge post"></span>Добавление произвольного расхода</a></li></ul></div></li><li><a href="#кампании"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Кампании</span></a><div class="collapse-content"><ul><li><a href="#кампании-get"><span class="badge get"></span>Список кампаний</a></li><li><a href="#кампании-get-1"><span class="badge get"></span>Детали кампании</a></li><li><a href="#кампании-delete"><span class="badge delete"></span>Удалить кампанию</a></li><li><a href="#кампании-get-2"><span class="badge get"></span>Общая статистика кампании</a></li><li><a href="#кампании-get-3"><span class="badge get"></span>Подробная статистика кампании</a></li><li><a href="#кампании-get-4"><span class="badge get"></span>Текущие настройки биддера</a></li><li><a href="#кампании-put"><span class="badge put"></span>Обновить настройки биддера</a></li><li><a href="#кампании-get-5"><span class="badge get"></span>Список ключевых фраз</a></li><li><a href="#кампании-get-6"><span class="badge get"></span>Список групп объявлений</a></li><li><a href="#кампании-get-7"><span class="badge get"></span>Обновить содержимое кампании</a></li><li><a href="#кампании-delete-1"><span class="badge delete"></span>Удалить настройки биддера</a></li></ul></div></li><li><a href="#группы-объявлений"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Группы объявлений</span></a><div class="collapse-content"><ul><li><a href="#группы-объявлений-get"><span class="badge get"></span>Список групп</a></li><li><a href="#группы-объявлений-get-1"><span class="badge get"></span>Детали группы</a></li><li><a href="#группы-объявлений-get-2"><span class="badge get"></span>Список ключевых фраз</a></li><li><a href="#группы-объявлений-get-3"><span class="badge get"></span>Текущие настройки биддера</a></li><li><a href="#группы-объявлений-put"><span class="badge put"></span>Обновить настройки биддера</a></li><li><a href="#группы-объявлений-get-4"><span class="badge get"></span>Общая статистика группы объявлений</a></li><li><a href="#группы-объявлений-delete"><span class="badge delete"></span>Удалить настройки биддера</a></li></ul></div></li><li><a href="#ключевые-фразы"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Ключевые фразы</span></a><div class="collapse-content"><ul><li><a href="#ключевые-фразы-get"><span class="badge get"></span>Детали ключевой фразы</a></li><li><a href="#ключевые-фразы-get-1"><span class="badge get"></span>Поиск фразы</a></li><li><a href="#ключевые-фразы-get-2"><span class="badge get"></span>Текущие настройки биддера</a></li><li><a href="#ключевые-фразы-put"><span class="badge put"></span>Обновить настройки биддера</a></li><li><a href="#ключевые-фразы-get-3"><span class="badge get"></span>Общая статистика ключевой фразы</a></li><li><a href="#ключевые-фразы-delete"><span class="badge delete"></span>Удалить настройки биддера</a></li></ul></div></li><li><a href="#биддер"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Биддер</span></a><div class="collapse-content"><ul><li><a href="#биддер-get"><span class="badge get"></span>Получить информацию о запуске биддера</a></li><li><a href="#биддер-put"><span class="badge put"></span>Обновить настройки запуска биддера</a></li></ul></div></li><li><a href="#звонки"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Звонки</span></a><div class="collapse-content"><ul><li><a href="#звонки-get"><span class="badge get"></span>Добавление информации о новом звонке</a></li></ul></div></li><li><a href="#сервис-общей-статистики"><div class="chevron collapse-button"><i class="open fa fa-angle-down"></i></div><span>Сервис общей статистики</span></a><div class="collapse-content"><ul><li><a href="#сервис-общей-статистики-get"><span class="badge get"></span>Статистика ключевых фраз</a></li><li><a href="#сервис-общей-статистики-get-1"><span class="badge get"></span>Статистика групп объявлений</a></li><li><a href="#сервис-общей-статистики-get-2"><span class="badge get"></span>Статистика кампаний</a></li><li><a href="#сервис-общей-статистики-get-3"><span class="badge get"></span>Статистика сайтов</a></li><li><a href="#сервис-общей-статистики-get-4"><span class="badge get"></span>Статистика проектов</a></li></ul></div></li></ul></div></div></nav><div class="content"><header><h1 id="top">Аналитика</h1></header><h2 class="group-heading">Overview</h2><div class="hostname"><a href="http://analitics.catkitcms.ru/api">http://analitics.catkitcms.ru/api</a></div><h3 id="header-аутентификация">Аутентификация <a class="permalink" href="#header-аутентификация" aria-hidden="true">¶</a></h3>
 <p>Для авторизации приложения используется механизм JWT токенов. При каждом
 запросе к API должен передаваться HTTP-заголовок <code>User-Token</code>, содержащий
 JWT токен.</p>
@@ -1712,7 +1712,254 @@ JWT токен.</p>
   "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
     <span class="hljs-string">"data"</span>
   ]
-</span>}</code></pre></div></div></div></div></div></div><div id="сайты" class="resource"><div id="сайты-get" class="action get"><div class="action-name"><span class="action-resource">Сайты</span><span class="action-dif">/</span><span class="action-title">Список сайтов</span></div><h4 class="action-heading"><a href="#сайты-get" class="method get">GET</a><div class="code">http://analitics.catkitcms.ru/api/sites?{order}=&amp;{reverse}=</div></h4><div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span></span></td><td>order</td><td><span class="attribute-type">string</span><p>Поле для сортировки</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>reverse</td><td><span class="attribute-type">boolean</span><p>Сортировка в обратном порядке</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="">data</td><td><span class="attribute-type">array</span><p></p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">id</td><td><span class="attribute-type">number</span><p>ID сайта</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">domain</td><td><span class="attribute-type">string</span><p>Доменное имя сайта</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">project_id</td><td><span class="attribute-type">number</span><p>ID проекта, которому принадлежит сайт</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div></div><div id="аккаунты" class="resource"><div id="аккаунты-get" class="action get"><div class="action-name"><span class="action-resource">Аккаунты</span><span class="action-dif">/</span><span class="action-title">Список доступных типов и настроек</span></div><h4 class="action-heading"><a href="#аккаунты-get" class="method get">GET</a><div class="code">http://analitics.catkitcms.ru/api/accounts/types</div></h4><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width=""></td><td><span class="attribute-type">array</span><p></p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">type</td><td><span class="attribute-type">number</span><p>Ключ для типа аккаунта</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">human</td><td><span class="attribute-type">string</span><p>Название типа</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">options</td><td><span class="attribute-type">array</span><p></p></td></tr><tr><td></td><td></td><td class="attribute-status"><span></span></td><td width="">name</td><td><span class="attribute-type">string</span><p>Поле для настройки</p></td></tr><tr><td></td><td></td><td class="attribute-status"><span></span></td><td width="">caption</td><td><span class="attribute-type">string</span><p>Название поля</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
+  "<span class="hljs-attribute">undefined</span>": <span class="hljs-value">[
+    {
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+      "<span class="hljs-attribute">human</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
+      "<span class="hljs-attribute">options</span>": <span class="hljs-value">[
+        {
+          "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
+          "<span class="hljs-attribute">caption</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span>
+        </span>}
+      ]
+    </span>}
+  ]
+</span>}</code></pre><div style="height: 1px;"></div></div><div data-tab="schema" class="tab"><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute"></span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span></span>,
+      "<span class="hljs-attribute">items</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+        "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+            "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+              <span class="hljs-number">0</span>
+            ]</span>,
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Ключ для типа аккаунта"</span>
+          </span>}</span>,
+          "<span class="hljs-attribute">human</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+            "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+              <span class="hljs-string">""</span>
+            ]</span>,
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Название типа"</span>
+          </span>}</span>,
+          "<span class="hljs-attribute">options</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span></span>,
+            "<span class="hljs-attribute">items</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+              "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+                "<span class="hljs-attribute">name</span>": <span class="hljs-value">{
+                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+                  "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+                    <span class="hljs-string">""</span>
+                  ]</span>,
+                  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Поле для настройки"</span>
+                </span>}</span>,
+                "<span class="hljs-attribute">caption</span>": <span class="hljs-value">{
+                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+                  "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+                    <span class="hljs-string">""</span>
+                  ]</span>,
+                  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Название поля"</span>
+                </span>}
+              </span>}</span>,
+              "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+                <span class="hljs-string">"name"</span>,
+                <span class="hljs-string">"caption"</span>
+              ]</span>,
+              "<span class="hljs-attribute">additionalProperties</span>": <span class="hljs-value"><span class="hljs-literal">false</span>
+            </span>}
+          </span>}
+        </span>}</span>,
+        "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+          <span class="hljs-string">"type"</span>,
+          <span class="hljs-string">"human"</span>,
+          <span class="hljs-string">"options"</span>
+        ]</span>,
+        "<span class="hljs-attribute">additionalProperties</span>": <span class="hljs-value"><span class="hljs-literal">false</span>
+      </span>}
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">""</span>
+  ]
+</span>}</code></pre></div></div></div></div></div><div id="аккаунты-get-1" class="action get"><div class="action-name"><span class="action-resource">Аккаунты</span><span class="action-dif">/</span><span class="action-title">Список аккаунтов</span></div><h4 class="action-heading"><a href="#аккаунты-get-1" class="method get">GET</a><div class="code">http://analitics.catkitcms.ru/api/accounts</div></h4><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="">data</td><td><span class="attribute-type">array</span><p></p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">id</td><td><span class="attribute-type">number</span><p>ID</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
+  "<span class="hljs-attribute">data</span>": <span class="hljs-value">[
+    {
+      "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span>
+    </span>}
+  ]
+</span>}</code></pre><div style="height: 1px;"></div></div><div data-tab="schema" class="tab"><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span></span>,
+      "<span class="hljs-attribute">items</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+        "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+            "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+              <span class="hljs-number">0</span>
+            ]</span>,
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"ID"</span>
+          </span>}
+        </span>}</span>,
+        "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+          <span class="hljs-string">"id"</span>
+        ]</span>,
+        "<span class="hljs-attribute">additionalProperties</span>": <span class="hljs-value"><span class="hljs-literal">false</span>
+      </span>}
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"data"</span>
+  ]
+</span>}</code></pre></div></div></div></div></div><div id="аккаунты-get-2" class="action get"><div class="action-name"><span class="action-resource">Аккаунты</span><span class="action-dif">/</span><span class="action-title">Подробная информация и настройки</span></div><h4 class="action-heading"><a href="#аккаунты-get-2" class="method get">GET</a><div class="code">http://analitics.catkitcms.ru/api/accounts/{id}</div></h4><div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID аккаунта</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width=""></td><td><span class="attribute-type">object</span><p></p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">id</td><td><span class="attribute-type">number</span><p>ID</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">site_id</td><td><span class="attribute-type">number</span><p>ID свзанного сайта</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">type</td><td><span class="attribute-type">string</span><p>Тип</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">caption</td><td><span class="attribute-type">string</span><p>Название</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">sriteria</td><td><span class="attribute-type">string</span><p>Строка для определения принадлежности заявки источнику трафика</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">human</td><td><span class="attribute-type">string</span><p>Название типа источника</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">options</td><td><span class="attribute-type">array</span><p></p></td></tr><tr><td></td><td></td><td class="attribute-status"><span></span></td><td width="">name</td><td><span class="attribute-type">string</span><p>Настройка</p></td></tr><tr><td></td><td></td><td class="attribute-status"><span></span></td><td width="">value</td><td><span class="attribute-type">string</span><p>Значение</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{}</code></pre><div style="height: 1px;"></div></div><div data-tab="schema" class="tab"><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute"></span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"ID"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">site_id</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"ID свзанного сайта"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">type</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Тип"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">caption</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Название"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">sriteria</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Строка для определения принадлежности заявки источнику трафика"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">human</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Название типа источника"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">options</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span></span>,
+          "<span class="hljs-attribute">items</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+            "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">name</span>": <span class="hljs-value">{
+                "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+                "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+                  <span class="hljs-string">""</span>
+                ]</span>,
+                "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Настройка"</span>
+              </span>}</span>,
+              "<span class="hljs-attribute">value</span>": <span class="hljs-value">{
+                "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+                "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+                  <span class="hljs-string">""</span>
+                ]</span>,
+                "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Значение"</span>
+              </span>}
+            </span>}</span>,
+            "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+              <span class="hljs-string">"name"</span>,
+              <span class="hljs-string">"value"</span>
+            ]</span>,
+            "<span class="hljs-attribute">additionalProperties</span>": <span class="hljs-value"><span class="hljs-literal">false</span>
+          </span>}
+        </span>}
+      </span>}</span>,
+      "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+        <span class="hljs-string">"options"</span>
+      ]
+    </span>}
+  </span>}
+</span>}</code></pre></div></div></div></div></div><div id="аккаунты-post" class="action post"><div class="action-name"><span class="action-resource">Аккаунты</span><span class="action-dif">/</span><span class="action-title">Добавить новый аккаунт</span></div><h4 class="action-heading"><a href="#аккаунты-post" class="method post">POST</a><div class="code">http://analitics.catkitcms.ru/api/accounts</div></h4><div class="title"><strong>Request</strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="">site_id</td><td><span class="attribute-type">number</span><p>ID сайта, к которому относится источник</p></td></tr><tr><td class="attribute-status"><span class="required"></span></td><td width="">type</td><td><span class="attribute-type">string</span><p>Ключ типа источника</p></td></tr><tr><td class="attribute-status"><span class="required"></span></td><td width="">caption</td><td><span class="attribute-type">string</span><p>Название источника</p></td></tr><tr><td class="attribute-status"><span></span></td><td width="">options</td><td><span class="attribute-type">object</span><p>Массив настроек для источника трафика в виде name-value</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">name - value</td><td><span class="attribute-type">string</span><p></p></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+  "<span class="hljs-attribute">site_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
+  "<span class="hljs-attribute">caption</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
+  "<span class="hljs-attribute">options</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">name - value</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span>
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div><div data-tab="schema" class="tab"><pre><code>{
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">site_id</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"ID сайта, к которому относится источник"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Ключ типа источника"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">caption</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Название источника"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">options</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">name - value</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+        </span>}
+      </span>}</span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Массив настроек для источника трафика в виде name-value"</span>
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"site_id"</span>,
+    <span class="hljs-string">"type"</span>,
+    <span class="hljs-string">"caption"</span>
+  ]</span>,
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span>
+</span>}</code></pre></div></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width="">data</td><td><span class="attribute-type">object</span><p></p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">id</td><td><span class="attribute-type">number</span><p>ID добавленного аккаунта</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
+  "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span>
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div><div data-tab="schema" class="tab"><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"ID добавленного аккаунта"</span>
+        </span>}
+      </span>}
+    </span>}
+  </span>}
+</span>}</code></pre></div></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width="">data</td><td><span class="attribute-type">object</span><p></p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">id</td><td><span class="attribute-type">number</span><p>ID аккаунта</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
+  "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span>
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div><div data-tab="schema" class="tab"><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"ID аккаунта"</span>
+        </span>}
+      </span>}
+    </span>}
+  </span>}
+</span>}</code></pre></div></div></div></div></div><div id="аккаунты-delete" class="action delete"><div class="action-name"><span class="action-resource">Аккаунты</span><span class="action-dif">/</span><span class="action-title">Удалить аккаунт</span></div><h4 class="action-heading"><a href="#аккаунты-delete" class="method delete">DELETE</a><div class="code">http://analitics.catkitcms.ru/api/accounts/{id}</div></h4><div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID аккаунта</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button">Headers</a></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div></div></div></div></div><div id="сайты" class="resource"><div id="сайты-get" class="action get"><div class="action-name"><span class="action-resource">Сайты</span><span class="action-dif">/</span><span class="action-title">Список сайтов</span></div><h4 class="action-heading"><a href="#сайты-get" class="method get">GET</a><div class="code">http://analitics.catkitcms.ru/api/sites?{order}=&amp;{reverse}=</div></h4><div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span></span></td><td>order</td><td><span class="attribute-type">string</span><p>Поле для сортировки</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>reverse</td><td><span class="attribute-type">boolean</span><p>Сортировка в обратном порядке</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="">data</td><td><span class="attribute-type">array</span><p></p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">id</td><td><span class="attribute-type">number</span><p>ID сайта</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">domain</td><td><span class="attribute-type">string</span><p>Доменное имя сайта</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">project_id</td><td><span class="attribute-type">number</span><p>ID проекта, которому принадлежит сайт</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">data</span>": <span class="hljs-value">[
     {
       "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
@@ -1822,12 +2069,14 @@ JWT токен.</p>
       "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"ID проекта, которому принадлежит сайт"</span>
     </span>}
   </span>}
-</span>}</code></pre></div></div></div></div></div><div id="сайты-delete" class="action delete"><div class="action-name"><span class="action-resource">Сайты</span><span class="action-dif">/</span><span class="action-title">Удалить сайт</span></div><h4 class="action-heading"><a href="#сайты-delete" class="method delete">DELETE</a><div class="code">http://analitics.catkitcms.ru/api/sites/{id}</div></h4><div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID сайта.</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button">Headers</a></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div></div></div></div><div id="сайты-get-2" class="action get"><div class="action-name"><span class="action-resource">Сайты</span><span class="action-dif">/</span><span class="action-title">Список источников трафика</span></div><h4 class="action-heading"><a href="#сайты-get-2" class="method get">GET</a><div class="code">http://analitics.catkitcms.ru/api/sites/{id}/sources?{order}=&amp;{reverse}=</div></h4><div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID сайта.</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>order</td><td><span class="attribute-type">string</span><p>Поле для сортировки</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>reverse</td><td><span class="attribute-type">boolean</span><p>Сортировка в обратном порядке</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="">data</td><td><span class="attribute-type">array</span><p></p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">id</td><td><span class="attribute-type">number</span><p>ID</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">type</td><td><span class="attribute-type">string</span><p>Тип</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">caption</td><td><span class="attribute-type">string</span><p>Название</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div><div id="сайты-delete" class="action delete"><div class="action-name"><span class="action-resource">Сайты</span><span class="action-dif">/</span><span class="action-title">Удалить сайт</span></div><h4 class="action-heading"><a href="#сайты-delete" class="method delete">DELETE</a><div class="code">http://analitics.catkitcms.ru/api/sites/{id}</div></h4><div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID сайта.</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button">Headers</a></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div></div></div></div><div id="сайты-get-2" class="action get"><div class="action-name"><span class="action-resource">Сайты</span><span class="action-dif">/</span><span class="action-title">Список источников трафика</span></div><h4 class="action-heading"><a href="#сайты-get-2" class="method get">GET</a><div class="code">http://analitics.catkitcms.ru/api/sites/{id}/sources?{order}=&amp;{reverse}=</div></h4><div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID сайта.</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>order</td><td><span class="attribute-type">string</span><p>Поле для сортировки</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td>reverse</td><td><span class="attribute-type">boolean</span><p>Сортировка в обратном порядке</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="">data</td><td><span class="attribute-type">array</span><p></p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">id</td><td><span class="attribute-type">number</span><p>ID</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">site_id</td><td><span class="attribute-type">number</span><p>ID свзанного сайта</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">type</td><td><span class="attribute-type">string</span><p>Тип</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">caption</td><td><span class="attribute-type">string</span><p>Название</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">sriteria</td><td><span class="attribute-type">string</span><p>Строка для определения принадлежности заявки источнику трафика</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">data</span>": <span class="hljs-value">[
     {
       "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+      "<span class="hljs-attribute">site_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
       "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
-      "<span class="hljs-attribute">caption</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span>
+      "<span class="hljs-attribute">caption</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
+      "<span class="hljs-attribute">sriteria</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span>
     </span>}
   ]
 </span>}</code></pre><div style="height: 1px;"></div></div><div data-tab="schema" class="tab"><pre><code>{
@@ -1846,6 +2095,13 @@ JWT токен.</p>
             ]</span>,
             "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"ID"</span>
           </span>}</span>,
+          "<span class="hljs-attribute">site_id</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+            "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+              <span class="hljs-number">0</span>
+            ]</span>,
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"ID свзанного сайта"</span>
+          </span>}</span>,
           "<span class="hljs-attribute">type</span>": <span class="hljs-value">{
             "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
             "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
@@ -1859,12 +2115,21 @@ JWT токен.</p>
               <span class="hljs-string">""</span>
             ]</span>,
             "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Название"</span>
+          </span>}</span>,
+          "<span class="hljs-attribute">sriteria</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+            "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+              <span class="hljs-string">""</span>
+            ]</span>,
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Строка для определения принадлежности заявки источнику трафика"</span>
           </span>}
         </span>}</span>,
         "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
           <span class="hljs-string">"id"</span>,
+          <span class="hljs-string">"site_id"</span>,
           <span class="hljs-string">"type"</span>,
-          <span class="hljs-string">"caption"</span>
+          <span class="hljs-string">"caption"</span>,
+          <span class="hljs-string">"sriteria"</span>
         ]</span>,
         "<span class="hljs-attribute">additionalProperties</span>": <span class="hljs-value"><span class="hljs-literal">false</span>
       </span>}
@@ -2097,88 +2362,14 @@ JWT токен.</p>
     </span>}
   </span>}</span>,
   "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span>
-</span>}</code></pre></div></div></div></div></div></div><div id="источники-трафика" class="resource"><div id="источники-трафика-get" class="action get"><div class="action-name"><span class="action-resource">Источники трафика</span><span class="action-dif">/</span><span class="action-title">Список доступных типов и настроек</span></div><h4 class="action-heading"><a href="#источники-трафика-get" class="method get">GET</a><div class="code">http://analitics.catkitcms.ru/api/sources/types</div></h4><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width=""></td><td><span class="attribute-type">array</span><p></p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">type</td><td><span class="attribute-type">number</span><p>Ключ для типа источника трафика</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">human</td><td><span class="attribute-type">string</span><p>Название типа источника</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">options</td><td><span class="attribute-type">array</span><p></p></td></tr><tr><td></td><td></td><td class="attribute-status"><span></span></td><td width="">name</td><td><span class="attribute-type">string</span><p>Настройка</p></td></tr><tr><td></td><td></td><td class="attribute-status"><span></span></td><td width="">caption</td><td><span class="attribute-type">string</span><p>Название поля</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
-  "<span class="hljs-attribute">undefined</span>": <span class="hljs-value">[
-    {
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-      "<span class="hljs-attribute">human</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
-      "<span class="hljs-attribute">options</span>": <span class="hljs-value">[
-        {
-          "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
-          "<span class="hljs-attribute">caption</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span>
-        </span>}
-      ]
-    </span>}
-  ]
-</span>}</code></pre><div style="height: 1px;"></div></div><div data-tab="schema" class="tab"><pre><code>{
-  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
-  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
-  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute"></span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span></span>,
-      "<span class="hljs-attribute">items</span>": <span class="hljs-value">{
-        "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
-        "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
-          "<span class="hljs-attribute">type</span>": <span class="hljs-value">{
-            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
-            "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
-              <span class="hljs-number">0</span>
-            ]</span>,
-            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Ключ для типа источника трафика"</span>
-          </span>}</span>,
-          "<span class="hljs-attribute">human</span>": <span class="hljs-value">{
-            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-            "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
-              <span class="hljs-string">""</span>
-            ]</span>,
-            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Название типа источника"</span>
-          </span>}</span>,
-          "<span class="hljs-attribute">options</span>": <span class="hljs-value">{
-            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span></span>,
-            "<span class="hljs-attribute">items</span>": <span class="hljs-value">{
-              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
-              "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
-                "<span class="hljs-attribute">name</span>": <span class="hljs-value">{
-                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-                  "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
-                    <span class="hljs-string">""</span>
-                  ]</span>,
-                  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Настройка"</span>
-                </span>}</span>,
-                "<span class="hljs-attribute">caption</span>": <span class="hljs-value">{
-                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-                  "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
-                    <span class="hljs-string">""</span>
-                  ]</span>,
-                  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Название поля"</span>
-                </span>}
-              </span>}</span>,
-              "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
-                <span class="hljs-string">"name"</span>,
-                <span class="hljs-string">"caption"</span>
-              ]</span>,
-              "<span class="hljs-attribute">additionalProperties</span>": <span class="hljs-value"><span class="hljs-literal">false</span>
-            </span>}
-          </span>}
-        </span>}</span>,
-        "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
-          <span class="hljs-string">"type"</span>,
-          <span class="hljs-string">"human"</span>,
-          <span class="hljs-string">"options"</span>
-        ]</span>,
-        "<span class="hljs-attribute">additionalProperties</span>": <span class="hljs-value"><span class="hljs-literal">false</span>
-      </span>}
-    </span>}
-  </span>}</span>,
-  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
-    <span class="hljs-string">""</span>
-  ]
-</span>}</code></pre></div></div></div></div></div><div id="источники-трафика-get-1" class="action get"><div class="action-name"><span class="action-resource">Источники трафика</span><span class="action-dif">/</span><span class="action-title">Список источников трафика</span></div><h4 class="action-heading"><a href="#источники-трафика-get-1" class="method get">GET</a><div class="code">http://analitics.catkitcms.ru/api/sources</div></h4><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="">data</td><td><span class="attribute-type">array</span><p></p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">id</td><td><span class="attribute-type">number</span><p>ID</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">type</td><td><span class="attribute-type">string</span><p>Тип</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">caption</td><td><span class="attribute-type">string</span><p>Название</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div></div><div id="источники-трафика" class="resource"><div id="источники-трафика-get" class="action get"><div class="action-name"><span class="action-resource">Источники трафика</span><span class="action-dif">/</span><span class="action-title">Список источников трафика</span></div><h4 class="action-heading"><a href="#источники-трафика-get" class="method get">GET</a><div class="code">http://analitics.catkitcms.ru/api/sources</div></h4><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="">data</td><td><span class="attribute-type">array</span><p></p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">id</td><td><span class="attribute-type">number</span><p>ID</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">site_id</td><td><span class="attribute-type">number</span><p>ID свзанного сайта</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">type</td><td><span class="attribute-type">string</span><p>Тип</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">caption</td><td><span class="attribute-type">string</span><p>Название</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">sriteria</td><td><span class="attribute-type">string</span><p>Строка для определения принадлежности заявки источнику трафика</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">data</span>": <span class="hljs-value">[
     {
       "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+      "<span class="hljs-attribute">site_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
       "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
-      "<span class="hljs-attribute">caption</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span>
+      "<span class="hljs-attribute">caption</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
+      "<span class="hljs-attribute">sriteria</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span>
     </span>}
   ]
 </span>}</code></pre><div style="height: 1px;"></div></div><div data-tab="schema" class="tab"><pre><code>{
@@ -2197,6 +2388,13 @@ JWT токен.</p>
             ]</span>,
             "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"ID"</span>
           </span>}</span>,
+          "<span class="hljs-attribute">site_id</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+            "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+              <span class="hljs-number">0</span>
+            ]</span>,
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"ID свзанного сайта"</span>
+          </span>}</span>,
           "<span class="hljs-attribute">type</span>": <span class="hljs-value">{
             "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
             "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
@@ -2210,12 +2408,21 @@ JWT токен.</p>
               <span class="hljs-string">""</span>
             ]</span>,
             "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Название"</span>
+          </span>}</span>,
+          "<span class="hljs-attribute">sriteria</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+            "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+              <span class="hljs-string">""</span>
+            ]</span>,
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Строка для определения принадлежности заявки источнику трафика"</span>
           </span>}
         </span>}</span>,
         "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
           <span class="hljs-string">"id"</span>,
+          <span class="hljs-string">"site_id"</span>,
           <span class="hljs-string">"type"</span>,
-          <span class="hljs-string">"caption"</span>
+          <span class="hljs-string">"caption"</span>,
+          <span class="hljs-string">"sriteria"</span>
         ]</span>,
         "<span class="hljs-attribute">additionalProperties</span>": <span class="hljs-value"><span class="hljs-literal">false</span>
       </span>}
@@ -2224,19 +2431,13 @@ JWT токен.</p>
   "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
     <span class="hljs-string">"data"</span>
   ]
-</span>}</code></pre></div></div></div></div></div><div id="источники-трафика-get-2" class="action get"><div class="action-name"><span class="action-resource">Источники трафика</span><span class="action-dif">/</span><span class="action-title">Подробная информация и настройки</span></div><h4 class="action-heading"><a href="#источники-трафика-get-2" class="method get">GET</a><div class="code">http://analitics.catkitcms.ru/api/sources/{id}</div></h4><div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID источника трафика</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width=""></td><td><span class="attribute-type">object</span><p></p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">id</td><td><span class="attribute-type">number</span><p>ID</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">type</td><td><span class="attribute-type">string</span><p>Тип</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">caption</td><td><span class="attribute-type">string</span><p>Название</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">site_id</td><td><span class="attribute-type">number</span><p>ID свзанного сайта</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">human</td><td><span class="attribute-type">string</span><p>Название типа источника</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">options</td><td><span class="attribute-type">array</span><p></p></td></tr><tr><td></td><td></td><td class="attribute-status"><span></span></td><td width="">name</td><td><span class="attribute-type">string</span><p>Настройка</p></td></tr><tr><td></td><td></td><td class="attribute-status"><span></span></td><td width="">value</td><td><span class="attribute-type">string</span><p>Значение</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div><div id="источники-трафика-get-1" class="action get"><div class="action-name"><span class="action-resource">Источники трафика</span><span class="action-dif">/</span><span class="action-title">Подробная информация и настройки</span></div><h4 class="action-heading"><a href="#источники-трафика-get-1" class="method get">GET</a><div class="code">http://analitics.catkitcms.ru/api/sources/{id}</div></h4><div class="title"><strong>Parameters</strong></div><div class="div"><table class="inner"><tr><td></td><td class="attribute-status"><span class="required"></span></td><td>id</td><td><span class="attribute-type">number</span><p>ID источника трафика</p></td></tr></table></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width=""></td><td><span class="attribute-type">object</span><p></p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">id</td><td><span class="attribute-type">number</span><p>ID</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">site_id</td><td><span class="attribute-type">number</span><p>ID свзанного сайта</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">type</td><td><span class="attribute-type">string</span><p>Тип</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">caption</td><td><span class="attribute-type">string</span><p>Название</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">sriteria</td><td><span class="attribute-type">string</span><p>Строка для определения принадлежности заявки источнику трафика</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">undefined</span>": <span class="hljs-value">{
     "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+    "<span class="hljs-attribute">site_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
     "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
     "<span class="hljs-attribute">caption</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
-    "<span class="hljs-attribute">site_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-    "<span class="hljs-attribute">human</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
-    "<span class="hljs-attribute">options</span>": <span class="hljs-value">[
-      {
-        "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
-        "<span class="hljs-attribute">value</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span>
-      </span>}
-    ]
+    "<span class="hljs-attribute">sriteria</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span>
   </span>}
 </span>}</code></pre><div style="height: 1px;"></div></div><div data-tab="schema" class="tab"><pre><code>{
   "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
@@ -2249,6 +2450,10 @@ JWT токен.</p>
           "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
           "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"ID"</span>
         </span>}</span>,
+        "<span class="hljs-attribute">site_id</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"ID свзанного сайта"</span>
+        </span>}</span>,
         "<span class="hljs-attribute">type</span>": <span class="hljs-value">{
           "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
           "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Тип"</span>
@@ -2257,54 +2462,18 @@ JWT токен.</p>
           "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
           "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Название"</span>
         </span>}</span>,
-        "<span class="hljs-attribute">site_id</span>": <span class="hljs-value">{
-          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
-          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"ID свзанного сайта"</span>
-        </span>}</span>,
-        "<span class="hljs-attribute">human</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">sriteria</span>": <span class="hljs-value">{
           "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Название типа источника"</span>
-        </span>}</span>,
-        "<span class="hljs-attribute">options</span>": <span class="hljs-value">{
-          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span></span>,
-          "<span class="hljs-attribute">items</span>": <span class="hljs-value">{
-            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
-            "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
-              "<span class="hljs-attribute">name</span>": <span class="hljs-value">{
-                "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-                "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
-                  <span class="hljs-string">""</span>
-                ]</span>,
-                "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Настройка"</span>
-              </span>}</span>,
-              "<span class="hljs-attribute">value</span>": <span class="hljs-value">{
-                "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-                "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
-                  <span class="hljs-string">""</span>
-                ]</span>,
-                "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Значение"</span>
-              </span>}
-            </span>}</span>,
-            "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
-              <span class="hljs-string">"name"</span>,
-              <span class="hljs-string">"value"</span>
-            ]</span>,
-            "<span class="hljs-attribute">additionalProperties</span>": <span class="hljs-value"><span class="hljs-literal">false</span>
-          </span>}
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Строка для определения принадлежности заявки источнику трафика"</span>
         </span>}
-      </span>}</span>,
-      "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
-        <span class="hljs-string">"options"</span>
-      ]
+      </span>}
     </span>}
   </span>}
-</span>}</code></pre></div></div></div></div></div><div id="источники-трафика-post" class="action post"><div class="action-name"><span class="action-resource">Источники трафика</span><span class="action-dif">/</span><span class="action-title">Добавить новый источник трафика</span></div><h4 class="action-heading"><a href="#источники-трафика-post" class="method post">POST</a><div class="code">http://analitics.catkitcms.ru/api/sources</div></h4><div class="title"><strong>Request</strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="">site_id</td><td><span class="attribute-type">number</span><p>ID сайта, к которому относится источник</p></td></tr><tr><td class="attribute-status"><span class="required"></span></td><td width="">type</td><td><span class="attribute-type">string</span><p>Ключ типа источника</p></td></tr><tr><td class="attribute-status"><span class="required"></span></td><td width="">caption</td><td><span class="attribute-type">string</span><p>Название источника</p></td></tr><tr><td class="attribute-status"><span></span></td><td width="">options</td><td><span class="attribute-type">object</span><p>Массив настроек для источника трафика в виде name-value</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">name - value</td><td><span class="attribute-type">string</span><p></p></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div><div id="источники-трафика-post" class="action post"><div class="action-name"><span class="action-resource">Источники трафика</span><span class="action-dif">/</span><span class="action-title">Добавить новый источник трафика</span></div><h4 class="action-heading"><a href="#источники-трафика-post" class="method post">POST</a><div class="code">http://analitics.catkitcms.ru/api/sources</div></h4><div class="title"><strong>Request</strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="">site_id</td><td><span class="attribute-type">number</span><p>ID сайта, к которому относится источник</p></td></tr><tr><td class="attribute-status"><span class="required"></span></td><td width="">type</td><td><span class="attribute-type">string</span><p>Ключ типа источника</p></td></tr><tr><td class="attribute-status"><span class="required"></span></td><td width="">caption</td><td><span class="attribute-type">string</span><p>Название источника</p></td></tr><tr><td class="attribute-status"><span class="required"></span></td><td width="">criteria</td><td><span class="attribute-type">string</span><p>Строка для определения принадлежности заявки источнику трафика</p></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">site_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
   "<span class="hljs-attribute">caption</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
-  "<span class="hljs-attribute">options</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">name - value</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span>
-  </span>}
+  "<span class="hljs-attribute">criteria</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span>
 </span>}</code></pre><div style="height: 1px;"></div></div><div data-tab="schema" class="tab"><pre><code>{
   "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
   "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
@@ -2320,20 +2489,16 @@ JWT токен.</p>
       "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
       "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Название источника"</span>
     </span>}</span>,
-    "<span class="hljs-attribute">options</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
-      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
-        "<span class="hljs-attribute">name - value</span>": <span class="hljs-value">{
-          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
-        </span>}
-      </span>}</span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Массив настроек для источника трафика в виде name-value"</span>
+    "<span class="hljs-attribute">criteria</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Строка для определения принадлежности заявки источнику трафика"</span>
     </span>}
   </span>}</span>,
   "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
     <span class="hljs-string">"site_id"</span>,
     <span class="hljs-string">"type"</span>,
-    <span class="hljs-string">"caption"</span>
+    <span class="hljs-string">"caption"</span>,
+    <span class="hljs-string">"criteria"</span>
   ]</span>,
   "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span>
 </span>}</code></pre></div></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width="">data</td><td><span class="attribute-type">object</span><p></p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">id</td><td><span class="attribute-type">number</span><p>ID добавленного источника</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
@@ -2354,12 +2519,10 @@ JWT токен.</p>
       </span>}
     </span>}
   </span>}
-</span>}</code></pre></div></div></div></div></div><div id="источники-трафика-put" class="action put"><div class="action-name"><span class="action-resource">Источники трафика</span><span class="action-dif">/</span><span class="action-title">Редактировать источник трафика</span></div><h4 class="action-heading"><a href="#источники-трафика-put" class="method put">PUT</a><div class="code">http://analitics.catkitcms.ru/api/sources</div></h4><div class="title"><strong>Request</strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="">site_id</td><td><span class="attribute-type">number</span><p>ID сайта, к которому относится источник</p></td></tr><tr><td class="attribute-status"><span class="required"></span></td><td width="">caption</td><td><span class="attribute-type">string</span><p>Название источника</p></td></tr><tr><td class="attribute-status"><span></span></td><td width="">options</td><td><span class="attribute-type">object</span><p>Массив настроек для источника трафика в виде name-value</p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">name - value</td><td><span class="attribute-type">string</span><p></p></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
+</span>}</code></pre></div></div></div></div></div><div id="источники-трафика-put" class="action put"><div class="action-name"><span class="action-resource">Источники трафика</span><span class="action-dif">/</span><span class="action-title">Редактировать источник трафика</span></div><h4 class="action-heading"><a href="#источники-трафика-put" class="method put">PUT</a><div class="code">http://analitics.catkitcms.ru/api/sources</div></h4><div class="title"><strong>Request</strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span class="required"></span></td><td width="">site_id</td><td><span class="attribute-type">number</span><p>ID сайта, к которому относится источник</p></td></tr><tr><td class="attribute-status"><span class="required"></span></td><td width="">caption</td><td><span class="attribute-type">string</span><p>Название источника</p></td></tr><tr><td class="attribute-status"><span class="required"></span></td><td width="">criteria</td><td><span class="attribute-type">string</span><p>Строка для определения принадлежности заявки источнику трафика</p></td></tr></thead></table></div><div data-tab="body" class="tab"><pre><code>{
   "<span class="hljs-attribute">site_id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">caption</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
-  "<span class="hljs-attribute">options</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">name - value</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span>
-  </span>}
+  "<span class="hljs-attribute">criteria</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span>
 </span>}</code></pre><div style="height: 1px;"></div></div><div data-tab="schema" class="tab"><pre><code>{
   "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
   "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
@@ -2371,19 +2534,15 @@ JWT токен.</p>
       "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
       "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Название источника"</span>
     </span>}</span>,
-    "<span class="hljs-attribute">options</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
-      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
-        "<span class="hljs-attribute">name - value</span>": <span class="hljs-value">{
-          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
-        </span>}
-      </span>}</span>,
-      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Массив настроек для источника трафика в виде name-value"</span>
+    "<span class="hljs-attribute">criteria</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Строка для определения принадлежности заявки источнику трафика"</span>
     </span>}
   </span>}</span>,
   "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
     <span class="hljs-string">"site_id"</span>,
-    <span class="hljs-string">"caption"</span>
+    <span class="hljs-string">"caption"</span>,
+    <span class="hljs-string">"criteria"</span>
   ]</span>,
   "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span>
 </span>}</code></pre></div></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div><div class="inner"><div class="tabs r-tabs"><div class="tabs-menu"><a data-tab="attributes" class="tab-button active">Attributes</a><a data-tab="attributes" class="tab-button">Headers</a><a data-tab="attributes" class="tab-button">Body</a><a data-tab="attributes" class="tab-button">Schema</a></div><div data-tab="attributes" class="tab active"><table style="width: 100%;"><thead><tr><td class="attribute-status"><span></span></td><td width="">data</td><td><span class="attribute-type">object</span><p></p></td></tr><tr><td></td><td class="attribute-status"><span></span></td><td width="">id</td><td><span class="attribute-type">number</span><p>ID источника</p></td></tr></thead></table></div><div data-tab="headers" class="tab"><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div><div data-tab="body" class="tab"><pre><code>{
@@ -4132,7 +4291,7 @@ JWT токен.</p>
       </span>}
     </span>}
   </span>}
-</span>}</code></pre></div></div></div></div></div></div></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 18 May 2018</p><script>/*
+</span>}</code></pre></div></div></div></div></div></div></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 05 Jun 2018</p><script>/*
     Determine if a string ends with another string.
 */
 function endsWith(str, suffix) {

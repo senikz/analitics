@@ -37,6 +37,7 @@ class AggregateStatisticsShell extends \Cake\Console\Shell
 
 		Log::write('debug', [$date], ['shell', 'AggregateStatisticsShell', 'main']);
 
+		$this->leads(date('Y-m-d'));
 		$this->leads($date);
 
 		$this->sources($date);
