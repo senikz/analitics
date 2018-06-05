@@ -167,6 +167,9 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 + Include Campaign Statistics
 + orders (number) - Кол-во заказов с сайта
 
+## Account
++ id: (number) - ID
+
 ## Source
 + id: (number) - ID
 + site_id: (number) - ID свзанного сайта
@@ -423,30 +426,30 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
             + (Account)
 
 
-		### Подробная информация и настройки [GET/accounts/{id}]
+### Подробная информация и настройки [GET/accounts/{id}]
 
-		+ Parameters
-		    + id: (number, required) - ID аккаунта
++ Parameters
+    + id: (number, required) - ID аккаунта
 
-		+ Response 200 (application/json)
-		    + Attributes
-		        + (Source)
-					+ site_id: (number) - ID свзанного сайта
-					+ human: (string) - Название типа источника
-					+ options: (array,fixed)
-						+ Object
-							+ name: (string) - Настройка
-							+ value: (string) - Значение
++ Response 200 (application/json)
+    + Attributes
+        + (Source)
+			+ site_id: (number) - ID свзанного сайта
+			+ human: (string) - Название типа источника
+			+ options: (array,fixed)
+				+ Object
+					+ name: (string) - Настройка
+					+ value: (string) - Значение
 
-		### Добавить новый источник трафика [POST]
+### Добавить новый аккаунт [POST]
 
-		+ Request
-		    + Attributes
-		        + site_id: (number, required) - ID сайта, к которому относится источник
-		        + type: (string, required) - Ключ типа источника
-		        + caption: (string,required) - Название источника
-				+ options: (object) - Массив настроек для источника трафика в виде name-value
-					+ `name - value`
++ Request
+    + Attributes
+        + site_id: (number, required) - ID сайта, к которому относится источник
+        + type: (string, required) - Ключ типа источника
+        + caption: (string,required) - Название источника
+		+ options: (object) - Массив настроек для источника трафика в виде name-value
+			+ `name - value`
 
 + Response 200 (application/json)
     + Attributes
