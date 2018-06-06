@@ -12,11 +12,11 @@ trait StatisticsTableHelper
 
         $statistics = $query
             ->select([
-                'total_cost' => $query->func()->sum('cost'),
-                'total_views' => $query->func()->sum('views'),
-                'total_clicks' => $query->func()->sum('clicks'),
-                'total_calls' => $query->func()->sum('calls'),
-                'total_emails' => $query->func()->sum('emails'),
+                'cost' => $query->func()->sum('cost'),
+                'views' => $query->func()->sum('views'),
+                'clicks' => $query->func()->sum('clicks'),
+                'calls' => $query->func()->sum('calls'),
+                'emails' => $query->func()->sum('emails'),
             ])
             ->first();
 
@@ -24,21 +24,24 @@ trait StatisticsTableHelper
             return [];
         }
 
+		$statistics = $this->calcPerc($statistics);
+
         return [
-            'clicks' => (int)$statistics->total_clicks,
-            'views' => (int)$statistics->total_views,
-            'cost' => sprintf('%.2f', $statistics->total_cost),
-            'calls' => (int)$statistics->total_calls,
-            'emails' => (int)$statistics->total_emails,
+            'clicks' => (int)$statistics->clicks,
+            'views' => (int)$statistics->views,
+            'cost' => sprintf('%.2f', $statistics->cost),
+            'calls' => (int)$statistics->calls,
+            'emails' => (int)$statistics->emails,
+			'ctr' => (float)$statistics->ctr,
+			'leads' => (int)$statistics->leads,
+			'lead_perc' => (float)$statistics->lead_perc,
+			'lead_cost' => (float)$statistics->lead_cost,
+			'order_perc' => (float)$statistics->order_perc,
+			'order_cost' => (float)$statistics->order_cost,
         ];
     }
 
-	public function create($statRecord, $date, $entity = false)
-	{
-
-	}
-
-	public function beforeSave(\Cake\Event\Event $event, $entity, \ArrayObject $options)
+	public function calcPerc($entity)
 	{
 		$entity->ctr = ($entity->views > 0 ? round(($entity->clicks * 100 / $entity->views), 2) : 0);
 		$entity->leads = $entity->calls + $entity->emails;
@@ -47,6 +50,12 @@ trait StatisticsTableHelper
 		$entity->order_perc = ($entity->leads > 0 ? round(($entity->orders * 100 / $entity->leads), 2) : 0);
 		$entity->order_cost = ($entity->orders > 0 ? round(($entity->cost / $entity->orders), 2) : 0);
 
+		return $entity;
+	}
+
+	public function beforeSave(\Cake\Event\Event $event, $entity, \ArrayObject $options)
+	{
+		$entity = $this->calcPerc($entity);
 		return true;
 	}
 

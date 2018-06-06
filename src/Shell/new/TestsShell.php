@@ -29,9 +29,12 @@ class TestsShell extends \Cake\Console\Shell
 
     public function main()
     {
+		$a = $this->AGSD->find()->where(['id' => 1])->first();
+		$a->calls = 324;
+		var_dump($this->AGSD->save($a));
 
-		$account = $this->Accounts->find()->where(['id' => 4])->first();
-		$campaign = $this->Campaigns->find()->where(['id' => 85])->first();
+		//$account = $this->Accounts->find()->where(['id' => 4])->first();
+		//$campaign = $this->Campaigns->find()->where(['id' => 85])->first();
 
 		//$account->syncCampaignAdGroups($campaign);
 		//$account->syncCampaignKeywords($campaign);

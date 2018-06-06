@@ -159,6 +159,10 @@ Router::prefix('api', function ($routes) {
 		$routes->resources('Costs', [
             'prefix' => 'sources',
         ]);
+		$routes->resources('Statistics', [
+            'prefix' => 'sources',
+            'map' => $statisticsMap,
+        ]);
         /*$routes->resources('Campaigns', [
             'prefix' => 'sites',
             'only' => ['index']
