@@ -68,6 +68,38 @@ class StatisticsController extends ApiController
 		$this->sendData($this->buildResult($query));
 	}
 
+    public function sources()
+    {
+		$fields = $this->request->query;
+		if (!$this->Validator->required($fields, ['from', 'to'])) {
+			$this->sendError($this->Validator->getLastError());
+		}
+
+		$this->StatTable = TableRegistry::get('SourceStatisticsDaily');
+		$query = $this->getQuery($fields)
+			->select(['key_id' => 'source_id']);
+
+		if(!empty($fields['source_ids'])) {
+			if(is_string($fields['source_ids'])) {
+				$fields['source_ids'] = explode(',', $fields['source_ids']);
+			}
+			$query->where([
+				'source_id IN' => $fields['source_ids'],
+			]);
+		}
+
+		if(!empty($fields['site_id'])) {
+			$query
+				->leftJoinWith('Sources', function ($q) use ($fields) {
+			        return $q
+						->where(['Sources.site_id' => $fields['site_id']]);
+			    });
+		}
+
+		$this->completeQuery($query);
+		$this->sendData($this->buildResult($query));
+	}
+
     public function campaigns()
     {
 		$fields = $this->request->query;
@@ -167,7 +199,6 @@ class StatisticsController extends ApiController
 		$this->sendData($this->buildResult($query));
 	}
 
-
 	private function getQuery($fields)
 	{
 		$query = $this->StatTable->find('all');
@@ -207,20 +238,20 @@ class StatisticsController extends ApiController
 			'ctr' => $item->ctr,
 			'calls' => $item->calls,
 			'emails' => $item->emails,
-			'leads' => $item->leads,
-			'lead_perc' => $item->lead_perc,
-			'lead_cost' => $item->lead_cost,
-			'orders' => $item->orders,
-			'order_perc' => $item->order_perc,
-			'order_cost' => $item->order_cost,
+			'leads' => (int)$item->leads,
+			'lead_perc' => (float)$item->lead_perc,
+			'lead_cost' => (float)$item->lead_cost,
+			'orders' => (int)$item->orders,
+			'order_perc' => (float)$item->order_perc,
+			'order_cost' => (float)$item->order_cost,
 		];
 	}
 
 	private function buildResult($query)
 	{
-		//var_dump($query);exit;
 		$result = [];
 		foreach ($query as $item) {
+
 		    $result[] = $this->getItem($item);
 		}
 		return $result;
