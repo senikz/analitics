@@ -104,15 +104,19 @@ class Adwords extends \App\Model\Entity\Account
 		return ReportParser::parseCsv($reportDownloadResult->getAsString(), ['col_delimiter' => ',']);
 	}
 
-	public function syncCampaigns()
+	public function getCampaigns()
 	{
-		$campaignsTable = TableRegistry::get('Campaigns');
-
 		$services = new AdWordsServices();
 		$session = $this->getSession();
 
 		$campaignService = $services->get($session, CampaignService::class);
-		$campaigns = $campaignService->get((new Selector())->setFields(['Id', 'Name']))->getEntries();
+		return $campaignService->get((new Selector())->setFields(['Id', 'Name']))->getEntries();
+	}
+
+	public function syncCampaigns()
+	{
+		$campaignsTable = TableRegistry::get('Campaigns');
+		$campaigns = $this->getCampaigns();
 
 		if ($campaigns === null) {
 			return;

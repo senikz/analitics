@@ -3,33 +3,31 @@ namespace App\Controller\Api\Projects;
 
 class SitesController extends \App\Controller\Api\ApiController
 {
-
     public function index()
     {
-		$result = [];
-		$query = $this->request->query;
+        $result = [];
 
-		$sites = $this->Sites->find('all', [
-			'conditions' => [
-				'project_id' => $this->request->params['project_id']
-			]
-		]);
+        if (empty($this->request->query['order'])) {
+            $this->request->query['order'] = 'order';
+        }
 
-		foreach ($sites as $row) {
-			$result[] = [
-				'id' => $row->id,
-				'domain' => $row->domain,
-			];
-		}
+        $sites = $this->Sites->find()
+            ->where([
+				'project_id' => $this->request->params['project_id'],
+				'deleted !=' => 1,
+			]);
 
-		$order = empty($query['order']) ? 'id' : $query['order'];
-		$reverse = (empty($query['reverse']) || !$query['reverse']) ? false : true;
+		$this->prepareApiQuery($sites);
 
-		usort($result, function($a, $b) use($order, $reverse) {
-			return ($a[$order] == $b[$order] ? 0 : ($a[$order] > $b[$order] ? 1 : -1)) * ($reverse ? -1 : 1);
-		});
+        $sites = $sites->all();
 
-		$this->sendData($result);
+        foreach ($sites as $row) {
+            $result[] = [
+                'id' => $row->id,
+                'domain' => $row->domain,
+            ];
+        }
+
+        $this->sendData($result);
     }
-
 }

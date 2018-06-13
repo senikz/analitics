@@ -9,32 +9,6 @@ class SitesController extends ApiController
         $this->loadComponent('Validator');
     }
 
-    public function index()
-    {
-        $result = [];
-
-        if (empty($this->request->query['order'])) {
-            $this->request->query['order'] = 'order';
-        }
-
-        $sites = $this->Sites->find()
-            ->contain(false);
-
-        $this->orderQuery($sites);
-
-        $sites = $sites->all();
-
-        foreach ($sites as $row) {
-            $result[] = [
-                'id' => $row->id,
-                'project_id' => $row->project_id,
-                'domain' => $row->domain,
-            ];
-        }
-
-        $this->sendData($result);
-    }
-
     public function view($id = null)
     {
         $site = $this->Sites->get($id, [
@@ -45,6 +19,7 @@ class SitesController extends ApiController
             'id' => $site->id,
             'project_id' => $site->project_id,
             'caption' => $site->domain,
+			'deleted' => $site->deleted,
         ];
 
         $this->sendData($result);
@@ -76,7 +51,21 @@ class SitesController extends ApiController
     {
         if ($this->request->is('delete') && $id) {
             $site = $this->Sites->get($id);
-            if ($this->Sites->delete($site)) {
+            $site->deleted = 1;
+            if ($this->Sites->save($site)) {
+				$campaignsTable = TableRegistry::get('Campaigns');
+				$campaignsTable->updateAll([
+                        'deleted' => 1,
+                    ], [
+                        'site_id' => $id
+                    ]);
+
+				$sourcesTable = TableRegistry::get('Sources');
+				$sourcesTable->updateAll([
+                        'deleted' => 1,
+                    ], [
+                        'site_id' => $id
+                    ]);
                 $this->sendData([]);
             } else {
                 $this->sendError(__('Can`t delete site'));

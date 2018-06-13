@@ -20,6 +20,7 @@ class SourcesController extends \App\Controller\Api\ApiController
             $result[] = [
                 'id' => $row->id,
                 'caption' => $row->caption,
+                'type' => $row->type,
             ];
         }
 

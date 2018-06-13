@@ -45,17 +45,15 @@ class Direct extends \App\Model\Entity\Account
         $this->credential->updateLimits($service->getUnits()->getRest());
     }*/
 
-	public function syncCampaigns()
+	public function getCampaigns()
 	{
-		$campaignsTable = TableRegistry::get('Campaigns');
 		$provider = $this->getProvider();
-
 		if (!$provider) {
-            return false;
-        }
+			return false;
+		}
 
 		$campaignsService = $provider->getCampaignsService();
-		$campaigns = $campaignsService->get(
+		return $campaignsService->get(
 			GetCampaignsRequest::create()
 				->setFieldNames([
 					CampaignFieldEnum::ID,
@@ -63,6 +61,12 @@ class Direct extends \App\Model\Entity\Account
 					CampaignFieldEnum::STATE,
 				])
 		)->getCampaigns();
+	}
+
+	public function syncCampaigns()
+	{
+		$campaignsTable = TableRegistry::get('Campaigns');
+		$campaigns = $this->getCampaigns();
 
 		if ($campaigns === null) {
 			return;
