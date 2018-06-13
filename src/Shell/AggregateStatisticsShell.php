@@ -54,6 +54,11 @@ class AggregateStatisticsShell extends \Cake\Console\Shell
 		$this->projects($date);
 	}
 
+	public function le()
+	{
+		$this->leads(date('Y-m-d'));
+	}
+
 	public function projects($date = null)
 	{
 		$projects = $this->Projects->find('all')->all();
@@ -204,30 +209,31 @@ class AggregateStatisticsShell extends \Cake\Console\Shell
 
 		$src = [
 			[
-				'table' => $this->AdGroups,
-				'statistics' => $this->AGSD,
-				'key' => 'ad_group_id',
-			], [
-				'table' => $this->Sources,
-				'statistics' => $this->SOSD,
-				'key' => 'source_id',
-			], [
-				'table' => $this->Campaigns,
-				'statistics' => $this->CSD,
-				'key' => 'campaign_id',
-			], [
-				'table' => $this->Keywords,
+				'table' => $this->Keywords->find()->contain(['Campaigns'])->where(['Campaigns.deleted !=' => 1]),
 				'statistics' => $this->KSD,
 				'key' => 'keyword_id',
 			], [
-				'table' => $this->Sites,
+				'table' => $this->AdGroups->find()->contain(['Campaigns'])->where(['Campaigns.deleted !=' => 1]),
+				'statistics' => $this->AGSD,
+				'key' => 'ad_group_id',
+			], [
+				'table' => $this->Campaigns->find()->where(['deleted !=' => 1]),
+				'statistics' => $this->CSD,
+				'key' => 'campaign_id',
+			], [
+				'table' => $this->Sources->find()->where(['deleted !=' => 1]),
+				'statistics' => $this->SOSD,
+				'key' => 'source_id',
+			], [
+				'table' => $this->Sites->find()->where(['deleted !=' => 1]),
 				'statistics' => $this->SSD,
 				'key' => 'site_id',
 			],
 		];
 
 		foreach($src as $table) {
-			$items = $table['table']->find('all')->all();
+			$items = $table['table']->all();
+
 	        foreach ($items as $item) {
 				$recordWhere = ['date' => $date];
 				$recordWhere[$table['key']] = $item->id;

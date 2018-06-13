@@ -15,14 +15,6 @@ class SourcesController extends ApiController
         $this->loadComponent('Validator');
     }
 
-    public function index()
-    {
-        $this->sendData(array_map(function($source) {
-			unset($source['user_id']);
-			return $source;
-		}, $this->Sources->find()->contain(false)->all()->toArray()));
-    }
-
 	public function view($id = null)
     {
         $source = $this->Sources->get($id)->toArray();
@@ -60,7 +52,16 @@ class SourcesController extends ApiController
     public function delete($id = null)
     {
         if ($this->request->is('delete') && $id) {
-            if ($this->Sources->deleteAll(['id' => $id])) {
+			$source = $this->Sources->get($id);
+            $source->deleted = 1;
+            if ($this->Sources->save($source)) {
+				$campaignsTable = TableRegistry::get('Campaigns');
+				$campaignsTable->updateAll([
+                        'deleted' => 1,
+                    ], [
+                        'source_id' => $id
+                    ]);
+
                 $this->sendData([]);
             } else {
                 $this->sendError(__('Can`t delete source'));

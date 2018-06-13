@@ -24,20 +24,16 @@ class Campaign extends Entity
 		return false;
 	}
 
-    public function getSource()
+    public function getAccount()
     {
-        if (empty($this->Sources)) {
-            $sourceOptionsTable = TableRegistry::get('SourceOptions');
-            $this->SourceOptions = $sourceOptionsTable->find()->where(['source_id' => $this->id])->all();
-        }
-
-        foreach ($this->SourceOptions as $option) {
-            if ($option->name == $name) {
-                return $option->value;
-            }
-        }
-
-        return null;
+		if (empty($this->account_id)) {
+			return null;
+		}
+		$accountsTable = TableRegistry::get('Accounts');
+		if (@!$account = $accountsTable->get($this->account_id)) {
+			return $account;
+		}
+		return null;
     }
 
 }

@@ -8,13 +8,15 @@ class CampaignsController extends \App\Controller\Api\ApiController
     {
 		$result = [];
 
-		$query = $this->Campaigns->find('all', [
-			'conditions' => [
+		$query = $this->Campaigns->find()
+			->where([
 				'Sites.project_id' => $this->request->params['project_id']
-			],
-			'contain' => ['Sites',],
-		]);
+			])
+			->select(['id' => 'Campaigns.id', 'site_id' => 'Campaigns.site_id', 'caption' => 'Campaigns.caption'])
+			->contain(['Sites',]);
 
+		$this->prepareApiQuery($query);
+		$query = $query->all();
 
 		foreach ($query as $row) {
 			$result[] = [

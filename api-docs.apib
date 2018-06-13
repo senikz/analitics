@@ -168,111 +168,116 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 + orders (number) - Кол-во заказов с сайта
 
 ## Account
-+ id: (number) - ID
++ id: 0 (number) - ID
 
 ## Source
-+ id: (number) - ID
-+ site_id: (number) - ID свзанного сайта
-+ type: (string) -  Тип
-+ caption: (string) - Название
-+ sriteria: (string) - Строка для определения принадлежности заявки источнику трафика
++ id: 0 (number) - ID
++ site_id: 0 (number) - ID свзанного сайта
++ type (string) -  Тип
++ caption (string) - Название
++ sriteria (string) - Строка для определения принадлежности заявки источнику трафика
 
 ## Campaign Statistics
-+ cost: (number) - Потраченная сумма(руб.).
-+ views: (number) - Кол-во просмотров рекламных объявлений за период.
-+ clicks: (number) - Кол-во кликов по рекламе за период.
-+ calls: (number) - Кол-во звонков
-+ emails: (number) - Кол-во писем
++ cost: 0 (number) - Потраченная сумма(руб.).
++ views: 0 (number) - Кол-во просмотров рекламных объявлений за период.
++ clicks: 0 (number) - Кол-во кликов по рекламе за период.
++ calls: 0 (number) - Кол-во звонков
++ emails: 0 (number) - Кол-во писем
 
 ## Ad Group Statistics
-+ cost: (number) - Потраченная сумма(руб.).
-+ views: (number) - Кол-во просмотров за период.
-+ clicks: (number) - Кол-во кликов по рекламе за период.
-+ calls: (number) - Кол-во звонков с указанным utm_term, принадлежащим этой группе объявлений
-+ emails: (number) - Кол-во писем с указанным utm_term, принадлежащим этой группе объявлений
++ cost: 0 (number) - Потраченная сумма(руб.).
++ views: 0 (number) - Кол-во просмотров за период.
++ clicks: 0 (number) - Кол-во кликов по рекламе за период.
++ calls: 0 (number) - Кол-во звонков с указанным utm_term, принадлежащим этой группе объявлений
++ emails: 0 (number) - Кол-во писем с указанным utm_term, принадлежащим этой группе объявлений
 
 ## Keyword Statistics
-+ cost: (number) - Потраченная сумма(руб.).
-+ views: (number) - Кол-во просмотров за период.
-+ clicks: (number) - Кол-во кликов по рекламе за период.
-+ calls: (number) - Кол-во звонков с указанным utm_term для данного ключевого слова
-+ emails: (number) - Кол-во писем с указанным utm_term для данного ключевого слова
++ cost: 0 (number) - Потраченная сумма(руб.).
++ views: 0 (number) - Кол-во просмотров за период.
++ clicks: 0 (number) - Кол-во кликов по рекламе за период.
++ calls: 0 (number) - Кол-во звонков с указанным utm_term для данного ключевого слова
++ emails: 0 (number) - Кол-во писем с указанным utm_term для данного ключевого слова
 
 
 
 ## Project Statistics Details
-+ data: (array,fixed)
++ data: 'string' (array,fixed)
     + (object)
-        + time: (string) - Время, за которое предоставляется стастистика (в формате UTC).
-		+ statistics: (Project Statistics) - Объект со статистикой за указанное время
+        + time (string) - Время, за которое предоставляется стастистика (в формате UTC).
+        + statistics (object) - Объект со статистикой за указанное время
+            + Include Project Statistics
 
 ## Site Statistics Details
-+ data: (array,fixed)
++ data: 'string' (array,fixed)
     + (object)
-        + time: (string) - Время, за которое предоставляется стастистика (в формате UTC).
-		+ statistics: (Site Statistics) - Объект со статистикой за указанное время
+        + time (string) - Время, за которое предоставляется стастистика (в формате UTC).
+        + statistics (object) - Объект со статистикой за указанное время
+            + Include Site Statistics
 
 ## Campaign Statistics Details
-+ data: (array,fixed)
++ data: 'string' (array,fixed)
     + (object)
-        + time: (string) - Время, за которое предоставляется стастистика (в формате UTC).
-		+ statistics: (Campaign Statistics) - Объект со статистикой за указанное время
+        + time (string) - Время, за которое предоставляется стастистика (в формате UTC).
+        + statistics (object) - Объект со статистикой за указанное время
+            + Include Campaign Statistics
 
 ## Ad Group Statistics Details
-+ data: (array,fixed)
++ data: 'string' (array,fixed)
     + (object)
-        + time: (string) - Время, за которое предоставляется стастистика (в формате UTC).
-		+ statistics: (Ad Group Statistics) - Объект со статистикой за указанное время
+        + time (string) - Время, за которое предоставляется стастистика (в формате UTC).
+        + statistics (object) - Объект со статистикой за указанное время
+            + Include Ad Group Statistics
 
 ## Keyword Statistics Details
-+ data: (array,fixed)
++ data: 'string' (array,fixed)
     + (object)
-        + time: (string) - Время, за которое предоставляется стастистика (в формате UTC).
-		+ statistics: (Keyword Statistics) - Объект со статистикой за указанное время
+        + time (string) - Время, за которое предоставляется стастистика (в формате UTC).
+        + statistics (object) - Объект со статистикой за указанное время
+            + Include Keyword Statistics
 
 
 
 ## Project
-+ id: (number) - ID проекта
-+ caption: (number) - Заголовок
-+ icon: (string) - Иконка
++ id: 0 (number) - ID проекта
++ caption: 0 (number) - Заголовок
++ icon (string) - Иконка
 
 ## Site
-+ id: (number) - ID сайта
-+ domain: (string) - Доменное имя сайта
++ id: 0 (number) - ID сайта
++ domain (string) - Доменное имя сайта
 
 ## Campaign
-+ id: (number) - ID кампании
-+ site_id: (number) - ID сайта, к которому привязана кампания
-+ caption: (string) - Заголовок кампании
++ id: 0 (number) - ID кампании
++ site_id: 0 (number) - ID сайта, к которому привязана кампания
++ caption (string) - Заголовок кампании
 
 ## Keyword
-+ id: (number) - ID ключевой фразы
-+ keyword: (string) - Ключевая фраза
++ id: 0 (number) - ID ключевой фразы
++ keyword (string) - Ключевая фраза
 
 ## Ad
-+ id: (number) - ID объявления
++ id: 0 (number) - ID объявления
 
 ## AdGroup
-+ id: (number) - ID группы
-+ caption: (string) - Заголовок группы
++ id: 0 (number) - ID группы
++ caption (string) - Заголовок группы
 
 ## Lead
-+ site_id: (number) - ID сайта
-+ type: (enum[string]) - Тип заявки
++ site_id: 0 (number) - ID сайта
++ type (enum[string]) - Тип заявки
     + Members
         + email - Письмо с сайта
         + call - Звонок
-+ source: (string) - Источник заявки
-+ campaign: (string) - Кампания
-+ keyword: - Ключевое слово
-+ place: (string) - Место показа
-+ time: (string) - Время заявки
++ source (string) - Источник заявки
++ campaign (string) - Кампания
++ keyword (string) - Ключевое слово
++ place (string) - Место показа
++ time (string) - Время заявки
 
 
 ## Bid Option
-+ max: (number) - Максимальная ставка
-+ position: (enum[string]) - Позиция, строка по формуле Pnm, где n - , m -
++ max: 0 (number) - Максимальная ставка
++ position (enum[string]) - Позиция, строка по формуле Pnm, где n - , m -
     + Members
         + P11
         + P12
@@ -280,14 +285,17 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
         + P14
         + P21
         + P22
-+ increment: (number) - Процент завышения ставки
-+ active: (boolean) - Статус (включено/выключено)
++ increment: 0 (number) - Процент завышения ставки
++ active (boolean) - Статус (включено/выключено)
 + day_num: 0 (number,required) - Порядковый номер дня недели от 0 (понедельник) до 6, для которого должны применяться настройки
 + hour_num: 0 (number,required) - Порядковый номер часа от 0 до 23, для которого должны применяться настройки
 
 ## Bid Options
 
-
+## Ordering
++ order (string, optional) - Поле для сортировки
++ reverse (boolean, optional) - Сортировка в обратном порядке
++ page: '2,50' (string,optional) - Номер страницы списка (начиная от 1) и количество результатов на странице, разделенные запятыми
 
 
 
@@ -313,28 +321,52 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 ### Детали проекта [GET/projects/{id}]
 
 + Parameters
-    + id: (number, required) - ID проекта
+    + id: 0 (number, required) - ID проекта
 
 + Response 200 (application/json)
     + Attributes
         + Include Project
 
-### Список сайтов [GET/projects/{id}/sites?{order}=&{reverse}=]
+### Создать новый проект [POST/projects]
+
++ Request
+    + Attributes
+        + caption (string,required) - Название источника
+        + caption (string) - Иконка
+
++ Response 200 (application/json)
+    + Attributes
+        + data
+            + id: 0 (number) - ID добавленного проекта
+
+### Обновить данные проекта [PUT/projects]
+
++ Request
+    + Attributes
+        + caption (string,required) - Название источника
+        + caption (string) - Иконка
+
++ Response 200 (application/json)
+    + Attributes
+        + data
+
+### Список сайтов [GET/projects/{id}/sites?{order}=&{reverse}=&{page}=]
 
 + Parameters
-    + id: (number, required) - ID проекта
-    + order: (string, optional) - Поле для сортировки
-    + reverse: (boolean, optional) - Сортировка в обратном порядке
+    + id: 0 (number, required) - ID проекта
 
 + Response 200 (application/json)
     + Attributes
         + data (array,fixed)
             + (Site)
 
-### Список кампаний [GET/projects/{id}/campaigns]
+### Список кампаний [GET/projects/{id}/campaigns?{order}=&{reverse}=&{page}=]]
 
 + Parameters
-    + id: (number, required) - ID проекта
+    + id: 0 (number, required) - ID проекта
+    + order (string, optional) - Поле для сортировки
+    + reverse (boolean, optional) - Сортировка в обратном порядке
+    + page: '2,50' (string,optional) - Номер страницы списка (начиная от 1) и количество результатов на странице, разделенные запятыми
 
 + Response 200 (application/json)
     + Attributes
@@ -345,9 +377,9 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 Возвращает объект с суммой статистик по кампаниям проекта за указанный период.
 
 + Parameters
-    + id: (number, required) - ID проекта
-    + from: (string, required) - Дата начала периода в формате `YYYY-mm-dd`.
-    + to: (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
+    + id: 0 (number, required) - ID проекта
+    + from (string, required) - Дата начала периода в формате `YYYY-mm-dd`.
+    + to (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
 
 + Response 200 (application/json)
     + Attributes (Project Statistics)
@@ -358,9 +390,9 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 Возвращает массив объектов с суммой почасовых статистик по всем кампаниям проекта за указанный период.
 
 + Parameters
-    + id: (number, required) - ID проекта
-    + from: (string, required) - Дата начала периода в формате `YYYY-mm-dd`.
-    + to: (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
+    + id: 0 (number, required) - ID проекта
+    + from (string, required) - Дата начала периода в формате `YYYY-mm-dd`.
+    + to (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
 
 + Response 200 (application/json)
     + Attributes (Project Statistics Details)
@@ -368,36 +400,46 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 ### Список заявок [GET/projects/{id}/leads?{from}=&{to}=&{order}=&{reverse}=&{page}]
 
 + Parameters
-    + id: (number, required) - ID проекта
-    + from: (string, required) - Дата начала периода в формате `YYYY-mm-dd`.
-    + to: (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
-    + order: (string, optional) - Поле для сортировки
-    + reverse: (boolean, optional) - Сортировка в обратном порядке
+    + id: 0 (number, required) - ID проекта
+    + from (string, required) - Дата начала периода в формате `YYYY-mm-dd`.
+    + to (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
+    + order (string, optional) - Поле для сортировки
+    + reverse (boolean, optional) - Сортировка в обратном порядке
     + page: '2,50' (string,optional) - Номер страницы списка (начиная от 1) и количество результатов на странице, разделенные запятыми
 
 + Response 200 (application/json)
     + Attributes
-        + data: (array,fixed)
+        + data: 'string' (array,fixed)
             + (Lead)
-				+ phone: (string) - Номер телефона
-				+ unique: (number) - (опционально для звонков) Флаг уникальности звонка
-				+ duration: (number) - (опционально для звонков) Длительность звонка
+                + phone (string) - Номер телефона
+                + unique: 0 (number) - (опционально для звонков) Флаг уникальности звонка
+                + duration: 0 (number) - (опционально для звонков) Длительность звонка
 
 ### Календарь стоимости заказа [GET/projects/{id}/orders/cost?{from}=&{to}=]
 
 Возвращает среднюю стоимость заказа за день по всем кампаниям проекта. Для расчета учитывается количество заказов и сумма расходов по всем кампаниям, полученная из статистики.
 
 + Parameters
-    + id: (number, required) - ID проекта
-    + from: (string, required) - Дата начала периода в формате `YYYY-mm-dd`.
-    + to: (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
+    + id: 0 (number, required) - ID проекта
+    + from (string, required) - Дата начала периода в формате `YYYY-mm-dd`.
+    + to (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
 
 + Response 200 (application/json)
     + Attributes
-        + data: (array,fixed)
-			+ (object)
-                + date: (string) - Дата
-				+ cost: (number) - Стоимость клика
+        + data: 'string' (array,fixed)
+            + (object)
+                + date (string) - Дата
+                + cost: 0 (number) - Стоимость клика
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -409,14 +451,13 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 + Response 200 (application/json)
     + Attributes
-        + (array,fixed)
-			+ (object)
-				+ type: (number) - Ключ для типа аккаунта
-				+ human: (string) - Название типа
-				+ options: (array,fixed)
-					+ Object
-						+ name: (string) - Поле для настройки
-						+ caption: (string) - Название поля
+        + data (array,fixed)
+            + (object)
+                + type: 0 (number) - Ключ для типа аккаунта
+                + human (string) - Название типа
+                + options (array,fixed)
+                    + name (string) - Поле для настройки
+                    + caption (string) - Название поля
 
 ### Список аккаунтов [GET/accounts]
 
@@ -429,53 +470,78 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 ### Подробная информация и настройки [GET/accounts/{id}]
 
 + Parameters
-    + id: (number, required) - ID аккаунта
+    + id: 0 (number, required) - ID аккаунта
 
 + Response 200 (application/json)
     + Attributes
-        + (Source)
-			+ site_id: (number) - ID свзанного сайта
-			+ human: (string) - Название типа источника
-			+ options: (array,fixed)
-				+ Object
-					+ name: (string) - Настройка
-					+ value: (string) - Значение
+        + Include Source
+        + type (string) - Тип аккаунта
+        + human (string) - Название типа аккаунта
+        + caption (string) - Название
+        + options (array,fixed)
+            + name (string) - Настройка
+            + value (string) - Значение
 
 ### Добавить новый аккаунт [POST]
 
 + Request
     + Attributes
-        + site_id: (number, required) - ID сайта, к которому относится источник
-        + type: (string, required) - Ключ типа источника
-        + caption: (string,required) - Название источника
-		+ options: (object) - Массив настроек для источника трафика в виде name-value
-			+ `name - value`
+        + type (string, required) - Тип аккаунта
+        + caption (string,required) - Название аккаунта
+        + options (object) - Массив настроек аккаунта в виде name-value
+            + `name - value`
 
 + Response 200 (application/json)
     + Attributes
         + data
-            + id: (number) - ID добавленного аккаунта
+            + id: 0 (number) - ID добавленного аккаунта
 
-		### Редактировать источник трафика [PUT]
+### Редактировать аккаунт [PUT]
 
-		+ Request
-		    + Attributes
-		        + site_id: (number, required) - ID сайта, к которому относится источник
-		        + caption: (string,required) - Название источника
-				+ options: (object) - Массив настроек для источника трафика в виде name-value
-					+ `name - value`
++ Request
+    + Attributes
+        + caption (string,required) - Новое название аккаунта
+        + options (object) - Массив настроек аккаунта в виде name-value
+            + `name - value`
 
 + Response 200 (application/json)
     + Attributes
         + data
-            + id: (number) - ID аккаунта
+            + id: 0 (number) - ID аккаунта
 
 ### Удалить аккаунт [DELETE/accounts/{id}]
 
 + Parameters
-    + id: (number) - ID аккаунта
+    + id: 0 (number) - ID аккаунта
 
 + Response 200 (application/json)
+
+### Список локальных кампаний аккаунта [GET/accounts/{id}/campaigns]
+
+Возвращает список добавленных кампаний, принадлежащих аккаунту.
+
++ Parameters
+    + id: 0 (number) - ID аккаунта
+
++ Response 200 (application/json)
+    + Attributes
+        + data
+            + id: 0 (number)
+            + rel_id: 0 (number)
+            + caption
+
+### Загрузить список кампаний аккаунта [GET/accounts/{id}/campaigns/load]
+
+Загружает с соответствующего аккаунту сервера список кампаний.
+
++ Parameters
+    + id: 0 (number) - ID аккаунта
+
++ Response 200 (application/json)
+    + Attributes
+        + data
+            + id: 0 (number)
+            + caption
 
 
 
@@ -488,52 +554,42 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 ## Сайты [/sites]
 
-### Список сайтов [GET/sites?{order}=&{reverse}=]
-
-+ Parameters
-    + order: (string, optional) - Поле для сортировки
-    + reverse: (boolean, optional) - Сортировка в обратном порядке
-
-+ Response 200 (application/json)
-    + Attributes
-        + data (array,fixed)
-            + (Site)
-                + project_id: (number) - ID проекта, которому принадлежит сайт
-
 ### Добавить новый сайт [POST]
 
 + Request
     + Attributes
-        + project_id: (number, required) - ID проекта, к которому относится сайт.
-        + domain: (string, required) - Доменное имя сайта.
+        + project_id: 0 (number, required) - ID проекта, к которому относится сайт.
+        + domain (string, required) - Доменное имя сайта.
 
 + Response 200 (application/json)
     + Attributes
         + data
-            + id: (number) - ID добавленного сайта
+            + id: 0 (number) - ID добавленного сайта
 
 ### Детали сайта [GET/sites/{id}]
 
 + Parameters
-    + id: (number) - ID сайта.
+    + id: 0 (number) - ID сайта.
 
 + Response 200 (application/json)
     + Attributes (Site)
-        + project_id: (number) - ID проекта, которому принадлежит сайт
+        + project_id: 0 (number) - ID проекта, которому принадлежит сайт
 
 ### Удалить сайт [DELETE/sites/{id}]
 
+Отмечает сайт, а так же все его источники трафика и кампании, удаленными.
+
 + Parameters
-    + id: (number) - ID сайта.
+    + id: 0 (number) - ID сайта.
 
 + Response 200 (application/json)
 
 ### Список источников трафика [GET/sites/{id}/sources?{order}=&{reverse}=]
 
 + Parameters
-    + id: (number) - ID сайта.
-	+ order: (string, optional) - Поле для сортировки
-    + reverse: (boolean, optional) - Сортировка в обратном порядке
+    + id: 0 (number) - ID сайта.
+    + order (string, optional) - Поле для сортировки
+    + reverse (boolean, optional) - Сортировка в обратном порядке
 
 + Response 200 (application/json)
     + Attributes
@@ -543,26 +599,26 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 ### Добавление заказа [POST/sites/{id}/orders]
 
 + Parameters
-    + id: (number) - ID сайта.
+    + id: 0 (number) - ID сайта.
 
 + Request
-	+ Attributes
-	    + count (number, optional) - Количество заказов (позволяет создать заказ с количеством более 1).
-	    + comment (string, optional) - Комментарий к заказу.
-	    + time (string, optional) - Время заказа в формате `Y-m-d H:i:s` (по умолчанию будет установлено текущее время).
+    + Attributes
+        + count (number, optional) - Количество заказов (позволяет создать заказ с количеством более 1).
+        + comment (string, optional) - Комментарий к заказу.
+        + time (string, optional) - Время заказа в формате `Y-m-d H:i:s` (по умолчанию будет установлено текущее время).
 
 + Response 200 (application/json)
     + Attributes
-        + id: (number) - ID добавленного заказа
+        + id: 0 (number) - ID добавленного заказа
 
 ### Общая статистика сайта [GET/sites/{id}/statistics/summary?{from}=&{to}=]
 
 Возвращает объект с суммой статистик по всем кампаниям, принадлежащим сайту, за указанный период.
 
 + Parameters
-    + id: (number, required) - ID сайта
-    + from: (string, required) - Дата начала периода в формате `YYYY-mm-dd`.
-    + to: (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
+    + id: 0 (number, required) - ID сайта
+    + from (string, required) - Дата начала периода в формате `YYYY-mm-dd`.
+    + to (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
 
 + Response 200 (application/json)
     + Attributes (Site Statistics)
@@ -572,9 +628,9 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 Возвращает массив объектов с суммой почасовых статистик по всем кампаниям проекта за указанный период.
 
 + Parameters
-    + id: (number, required) - ID сайта
-    + from: (string, required) - Дата начала периода в формате `YYYY-mm-dd`.
-    + to: (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
+    + id: 0 (number, required) - ID сайта
+    + from (string, required) - Дата начала периода в формате `YYYY-mm-dd`.
+    + to (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
 
 + Response 200 (application/json)
     + Attributes (Site Statistics Details)
@@ -582,12 +638,12 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 ### Обновление статистики сайта [PUT/sites/{id}/statistics?{date}]
 
 + Parameters
-    + id: (number, required) - ID сайта
-    + date: (string, required) - Дата для изменения статистики
+    + id: 0 (number, required) - ID сайта
+    + date (string, required) - Дата для изменения статистики
 
 + Request
     + Attributes
-        + orders: (number) - Количество заказов за указанный в date день
+        + orders: 0 (number) - Количество заказов за указанный в date день
 
 + Response 200 (application/json)
 
@@ -596,22 +652,22 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 Обновляет UTM метки для ссылок в объявлениях всех кампаний, принадлежащик сайту.
 
 + Parameters
-    + id: (number, required) - ID сайта
-    + method: (enum[string], optional) - Способ задания меток
+    + id: 0 (number, required) - ID сайта
+    + method (enum[string], optional) - Способ задания меток
         + Default
-            + all
+            all
         + Members
-            + `only - Установить только заданные метки, остальные удалить`
-            + `replace - Обновить заданные метки, остальные не изменять. Выбран по умолчанию`
-            + `all - Обновить заданные метки, остальные очистить`
+            + only - Установить только заданные метки, остальные удалить
+            + replace - Обновить заданные метки, остальные не изменять. Выбран по умолчанию
+            + all - Обновить заданные метки, остальные очистить
 
 + Request
     + Attributes
-        + utm_source: (string, optional)
-        + utm_medium: (string, optional)
-        + utm_campaign: (string, optional)
-        + utm_content: (string, optional)
-        + utm_term: (string, optional)
+        + utm_source (string, optional)
+        + utm_medium (string, optional)
+        + utm_campaign (string, optional)
+        + utm_content (string, optional)
+        + utm_term (string, optional)
 
 + Response 200 (application/json)
 
@@ -620,12 +676,17 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 Обновление информации сайта.
 
 + Parameters
-    + id: (number, required) - ID сайта
+    + id: 0 (number, required) - ID сайта
 
 + Request
-	+ Attributes
-	    + domain: (string) - Доменное имя
-		+ order: (number) - Значение для сортировки по умолчанию
+    + Attributes
+        + domain (string) - Доменное имя
+        + order: 0 (number) - Значение для сортировки по умолчанию
+
++ Response 200 (application/json)
+
+
+
 
 
 
@@ -634,72 +695,80 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 
 ## Источники трафика [/sources]
 
-### Список источников трафика [GET/sources]
-
-+ Response 200 (application/json)
-    + Attributes
-        + data (array,fixed)
-            + (Source)
-
-
 ### Подробная информация и настройки [GET/sources/{id}]
 
 + Parameters
-    + id: (number, required) - ID источника трафика
+    + id: 0 (number, required) - ID источника трафика
 
 + Response 200 (application/json)
     + Attributes
-        + (Source)
+        + Include Source
 
 ### Добавить новый источник трафика [POST]
 
 + Request
     + Attributes
-        + site_id: (number, required) - ID сайта, к которому относится источник
-        + type: (string, required) - Ключ типа источника
-        + caption: (string,required) - Название источника
-        + criteria: (string,required) - Строка для определения принадлежности заявки источнику трафика
+        + site_id: 0 (number, required) - ID сайта, к которому относится источник
+        + type (string, required) - Ключ типа источника
+        + caption (string,required) - Название источника
+        + criteria (string,required) - Строка для определения принадлежности заявки источнику трафика
 
 + Response 200 (application/json)
     + Attributes
         + data
-            + id: (number) - ID добавленного источника
+            + id: 0 (number) - ID добавленного источника
 
 ### Редактировать источник трафика [PUT]
 
 + Request
     + Attributes
-        + site_id: (number, required) - ID сайта, к которому относится источник
-        + caption: (string,required) - Название источника
-		+ criteria: (string,required) - Строка для определения принадлежности заявки источнику трафика
+        + site_id: 0 (number, required) - ID сайта, к которому относится источник
+        + caption (string,required) - Название источника
+        + criteria (string,required) - Строка для определения принадлежности заявки источнику трафика
 
 + Response 200 (application/json)
     + Attributes
         + data
-            + id: (number) - ID источника
+            + id: 0 (number) - ID источника
 
 ### Удалить источник [DELETE/sources/{id}]
 
+Отмечает источник трафика, а так же все его кампании, удаленными.
+
 + Parameters
-    + id: (number) - ID источника
+    + id: 0 (number) - ID источника
 
 + Response 200 (application/json)
 
 
+### Список кампаний источника трафика [GET/sources/{id}/campaigns]
+
++ Parameters
+    + id: 0 (number) - ID аккаунта
+
++ Response 200 (application/json)
+    + Attributes
+        + data
+            + id: 0 (number)
+            + rel_id: 0 (number)
+            + caption
+
 ### Добавление произвольного расхода [POST/sources/{id}/costs]
 
 + Parameters
-    + id: (number) - ID источника трафика.
+    + id: 0 (number) - ID источника трафика.
 
 + Request
-	+ Attributes
-	    + cost (number, required) - Сумма расхода.
-	    + comment (string, optional) - Комментарий к расходу.
-	    + date (object, optional) - Период расхода в виде интервала; если не указано, будет установлено текущее время
-			+ from: (string) - Дата в формате `Y-m-d`
-			+ to: (string) - Дата в формате `Y-m-d`
+    + Attributes
+        + cost (number, required) - Сумма расхода.
+        + comment (string, optional) - Комментарий к расходу.
+        + date (object, optional) - Период расхода в виде интервала; если не указано, будет установлено текущее время
+            + from (string) - Дата в формате `Y-m-d`
+            + to (string) - Дата в формате `Y-m-d`
 
-
++ Response 200 (application/json)
+    + Attributes
+        + data
 
 
 
@@ -714,29 +783,29 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
     + Attributes
         + data (array,fixed)
             + (Campaign)
-                + site_id: (number) - ID сайта, которому принадлежит кампания
+                + site_id: 0 (number) - ID сайта, которому принадлежит кампания
 
 ### Детали кампании [GET/campaigns/{id}]
 
 + Parameters
-    + id: (number) - ID кампании
+    + id: 0 (number) - ID кампании
 
 + Response 200 (application/json)
     + Attributes (Campaign)
-        + site_id: (number) - ID сайта, которому принадлежит кампания
-        + type: (string) - Тип кампании
-        + num: (number) - Номер кампании в системе статистики
-		+ bids: (array,fixed) - Настройки биддера для кампании
-			+ (object)
-				+ current: (array,fixed) - Настройки для текущего времени
-					+ (object)
-						+ max: (number)
-						+ position: (string)
+        + site_id: 0 (number) - ID сайта, которому принадлежит кампания
+        + type (string) - Тип кампании
+        + num: 0 (number) - Номер кампании в системе статистики
+        + bids: 'string' (array,fixed) - Настройки биддера для кампании
+            + (object)
+                + current: 'string' (array,fixed) - Настройки для текущего времени
+                    + (object)
+                        + max: 0 (number)
+                        + position (string)
 
 ### Удалить кампанию [DELETE/campaigns/{id}]
 
 + Parameters
-    + id: (number) - ID кампании
+    + id: 0 (number) - ID кампании
 
 + Response 200 (application/json)
 
@@ -745,9 +814,9 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 Возвращает объект с суммой статистик кампании за указанный период.
 
 + Parameters
-    + id: (number, required) - ID кампании
-    + from: (string, required) - Дата начала периода в формате `YYYY-mm-dd`.
-    + to: (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
+    + id: 0 (number, required) - ID кампании
+    + from (string, required) - Дата начала периода в формате `YYYY-mm-dd`.
+    + to (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
 
 + Response 200 (application/json)
     + Attributes (Campaign Statistics)
@@ -757,9 +826,9 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 Возвращает массив объектов с суммой почасовых статистик кампании за указанный период.
 
 + Parameters
-    + id: (number, required) - ID кампании
-    + from: (string, required) - Дата начала периода в формате `YYYY-mm-dd`.
-    + to: (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
+    + id: 0 (number, required) - ID кампании
+    + from (string, required) - Дата начала периода в формате `YYYY-mm-dd`.
+    + to (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
 
 + Response 200 (application/json)
     + Attributes (Campaign Statistics Details)
@@ -769,37 +838,37 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 Возвращает список настроек биддера для кампании, а так же информацию о дочерних элементах с индивидуальными настройками биддера. Каждая настройка представляет собой параметры для одного часа (опция `hour_num`) определенного дня недели (опция `day_num`), и биддер будет запущен только в это время, в остальные, не указанные, диапазоны биддер выполняться не будет.
 
 + Parameters
-    + id: (number, required) - ID кампании
+    + id: 0 (number, required) - ID кампании
 
 + Response 200 (application/json)
     + Attributes
-		+ data
-            + options: (array, fixed)
+        + data
+            + options (array, fixed)
                 + (Bid Option)
-                    + hit: (number) - Показатель попадания ставки в процентах за указанный час. Отражает количество ставок, процент завышения которых не превышал максимальное значение, к общему количеству ставок по кампании. В расчет принимаются только ставки, сделанные по этой группе настроек, - если настройки биддера для кампании были переопределены настройками группы объявлений и/или ключевой фразы, они не учитываются. Значение для группы настроек обновляется при каждом ее использовании биддером.
-            + overrides: - список ID дочерних элементов, которые переопределяют настройки кампании
-                + ag_groups: (array, fixed) - Группы объявлений кампании, для которых указаны другие настройки биддера
-				 	+ (object)
-						+ id: (number) - ID группы объявлений
-						+ name: (string) - Название группы объявлений
-                + keywords: (array, fixed) - Ключевые фразы кампании, для которых указаны другие настройки биддера
-					+ (object)
-						+ id: (number) - ID ключевой фразы
-						+ ad_group_id: (number) - ID группы объявлений, к которой принадлежит ключевая фраза
-						+ keyword: (string) - Текст ключевой фразы
-			+ hit: (number) - Показатель попадания ставки в процентах, рассчитанный при последнем срабатывании биддера для этой кампании.
+                    + hit: 0 (number) - Показатель попадания ставки в процентах за указанный час. Отражает количество ставок, процент завышения которых не превышал максимальное значение, к общему количеству ставок по кампании. В расчет принимаются только ставки, сделанные по этой группе настроек, - если настройки биддера для кампании были переопределены настройками группы объявлений и/или ключевой фразы, они не учитываются. Значение для группы настроек обновляется при каждом ее использовании биддером.
+            + overrides (object) - список ID дочерних элементов, которые переопределяют настройки кампании
+                + ag_groups: 'string' (array, fixed) - Группы объявлений кампании, для которых указаны другие настройки биддера
+                     + (object)
+                        + id: 0 (number) - ID группы объявлений
+                        + name (string) - Название группы объявлений
+                + keywords: 'string' (array, fixed) - Ключевые фразы кампании, для которых указаны другие настройки биддера
+                    + (object)
+                        + id: 0 (number) - ID ключевой фразы
+                        + ad_group_id: 0 (number) - ID группы объявлений, к которой принадлежит ключевая фраза
+                        + keyword (string) - Текст ключевой фразы
+            + hit: 0 (number) - Показатель попадания ставки в процентах, рассчитанный при последнем срабатывании биддера для этой кампании.
 
 ### Обновить настройки биддера [PUT/campaigns/{id}/bids]
 
 Устанавливает новый набор настроек биддера для кампании. Все прежние диапазоны настроек будут удалены.
 
 + Parameters
-    + id: (number, required) - ID кампании
+    + id: 0 (number, required) - ID кампании
 
 + Request
     + Attributes
-		+ data (array,fixed)
-			+ (Bid Option)
+        + data (array,fixed)
+            + (Bid Option)
 
 + Response 200 (application/json)
 
@@ -808,9 +877,9 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 Возвращает нужное кол-во ключевых фраз, принадлежащих кампании.
 
 + Parameters
-    + id: (number, required) - ID кампании
-    + mask: (string, optional) - Маска для подбора ключевых фраз. Если маска не указана, ключевые фразы не будут фильтроваться.
-	+ page: '2,50' (string,optional) - Номер страницы списка (начиная от 1) и количество результатов на странице, разделенные запятыми
+    + id: 0 (number, required) - ID кампании
+    + mask (string, optional) - Маска для подбора ключевых фраз. Если маска не указана, ключевые фразы не будут фильтроваться.
+    + page: '2,50' (string,optional) - Номер страницы списка (начиная от 1) и количество результатов на странице, разделенные запятыми
 
 + Response 200 (application/json)
     + Attributes
@@ -820,10 +889,8 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 ### Список групп объявлений [GET/campaigns/{id}/ad_groups?{page}=&]
 
 + Parameters
-    + id: (number, required) - ID кампании
+    + id: 0 (number, required) - ID кампании
     + page: '2,50' (string,optional) - Номер страницы списка (начиная от 1) и количество результатов на странице, разделенные запятыми
-
-+ Request
 
 + Response 200 (application/json)
     + Attributes
@@ -835,16 +902,14 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 Запускает подгрузку ключевых фраз, объявлений и статусов с серверов поисковых систем немедленно.
 
 + Parameters
-    + id: (number, required) - ID кампании
-
-+ Request
+    + id: 0 (number, required) - ID кампании
 
 + Response 200 (application/json)
 
 ### Удалить настройки биддера [DELETE/campaigns/{id}/bids]
 
 + Parameters
-    + id: (number, required) - ID кампании
+    + id: 0 (number, required) - ID кампании
 
 + Response 200 (application/json)
 
@@ -872,26 +937,26 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 ### Детали группы [GET/ad_groups/{id}]
 
 + Parameters
-    + id: (number, required) - ID фразы
+    + id: 0 (number, required) - ID фразы
 
 + Response 200 (application/json)
     + Attributes
-        + (AdGroup)
-			+ bids: (array,fixed) - Настройки биддера для группы
-				+ (object)
-					+ current: (array,fixed) - Настройки для текущего времени
-						+ (object)
-							+ max: (number)
-							+ position: (string)
+        + Include AdGroup
+        + bids (array,fixed) - Настройки биддера для группы
+            + (object)
+                + current: 'string' (array,fixed) - Настройки для текущего времени
+                    + (object)
+                        + max: 0 (number)
+                        + position (string)
 
 ### Список ключевых фраз [GET/ad_groups/{id}/keywords?{mask}=&{page}=&]
 
 Возвращает нужное кол-во ключевых фраз, принадлежащих группе объявлений.
 
 + Parameters
-    + id: (number, required) - ID группы объявлений
-    + mask: (string, optional) - Маска для подбора ключевых фраз. Если маска не указана, ключевые фразы не будут фильтроваться.
-	+ page: '2,50' (string,optional) - Номер страницы списка (начиная от 1) и количество результатов на странице, разделенные запятыми
+    + id: 0 (number, required) - ID группы объявлений
+    + mask (string, optional) - Маска для подбора ключевых фраз. Если маска не указана, ключевые фразы не будут фильтроваться.
+    + page: '2,50' (string,optional) - Номер страницы списка (начиная от 1) и количество результатов на странице, разделенные запятыми
 
 + Response 200 (application/json)
     + Attributes
@@ -901,23 +966,23 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 ### Текущие настройки биддера [GET/ad_groups/{id}/bids]
 
 + Parameters
-    + id: (number, required) - ID группы объявлений
+    + id: 0 (number, required) - ID группы объявлений
 
 + Response 200 (application/json)
     + Attributes
-		+ data
-			+ options: (array, fixed)
-				+ (Bid Option)
-			+ overrides: - список ID дочерних элементов, которые переопределяют настройки кампании
-				+ keywords: (array, fixed) - Ключевые фразы кампании, для которых указаны другие настройки биддера
-					+ (object)
-						+ id: (number) - ID ключевой фразы
-						+ keyword: (string) - Текст ключевой фразы
+        + data
+            + options: 'string' (array, fixed)
+                + (Bid Option)
+            + overrides (object) - список ID дочерних элементов, которые переопределяют настройки кампании
+                + keywords: 'string' (array, fixed) - Ключевые фразы кампании, для которых указаны другие настройки биддера
+                    + (object)
+                        + id: 0 (number) - ID ключевой фразы
+                        + keyword (string) - Текст ключевой фразы
 
 ### Обновить настройки биддера [PUT/ad_groups/{id}/bids]
 
 + Parameters
-    + id: (number, required) - ID группы объявлений
+    + id: 0 (number, required) - ID группы объявлений
 
 + Request
     + Attributes (Bid Option)
@@ -928,18 +993,18 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 Возвращает объект с суммой статистик всех ключевых фраз, принадлежащих группе объявлений, за указанный период.
 
 + Parameters
-    + id: (number, required) - ID группы объявлений
-    + from: (string, required) - Дата начала периода в формате `YYYY-mm-dd`.
-    + to: (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
+    + id: 0 (number, required) - ID группы объявлений
+    + from (string, required) - Дата начала периода в формате `YYYY-mm-dd`.
+    + to (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
 
 + Response 200 (application/json)
     + Attributes
-		+ data (Ad Group Statistics)
+        + data (Ad Group Statistics)
 
 ### Удалить настройки биддера [DELETE/ad_groups/{id}/bids]
 
 + Parameters
-    + id: (number, required) - ID группы объявлений
+    + id: 0 (number, required) - ID группы объявлений
 
 + Response 200 (application/json)
 
@@ -959,20 +1024,20 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 ### Детали ключевой фразы [GET/keywords/{id}]
 
 + Parameters
-    + id: (number, required) - ID фразы
+    + id: 0 (number, required) - ID фразы
 
 + Response 200 (application/json)
     + Attributes
         + data (array,fixed)
             + (Keyword)
-                + campaign_id: (number) - ID кампании, которой принадлежит фраза
-                + ad_group_id: (number) - ID группы объявлений, которой принадлежит фраза
-				+ bids: (array,fixed) - Настройки биддера для фразы
-					+ (object)
-						+ current: (array,fixed) - Настройки для текущего времени
-							+ (object)
-								+ max: (number)
-								+ position: (string)
+                + campaign_id: 0 (number) - ID кампании, которой принадлежит фраза
+                + ad_group_id: 0 (number) - ID группы объявлений, которой принадлежит фраза
+                + bids: 'string' (array,fixed) - Настройки биддера для фразы
+                    + (object)
+                        + current: 'string' (array,fixed) - Настройки для текущего времени
+                            + (object)
+                                + max: 0 (number)
+                                + position (string)
 
 
 ### Поиск фразы [GET/keywords/seach?{mask}=&{count}=]
@@ -981,32 +1046,32 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 Метод медленный, рекомендуется к использованию только в случае, когда неизвестны ID кампании и/или группы объявлений.
 
 + Parameters
-    + mask: (string, required) - Маска для подбора ключевых фраз
+    + mask (string, required) - Маска для подбора ключевых фраз
     + count: 5 (number, optional) - Кол-во результатов
 
 + Response 200 (application/json)
     + Attributes
         + data (array,fixed)
             + (Keyword)
-                + campaign_id: (number) - ID кампании, которой принадлежит фраза
-                + ad_group_id: (number) - ID группы объявлений, которой принадлежит фраза
+                + campaign_id: 0 (number) - ID кампании, которой принадлежит фраза
+                + ad_group_id: 0 (number) - ID группы объявлений, которой принадлежит фраза
 
 
 ### Текущие настройки биддера [GET/keywords/{id}/bids]
 
 + Parameters
-    + id: (number, required) - ID ключевой фразы
+    + id: 0 (number, required) - ID ключевой фразы
 
 + Response 200 (application/json)
     + Attributes
-		+ data
-			+ options: (array, fixed)
-				+ (Bid Option)
+        + data
+            + options: 'string' (array, fixed)
+                + (Bid Option)
 
 ### Обновить настройки биддера [PUT/keywords/{id}/bids]
 
 + Parameters
-    + id: (number, required) - ID ключевой фразы
+    + id: 0 (number, required) - ID ключевой фразы
 
 + Attributes (Bid Option)
 
@@ -1016,18 +1081,18 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 Возвращает объект с суммой статистик для ключевой фразы за указанный период.
 
 + Parameters
-    + id: (number, required) - ID ключевой фразы
-    + from: (string, required) - Дата начала периода в формате `YYYY-mm-dd`.
-    + to: (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
+    + id: 0 (number, required) - ID ключевой фразы
+    + from (string, required) - Дата начала периода в формате `YYYY-mm-dd`.
+    + to (string, optional) - Дата окончания периода (опционально для периода больше 1 дня).
 
 + Response 200 (application/json)
     + Attributes
-		+ data (Keyword Statistics)
+        + data (Keyword Statistics)
 
 ### Удалить настройки биддера [DELETE/keywords/{id}/bids]
 
 + Parameters
-    + id: (number, required) - ID ключевой фразы
+    + id: 0 (number, required) - ID ключевой фразы
 
 + Response 200 (application/json)
 
@@ -1041,16 +1106,16 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 ### Получить информацию о запуске биддера [GET/bidder/info]
 
 + Response 200 (application/json)
-	+ Attributes
-		+ data
-			+ period: (number) - Интервал запуска биддера в минутах
-			+ last_run: (string) - Время последнего запуска
+    + Attributes
+        + data
+            + period: 0 (number) - Интервал запуска биддера в минутах
+            + last_run (string) - Время последнего запуска
 
 ### Обновить настройки запуска биддера [PUT/bidder/period]
 
 + Request
     + Attributes
-        + period: (number) - Интервал запуска биддера в минутах
+        + period: 0 (number) - Интервал запуска биддера в минутах
 
 + Response 200 (application/json)
 
@@ -1066,18 +1131,18 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 ### Добавление информации о новом звонке [GET/calls/push]
 
 + Request
-	+ Attributes
-		+ unique
-		+ site
-		+ callerphone
-		+ duration
-		+ reclink
-		+ timestamp
-		+ utm_source
-		+ utm_medium
-		+ utm_campaign
-		+ utm_content
-		+ utm_term
+    + Attributes
+        + unique
+        + site
+        + callerphone
+        + duration
+        + reclink
+        + timestamp
+        + utm_source
+        + utm_medium
+        + utm_campaign
+        + utm_content
+        + utm_term
 
 + Response 200 (application/json)
 
@@ -1095,74 +1160,74 @@ curl -H 'User-Token: SOME-KEY' http://analitics.catkitcms.ru/api/
 ### Статистика ключевых фраз [GET/statistics/keywords?{campaign_id}=&{ad_group_id}=&{keyword_ids}=]
 
 + Parameters
-    + campaign_id: (number) - ID кампании для подбора ключевых фраз
-    + ad_group_id: (number) - ID группы объявлений для подбора ключевых фраз
-    + keyword_ids: (array) - список ID ключевых фраз (массив, или разделенные запятой значения)
+    + campaign_id: 0 (number) - ID кампании для подбора ключевых фраз
+    + ad_group_id: 0 (number) - ID группы объявлений для подбора ключевых фраз
+    + keyword_ids: 'string' (array) - список ID ключевых фраз (массив, или разделенные запятой значения)
 
 + Response 200 (application/json)
     + Attributes
-		+ data (Keyword Statistics)
-			+ ctr: (number) - CTR
-			+ lead_perc: (number) - Суммарное число заявок/клики
-			+ lead_cost: (number) - Суммарное число заявок/расход
-			+ order_perc: (number) - Заказы/суммарное число заявок
-			+ order_cost: (number) - Заказы/расход
-			+ orders: (number) - Кол-во заказов.
+        + data (Keyword Statistics)
+            + ctr: 0 (number) - CTR
+            + lead_perc: 0 (number) - Суммарное число заявок/клики
+            + lead_cost: 0 (number) - Суммарное число заявок/расход
+            + order_perc: 0 (number) - Заказы/суммарное число заявок
+            + order_cost: 0 (number) - Заказы/расход
+            + orders: 0 (number) - Кол-во заказов.
 
 ### Статистика групп объявлений [GET/statistics/ad_groups?{campaign_id}=&{ad_group_ids}=]
 
 + Parameters
-    + campaign_id: (number) - ID кампании для подбора групп объявлений
-    + ad_group_ids: (array) - список ID групп объявлений (массив, или разделенные запятой значения)
+    + campaign_id: 0 (number) - ID кампании для подбора групп объявлений
+    + ad_group_ids: 'string' (array) - список ID групп объявлений (массив, или разделенные запятой значения)
 
 + Response 200 (application/json)
     + Attributes
-		+ data (Ad Group Statistics)
-			+ ctr: (number) - CTR
-			+ lead_perc: (number) - Суммарное число заявок/клики
-			+ lead_cost: (number) - Суммарное число заявок/расход
-			+ order_perc: (number) - Заказы/суммарное число заявок
-			+ order_cost: (number) - Заказы/расход
-			+ orders: (number) - Кол-во заказов.
+        + data (Ad Group Statistics)
+            + ctr: 0 (number) - CTR
+            + lead_perc: 0 (number) - Суммарное число заявок/клики
+            + lead_cost: 0 (number) - Суммарное число заявок/расход
+            + order_perc: 0 (number) - Заказы/суммарное число заявок
+            + order_cost: 0 (number) - Заказы/расход
+            + orders: 0 (number) - Кол-во заказов.
 
 ### Статистика кампаний [GET/statistics/campaigns?{site_id}=&{campaign_ids}=]
 
 + Parameters
-    + site_id: (number) - ID сайта для подбора кампаний
-    + campaign_ids: (array) - список ID кампаний (массив, или разделенные запятой значения)
+    + site_id: 0 (number) - ID сайта для подбора кампаний
+    + campaign_ids: 'string' (array) - список ID кампаний (массив, или разделенные запятой значения)
 
 + Response 200 (application/json)
     + Attributes
-		+ data (Campaign Statistics)
-			+ ctr: (number) - CTR
-			+ lead_perc: (number) - Суммарное число заявок/клики
-			+ lead_cost: (number) - Суммарное число заявок/расход
-			+ order_perc: (number) - Заказы/суммарное число заявок
-			+ order_cost: (number) - Заказы/расход
-			+ orders: (number) - Кол-во заказов.
+        + data (Campaign Statistics)
+            + ctr: 0 (number) - CTR
+            + lead_perc: 0 (number) - Суммарное число заявок/клики
+            + lead_cost: 0 (number) - Суммарное число заявок/расход
+            + order_perc: 0 (number) - Заказы/суммарное число заявок
+            + order_cost: 0 (number) - Заказы/расход
+            + orders: 0 (number) - Кол-во заказов.
 
 ### Статистика сайтов [GET/statistics/campaigns?{project_id}=&{site_ids}=]
 
 + Parameters
-    + project_id: (number) - ID проекта для подбора сайтов
-    + site_ids: (array) - список ID сайтов (массив, или разделенные запятой значения)
+    + project_id: 0 (number) - ID проекта для подбора сайтов
+    + site_ids: 'string' (array) - список ID сайтов (массив, или разделенные запятой значения)
 
 + Response 200 (application/json)
     + Attributes
-		+ data (Site Statistics)
-			+ orders: (number) - Кол-во заказов.
+        + data (Site Statistics)
+            + orders: 0 (number) - Кол-во заказов.
 
 ### Статистика проектов [GET/statistics/projects?{project_id}=]
 
 + Parameters
-    + project_id: (number) - ID проекта для получения статистики
+    + project_id: 0 (number) - ID проекта для получения статистики
 
 + Response 200 (application/json)
     + Attributes
-		+ data (Site Statistics)
-			+ ctr: (number) - CTR
-			+ lead_perc: (number) - Суммарное число заявок/клики
-			+ lead_cost: (number) - Суммарное число заявок/расход
-			+ order_perc: (number) - Заказы/суммарное число заявок
-			+ order_cost: (number) - Заказы/расход
-			+ orders: (number) - Кол-во заказов.
+        + data (Site Statistics)
+            + ctr: 0 (number) - CTR
+            + lead_perc: 0 (number) - Суммарное число заявок/клики
+            + lead_cost: 0 (number) - Суммарное число заявок/расход
+            + order_perc: 0 (number) - Заказы/суммарное число заявок
+            + order_cost: 0 (number) - Заказы/расход
+            + orders: 0 (number) - Кол-во заказов.

@@ -91,6 +91,19 @@ Router::prefix('api', function ($routes) {
         ]
     ];
 
+    $routes->resources('Accounts', function ($routes) use ($statisticsMap) {
+        $routes->resources('Campaigns', [
+            'prefix' => 'accounts',
+			'map' => [
+                [
+                    'action' => 'load',
+                    'method' => 'GET',
+                    'path' => '/load',
+                ],
+            ],
+        ]);
+    });
+
     $routes->resources('Projects', function ($routes) use ($statisticsMap) {
         $routes->resources('Sites', [
             'prefix' => 'projects',
@@ -155,19 +168,19 @@ Router::prefix('api', function ($routes) {
         ]);
     });
 
-	$routes->resources('Sources', function ($routes) use ($statisticsMap) {
-		$routes->resources('Costs', [
+    $routes->resources('Sources', function ($routes) use ($statisticsMap) {
+        $routes->resources('Costs', [
             'prefix' => 'sources',
         ]);
-		$routes->resources('Statistics', [
+        $routes->resources('Statistics', [
             'prefix' => 'sources',
             'map' => $statisticsMap,
         ]);
-        /*$routes->resources('Campaigns', [
-            'prefix' => 'sites',
+        $routes->resources('Campaigns', [
+            'prefix' => 'sources',
             'only' => ['index']
         ]);
-        $routes->resources('Leads', [
+        /*$routes->resources('Leads', [
             'prefix' => 'sites',
             'only' => ['index']
         ]);
