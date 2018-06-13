@@ -1,0 +1,2504 @@
+openapi: 3.0.0
+info:
+  title: Аналитика
+  description: 'TODO: Add a description'
+  version: '2.2'
+servers:
+  - url: 'http://analitics.catkitcms.ru/api'
+security:
+  - ApiKeyAuth: []
+paths:
+  /projects:
+    get:
+      summary: Список проектов
+      tags:
+        - Проекты
+      description: ''
+      operationId: СписокПроектов
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+    put:
+      summary: Обновить данные проекта
+      description: ''
+      tags:
+        - Проекты
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+                - caption
+              type: object
+              properties:
+                caption:
+                  type: string
+                  description: Название источника
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+    post:
+      summary: Создать новый проект
+      description: ''
+      tags:
+        - Проекты
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                caption:
+                  type: string
+                  description: Заголовок проекта
+                icon:
+                  type: string
+                  description: Иконка проекта
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: number
+                    description: ID добавленного проекта
+                    example: 0
+  '/projects/{id}':
+    get:
+      summary: Детали проекта
+      description: ''
+      tags:
+        - Проекты
+      parameters:
+        - name: id
+          in: path
+          description: ID проекта
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+  '/projects/{id}/sites':
+    get:
+      summary: Список сайтов
+      description: ''
+      tags:
+        - Проекты
+      parameters:
+        - $ref: '#/components/parameters/Order'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Reverse'
+        - name: id
+          in: path
+          description: ID проекта
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Site'
+  '/projects/{id}/campaigns':
+    get:
+      summary: Список кампаний проекта.
+      description: ''
+      tags:
+        - Проекты
+      parameters:
+        - name: id
+          in: path
+          description: ID проекта
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+        - $ref: '#/components/parameters/Order'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Reverse'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Campaign'
+  '/projects/{id}/statistics/summary':
+    get:
+      summary: Общая статистика проекта
+      description: >-
+        Возвращает объект с суммой статистик по кампаниям проекта за указанный
+        период.
+      tags:
+        - Проекты
+      parameters:
+        - name: id
+          in: path
+          description: ID проекта
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Statistics'
+  '/projects/{id}/statistics/details':
+    get:
+      summary: Подробная статистика проекта.
+      description: >-
+        Возвращает массив объектов с суммой почасовых статистик по всем
+        кампаниям проекта за указанный период.
+      tags:
+        - Проекты
+      parameters:
+        - name: id
+          in: path
+          description: ID проекта
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatisticsDetails'
+  '/projects/{id}/leads':
+    get:
+      summary: Список заявок
+      description: ''
+      tags:
+        - Проекты
+      parameters:
+        - name: id
+          in: path
+          description: ID проекта
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+        - $ref: '#/components/parameters/Order'
+        - $ref: '#/components/parameters/Reverse'
+        - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Lead'
+  '/projects/{id}/orders/cost':
+    get:
+      summary: Календарь стоимости заказа.
+      description: >-
+        Возвращает среднюю стоимость заказа за день по всем кампаниям проекта.
+        Для расчета учитывается количество заказов и сумма расходов по всем
+        кампаниям, полученная из статистики.
+      tags:
+        - Проекты
+      parameters:
+        - name: id
+          in: path
+          description: ID проекта
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    date:
+                      type: string
+                      example: '2018-01-02'
+                    cost:
+                      type: number
+  /accounts/types:
+    get:
+      summary: Список доступных типов и настроек
+      description: ''
+      tags:
+        - Аккаунты
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    type:
+                      type: number
+                      description: Ключ для типа аккаунта
+                      example: 0
+                    human:
+                      type: string
+                      description: Название типа
+                    options:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            description: Поле для настройки
+                          caption:
+                            type: string
+                            description: Название поля
+                      description: ''
+  /accounts:
+    get:
+      summary: Список аккаунтов
+      description: ''
+      tags:
+        - Аккаунты
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                    type:
+                      type: string
+                    caption:
+                      type: string
+    put:
+      summary: Редактировать аккаунт
+      description: ''
+      tags:
+        - Аккаунты
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                caption:
+                  type: string
+                options:
+                  type: array
+                  items:
+                    type: string
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+    post:
+      summary: Добавить новый аккаунт
+      description: ''
+      tags:
+        - Аккаунты
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                caption:
+                  type: string
+                options:
+                  type: array
+                  items:
+                    type: string
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+  '/accounts/{id}':
+    get:
+      summary: Подробная информация и настройки
+      description: ''
+      tags:
+        - Аккаунты
+      parameters:
+        - name: id
+          in: path
+          description: ID аккаунта
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  site_id:
+                    type: number
+                  sriteria:
+                    type: string
+                  type:
+                    type: string
+                  human:
+                    type: string
+                  caption:
+                    type: string
+                  options:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        value:
+                          type: string
+    delete:
+      summary: Удалить аккаунт
+      description: ''
+      tags:
+        - Аккаунты
+      parameters:
+        - name: id
+          in: path
+          description: ID аккаунта
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+      responses:
+        '200':
+          description: ''
+  '/accounts/{id}/campaigns':
+    get:
+      summary: Список локальных кампаний аккаунта
+      description: 'Возвращает список добавленных кампаний, принадлежащих аккаунту.'
+      tags:
+        - Аккаунты
+      parameters:
+        - name: id
+          in: path
+          description: ID аккаунта
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    example: 0
+                  rel_id:
+                    type: number
+                    example: 0
+                  caption:
+                    type: string
+  '/accounts/{id}/campaigns/load':
+    get:
+      summary: Загрузить список кампаний аккаунта
+      description: Загружает с соответствующего аккаунту сервера список кампаний.
+      tags:
+        - Аккаунты
+      parameters:
+        - name: id
+          in: path
+          description: ID аккаунта
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    example: 0
+                  caption:
+                    type: string
+
+  /sites:
+    post:
+      summary: Добавить новый сайт
+      description: ''
+      tags:
+        - Сайты
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                project_id:
+                  type: number
+                  description: 'ID проекта, к которому относится сайт.'
+                  example: 0
+                domain:
+                  type: string
+                  description: Доменное имя сайта.
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    description: 'ID добавленного сайта'
+  '/sites/{id}':
+    get:
+      summary: Детали сайта
+      description: ''
+      tags:
+        - Сайты
+      parameters:
+        - name: id
+          in: path
+          description: ID сайта.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Site'
+                  - type: object
+                    properties:
+                      project_id:
+                        type: number
+                        description: 'ID проекта, которому принадлежит сайт'
+                      deleted:
+                        type: number
+                        description: 'Признак удаления сайта'
+
+    put:
+      summary: Обновление данных сайта
+      description: Обновление информации сайта.
+      tags:
+        - Сайты
+      parameters:
+        - name: id
+          in: path
+          description: ID сайта
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+      requestBody:
+        description: ''
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                domain:
+                  type: string
+                  description: Доменное имя
+                order:
+                  type: number
+                  description: Значение для сортировки по умолчанию
+                  example: 0
+        required: true
+      responses:
+        '200':
+          description: ''
+    delete:
+      summary: Удалить сайт
+      description: >-
+        Отмечает сайт, а так же все его источники трафика и кампании,
+        удаленными.
+      tags:
+        - Сайты
+      parameters:
+        - name: id
+          in: path
+          description: ID сайта.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+      responses:
+        '200':
+          description: ''
+  '/sites/{id}/sources':
+    get:
+      summary: Список источников трафика
+      description: ''
+      tags:
+        - Сайты
+      parameters:
+        - name: id
+          in: path
+          description: ID сайта.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+        - $ref: '#/components/parameters/Order'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Reverse'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Source'
+                    description: ''
+  '/sites/{id}/orders':
+    post:
+      summary: Добавление заказа
+      description: ''
+      tags:
+        - Сайты
+      parameters:
+        - name: id
+          in: path
+          description: ID сайта.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+      requestBody:
+        description: ''
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                count:
+                  type: number
+                  description: Количество заказов (позволяет создать заказ с количеством более 1).
+                comment:
+                  type: string
+                  description: Комментарий к заказу.
+                time:
+                  type: string
+                  description: >-
+                    Время заказа в формате `Y-m-d H:i:s` (по умолчанию будет установлено
+                    текущее время).
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    description: ID добавленного заказа
+  '/sites/{id}/statistics/summary':
+    get:
+      summary: Общая статистика сайта3
+      description: >-
+        Возвращает объект с суммой статистик по всем кампаниям, принадлежащим
+        сайту, за указанный период.
+      tags:
+        - Сайты
+      parameters:
+        - name: id
+          in: path
+          description: ID сайта
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Statistics'
+
+  '/sites/{id}/statistics/details':
+    get:
+      summary: Подробная статистика сайта4
+      description: >-
+        Возвращает массив объектов с суммой почасовых статистик по всем
+        кампаниям проекта за указанный период.
+      tags:
+        - Сайты
+      parameters:
+        - name: id
+          in: path
+          description: ID сайта
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatisticsDetails'
+  '/sites/{id}/statistics':
+    put:
+      summary: Обновление статистики сайта
+      description: ''
+      tags:
+        - Сайты
+      parameters:
+        - name: id
+          in: path
+          description: ID сайта
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+        - name: date
+          in: path
+          description: Дата для изменения статистики
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      requestBody:
+        description: ''
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                orders:
+                  type: number
+                  description: Количество заказов за указанный в date день
+        required: true
+      responses:
+        '200':
+          description: ''
+  '/sites/{id}/utm':
+    put:
+      summary: Обновление UTM меток
+      description: >-
+        Обновляет UTM метки для ссылок в объявлениях всех кампаний,
+        принадлежащик сайту.
+      tags:
+        - Сайты
+      parameters:
+        - name: id
+          in: path
+          description: ID сайта
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+        - name: method
+          in: path
+          description: Способ задания меток
+          required: true
+          style: simple
+          explode: false
+          schema:
+            default: all
+            enum:
+              - only
+              - replace
+              - all
+            type: string
+            example: only
+            x-enum-elements:
+              - name: only
+                description: ''
+              - name: replace
+                description: ''
+              - name: all
+                description: ''
+      requestBody:
+        description: ''
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                utm_source:
+                  type: string
+                utm_medium:
+                  type: string
+                utm_campaign:
+                  type: string
+                utm_content:
+                  type: string
+                utm_term:
+                  type: string
+        required: true
+      responses:
+        '200':
+          description: ''
+  '/sources/{id}':
+    get:
+      summary: Подробная информация и настройки5
+      description: ''
+      tags:
+        - Источники трафика
+      parameters:
+        - name: id
+          in: path
+          description: ID источника трафика
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Source'
+                  - type: object
+                    properties:
+                      site_id:
+                        type: number
+                        description: ID свзанного сайта
+                        example: 0
+                      criteria:
+                        type: string
+                        description: Строка для определения принадлежности заявки источнику трафика
+
+    delete:
+      summary: Удалить источник2
+      description: 'Отмечает источник трафика, а так же все его кампании, удаленными.'
+      tags:
+        - Источники трафика
+      parameters:
+        - name: id
+          in: path
+          description: ID источника
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+      responses:
+        '200':
+          description: ''
+  /sources:
+    put:
+      summary: Редактировать источник трафика2
+      description: ''
+      tags:
+        - Источники трафика
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+                - site_id
+                - caption
+                - criteria
+              type: object
+              properties:
+                site_id:
+                  type: number
+                  description: 'ID сайта, к которому относится источник'
+                  example: 0
+                caption:
+                  type: string
+                  description: Название источника
+                criteria:
+                  type: string
+                  description: Строка для определения принадлежности заявки источнику трафика
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+    post:
+      summary: Добавить новый источник трафика3
+      description: ''
+      tags:
+        - Источники трафика
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              title: Добавить новый источник трафика request61
+              required:
+                - site_id
+                - type
+                - caption
+                - criteria
+              type: object
+              properties:
+                site_id:
+                  type: number
+                  description: 'ID сайта, к которому относится источник'
+                  example: 0
+                type:
+                  type: string
+                  description: Ключ типа источника
+                caption:
+                  type: string
+                  description: Название источника
+                criteria:
+                  type: string
+                  description: Строка для определения принадлежности заявки источнику трафика
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                title: Добавить новый источник трафика response62
+                type: object
+  '/sources/{id}/campaigns':
+    get:
+      summary: Список кампаний источника трафика6
+      description: ''
+      tags:
+        - Источники трафика
+      parameters:
+        - name: id
+          in: path
+          description: ID аккаунта
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                      example: 0
+                    rel_id:
+                      type: number
+                      example: 0
+                    caption:
+                      type: string
+  '/sources/{id}/costs':
+    post:
+      summary: Добавление произвольного расхода1
+      description: ''
+      tags:
+        - Источники трафика
+      parameters:
+        - name: id
+          in: path
+          description: ID источника трафика.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+      requestBody:
+        description: ''
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              title: Добавление произвольного расхода request69
+              required:
+                - cost
+              type: object
+              properties:
+                cost:
+                  type: number
+                  description: Сумма расхода.
+                comment:
+                  type: string
+                  description: Комментарий к расходу.
+                date:
+                  description: >-
+                    Период расхода в виде интервала; если не указано, будет установлено
+                    текущее время
+                  type: object
+                  properties:
+                    from:
+                      type: string
+                      description: Дата в формате `Y-m-d`
+                    to:
+                      type: string
+                      description: Дата в формате `Y-m-d`
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+  /campaigns:
+    get:
+      summary: Список кампаний
+      description: ''
+      tags:
+        - Кампании
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Campaign'
+                    description: ''
+    post:
+      summary: Добавить новую кампанию
+      description: ''
+      tags:
+        - Кампании
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                source_id:
+                  type: number
+                account_id:
+                  type: number
+                site_id:
+                  type: number
+                caption:
+                  type: string
+                rel_id:
+                  type: number
+        
+  '/campaigns/{id}':
+    get:
+      summary: Детали кампании7
+      description: ''
+      tags:
+        - Кампании
+      parameters:
+        - name: id
+          in: path
+          description: ID кампании
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Campaign'
+                  - type: object
+                    properties:
+                      type:
+                        type: string
+                        description: Тип кампании
+                      num:
+                        type: number
+                        description: Номер кампании в системе статистики
+                        example: 0
+                      bids:
+                        type: array
+                        items:
+                          type: string
+                        description: Настройки биддера для кампании
+    delete:
+      summary: Удалить кампанию3
+      description: ''
+      tags:
+        - Кампании
+      parameters:
+        - name: id
+          in: path
+          description: ID кампании
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+      responses:
+        '200':
+          description: ''
+  '/campaigns/{id}/statistics/summary':
+    get:
+      summary: Общая статистика кампании5
+      description: Возвращает объект с суммой статистик кампании за указанный период.
+      tags:
+        - Кампании
+      parameters:
+        - name: id
+          in: path
+          description: ID кампании
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Statistics'
+  '/campaigns/{id}/statistics/details':
+    get:
+      summary: Подробная статистика кампании6
+      description: >-
+        Возвращает массив объектов с суммой почасовых статистик кампании за
+        указанный период.
+      tags:
+        - Кампании
+      parameters:
+        - name: id
+          in: path
+          description: ID кампании
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatisticsDetails'
+  '/campaigns/{id}/bids':
+    get:
+      summary: Текущие настройки биддера8
+      description: >-
+        Возвращает список настроек биддера для кампании, а так же информацию о
+        дочерних элементах с индивидуальными настройками биддера. Каждая
+        настройка представляет собой параметры для одного часа (опция
+        `hour_num`) определенного дня недели (опция `day_num`), и биддер будет
+        запущен только в это время, в остальные, не указанные, диапазоны биддер
+        выполняться не будет.
+      tags:
+        - Кампании
+      parameters:
+        - name: id
+          in: path
+          description: ID кампании
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    options:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/BidOption'
+                      description: ''
+                    overrides:
+                      description: >-
+                        список ID дочерних элементов, которые переопределяют настройки
+                        кампании
+                      type: object
+                      properties:
+                        ag_groups:
+                          type: array
+                          items:
+                            type: string
+                          description: >-
+                            Группы объявлений кампании, для которых указаны другие настройки
+                            биддера
+                        keywords:
+                          type: array
+                          items:
+                            type: string
+                          description: >-
+                            Ключевые фразы кампании, для которых указаны другие настройки
+                            биддера
+                    hit:
+                      type: number
+                      description: >-
+                        Показатель попадания ставки в процентах, рассчитанный при последнем
+                        срабатывании биддера для этой кампании.
+                      example: 0
+    put:
+      summary: Обновить настройки биддера1
+      description: >-
+        Устанавливает новый набор настроек биддера для кампании. Все прежние
+        диапазоны настроек будут удалены.
+      tags:
+        - Кампании
+      parameters:
+        - name: id
+          in: path
+          description: ID кампании
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+      requestBody:
+        description: ''
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/BidOption'
+        required: true
+      responses:
+        '200':
+          description: ''
+    delete:
+      summary: Удалить настройки биддера4
+      description: ''
+      tags:
+        - Кампании
+      parameters:
+        - name: id
+          in: path
+          description: ID кампании
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+      responses:
+        '200':
+          description: ''
+  '/campaigns/{id}/keywords':
+    get:
+      summary: Список ключевых фраз
+      description: 'Возвращает нужное кол-во ключевых фраз, принадлежащих кампании.'
+      tags:
+        - Кампании
+      parameters:
+        - name: id
+          in: path
+          description: ID кампании
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+        - name: mask
+          in: path
+          description: >-
+            Маска для подбора ключевых фраз. Если маска не указана, ключевые
+            фразы не будут фильтроваться.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+        - name: page
+          in: path
+          description: >-
+            Номер страницы списка (начиная от 1) и количество результатов на
+            странице, разделенные запятыми
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: '''2,50'''
+          example: '''2,50'''
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Keyword'
+  '/campaigns/{id}/ad_groups':
+    get:
+      summary: Список групп объявлений
+      description: ''
+      tags:
+        - Кампании
+      parameters:
+        - name: id
+          in: path
+          description: ID кампании
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+        - name: page
+          in: path
+          description: >-
+            Номер страницы списка (начиная от 1) и количество результатов на
+            странице, разделенные запятыми
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: '''2,50'''
+          example: '''2,50'''
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AdGroup'
+  '/campaigns/{id}/sync':
+    get:
+      summary: Обновить содержимое кампании9
+      description: >-
+        Запускает подгрузку ключевых фраз, объявлений и статусов с серверов
+        поисковых систем немедленно.
+      tags:
+        - Кампании
+      parameters:
+        - name: id
+          in: path
+          description: ID кампании
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+      responses:
+        '200':
+          description: ''
+  /ad_groups:
+    get:
+      summary: Список групп4
+      description: ''
+      tags:
+        - Группы объявлений
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AdGroup'
+              example:
+                data:
+                  - id: 0
+                    caption: ''
+  '/ad_groups/{id}':
+    get:
+      summary: Детали группы10
+      description: ''
+      tags:
+        - Группы объявлений
+      parameters:
+        - name: id
+          in: path
+          description: ID фразы
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  bids:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        current:
+                          type: array
+                          items:
+                            type: string
+                          description: Настройки для текущего времени
+                  id:
+                    type: number
+                    description: ID группы
+                    example: 0
+                  caption:
+                    type: string
+                    description: Заголовок группы
+  '/ad_groups/{id}/keywords':
+    get:
+      summary: Список ключевых фраз1
+      description: 'Возвращает нужное кол-во ключевых фраз, принадлежащих группе объявлений.'
+      tags:
+        - Группы объявлений
+      parameters:
+        - name: id
+          in: path
+          description: ID группы объявлений
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+        - name: mask
+          in: path
+          description: >-
+            Маска для подбора ключевых фраз. Если маска не указана, ключевые
+            фразы не будут фильтроваться.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+        - name: page
+          in: path
+          description: >-
+            Номер страницы списка (начиная от 1) и количество результатов на
+            странице, разделенные запятыми
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: '''2,50'''
+          example: '''2,50'''
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example:
+                  data:
+                    - id: 0
+                      keyword: ''
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Keyword'
+              example:
+                data:
+                  - id: 0
+                    keyword: ''
+  '/ad_groups/{id}/bids':
+    get:
+      summary: Текущие настройки биддера11
+      description: ''
+      tags:
+        - Группы объявлений
+      parameters:
+        - name: id
+          in: path
+          description: ID группы объявлений
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    options:
+                      type: array
+                      items:
+                        type: string
+                      description: ''
+                    overrides:
+                      description: >-
+                        список ID дочерних элементов, которые переопределяют настройки
+                        кампании
+                      type: object
+                      properties:
+                        keywords:
+                          type: array
+                          items:
+                            type: string
+                          description: >-
+                            Ключевые фразы кампании, для которых указаны другие настройки
+                            биддера
+    put:
+      summary: Обновить настройки биддера2
+      description: ''
+      tags:
+        - Группы объявлений
+      parameters:
+        - name: id
+          in: path
+          description: ID группы объявлений
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+      requestBody:
+        description: ''
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BidOption'
+        required: true
+      responses:
+        '200':
+          description: ''
+    delete:
+      summary: Удалить настройки биддера5
+      description: ''
+      tags:
+        - Группы объявлений
+      parameters:
+        - name: id
+          in: path
+          description: ID группы объявлений
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+      responses:
+        '200':
+          description: ''
+  '/ad_groups/{id}/statistics/summary':
+    get:
+      summary: Общая статистика группы объявлений7
+      description: >-
+        Возвращает объект с суммой статистик всех ключевых фраз, принадлежащих
+        группе объявлений, за указанный период.
+      tags:
+        - Группы объявлений
+      parameters:
+        - name: id
+          in: path
+          description: ID группы объявлений
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Statistics'
+  '/keywords/{id}':
+    get:
+      summary: Детали ключевой фразы12
+      description: >-
+        Из-за большого количества записей нет возможности их динамической
+        подгрузки из ресурсов поисковых систем.  В связи с этим, все методы,
+        возвращающие список ключевых фраз, предоставляют только их снимок,
+        который автоматически синхронизируется в течение некоторого времени. Так
+        же при необходимости можно запустить синхронизацию немедленно, вызвав
+        метод [campaigns::sync](#кампании-get-8)
+      tags:
+        - Ключевые фразы
+      parameters:
+        - name: id
+          in: path
+          description: ID фразы
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Keyword'
+              example:
+                data:
+                  - id: 0
+                    keyword: ''
+                    campaign_id: 0
+                    ad_group_id: 0
+                    bids:
+                      - '''string'''
+                      - current:
+                          - '''string'''
+                          - max: 0
+                            position: ''
+  '/keywords/seach':
+    get:
+      summary: Поиск фразы
+      description: >-
+        Возвращает заданное количетсво ключевых фраз, подходящих по маске.
+
+        Метод медленный, рекомендуется к использованию только в случае, когда
+        неизвестны ID кампании и/или группы объявлений.
+      tags:
+        - Ключевые фразы
+      parameters:
+        - name: mask
+          in: path
+          description: Маска для подбора ключевых фраз
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+        - name: count
+          in: path
+          description: Кол-во результатов
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 5
+          example: 5
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Keyword'
+  '/keywords/{id}/bids':
+    get:
+      summary: Текущие настройки биддера13
+      description: >-
+        Из-за большого количества записей нет возможности их динамической
+        подгрузки из ресурсов поисковых систем.  В связи с этим, все методы,
+        возвращающие список ключевых фраз, предоставляют только их снимок,
+        который автоматически синхронизируется в течение некоторого времени. Так
+        же при необходимости можно запустить синхронизацию немедленно, вызвав
+        метод [campaigns::sync](#кампании-get-8)
+      tags:
+        - Ключевые фразы
+      parameters:
+        - name: id
+          in: path
+          description: ID ключевой фразы
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  options:
+                    type: array
+                    items:
+                      type: string
+    put:
+      summary: Обновить настройки биддера3
+      description: >-
+        Из-за большого количества записей нет возможности их динамической
+        подгрузки из ресурсов поисковых систем.  В связи с этим, все методы,
+        возвращающие список ключевых фраз, предоставляют только их снимок,
+        который автоматически синхронизируется в течение некоторого времени. Так
+        же при необходимости можно запустить синхронизацию немедленно, вызвав
+        метод [campaigns::sync](#кампании-get-8)
+      tags:
+        - Ключевые фразы
+      parameters:
+        - name: id
+          in: path
+          description: ID ключевой фразы
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+      requestBody:
+        description: ''
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BidOption'
+        required: true
+      responses:
+        '200':
+          description: ''
+    delete:
+      summary: Удалить настройки биддера6
+      description: >-
+        Из-за большого количества записей нет возможности их динамической
+        подгрузки из ресурсов поисковых систем.  В связи с этим, все методы,
+        возвращающие список ключевых фраз, предоставляют только их снимок,
+        который автоматически синхронизируется в течение некоторого времени. Так
+        же при необходимости можно запустить синхронизацию немедленно, вызвав
+        метод [campaigns::sync](#кампании-get-8)
+      tags:
+        - Ключевые фразы
+      parameters:
+        - name: id
+          in: path
+          description: ID ключевой фразы
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+  '/keywords/{id}/statistics/summary':
+    get:
+      summary: Общая статистика ключевой фразы8
+      description: >-
+        Возвращает объект с суммой статистик для ключевой фразы за указанный
+        период.
+      tags:
+        - Ключевые фразы
+      parameters:
+        - name: id
+          in: path
+          description: ID ключевой фразы
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+            example: 0
+          example: 0
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Statistics'
+  /bidder/info:
+    get:
+      summary: Получить информацию о запуске биддера5
+      description: ''
+      tags:
+        - Биддер
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  period:
+                    type: number
+                    description: Интервал запуска биддера в минутах
+                    example: 0
+                  last_run:
+                    type: string
+                    description: Время последнего запуска
+  /bidder/period:
+    put:
+      summary: Обновить настройки запуска биддера3
+      description: ''
+      tags:
+        - Биддер
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                period:
+                  type: number
+                  description: Интервал запуска биддера в минутах
+        required: true
+      responses:
+        '200':
+          description: ''
+  /calls/push:
+    get:
+      summary: Добавление информации о новом звонке6
+      description: ''
+      tags:
+        - Звонки
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  '/statistics/keywords':
+    get:
+      summary: Статистика ключевых фраз
+      description: >-
+        Сервис предоставляет предварительно кэшированную статистику для всех
+        ресурсов с возможностью сортировки и пагинации.
+
+        * Каждый ресурс принимает параметры `from` и `to` для определения
+        диапазона, за который необходимо получить статистику. При указании
+        только параметра `from` будет отображена статистика только за 1 день.
+
+        * Каждый ресурс принимает дополнительные параметры `page=page,count`,
+        `order=field`, `reverse=1` и возвращает заголовок `RecordsCount` с общим
+        количеством найденных результатов.
+
+        * Все уточняющие параметры взаимно дополняют друг-друга.
+      tags:
+        - Сервис статистики
+      parameters:
+        - $ref: '#/components/parameters/CampaignId'
+        - $ref: '#/components/parameters/AdGroupId'
+        - $ref: '#/components/parameters/KeywordIds'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Statistics'
+  '/statistics/ad_groups':
+    get:
+      summary: Статистика групп объявлений
+      description: >-
+        Сервис предоставляет предварительно кэшированную статистику для всех
+        ресурсов с возможностью сортировки и пагинации.
+
+        * Каждый ресурс принимает параметры `from` и `to` для определения
+        диапазона, за который необходимо получить статистику. При указании
+        только параметра `from` будет отображена статистика только за 1 день.
+
+        * Каждый ресурс принимает дополнительные параметры `page=page,count`,
+        `order=field`, `reverse=1` и возвращает заголовок `RecordsCount` с общим
+        количеством найденных результатов.
+
+        * Все уточняющие параметры взаимно дополняют друг-друга.
+      tags:
+        - Сервис статистики
+      parameters:
+        - $ref: '#/components/parameters/CampaignId'
+        - $ref: '#/components/parameters/AdGroupIds'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Statistics'
+  '/statistics/campaigns':
+    get:
+      summary: Статистика кампаний
+      description: >-
+        Сервис предоставляет предварительно кэшированную статистику для всех
+        ресурсов с возможностью сортировки и пагинации.
+
+        * Каждый ресурс принимает параметры `from` и `to` для определения
+        диапазона, за который необходимо получить статистику. При указании
+        только параметра `from` будет отображена статистика только за 1 день.
+
+        * Каждый ресурс принимает дополнительные параметры `page=page,count`,
+        `order=field`, `reverse=1` и возвращает заголовок `RecordsCount` с общим
+        количеством найденных результатов.
+
+        * Все уточняющие параметры взаимно дополняют друг-друга.
+      tags:
+        - Сервис статистики
+      parameters:
+        - $ref: '#/components/parameters/SiteId'
+        - $ref: '#/components/parameters/CampaignIds'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Statistics'
+  '/statistics/sites':
+    get:
+      summary: Статистика сайтов
+      description: >-
+        Сервис предоставляет предварительно кэшированную статистику для всех
+        ресурсов с возможностью сортировки и пагинации.
+
+        * Каждый ресурс принимает параметры `from` и `to` для определения
+        диапазона, за который необходимо получить статистику. При указании
+        только параметра `from` будет отображена статистика только за 1 день.
+
+        * Каждый ресурс принимает дополнительные параметры `page=page,count`,
+        `order=field`, `reverse=1` и возвращает заголовок `RecordsCount` с общим
+        количеством найденных результатов.
+
+        * Все уточняющие параметры взаимно дополняют друг-друга.
+      tags:
+        - Сервис статистики
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/SiteIds'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Statistics'
+  '/statistics/projects':
+    get:
+      summary: Статистика проектов
+      description: >-
+        Сервис предоставляет предварительно кэшированную статистику для всех
+        ресурсов с возможностью сортировки и пагинации.
+
+        * Каждый ресурс принимает параметры `from` и `to` для определения
+        диапазона, за который необходимо получить статистику. При указании
+        только параметра `from` будет отображена статистика только за 1 день.
+
+        * Каждый ресурс принимает дополнительные параметры `page=page,count`,
+        `order=field`, `reverse=1` и возвращает заголовок `RecordsCount` с общим
+        количеством найденных результатов.
+
+        * Все уточняющие параметры взаимно дополняют друг-друга.
+      tags:
+        - Сервис статистики
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Statistics'
+
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: User-Token
+  schemas:
+    Project:
+      title: Project
+      type: object
+      properties:
+        id:
+          type: number
+          description: ID проекта
+          example: 0
+        caption:
+          type: number
+          description: Заголовок
+          example: 0
+        icon:
+          type: string
+          description: Иконка
+    Account:
+      title: Account
+      type: object
+      properties:
+        id:
+          type: number
+          description: ID
+          example: 0
+    Site:
+      title: Site
+      type: object
+      properties:
+        id:
+          type: number
+          description: ID сайта
+          example: 0
+        domain:
+          type: string
+          description: Доменное имя сайта
+    Source:
+      title: Source
+      type: object
+      properties:
+        id:
+          type: number
+          description: ID
+          example: 0
+        type:
+          type: string
+          description: Тип
+        caption:
+          type: string
+          description: Название
+    Campaign:
+      title: Campaign
+      type: object
+      properties:
+        id:
+          type: number
+          description: ID кампании
+          example: 0
+        site_id:
+          type: number
+          description: 'ID сайта, к которому привязана кампания'
+          example: 0
+        caption:
+          type: string
+          description: Заголовок кампании
+    Keyword:
+      title: Keyword
+      type: object
+      properties:
+        id:
+          type: number
+          description: ID ключевой фразы
+          example: 0
+        keyword:
+          type: string
+          description: Ключевая фраза
+    Ad:
+      title: Ad
+      type: object
+      properties:
+        id:
+          type: number
+          description: ID объявления
+          example: 0
+    AdGroup:
+      title: AdGroup
+      type: object
+      properties:
+        id:
+          type: number
+          description: ID группы
+          example: 0
+        caption:
+          type: string
+          description: Заголовок группы
+    Statistics:
+      type: object
+      properties:
+        orders:
+          type: number
+          description: Кол-во заказов.
+        cost:
+          type: number
+          description: Потраченная сумма(руб.).
+          example: 0
+        views:
+          type: number
+          description: Кол-во просмотров рекламных объявлений за период.
+          example: 0
+        clicks:
+          type: number
+          description: Кол-во кликов по рекламе за период.
+          example: 0
+        calls:
+          type: number
+          description: Кол-во звонков.
+          example: 0
+        emails:
+          type: number
+          description: Кол-во писем.
+          example: 0
+    StatisticsDetails:
+      type: array
+      items:
+        type: object
+        properties:
+          time:
+            type: string
+            description: ''
+          statistics:
+            $ref: '#/components/schemas/Statistics'
+    Lead:
+      title: Lead
+      type: object
+      properties:
+        site_id:
+          type: number
+          description: ID сайта
+          example: 0
+        type:
+          $ref: '#/components/schemas/LeadTypes'
+        source:
+          type: string
+          description: Источник заявки
+        campaign:
+          type: string
+          description: Кампания
+        keyword:
+          type: string
+          description: Ключевое слово
+        place:
+          type: string
+          description: Место показа
+        time:
+          type: string
+          description: Время заявки
+    LeadTypes:
+      type: string
+      description: Тип заявки
+      enum:
+        - email
+        - call
+    BidOption:
+      title: Bid Option
+      required:
+        - day_num
+        - hour_num
+      type: object
+      properties:
+        day_num:
+          type: number
+          description: >-
+            Порядковый номер дня недели от 0 (понедельник) до 6, для которого
+            должны применяться настройки
+          example: 0
+        hour_num:
+          type: number
+          description: >-
+            Порядковый номер часа от 0 до 23, для которого должны применяться
+            настройки
+          example: 0
+        max:
+          type: number
+          description: Максимальная ставка
+          example: 0
+        position:
+          $ref: '#/components/schemas/Position'
+        increment:
+          type: number
+          description: Процент завышения ставки
+          example: 0
+        active:
+          type: boolean
+          description: Статус (включено/выключено)
+    Position:
+      title: position
+      description: 'Позиция, строка по формуле Pnm, где n - , m -'
+      enum:
+        - P11
+        - P12
+        - P13
+        - P14
+        - P21
+        - P22
+      type: string
+      example: P11
+      x-enum-elements:
+        - name: P11
+          description: ''
+        - name: P12
+          description: ''
+        - name: P13
+          description: ''
+        - name: P14
+          description: ''
+        - name: P21
+          description: ''
+        - name: P22
+          description: ''
+
+  parameters:
+    Order:
+      name: order
+      in: query
+      description: Поле для сортировки.
+      required: false
+      explode: false
+      schema:
+        type: string
+    Reverse:
+      name: reverse
+      in: query
+      description: Сортировка в обратном порядке.
+      required: false
+      explode: false
+      schema:
+        type: boolean
+    Page:
+      name: page
+      in: query
+      description: >-
+        Номер страницы списка (начиная от 1) и количество результатов на
+        странице, разделенные запятыми.
+      required: false
+      explode: false
+      schema:
+        type: string
+        example: '2,40'
+    From:
+      name: from
+      in: query
+      description: Дата начала периода в формате `YYYY-mm-dd`.
+      required: true
+      explode: false
+      schema:
+        type: string
+    To:
+      name: to
+      in: query
+      description: Дата окончания периода (опционально для периода больше 1 дня).
+      required: true
+      explode: false
+      schema:
+        type: string
+
+    CampaignId:
+      name: campaign_id
+      in: query
+      description: ID кампании
+      required: true
+      explode: false
+      schema:
+        type: number
+        example: 0
+      example: 0
+    CampaignIds:
+      name: campaign_ids
+      in: query
+      description: >-
+        список ID кампаний (массив, или разделенные запятой значения)
+      required: true
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+    AdGroupId:
+      name: ad_group_id
+      in: path
+      description: ID группы
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: number
+        example: 0
+      example: 0
+    AdGroupIds:
+      name: ad_group_ids
+      in: path
+      description: >-
+        список ID групп объявлений (массив, или разделенные запятой значения)
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+    ProjectId:
+      name: project_id
+      in: path
+      description: ID проекта
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: number
+    SiteId:
+      name: site_id
+      in: path
+      description: ID сайта
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: number
+    SiteIds:
+      name: site_ids
+      in: path
+      description: >-
+        список ID сайтов (массив, или разделенные запятой значения)
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+    KeywordId:
+      name: keyword_id
+      in: path
+      description: ID ключевой фразы
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: number
+    KeywordIds:
+      name: keyword_ids
+      in: path
+      description: >-
+        список ID ключевых фраз (массив, или разделенные запятой значения)
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
