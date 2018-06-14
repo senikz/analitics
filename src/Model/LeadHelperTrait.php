@@ -27,11 +27,14 @@ trait LeadHelperTrait
 			}
 
 			if(!empty($details['phrase_id'])) {
-				$keyword = TableRegistry::get('Keywords')->find('all')->where(['rel_id' => $details['phrase_id']])->first();
+				$keyword = TableRegistry::get('Keywords')->find()->where(['rel_id' => $details['phrase_id']])->first();
 				if(!empty($keyword)) {
 					$this->keyword_id = $keyword->id;
 					$this->ad_group_id = $keyword->ad_group_id;
 					$this->campaign_id = $keyword->campaign_id;
+					if (empty($campaignId)) {
+						$campaignId = $keyword->campaign_id;
+					}
 				}
 			}
 
@@ -40,8 +43,8 @@ trait LeadHelperTrait
 			}
 		}
 
-		if(!empty($campaignId) && empty($this->campaign_id)) {
-			$camp = TableRegistry::get('Campaigns')->find('all')->where(['rel_id' => $campaignId])->first();
+		if(!empty($campaignId)) {
+			$camp = TableRegistry::get('Campaigns')->find()->where(['rel_id' => $campaignId])->first();
 			if(!empty($camp)) {
 				$this->campaign_id = $camp->id;
 				$this->source_id = $camp->source_id;
@@ -49,7 +52,7 @@ trait LeadHelperTrait
 		}
 
 		if (empty($this->source_id) && !empty($this->site_id) && !empty($this->utm_content)) {
-			$sources = TableRegistry::get('Sources')->find('all')->where(['site_id' => $this->site_id])->all();
+			$sources = TableRegistry::get('Sources')->find()->where(['site_id' => $this->site_id])->all();
 			foreach ($sources as $source) {
 				if (empty($source->criteria)) {
 					continue;
