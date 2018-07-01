@@ -16,7 +16,9 @@ class AccountsShell extends \Cake\Console\Shell
 		if (empty($accountId)) {
 			$accounts = $this->Accounts->find()->all();
 			foreach ($accounts as $account) {
-				$account->syncCampaigns();
+				if ($account->status == 'active') {
+					$account->syncCampaigns();
+				}
 			}
 		} else {
 			$account = $this->Accounts->find()->where(['id' => $accountId])->first();

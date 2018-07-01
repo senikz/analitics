@@ -109,6 +109,10 @@ Router::prefix('api', function ($routes) {
             'prefix' => 'projects',
             'only' => ['index']
         ]);
+        $routes->resources('Accounts', [
+            'prefix' => 'projects',
+            'only' => ['index']
+        ]);
         $routes->resources('Campaigns', [
             'prefix' => 'projects',
             'only' => ['index']

@@ -5,7 +5,6 @@ class Avito extends \App\Model\Entity\Account
 {
 	const TYPE = 'avito';
 	const TYPE_HUMAN = 'Авито';
-	const OPTIONS = [];
 
 	public function isCampaignable()
 	{

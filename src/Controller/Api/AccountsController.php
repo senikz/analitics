@@ -32,7 +32,7 @@ class AccountsController extends ApiController
                         'name' => $option,
                         'caption' => __('sources.options.' . $option),
                     ];
-                }, $className::OPTIONS),
+                }, $className::settingsFields()),
             ];
         }
 
@@ -110,9 +110,20 @@ class AccountsController extends ApiController
                         $optionsTable->save($op);
                     }
 
-                    $this->sendData([
-                        'id' => $account->id,
-                    ]);
+					$account = $this->Accounts->get($account->id);
+					$auth = $account->auth();
+
+					$result = [
+						'id' => $account->id,
+					];
+
+					if ($auth !== null && $auth !== true) {
+						$result['auth'] = $auth;
+					}
+
+					$result['status'] = $account->status;
+
+                    $this->sendData($result);
                 }
 
                 $this->sendError(__('Can`t add account'));
@@ -153,7 +164,7 @@ class AccountsController extends ApiController
         if ($this->request->is(['put'])) {
             $data = $this->request->getData();
 
-            if (!empty($data['options'])) {
+            /*if (!empty($data['options'])) {
                 $optionsTable = TableRegistry::get('AccountOptions');
                 foreach ($account->allOptions() as $option) {
                     if (isset($data['options'][$option->name])) {
@@ -161,20 +172,20 @@ class AccountsController extends ApiController
                         $optionsTable->save($option);
                     }
                 }
-            }
+            }*/
 
             if (isset($data['caption'])) {
                 $account->caption = $data['caption'];
             }
 
-            if (isset($data['site_id'])) {
+            /*if (isset($data['site_id'])) {
                 $sitesTable = TableRegistry::get('Sites');
                 $site = $sitesTable->find()->where(['id' => $data['site_id']])->first();
                 if (empty($site)) {
                     $this->sendError(__('Site doesn`t exists or doesn`t belongs to you.'));
                 }
                 $account->site_id = $data['site_id'];
-            }
+            }*/
 
             $this->Accounts->save($account, ['associated' => false]);
             $this->sendData([

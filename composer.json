@@ -16,7 +16,8 @@
         "biplane/yandex-direct": "4.4.x-dev",
         "googleads/googleads-php-lib": "34.0",
         "justinrainbow/json-schema": "^2.0.1",
-        "fr3d/swagger-assertions": "^0.7.0"
+        "fr3d/swagger-assertions": "^0.7.0",
+        "nixsolutions/yandex-php-library": "^3.0"
     },
     "require-dev": {
         "psy/psysh": "@stable",

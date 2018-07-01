@@ -20,9 +20,10 @@ use Biplane\YandexDirect\Api\V5\Report\FilterOperatorEnum;
 
 class Direct extends \App\Model\Entity\Account
 {
+	use \App\Model\YandexAccountTrait;
+
 	const TYPE = 'direct';
 	const TYPE_HUMAN = 'Яндекс.Директ';
-	const OPTIONS = ['login', 'token'];
 
 	const SYNC_STATES = ['ON'];
 
@@ -31,7 +32,7 @@ class Direct extends \App\Model\Entity\Account
 		return true;
 	}
 
-    protected function getProvider()
+    public function getProvider()
     {
         return new User([
             'access_token' => $this->option('token'),
@@ -213,8 +214,9 @@ class Direct extends \App\Model\Entity\Account
 		return ReportParser::parseCsv($reportService->getReady($reportRequest)->getData(), ['col_delimiter' => '\t']);
 	}
 
-	public function updateCampaignsDailyStatistics($date)
+	public function cronJob()
 	{
+		$date = date('Y-m-d');
 		$report = $this->loadDailyStatisticsReport(
 			$date,
 			ReportTypeEnum::CAMPAIGN_PERFORMANCE_REPORT,
@@ -229,7 +231,7 @@ class Direct extends \App\Model\Entity\Account
 		$statDailyTable->saveCampaignsReport($report, $date, 'CampaignId');
 	}
 
-	public function updateCampaignsContentStatistics($date)
+	public function dailyCronJob($date)
 	{
 		$campaignsTable = TableRegistry::get('Campaigns');
 		$campaignIds = $campaignsTable->find('list', ['valueField' => 'rel_id'])->where(['account_id' => $this->id])->toArray();

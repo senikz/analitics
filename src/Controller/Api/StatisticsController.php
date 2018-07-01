@@ -57,11 +57,8 @@ class StatisticsController extends ApiController
 		}
 
 		if(!empty($fields['project_id'])) {
-			$query
-				->leftJoinWith('Sites', function ($q) use ($fields) {
-			        return $q
-						->where(['Sites.project_id' => $fields['project_id']]);
-			    });
+			$query->leftJoinWith('Sites');
+			$query->where(['Sites.project_id' => $fields['project_id']]);
 		}
 
 		$this->completeQuery($query);
@@ -89,11 +86,8 @@ class StatisticsController extends ApiController
 		}
 
 		if(!empty($fields['site_id'])) {
-			$query
-				->leftJoinWith('Sources', function ($q) use ($fields) {
-			        return $q
-						->where(['Sources.site_id' => $fields['site_id']]);
-			    });
+			$query->leftJoinWith('Sources');
+			$query->where(['Sources.site_id' => $fields['site_id']]);
 		}
 
 		$this->completeQuery($query);

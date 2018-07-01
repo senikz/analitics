@@ -19,6 +19,9 @@ use Cake\ORM\TableRegistry;
 class Account extends Entity
 {
 
+	const STATUS_ACTIVE = 'active';
+	const STATUS_PENDING = 'pending';
+
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -32,6 +35,11 @@ class Account extends Entity
         '*' => true,
         'id' => false
     ];
+
+	public static function settingsFields()
+	{
+		return [];
+	}
 
 	public function option($name)
 	{
@@ -59,6 +67,11 @@ class Account extends Entity
 		return false;
 	}
 
+	public function auth()
+	{
+		return null;
+	}
+
 	public function getType()
 	{
 		return static::TYPE_HUMAN;
@@ -74,18 +87,9 @@ class Account extends Entity
 		return true;
 	}
 
-	/**
-	 * Loads all campaigns statistics for specified date.
-	 *
-	 * @param  [string] $date
-	 */
-	public function updateCampaignsDailyStatistics($date)
-	{
-		return true;
-	}
+	public function dailyCronJob($date)
+	{}
 
-	public function updateCampaignsContentStatistics($date)
-	{
-		return true;
-	}
+	public function cronJob()
+	{}
 }

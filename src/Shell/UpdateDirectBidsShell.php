@@ -140,7 +140,7 @@ class UpdateDirectBidsShell extends \Cake\Console\Shell
 			}
 
 			foreach($prices as $auctionPrice) {
-				if($auctionPrice->getPosition() != $options->position) {
+				if($auctionPrice->Position != $options->position) {
 					continue;
 				}
 				$price = $auctionPrice->getBid() / 1000000;
@@ -174,12 +174,12 @@ class UpdateDirectBidsShell extends \Cake\Console\Shell
 		$this->BidOptions->save($campaignOptions);
 		$this->Campaigns->save($campaign);
 
-		Log::write('debug', ['campaignId' => $campaign->id, 'bids' => $updateBids], ['shell', 'UpdateDirectBidsShell', 'update bids']);
+		//Log::write('debug', ['campaignId' => $campaign->id, 'bids' => $updateBids], ['shell', 'UpdateDirectBidsShell', 'update bids']);
 
 		if(!empty($updateBids)) {
 			$bidsService->set(SetBidsRequest::create()->setBids($updateBids));
 		}
 
-		$campaign->updateLimits($bidsService);
+		//$campaign->updateLimits($bidsService);
 	}
 }
