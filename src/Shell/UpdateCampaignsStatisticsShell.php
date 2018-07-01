@@ -17,7 +17,7 @@ class UpdateCampaignsStatisticsShell extends Base
 		 * Every N minutes run daily statistics loading.
 		 */
 		if ($this->checkRunTime('CampaignsLastStatistics')) {
-			$this->campaignsLoad(date('Y-m-d'));
+			$this->campaignsLoad();
 		}
 
 		/**
@@ -30,7 +30,7 @@ class UpdateCampaignsStatisticsShell extends Base
 
 	public function date($date)
 	{
-		$this->campaignsLoad($date);
+		$this->campaignsLoad();
 		$this->campaignsContentLoad($date);
 	}
 
@@ -44,20 +44,18 @@ class UpdateCampaignsStatisticsShell extends Base
 
 		$date = empty($date) ? date('Y-m-d', strtotime('-1 day')) : $date;
 
-		$account->updateCampaignsDailyStatistics($date);
-		$account->updateCampaignsContentStatistics($date);
+		$account->cronJob();
+		$account->dailyCronJob($date);
 	}
 
 	/**
 	 * Loads daily statistics for every campaign of each
 	 * source (which has campaigns)
 	 */
-	protected function campaignsLoad($date)
+	protected function campaignsLoad()
 	{
 		foreach ($this->Accounts->find()->all() as $account) {
-			if ($account->isCampaignable()) {
-				$account->updateCampaignsDailyStatistics($date);
-			}
+			$account->cronJob();
 		}
 	}
 
@@ -68,9 +66,7 @@ class UpdateCampaignsStatisticsShell extends Base
 	protected function campaignsContentLoad($date)
 	{
 		foreach ($this->Accounts->find()->all() as $account) {
-			if ($account->isCampaignable()) {
-				$account->updateCampaignsContentStatistics($date);
-			}
+			$account->dailyCronJob($date);
 		}
 	}
 }

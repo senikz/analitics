@@ -31,11 +31,15 @@ class Adwords extends \App\Model\Entity\Account
 {
 	const TYPE = 'adwords';
 	const TYPE_HUMAN = 'Google Adwords';
-	const OPTIONS = ['clientCustomerId'];
 
 	const PAGE_LIMIT = 2000;
 
     protected $session;
+
+	public static function settingsFields()
+	{
+		return ['clientCustomerId'];
+	}
 
 	public function isCampaignable()
 	{
@@ -59,7 +63,7 @@ class Adwords extends \App\Model\Entity\Account
         return $this->session;
     }
 
-	protected function getService($classname)
+	public function getService($classname)
 	{
 		return (new AdWordsServices())->get($this->getSession(), $classname);
 	}
@@ -269,8 +273,9 @@ class Adwords extends \App\Model\Entity\Account
 		} while ($kSelector->getPaging()->getStartIndex() < $totalNumEntries);
 	}
 
-	public function updateCampaignsDailyStatistics($date)
+	public function cronJob()
 	{
+		$date = date('Y-m-d');
 		$report = $this->loadDailyStatisticsReport(
 			$date,
 			ReportDefinitionReportType::CAMPAIGN_PERFORMANCE_REPORT,
@@ -285,7 +290,7 @@ class Adwords extends \App\Model\Entity\Account
 		$statDailyTable->saveCampaignsReport($report, $date, 'Campaign ID', null, 1000000);
 	}
 
-	public function updateCampaignsContentStatistics($date)
+	public function dailyCronJob($date)
 	{
 		$campaignsTable = TableRegistry::get('Campaigns');
 		$campaignIds = $campaignsTable->find('list', ['valueField' => 'rel_id'])->where(['account_id' => $this->id])->toArray();

@@ -54,11 +54,6 @@ class AggregateStatisticsShell extends \Cake\Console\Shell
 		$this->projects($date);
 	}
 
-	public function le()
-	{
-		$this->leads(date('Y-m-d'));
-	}
-
 	public function projects($date = null)
 	{
 		$projects = $this->Projects->find('all')->all();

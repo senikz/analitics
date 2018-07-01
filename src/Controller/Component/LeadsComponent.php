@@ -50,6 +50,7 @@ class LeadsComponent extends Component
 		$controller->setQueryCount($unionQuery);
         $unionQuery->epilog($paginationQuery);
 
+		\Cake\I18n\FrozenTime::setJsonEncodeFormat("yyyy-MM-dd'T'HH:mm:ss'+03:00'");
         return $unionQuery->toArray();
     }
 }

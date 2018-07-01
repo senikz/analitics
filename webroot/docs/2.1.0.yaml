@@ -104,9 +104,32 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Project'
+  'projects/{id}/accounts':
+    get:
+      summary: Список аккаунтов проекта
+      description: ''
+      tags:
+        - Проекты
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                    type:
+                      type: string
+                    caption:
+                      type: string
   '/projects/{id}/sites':
     get:
-      summary: Список сайтов
+      summary: Список сайтов проекта
       description: ''
       tags:
         - Проекты
@@ -303,9 +326,8 @@ paths:
                   type: object
                   properties:
                     type:
-                      type: number
+                      type: string
                       description: Ключ для типа аккаунта
-                      example: 0
                     human:
                       type: string
                       description: Название типа
@@ -322,28 +344,6 @@ paths:
                             description: Название поля
                       description: ''
   /accounts:
-    get:
-      summary: Список аккаунтов
-      description: ''
-      tags:
-        - Аккаунты
-      parameters: []
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: number
-                    type:
-                      type: string
-                    caption:
-                      type: string
     put:
       summary: Редактировать аккаунт
       description: ''
@@ -1150,7 +1150,16 @@ paths:
                   type: string
                 rel_id:
                   type: number
-        
+      responses:
+        '200':
+          description: ''
+          content:
+            application/josn:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
   '/campaigns/{id}':
     get:
       summary: Детали кампании7
