@@ -114,7 +114,11 @@ class StatisticsController extends ApiController
 			]);
 		}
 
-		if(!empty($fields['site_id'])) {
+		if(!empty($fields['source_id'])) {
+			$query
+				->leftJoinWith('Campaigns')
+				->where(['Campaigns.source_id' => $fields['source_id']]);
+		} else if(!empty($fields['site_id'])) {
 			$query
 				->leftJoinWith('Campaigns')
 				->where(['Campaigns.site_id' => $fields['site_id']]);
