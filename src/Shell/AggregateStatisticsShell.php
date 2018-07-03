@@ -29,6 +29,7 @@ class AggregateStatisticsShell extends \Cake\Console\Shell
 		$this->SiteOrders = TableRegistry::get('SiteOrders');
 		$this->SiteCalls = TableRegistry::get('SiteCalls');
 		$this->SiteEmails = TableRegistry::get('SiteEmails');
+		$this->SiteCosts = TableRegistry::get('SiteCosts');
 	}
 
 	public function main()
@@ -176,7 +177,13 @@ class AggregateStatisticsShell extends \Cake\Console\Shell
 				'source_id' => $source->id,
 			]);
 
-			$record->cost = $item->cost;
+			$siteCosts = $this->SiteCosts->find();
+			$sc = $siteCosts
+				->where(['SiteCosts.source_id' => $source->id, 'SiteCosts.time LIKE' => $date . '%'])
+				->select(['costs' => $siteCosts->func()->sum('SiteCosts.cost')])
+				->first();
+
+			$record->cost = $item->cost + $sc->costs;
 			$record->views = $item->views;
 			$record->clicks = $item->clicks;
 

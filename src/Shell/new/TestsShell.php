@@ -14,6 +14,7 @@ class TestsShell extends \Cake\Console\Shell
 		$this->Accounts = TableRegistry::get('Accounts');
 		$this->Sources = TableRegistry::get('Sources');
 
+        $this->SiteCosts = TableRegistry::get('SiteCosts');
         $this->SiteCalls = TableRegistry::get('SiteCalls');
         $this->SiteEmails = TableRegistry::get('SiteEmails');
         $this->Sources = TableRegistry::get('Sources');
@@ -25,51 +26,28 @@ class TestsShell extends \Cake\Console\Shell
 		$this->KSD = TableRegistry::get('KeywordStatisticsDaily');
 		$this->CSD = TableRegistry::get('CampaignStatisticsDaily');
 		$this->AGSD = TableRegistry::get('AdGroupStatisticsDaily');
+		$this->SOSD = TableRegistry::get('SourceStatisticsDaily');
     }
 
     public function main()
     {
-		$a = $this->AGSD->find()->where(['id' => 1])->first();
-		$a->calls = 324;
-		var_dump($this->AGSD->save($a));
+		/*$costs = $this->SiteCosts->find()->all();
 
-		//$account = $this->Accounts->find()->where(['id' => 4])->first();
-		//$campaign = $this->Campaigns->find()->where(['id' => 85])->first();
+		foreach ($costs as $cost) {
+			if (!$cost->source_id) {
+				continue;
+			}
+			$date = $cost->time->format('Y-m-d');
+			$stat = $this->SOSD->find()
+				->where(['source_id' => $cost->source_id, 'date' => $date])
+				->first();
+			if (!$stat) {
+				continue;
+			}
 
-		//$account->syncCampaignAdGroups($campaign);
-		//$account->syncCampaignKeywords($campaign);
-
-		//var_dump($b);
-		//var_dump($a);
-		//$a->syncCampaigns();
-
-		/*$this->CSD->saveCampaignsReport([
-			[
-				'CampaignId' => 281898304,
-				'Impressions' => 100,
-				'Clicks' => 14,
-				'Cost' => 10.10,
-			]
-		], '2018-05-05');*/
-
-		//$c = $this->Campaigns->find()->where(['id' => 79])->first();
-		//$rep = $a->loadCampaignStatisticsReport($c, ReportDefinitionDateRangeType::YESTERDAY, ['CampaignId', 'AdGroupId', 'Criteria', 'Id', 'Impressions', 'Clicks', 'Cost']);
-		//$rep = $b->updateCampaignsContentStatistics('2018-05-02');
-//var_dump($rep);
-		//$this->CSD->create([], date('Y-m-d'));
-
-
-        /*$a = $this->Campaigns->find()->contain(['Sources'])->first();
-        var_dump($a->source->getProvider());
-        //$a = $this->Sources->find()->contain(['SourceOptions'])->first();
-        //var_dump($a);
-        exit;
-*/
-		// Заполнить site_costs по полю comment
-		// Заполнить user_id единицами
-		//
-
-		//$this->fill_leads();
+			$stat->cost = $stat->cost + $cost->cost;
+			$this->SOSD->save($stat);
+		}*/
     }
 
 	public function fill_leads()
