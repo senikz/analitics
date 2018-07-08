@@ -172,6 +172,7 @@ class Adwords extends \App\Model\Entity\Account
         }
 
         $campaignsFoundIds = [];
+		$campaignsNewIds = [];
 
         foreach ($campaigns as $campaign) {
             $campaignsFoundIds[] = $campaign->getId();
@@ -198,7 +199,7 @@ class Adwords extends \App\Model\Entity\Account
         }
 
 		if (!empty($options['load_content']) && $options['load_content']) {
-			$this->syncCampaignContents($campaignsFoundIds);
+			$this->syncCampaignContents($campaignsNewIds);
 		}
 
     }
