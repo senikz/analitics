@@ -186,6 +186,8 @@ class Adwords extends \App\Model\Entity\Account
 
             $found->caption = $campaign->getName();
             $found = $campaignsTable->save($found);
+
+			$campaignsNewIds[] = $found->id;
         }
 
         if (!empty($campaignsFoundIds) && empty($options['ignore_blank'])) {
