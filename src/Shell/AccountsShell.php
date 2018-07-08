@@ -9,15 +9,16 @@ class AccountsShell extends \Cake\Console\Shell
     {
         parent::initialize();
 		$this->Accounts = TableRegistry::get('Accounts');
+		$this->Campaigns = TableRegistry::get('Campaigns');
     }
 
-	public function sync($accountId = null)
+	public function syncCampaignsContent($accountId = null)
 	{
 		if (empty($accountId)) {
 			$accounts = $this->Accounts->find()->all();
 			foreach ($accounts as $account) {
 				if ($account->status == 'active') {
-					$account->syncCampaigns();
+					$this->syncAccountContents($account);
 				}
 			}
 		} else {
@@ -25,9 +26,15 @@ class AccountsShell extends \Cake\Console\Shell
 			if (empty($account)) {
 				die('Account not found.' . PHP_EOL);
 			}
-			$account->syncCampaigns();
+			$this->syncAccountContents($account);
 		}
 
+	}
+
+	private function syncAccountContents($account)
+	{
+		$campaignIds = $this->Campaigns->find()->where(['account_id' => $account->id])->extract('id')->toArray();
+		$account->syncCampaignContents($campaignIds);
 	}
 
 }

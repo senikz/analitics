@@ -64,7 +64,7 @@ class Direct extends \App\Model\Entity\Account
 		)->getCampaigns();
 	}
 
-	public function syncCampaigns()
+	public function syncCampaigns($options = [])
 	{
 		$campaignsTable = TableRegistry::get('Campaigns');
 		$campaigns = $this->getCampaigns();
@@ -92,94 +92,30 @@ class Direct extends \App\Model\Entity\Account
 			$found->caption = $campaign->getName();
 			$found = $campaignsTable->save($found);
 
-			$this->syncCampaign($found);
+			if (!empty($options['load_content']) && $options['load_content']) {
+				$this->loadCampaignContents($found);
+			}
 		}
 
-		if (!empty($campaignsFoundIds)) {
-			$campaignsTable->deleteAll([
-				'account_id' => $this->id,
-				'rel_id NOT IN' => $campaignsFoundIds,
-			]);
+		if (!empty($campaignsFoundIds) && empty($options['ignore_blank'])) {
+			$campaignsTable->updateAll(
+				[
+					'deleted' => 1,
+				], [
+					'account_id' => $this->id,
+					'rel_id NOT IN' => $campaignsFoundIds,
+				]);
 		}
 	}
 
-    public function syncCampaign(\App\Model\Entity\Campaign $campaign)
+    public function syncCampaignContents($campaignIds)
     {
-        $provider = $this->getProvider();
-
-        if (!$provider) {
-            return false;
-        }
-
-        $adGroupsService = $provider->getAdGroupsService();
-        $adGroups = $adGroupsService->get(
-            \Biplane\YandexDirect\Api\V5\Contract\GetAdGroupsRequest::create()
-                ->setSelectionCriteria(
-                    \Biplane\YandexDirect\Api\V5\Contract\AdGroupsSelectionCriteria::create()->setCampaignIds([$campaign->rel_id])
-                )
-                ->setFieldNames([
-                    AdGroupFieldEnum::ID,
-                    AdGroupFieldEnum::NAME,
-                    AdGroupFieldEnum::CAMPAIGN_ID,
-                ])
-        )->getAdGroups();
-        //$this->updateLimits($adGroupsService);
-
-        if (!empty($adGroups)) {
-            $adGroupsTable = TableRegistry::get('AdGroups');
-            $adGroupsIds = [];
-
-            foreach ($adGroups as $group) {
-                $groupDetails = $adGroupsTable->find('all', ['conditions' => ['rel_id' => $group->getId()]])->first();
-                if (!$groupDetails) {
-                    $groupDetails = $adGroupsTable->newEntity(['rel_id' => $group->getId(), 'campaign_id' => $campaign->id]);
-                }
-                $groupDetails->name = $group->getName();
-                $adGroupsTable->save($groupDetails);
-
-                $adGroupsIds[$group->getId()] = $groupDetails->id;
-            }
-
-            $adGroupsTable->deleteAll([
-                'AdGroups.campaign_id' => $campaign->id,
-                'AdGroups.rel_id NOT IN' => array_keys($adGroupsIds),
-            ]);
-
-            $keywordsService = $provider->getKeywordsService();
-            $keywords = $keywordsService->get(
-                \Biplane\YandexDirect\Api\V5\Contract\GetKeywordsRequest::create()
-                    ->setSelectionCriteria(
-                        \Biplane\YandexDirect\Api\V5\Contract\KeywordsSelectionCriteria::create()->setCampaignIds([$campaign->rel_id])
-                    )
-                    ->setFieldNames([
-                        KeywordFieldEnum::ID,
-                        KeywordFieldEnum::AD_GROUP_ID,
-                        KeywordFieldEnum::KEYWORD,
-                    ])
-            )->getKeywords();
-            //$this->updateLimits($keywordsService);
-
-            if (!empty($keywords)) {
-                $keywordsTable = TableRegistry::get('Keywords');
-                $keywordsIds = [];
-
-                $query = $keywordsTable->query()->insert(['rel_id', 'campaign_id', 'ad_group_id', 'keyword']);
-
-                foreach ($keywords as $keyword) {
-                    $keywordsIds[] = $keyword->getId();
-                    $query->values(['rel_id' => $keyword->getId(), 'campaign_id' => $campaign->id, 'ad_group_id' => $adGroupsIds[$keyword->getAdGroupId()], 'keyword' => $keyword->getKeyword()]);
-                }
-
-                $query->epilog('ON DUPLICATE KEY UPDATE `keyword`=values(`keyword`)')->execute();
-
-                $keywordsTable->deleteAll([
-                    'Keywords.campaign_id' => $campaign->id,
-                    'Keywords.rel_id NOT IN' => $keywordsIds,
-                ]);
-            }
-
-            return true;
-        }
+		$campaignIds = is_array($campaignIds) ? $campaignIds : [$campaignIds];
+		$campaignsTable = TableRegistry::get('Campaigns');
+		foreach ($campaignIds as $campaignId) {
+			$campaign = $campaignsTable->get($campaignId);
+			$this->loadCampaignContents($campaign);
+		}
     }
 
 	public function loadDailyStatisticsReport($date, $type, $fields, $filter = null)
@@ -253,5 +189,84 @@ class Direct extends \App\Model\Entity\Account
 
 		$statDailyTable = TableRegistry::get('CampaignStatisticsDaily');
 		$statDailyTable->saveCampaignsContentReport($report, $date);
+	}
+
+	private function loadCampaignContents($campaign)
+	{
+		$provider = $this->getProvider();
+
+		if (!$provider) {
+			return false;
+		}
+
+		$adGroupsService = $provider->getAdGroupsService();
+		$adGroups = $adGroupsService->get(
+			\Biplane\YandexDirect\Api\V5\Contract\GetAdGroupsRequest::create()
+				->setSelectionCriteria(
+					\Biplane\YandexDirect\Api\V5\Contract\AdGroupsSelectionCriteria::create()->setCampaignIds([$campaign->rel_id])
+				)
+				->setFieldNames([
+					AdGroupFieldEnum::ID,
+					AdGroupFieldEnum::NAME,
+					AdGroupFieldEnum::CAMPAIGN_ID,
+				])
+		)->getAdGroups();
+		//$this->updateLimits($adGroupsService);
+
+		if (!empty($adGroups)) {
+			$adGroupsTable = TableRegistry::get('AdGroups');
+			$adGroupsIds = [];
+
+			foreach ($adGroups as $group) {
+				$groupDetails = $adGroupsTable->find('all', ['conditions' => ['rel_id' => $group->getId()]])->first();
+				if (!$groupDetails) {
+					$groupDetails = $adGroupsTable->newEntity(['rel_id' => $group->getId(), 'campaign_id' => $campaign->id]);
+				}
+				$groupDetails->name = $group->getName();
+				$adGroupsTable->save($groupDetails);
+
+				$adGroupsIds[$group->getId()] = $groupDetails->id;
+			}
+
+			$adGroupsTable->deleteAll([
+				'AdGroups.campaign_id' => $campaign->id,
+				'AdGroups.rel_id NOT IN' => array_keys($adGroupsIds),
+			]);
+
+			$keywordsService = $provider->getKeywordsService();
+			$keywords = $keywordsService->get(
+				\Biplane\YandexDirect\Api\V5\Contract\GetKeywordsRequest::create()
+					->setSelectionCriteria(
+						\Biplane\YandexDirect\Api\V5\Contract\KeywordsSelectionCriteria::create()->setCampaignIds([$campaign->rel_id])
+					)
+					->setFieldNames([
+						KeywordFieldEnum::ID,
+						KeywordFieldEnum::AD_GROUP_ID,
+						KeywordFieldEnum::KEYWORD,
+					])
+			)->getKeywords();
+			//$this->updateLimits($keywordsService);
+
+			if (!empty($keywords)) {
+				$keywordsTable = TableRegistry::get('Keywords');
+				$keywordsIds = [];
+
+				$query = $keywordsTable->query()->insert(['rel_id', 'campaign_id', 'ad_group_id', 'keyword']);
+
+				foreach ($keywords as $keyword) {
+					$keywordsIds[] = $keyword->getId();
+					$query->values(['rel_id' => $keyword->getId(), 'campaign_id' => $campaign->id, 'ad_group_id' => $adGroupsIds[$keyword->getAdGroupId()], 'keyword' => $keyword->getKeyword()]);
+				}
+
+				$query->epilog('ON DUPLICATE KEY UPDATE `keyword`=values(`keyword`)')->execute();
+
+				$keywordsTable->deleteAll([
+					'Keywords.campaign_id' => $campaign->id,
+					'Keywords.rel_id NOT IN' => $keywordsIds,
+				]);
+			}
+
+			return true;
+		}
 	}
 }

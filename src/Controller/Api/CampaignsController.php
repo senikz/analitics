@@ -131,10 +131,10 @@ class CampaignsController extends ApiController
 
     public function sync($id = null)
     {
-        if ($id && ($campaign = $this->Campaigns->get($id))) {
-            $account = $campaign->getAccount();
-            $account->syncCampaign($campaign);
-        }
+		if ($id && ($campaign = $this->Campaigns->get($id))) {
+			$account = $campaign->getAccount();
+			$account->syncCampaignContents($id);
+		}
     }
 
     public function keywords()

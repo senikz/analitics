@@ -14,7 +14,7 @@
         "Cewi/Excel": "dev-master",
         "queencitycodefactory/cakesoap": "^3.3",
         "biplane/yandex-direct": "4.4.x-dev",
-        "googleads/googleads-php-lib": "34.0",
+        "googleads/googleads-php-lib": "35.2",
         "justinrainbow/json-schema": "^2.0.1",
         "fr3d/swagger-assertions": "^0.7.0",
         "nixsolutions/yandex-php-library": "^3.0"
