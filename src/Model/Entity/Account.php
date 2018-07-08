@@ -77,12 +77,12 @@ class Account extends Entity
 		return static::TYPE_HUMAN;
 	}
 
-	public function syncCampaigns()
+	public function syncCampaigns($options = [])
 	{
 		return true;
 	}
 
-	public function syncCampaign(\App\Model\Entity\Campaign $campaign)
+	public function syncCampaignContents($campaignIds)
 	{
 		return true;
 	}
