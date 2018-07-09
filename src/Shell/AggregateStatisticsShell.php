@@ -4,7 +4,7 @@ namespace App\Shell;
 use Cake\ORM\TableRegistry;
 use Cake\Log\Log;
 
-class AggregateStatisticsShell extends \Cake\Console\Shell
+class AggregateStatisticsShell extends Base
 {
     public $statItems = ['cost', 'views', 'clicks', 'calls', 'emails', 'leads', 'orders'];
 
@@ -59,6 +59,7 @@ class AggregateStatisticsShell extends \Cake\Console\Shell
     {
         $date = $from;
         do {
+			$this->message("range: starting $date");
             $this->date($date);
             $date = date('Y-m-d', strtotime($date . ' +1 day'));
         } while ($date <= $to);
@@ -69,6 +70,7 @@ class AggregateStatisticsShell extends \Cake\Console\Shell
         $projects = $this->Projects->find('all')->all();
 
         foreach ($projects as $project) {
+			$this->message("projects: starting $date for " . $project->id);
             $query = $this->SSD->find('all');
 
             $sIds = array_map(
@@ -118,6 +120,7 @@ class AggregateStatisticsShell extends \Cake\Console\Shell
         $sites = $this->Sites->find('all')->all();
 
         foreach ($sites as $site) {
+			$this->message("sites: starting $date for " . $site->id);
 
             // Orders
             $ordersQuery = $this->SiteOrders->find('all');
@@ -163,6 +166,8 @@ class AggregateStatisticsShell extends \Cake\Console\Shell
         $sources = $this->Sources->find('all')->all();
 
         foreach ($sources as $source) {
+			$this->message("sources: starting $date for " . $source->id);
+
             $campaigns = $this->Campaigns->find('all')->select('id')->where(['source_id' => $source->id])->all()->toArray();
             $cIds = array_map(function ($campaign) {
                 return $campaign->id;
@@ -219,22 +224,27 @@ class AggregateStatisticsShell extends \Cake\Console\Shell
 
         $src = [
             [
+				'target' => 'keywords',
                 'table' => $this->Keywords->find()->contain(['Campaigns'])->where(['Campaigns.deleted !=' => 1]),
                 'statistics' => $this->KSD,
                 'key' => 'keyword_id',
             ], [
+				'target' => 'ad_groups',
                 'table' => $this->AdGroups->find()->contain(['Campaigns'])->where(['Campaigns.deleted !=' => 1]),
                 'statistics' => $this->AGSD,
                 'key' => 'ad_group_id',
             ], [
+				'target' => 'campaigns',
                 'table' => $this->Campaigns->find()->where(['deleted !=' => 1]),
                 'statistics' => $this->CSD,
                 'key' => 'campaign_id',
             ], [
+				'target' => 'sources',
                 'table' => $this->Sources->find()->where(['deleted !=' => 1]),
                 'statistics' => $this->SOSD,
                 'key' => 'source_id',
             ], [
+				'target' => 'sites',
                 'table' => $this->Sites->find()->where(['deleted !=' => 1]),
                 'statistics' => $this->SSD,
                 'key' => 'site_id',
@@ -242,6 +252,8 @@ class AggregateStatisticsShell extends \Cake\Console\Shell
         ];
 
         foreach ($src as $table) {
+			$this->message("leads: starting $date for " . $table['target']);
+
             $items = $table['table']->all();
 
             foreach ($items as $item) {
