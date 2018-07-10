@@ -18,7 +18,7 @@ class SitesController extends ApiController
         $result = [
             'id' => $site->id,
             'project_id' => $site->project_id,
-            'caption' => $site->domain,
+            'domain' => $site->domain,
 			'deleted' => $site->deleted,
         ];
 
