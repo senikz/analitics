@@ -46,6 +46,7 @@ class AccountsShell extends \Cake\Console\Shell
 			$to = $from;
 		}
         do {
+			echo $date . PHP_EOL;
 			$this->runForAccount($accountId, function ($account) use ($date) {
 				$account->dailyCronJob($date);
 			});
