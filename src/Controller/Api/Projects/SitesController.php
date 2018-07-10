@@ -24,6 +24,7 @@ class SitesController extends \App\Controller\Api\ApiController
         foreach ($sites as $row) {
             $result[] = [
                 'id' => $row->id,
+                'project_id' => $row->project_id,
                 'domain' => $row->domain,
             ];
         }
