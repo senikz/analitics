@@ -33,11 +33,28 @@ class AccountsShell extends \Cake\Console\Shell
 
 	public function syncCampaignsContent($accountId = null)
 	{
+		$this->runForAccount($accountId, function ($account) {
+			$campaignIds = $this->Campaigns->find()->where(['account_id' => $account->id])->extract('id')->toArray();
+			$account->syncCampaignContents($campaignIds);
+		});
+	}
+
+	public function loadCampaignsContent($accountId, $date)
+	{
+		$this->runForAccount($accountId, function ($account) use ($date) {
+			$account->dailyCronJob($date);
+		});
+	}
+
+
+
+	private function runForAccount($accountId, $callback)
+	{
 		if (empty($accountId)) {
 			$accounts = $this->Accounts->find()->all();
 			foreach ($accounts as $account) {
 				if ($account->status == 'active') {
-					$this->syncAccountContents($account);
+					$callback($account);
 				}
 			}
 		} else {
@@ -45,15 +62,7 @@ class AccountsShell extends \Cake\Console\Shell
 			if (empty($account)) {
 				die('Account not found.' . PHP_EOL);
 			}
-			$this->syncAccountContents($account);
+			$callback($account);
 		}
-
 	}
-
-	private function syncAccountContents($account)
-	{
-		$campaignIds = $this->Campaigns->find()->where(['account_id' => $account->id])->extract('id')->toArray();
-		$account->syncCampaignContents($campaignIds);
-	}
-
 }
