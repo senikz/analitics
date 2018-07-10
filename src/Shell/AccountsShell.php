@@ -39,11 +39,18 @@ class AccountsShell extends \Cake\Console\Shell
 		});
 	}
 
-	public function loadCampaignsContent($accountId, $date)
+	public function loadCampaignsContent($accountId, $from, $to = null)
 	{
-		$this->runForAccount($accountId, function ($account) use ($date) {
-			$account->dailyCronJob($date);
-		});
+		$date = $from;
+		if (!$to) {
+			$to = $from;
+		}
+        do {
+			$this->runForAccount($accountId, function ($account) use ($date) {
+				$account->dailyCronJob($date);
+			});
+            $date = date('Y-m-d', strtotime($date . ' +1 day'));
+        } while ($date <= $to);
 	}
 
 
