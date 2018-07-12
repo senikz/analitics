@@ -53,6 +53,6 @@ class Base extends \Cake\Console\Shell
 
     protected function message($message)
     {
-        echo sprintf("%s %s: %s", date('c'), get_class(), $message) . PHP_EOL;
+        echo sprintf("%s %s: %s", date('c'), get_class($this), $message) . PHP_EOL;
     }
 }

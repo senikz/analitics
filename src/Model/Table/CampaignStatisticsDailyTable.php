@@ -146,7 +146,9 @@ class CampaignStatisticsDailyTable extends Table
 				}
 			}
 
-			$this->save($dailyRecord);
+			if ($this->isRecordFilled($dailyRecord)) {
+				$this->save($dailyRecord);
+			}
 
 			if (!$calcHourly) {
 				continue;
@@ -240,7 +242,9 @@ class CampaignStatisticsDailyTable extends Table
 			}
 
 			$record->date = $date;
-			$AdGroupsStatisticsTable->save($record);
+			if ($this->isRecordFilled($record)) {
+				$AdGroupsStatisticsTable->save($record);
+			}
 		}
 
 		foreach ($keywords as $kId => $kStat) {
@@ -266,7 +270,9 @@ class CampaignStatisticsDailyTable extends Table
 			}
 			$record->date = $date;
 
-			$keywordsStatisticsTable->save($record);
+			if ($this->isRecordFilled($record)) {
+				$keywordsStatisticsTable->save($record);
+			}
 		}
 	}
 }

@@ -53,6 +53,11 @@ trait StatisticsTableHelper
 		return $entity;
 	}
 
+	public function isRecordFilled($entity)
+	{
+		return $entity->cost || $entity->views || $entity->clicks || $entity->leads || $entity->orders;
+	}
+
 	public function beforeSave(\Cake\Event\Event $event, $entity, \ArrayObject $options)
 	{
 		$entity = $this->calcPerc($entity);
