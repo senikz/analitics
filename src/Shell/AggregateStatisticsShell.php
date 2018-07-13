@@ -111,7 +111,9 @@ class AggregateStatisticsShell extends Base
                 $record->$name = $item->$name;
             }
 
-            $this->PSD->save($record);
+			if ($this->PSD->isRecordFilled($record)) {
+            	$this->PSD->save($record);
+			}
         }
     }
 
@@ -157,7 +159,9 @@ class AggregateStatisticsShell extends Base
 
             $record->orders = $ordersItem->count ? $ordersItem->count : 0;
 
-            $this->SSD->save($record);
+			if ($this->SSD->isRecordFilled($record)) {
+            	$this->SSD->save($record);
+			}
         }
     }
 
@@ -201,7 +205,9 @@ class AggregateStatisticsShell extends Base
             $record->views = $item->views;
             $record->clicks = $item->clicks;
 
-            $this->SOSD->save($record);
+			if ($this->SOSD->isRecordFilled($record)) {
+	            $this->SOSD->save($record);
+			}
         }
     }
 
@@ -273,7 +279,10 @@ class AggregateStatisticsShell extends Base
                 $record->calls = $this->SiteCalls->findCountBy($conditions);
                 $record->emails = $this->SiteEmails->findCountBy($conditions);
                 $record->leads = $record->emails + $record->calls;
-                $table['statistics']->save($record);
+
+				if ($table['statistics']->isRecordFilled($record)) {
+                	$table['statistics']->save($record);
+				}
             }
         }
     }
